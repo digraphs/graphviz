@@ -19,18 +19,20 @@ gap> GV_Edge(x, "A", "B");
 gap> GV_Edge(x, "A", "L");
 gap> GV_Edge(x, "B", "L", rec(constraint := false));
 gap> GV_String(x);
-"//The round table\ngraph {\n\tA [label=\"King Arthur\", shape=box]\n\tB [labe\
-l=\"Sir Bedevere the Wise\"]\n\tL [label=\"Sir Lancelot the Brave\"]\n\tA -- B\
-\n\tA -- L\n\tB -- L [constraint=false]\n}\n"
+"//The round table\ngraph  {\n\tA [label=\"King Arthur\", shape=box]\n\tB [lab\
+el=\"Sir Bedevere the Wise\"]\n\tL [label=\"Sir Lancelot the Brave\"]\n\tA -- \
+B\n\tA -- L\n\tB -- L [constraint=false]\n}\n"
 gap> GV_Comment(x, "dot", 1);
 <graphviz graph object with 3 nodes and 3 edges>
-gap> GV_GraphAttr(x, rec(bgcolor := "blue", rankdir := "RL"));
+gap> GV_GraphAttr(x, rec(bgcolor := "blue", rankdir := "RL"), 4);
 <graphviz graph object with 3 nodes and 3 edges>
 gap> GV_NodeAttr(x, rec(style :="filled"));
 <graphviz graph object with 3 nodes and 3 edges>
 
 #
-gap> x := GV_Graph("G");
+gap> x := GV_Graph(rec(name := "G", comment := "dot"));
+<graphviz graph object with 0 nodes and 0 edges>
+gap> GV_NodeAttr(x, rec(shape := "box"));
 <graphviz graph object with 0 nodes and 0 edges>
 gap> GV_Edge(x, "run", "intr");
 <graphviz graph object with 0 nodes and 1 edges>
@@ -46,6 +48,8 @@ gap> GV_Edge(x, "kernel", "sleep");
 <graphviz graph object with 0 nodes and 6 edges>
 gap> GV_Edge(x, "kernel", "runmem");
 <graphviz graph object with 0 nodes and 7 edges>
+gap> GV_NodeAttr(x, rec(shape := "circle"));
+<graphviz graph object with 0 nodes and 7 edges>
 gap> GV_Edge(x, "sleep", "swap");
 <graphviz graph object with 0 nodes and 8 edges>
 gap> GV_Edge(x, "swap", "runswap");
@@ -60,21 +64,23 @@ gap> GV_Edge(x, "sleep", "runmem");
 <graphviz graph object with 0 nodes and 13 edges>
 
 #
-gap> x := GV_Digraph("dot");
+gap> x := GV_Digraph(rec(comment := "dot"));
 <graphviz digraph object with 0 nodes and 0 edges>
 gap> GV_GraphAttr(x, rec(rankdir:="LR", size:="8,5"));
 <graphviz digraph object with 0 nodes and 0 edges>
-gap> GV_NodeAttr(x,  rec(shape:="circle"));
+gap> GV_NodeAttr(x,  rec(shape:="doublecircle"));
 <graphviz digraph object with 0 nodes and 0 edges>
-gap> GV_Node(x, "LR_0", rec(shape:="doublecircle"));
+gap> GV_Node(x, "LR_0");
 <graphviz digraph object with 1 nodes and 0 edges>
-gap> GV_Node(x, "LR_0", rec(shape:="doublecircle"));
+gap> GV_Node(x, "LR_0");
 <graphviz digraph object with 1 nodes and 0 edges>
-gap> GV_Node(x, "LR_3", rec(shape:="doublecircle"));
+gap> GV_Node(x, "LR_3");
 <graphviz digraph object with 2 nodes and 0 edges>
-gap> GV_Node(x, "LR_4", rec(shape:="doublecircle"));
+gap> GV_Node(x, "LR_4");
 <graphviz digraph object with 3 nodes and 0 edges>
-gap> GV_Node(x, "LR_8", rec(shape:="doublecircle"));
+gap> GV_Node(x, "LR_8");
+<graphviz digraph object with 4 nodes and 0 edges>
+gap> GV_NodeAttr(x,  rec(shape:="circle"));
 <graphviz digraph object with 4 nodes and 0 edges>
 gap> GV_Edge(x, "LR_0", "LR_2", rec(label:="SS(B)"));
 <graphviz digraph object with 4 nodes and 1 edges>

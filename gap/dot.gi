@@ -1,8 +1,30 @@
 
 
 
+
 ###############################################################################
-# Constuctors etc
+# Private functionality
+###############################################################################
+
+DeclareOperation("GV_StringifyComment", [IsString]);
+DeclareOperation("GV_StringifyGraphHead", [IsString]);
+DeclareOperation("GV_StringifyDigraphHead", [IsString]);
+DeclareOperation("GV_StringifyGraphEdge", [IsString, IsString, IsRecord]);
+DeclareOperation("GV_StringifyDigraphEdge", [IsString, IsString, IsRecord]);
+DeclareOperation("GV_StringifySubgraph", [IsString]);
+DeclareOperation("GV_StringifyPlainSubgraph", [IsString]);
+DeclareOperation("GV_StringifyNode", [IsString, IsRecord]);
+DeclareOperation("GV_StringifyGraphAttrs", [IsRecord]);
+DeclareOperation("GV_StringifyNodeEdgeAttrs", [IsRecord]);
+
+BindGlobal("GV_Head",
+function(x)
+  Assert(1, IsGVObject(x));
+  return x!.HeadFunc(GV_Name(x));
+end);
+
+###############################################################################
+# Family + type
 ###############################################################################
 
 BindGlobal("GV_ObjectFamily",
@@ -18,10 +40,9 @@ BindGlobal("GV_DigraphType", NewType(GV_ObjectFamily,
                                      IsComponentObjectRep and
                                      IsAttributeStoringRep));
 
-InstallMethod(GV_Graph, "for no args", [],
-function()
-  return GV_Graph(rec());
-end);
+###############################################################################
+# Constuctors etc
+###############################################################################
 
 InstallMethod(GV_Graph, "for a string", [IsRecord],
 function(attrs)
@@ -33,16 +54,16 @@ function(attrs)
 
   # TODO other attrs
   result := Objectify(GV_GraphType,
-                      rec(HeadFunc := GV_StringifyGraphHead,
-                          EdgeFunc := GV_StringifyGraphEdge,
-                          Name := attrs.name,
-                          Nodes := rec(),
-                          Edges := [],
+                      rec(HeadFunc   := GV_StringifyGraphHead,
+                          EdgeFunc   := GV_StringifyGraphEdge,
+                          Name       := attrs.name,
+                          Nodes      := rec(),
+                          Edges      := [],
                           GraphAttrs := [],
-                          NodeAttrs := [],
-                          EdgeAttrs := [],
-                          Comments := [],
-                          Lines := []));
+                          NodeAttrs  := [],
+                          EdgeAttrs  := [],
+                          Comments   := [],
+                          Lines      := []));
 
   if IsBound(attrs.comment) then
     GV_Comment(result, attrs.comment);
@@ -51,19 +72,37 @@ function(attrs)
   return result;
 end);
 
-InstallMethod(GV_Digraph, "for a string", [IsString],
-function(comment)
-  return Objectify(GV_DigraphType,
-                   rec(HeadFunc := GV_StringifyDigraphHead,
-                       EdgeFunc := GV_StringifyDigraphEdge,
-                       Name := "",
-                       Nodes := rec(),
-                       Edges := [],
-                       GraphAttrs := rec(),
-                       NodeAttrs := rec(),
-                       EdgeAttrs := rec(),
-                       Comment := comment));
+InstallMethod(GV_Graph, "for no args", [], {} -> GV_Graph(rec()));
+
+InstallMethod(GV_Digraph, "for a string", [IsRecord],
+function(attrs)
+  local result;
+
+  if not IsBound(attrs.name) then
+    attrs.name := "";
+  fi;
+
+  # TODO other attrs
+  result := Objectify(GV_DigraphType,
+                      rec(HeadFunc   := GV_StringifyDigraphHead,
+                          EdgeFunc   := GV_StringifyDigraphEdge,
+                          Name       := attrs.name,
+                          Nodes      := rec(),
+                          Edges      := [],
+                          GraphAttrs := [],
+                          NodeAttrs  := [],
+                          EdgeAttrs  := [],
+                          Comments   := [],
+                          Lines      := []));
+
+  if IsBound(attrs.comment) then
+    GV_Comment(result, attrs.comment);
+  fi;
+  Add(GV_Lines(result), ["Head"]);
+  return result;
 end);
+
+InstallMethod(GV_Digraph, "for no args", [], {} -> GV_Digraph(rec()));
 
 ###############################################################################
 # Printing and viewing
@@ -86,71 +125,31 @@ function(x)
 end);
 
 ###############################################################################
-# Helpers
-###############################################################################
-
-BindGlobal("_UniteRecs",
-function(lhop, rhop)
-  local name;
-  for name in NamesOfComponents(rhop) do
-    lhop.(name) := rhop.(name);
-  od;
-end);
-
-###############################################################################
-# Private
-###############################################################################
-
-InstallMethod(GV_EdgeFunc, "for a graphviz object", [IsGVObject],
-function(x)
-  return x!.EdgeFunc;
-end);
-
-InstallMethod(GV_Head, "for a graphviz object", [IsGVObject],
-function(x)
-  return x!.HeadFunc(GV_Name(x));
-end);
-
-###############################################################################
 # Getters
 ###############################################################################
 
 InstallMethod(GV_Name, "for a graphviz object", [IsGVObject], x -> x!.Name);
 
 InstallMethod(GV_GraphAttrs, "for a graphviz object", [IsGVObject],
-function(x)
-  return x!.GraphAttrs;
-end);
+x -> x!.GraphAttrs);
 
 InstallMethod(GV_NodeAttrs, "for a graphviz object", [IsGVObject],
-function(x)
-  return x!.NodeAttrs;
-end);
+x -> x!.NodeAttrs);
 
 InstallMethod(GV_EdgeAttrs, "for a graphviz object", [IsGVObject],
-function(x)
-  return x!.EdgeAttrs;
-end);
+x -> x!.EdgeAttrs);
 
 InstallMethod(GV_Nodes, "for a graphviz object", [IsGVObject],
-function(x)
-  return x!.Nodes;
-end);
+x -> x!.Nodes);
 
 InstallMethod(GV_Edges, "for a graphviz object", [IsGVObject],
-function(x)
-  return x!.Edges;
-end);
+x -> x!.Edges);
 
 InstallMethod(GV_Comments, "for a graphviz object", [IsGVObject],
-function(x)
-  return x!.Comments;
-end);
+x -> x!.Comments);
 
 InstallMethod(GV_Lines, "for a graphviz object", [IsGVObject],
-function(x)
-  return x!.Lines;
-end);
+x -> x!.Lines);
 
 ###############################################################################
 # Setters
@@ -168,7 +167,9 @@ InstallMethod(GV_GraphAttr, "for a graphviz object, record, and pos int",
 function(x, attr, line_number)
   # TODO Check that line_number is after Head position in Lines
   Add(GV_GraphAttrs(x), attr);
-  InsertElmList(GV_Lines(x), line_number, ["GraphAttr", Length(GV_GraphAttrs(x))]);
+  InsertElmList(GV_Lines(x),
+                line_number,
+                ["GraphAttr", Length(GV_GraphAttrs(x))]);
   return x;
 end);
 
@@ -178,28 +179,53 @@ function(x, attr)
   return GV_GraphAttr(x, attr, Length(GV_Lines(x)) + 1);
 end);
 
+InstallMethod(GV_NodeAttr, "for a graphviz object, record, and pos int",
+[IsGVObject, IsRecord, IsPosInt],
+function(x, attr, line_number)
+  Add(GV_NodeAttrs(x), attr);
+  InsertElmList(GV_Lines(x), line_number, ["NodeAttr", Length(GV_NodeAttrs(x))]);
+  return x;
+end);
+
 InstallMethod(GV_NodeAttr, "for a graphviz object and record",
 [IsGVObject, IsRecord],
 function(x, attr)
-  Add(GV_NodeAttrs(x), attr);
-  Add(GV_Lines(x), ["NodeAttr", Length(GV_NodeAttrs(x))]);
+  return GV_NodeAttr(x, attr, Length(GV_Lines(x) + 1));
+end);
+
+InstallMethod(GV_EdgeAttr, "for a graphviz object, record, and pos int",
+[IsGVObject, IsRecord, IsPosInt],
+function(x, attr, line_number)
+  Add(GV_EdgeAttrs(x), attr);
+  InsertElmList(GV_Lines(x), line_number, ["EdgeAttr", Length(GV_EdgeAttrs(x))]);
   return x;
 end);
 
 InstallMethod(GV_EdgeAttr, "for a graphviz object and record",
 [IsGVObject, IsRecord],
 function(x, attr)
-  Add(GV_EdgeAttrs(x), attr);
-  Add(GV_Lines(x), ["EdgeAttr", Length(GV_EdgeAttrs(x))]);
+  return GV_EdgeAttr(x, attr, Length(GV_Lines(x) + 1));
+end);
+
+InstallMethod(GV_Node, "for a graphviz object, string, record, pos. int.",
+[IsGVObject, IsString, IsRecord, IsPosInt],
+function(x, name, attrs, line_number)
+  GV_Nodes(x).(name) := attrs;
+  InsertElmList(GV_Lines(x), line_number, ["Node", name]);
   return x;
 end);
 
 InstallMethod(GV_Node, "for a graphviz object, string, and record",
 [IsGVObject, IsString, IsRecord],
 function(x, name, attrs)
-  GV_Nodes(x).(name) := attrs;
-  Add(GV_Lines(x), ["Node", name]);
-  return x;
+  return GV_Node(x, name, attrs, Length(GV_Lines(x)) + 1);
+end);
+
+InstallMethod(GV_Node, "for a graphviz object, string, string",
+[IsGVObject, IsString, IsString, IsRecord],
+function(x, name, label, attrs)
+  attrs.label := label;
+  return GV_Node(x, name, attrs);
 end);
 
 InstallMethod(GV_Node, "for a graphviz object, string, string",
@@ -322,7 +348,6 @@ function(name)
   return StringFormatted("{}{{\n", name);
 end);
 
-
 InstallMethod(GV_StringifyGraphAttrs, "for a record", [IsRecord],
 function(attrs)
   local result, attr_names, n, i;
@@ -390,9 +415,10 @@ function(x)
     if line[1] = "Head" then
       Append(result, GV_Head(x));
     elif line[1] = "Node" then
-      Append(result, CallFuncList(GV_StringifyNode, [line[2], GV_Nodes(x).(line[2])]));
+      Append(result,
+             CallFuncList(GV_StringifyNode, [line[2], GV_Nodes(x).(line[2])]));
     elif line[1] = "Edge" then
-      Append(result, CallFuncList(GV_EdgeFunc(x), GV_Edges(x)[line[2]]));
+      Append(result, CallFuncList(x!.EdgeFunc, GV_Edges(x)[line[2]]));
     elif line[1] = "GraphAttr" then
       Append(result, GV_StringifyGraphAttrs(GV_GraphAttrs(x)[line[2]]));
     elif line[1] = "NodeAttr" then
