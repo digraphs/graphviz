@@ -17,11 +17,13 @@ DeclareOperation("GV_Graph", []);
 
 # Getters
 DeclareOperation("GV_Name", [IsGVObject]);
-DeclareOperation("GV_GraphAttrs", [IsGVObject]);
+DeclareOperation("GV_Attrs", [IsGVObject]);
 DeclareOperation("GV_NodeAttrs", [IsGVObject]);
 DeclareOperation("GV_EdgeAttrs", [IsGVObject]);
 DeclareOperation("GV_Nodes", [IsGVObject]);
 DeclareOperation("GV_Edges", [IsGVObject]);
+DeclareOperation("GV_Head", [IsGVEdge]);
+DeclareOperation("GV_Tail", [IsGVEdge]);
 
 
 

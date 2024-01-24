@@ -17,12 +17,6 @@ DeclareOperation("GV_StringifyNode", [IsString, IsRecord]);
 DeclareOperation("GV_StringifyGraphAttrs", [IsRecord]);
 DeclareOperation("GV_StringifyNodeEdgeAttrs", [IsRecord]);
 
-BindGlobal("GV_Head",
-function(x)
-  Assert(1, IsGVObject(x));
-  return x!.HeadFunc(GV_Name(x));
-end);
-
 ###############################################################################
 # Family + type
 ###############################################################################
@@ -96,13 +90,27 @@ end);
 InstallMethod(GV_Graph, "for no args", [], {} -> GV_Graph(""));
 
 ############################################################
+# Stringify
+############################################################
+InstallMethod(ViewString, "", [IsGVNode], n -> StringFormatted("<node {}>", GV_Name(n)));
+InstallMethod(ViewString, "", [IsGVEdge], 
+function(e)
+  local head, tail;
+  head := GV_Head(e);
+  tail := GV_Tail(e);
+
+end);
+
+############################################################
 # Getters
 ############################################################
 InstallMethod(GV_Name, "for a graphviz object", [IsGVObject], x -> x!.Name);
 InstallMethod(GV_Attrs, "for a graphviz object", [IsGVObject], x -> x!.Attrs);
 
-InstallMethod(GV_NodeAttrs, "for a graphviz object", [IsGVGraph], x -> x!.NodeAttrs);
-InstallMethod(GV_EdgeAttrs, "for a graphviz object", [IsGVGraph], x -> x!.EdgeAttrs);
-InstallMethod(GV_Nodes, "for a graphviz object", [IsGVGraph], x -> x!.Nodes);
-InstallMethod(GV_Edges, "for a graphviz object", [IsGVGraph], x -> x!.Edges);
+InstallMethod(GV_NodeAttrs, "for a graphviz graph", [IsGVGraph], x -> x!.NodeAttrs);
+InstallMethod(GV_EdgeAttrs, "for a graphviz graph", [IsGVGraph], x -> x!.EdgeAttrs);
+InstallMethod(GV_Nodes, "for a graphviz graph", [IsGVGraph], x -> x!.Nodes);
+InstallMethod(GV_Edges, "for a graphviz graph", [IsGVGraph], x -> x!.Edges);
 
+InstallMethod(GV_Tail, "got a graphviz edge", [IsGVEdge], x -> x!.Tail);
+InstallMethod(GV_Head, "got a graphviz edge", [IsGVEdge], x -> x!.Head);

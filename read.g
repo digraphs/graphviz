@@ -4,4 +4,5 @@
 #
 # Reading the implementation part of the package.
 #
-# ReadPackage( "graphviz", "gap/dot.gi");
+
+ReadPackage( "graphviz", "gap/dot.gi");
