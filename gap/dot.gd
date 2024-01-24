@@ -1,15 +1,19 @@
 
 # Categories
 DeclareCategory("IsGVObject", IsObject);
-
 DeclareCategory("IsGVGraph", IsGVObject);
-DeclareCategory("IsGVDigraph", IsGVObject);
+DeclareCategory("IsGVNode", IsGVObject);
+DeclareCategory("IsGVEdge", IsGVObject);
 
 # Constuctors
-DeclareOperation("GV_Graph", [IsRecord]);
+DeclareOperation("GV_Node", [IsString, IsRecord]);
+DeclareOperation("GV_Node", [IsString]);
+
+DeclareOperation("GV_Edge", [IsString, IsString, IsRecord]);
+DeclareOperation("GV_Edge", [IsString, IsString]);
+
+DeclareOperation("GV_Graph", [IsString]);
 DeclareOperation("GV_Graph", []);
-DeclareOperation("GV_Digraph", [IsRecord]);
-DeclareOperation("GV_Digraph", []);
 
 # Getters
 DeclareOperation("GV_Name", [IsGVObject]);
@@ -18,8 +22,8 @@ DeclareOperation("GV_NodeAttrs", [IsGVObject]);
 DeclareOperation("GV_EdgeAttrs", [IsGVObject]);
 DeclareOperation("GV_Nodes", [IsGVObject]);
 DeclareOperation("GV_Edges", [IsGVObject]);
-DeclareOperation("GV_Comments", [IsGVObject]);
-DeclareOperation("GV_Lines", [IsGVObject]);
+
+
 
 # Setters
 DeclareOperation("GV_Name",
