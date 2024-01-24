@@ -87,9 +87,9 @@ function(name)
                           Name       := name,
                           Nodes      := rec(),
                           Edges      := [],
-                          Attrs      := [],
-                          NodeAttrs  := [],
-                          EdgeAttrs  := []));
+                          Attrs      := rec(),
+                          NodeAttrs  := rec(),
+                          EdgeAttrs  := rec()));
 end);
 
 InstallMethod(GV_Graph, "for no args", [], {} -> GV_Graph(""));
@@ -164,3 +164,34 @@ function(x, type)
   x!.Type := type;
   return x;
 end);
+
+InstallMethod(GV_Attrs, "for a graphviz object and record",
+[IsGVObject, IsRecord], 
+function(x, attrs)
+  local name;
+  for name in RecNames(attrs) do
+    GV_Attrs(x).(name) := attrs.(name);
+  od;
+  return x;
+end);
+
+InstallMethod(GV_NodeAttrs, "for a graphviz graph and record",
+[IsGVGraph, IsRecord], 
+function(x, attrs)
+  local name;
+  for name in RecNames(attrs) do
+    GV_NodeAttrs(x).(name) := attrs.(name);
+  od;
+  return x;
+end);
+
+InstallMethod(GV_EdgeAttrs, "for a graphviz graph and record",
+[IsGVGraph, IsRecord], 
+function(x, attrs)
+  local name;
+  for name in RecNames(attrs) do
+    GV_EdgeAttrs(x).(name) := attrs.(name);
+  od;
+  return x;
+end);
+
