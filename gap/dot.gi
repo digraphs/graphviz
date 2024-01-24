@@ -6,7 +6,6 @@
 # Private functionality
 ###############################################################################
 
-DeclareOperation("GV_StringifyComment", [IsString]);
 DeclareOperation("GV_StringifyGraphHead", [IsString]);
 DeclareOperation("GV_StringifyDigraphHead", [IsString]);
 DeclareOperation("GV_StringifyGraphEdge", [IsString, IsString, IsRecord]);
@@ -279,4 +278,222 @@ function(g, hn, tn)
     end);
   return g;
 end);
+
+InstallMethod(GV_FilterEnds, "for a graphviz graph and two strings",
+[IsGVGraph, IsString, IsString],
+function(g, hn, tn)
+  g!.Edges := Filtered(GV_Edges(g), 
+    function(e)
+      local head, tail;
+      head := GV_Head(e);
+      tail := GV_Tail(e);
+      return tn <> GV_Name(tail) or hn <> GV_Name(head); 
+    end);
+  return g;
+end);
+
+###############################################################################
+# Stringifying
+###############################################################################
+
+#@ Return comment header line.
+InstallMethod(GV_StringifyComment, "for a string", [IsString],
+function(line)
+  return StringFormatted("//{}\n", line);
+end);
+
+#@ Return DOT subgraph start line.
+InstallMethod(GV_StringifySubgraphBegin, "for a string", [IsString],
+function(name)
+  return StringFormatted("\tsubgraph {} {{\n", name);
+end);
+
+#@ Return DOT subgraph end line.
+InstallMethod(GV_StringifySubgraphEnd, "for a string", [],
+function()
+  return StringFormatted("\t}}\n");
+end);
+
+
+#@ Return DOT graph head line.
+InstallMethod(GV_StringifyGraphHead, "for a string", [IsString],
+function(name)
+  return StringFormatted("graph {} {{\n", name);
+end);
+
+#@ Return DOT digraph head line.
+InstallMethod(GV_StringifyDigraphHead, "for a string", [IsString],
+function(name)
+  return StringFormatted("digraph {} {{\n", name);
+end);
+
+#@ Return DOT node statement line.
+InstallMethod(GV_StringifyNode, "for string and record",
+[IsString, IsRecord],
+function(name, attrs)
+  return StringFormatted("\t{}{}\n", name, GV_StringifyNodeEdgeAttrs(attrs));
+end);
+
+#@ Return DOT graph edge statement line.
+InstallMethod(GV_StringifyGraphEdge, "for string, string, record",
+[IsString, IsString, IsRecord],
+function(tail, head, attrs)
+  return StringFormatted("\t{} -- {}{}\n",
+                         tail,
+                         head,
+                         GV_StringifyNodeEdgeAttrs(attrs));
+
+end);
+
+#@ Return DOT digraph edge statement line.
+InstallMethod(GV_StringifyDigraphEdge, "for string, string, record",
+[IsString, IsString, IsRecord],
+function(tail, head, attrs)
+  return StringFormatted("\t{} -> {}{}\n",
+                         tail,
+                         head,
+                         GV_StringifyNodeEdgeAttrs(attrs));
+
+end);
+
+#@ Return DOT subgraph head line.
+InstallMethod(GV_StringifySubgraph, "for a string",
+[IsString],
+function(name)
+  return StringFormatted("subgraph {}{{\n", name);
+end);
+
+#@ Return plain DOT subgraph head line.
+InstallMethod(GV_StringifyPlainSubgraph, "for a string",
+[IsString],
+function(name)
+  return StringFormatted("{}{{\n", name);
+end);
+
+InstallMethod(GV_StringifyGraphAttrs, "for a record", [IsRecord],
+function(attrs)
+  local result, attr_names, n, i;
+  result := "";
+  attr_names := NamesOfComponents(attrs);
+  n := Length(attr_names);
+  if n <> 0 then
+    Append(result, "\t");
+    for i in [1 .. n] do
+      Append(result,
+             StringFormatted("{}=\"{}\" ",
+                             attr_names[i],
+                             attrs.(attr_names[i])));
+    od;
+    Append(result, "\n");
+  fi;
+  return result;
+end);
+
+InstallMethod(GV_StringifyNodeEdgeAttrs, "for a record", [IsRecord],
+function(attrs)
+  local result, attr_names, n, i;
+
+  result := "";
+  attr_names := NamesOfComponents(attrs);
+  n := Length(attr_names);
+  if n <> 0 then
+    Append(result, " [");
+    for i in [1 .. n - 1] do
+      if attr_names[i] = "label" then
+        Append(result,
+               StringFormatted("{}=\"{}\", ",
+                               attr_names[i],
+                               attrs.(attr_names[i])));
+      else
+        Append(result,
+               StringFormatted("{}={}, ",
+                               attr_names[i],
+                               attrs.(attr_names[i])));
+      fi;
+    od;
+    if attr_names[n] = "label" then
+      Append(result,
+             StringFormatted("{}=\"{}\"]",
+                             attr_names[n],
+                             attrs.(attr_names[n])));
+    else
+      Append(result,
+             StringFormatted("{}={}]",
+                             attr_names[n],
+                             attrs.(attr_names[n])));
+    fi;
+  fi;
+  return result;
+end);
+
+DeclareOperation("GV_ValidateSubgraphs", [IsGVObject]);
+InstallMethod(GV_ValidateSubgraphs, "validate graphviz subgraphs",
+[IsGVObject],
+function(x)
+  local depth, lineIdx, line, lines;
+
+  lineIdx := 0;
+  depth := 0;
+  lines := GV_Lines(x);
+  for lineIdx in [1..Length(lines)] do
+    line := lines[lineIdx];
+
+    if line[1] = "SubBegin" then
+      depth := depth + 1;
+    elif line[1] = "SubEnd" then
+      depth := depth - 1;
+    fi;
+
+    if depth < 0 then
+      return [depth, lineIdx];
+    fi;
+  od;
+
+  return [depth, lineIdx];
+end);
+
+InstallMethod(GV_String, "for a graphviz object",
+[IsGVObject],
+function(x)
+  local result, info, line, i;
+
+  info := GV_ValidateSubgraphs(x);
+  if info[1] < 0 then
+    return StringFormatted("Failed to output - Too many ending brackets. Line: {}\n", info[2]);
+  elif info[1] > 0 then 
+    return "Failed to output - Too few ending brackets\n";
+  fi;
+
+  result := "";
+  for i in [1 .. Length(GV_Lines(x))] do
+    line := GV_Lines(x)[i];
+    if line[1] = "Head" then
+      Append(result, GV_Head(x));
+    elif line[1] = "Node" then
+      Append(result,
+             CallFuncList(GV_StringifyNode, [line[2], GV_Nodes(x).(line[2])]));
+    elif line[1] = "Edge" then
+      Append(result, CallFuncList(x!.EdgeFunc, GV_Edges(x)[line[2]]));
+    elif line[1] = "GraphAttr" then
+      Append(result, GV_StringifyGraphAttrs(GV_GraphAttrs(x)[line[2]]));
+    elif line[1] = "NodeAttr" then
+      Append(result,
+             StringFormatted("\tnode {}\n",
+                             GV_StringifyNodeEdgeAttrs(GV_NodeAttrs(x)[line[2]])));
+    elif line[1] = "EdgeAttr" then
+      Append(result,
+             StringFormatted("\tedge {}\n",
+                             GV_StringifyNodeEdgeAttrs(GV_EdgeAttrs(x)[line[2]])));
+    elif line[1] = "Comment" then
+      Append(result, GV_StringifyComment(GV_Comments(x)[line[2]]));
+    elif line[1] = "SubBegin" then
+      Append(result, GV_StringifySubgraphBegin(GV_Subgraphs(x)[line[2]]));
+    elif line[1] = "SubEnd" then
+      Append(result, GV_StringifySubgraphEnd());
+    fi;
+  od;
+  Append(result, "}\n");
+  return result;
+end);
+
 

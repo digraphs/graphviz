@@ -26,7 +26,6 @@ DeclareOperation("GV_Head", [IsGVEdge]);
 DeclareOperation("GV_Tail", [IsGVEdge]);
 DeclareOperation("GV_Type", [IsGVGraph]);
 
-
 DeclareOperation("GV_HasNode",[IsGVGraph, IsString]);
 
 # Setters
@@ -43,3 +42,8 @@ DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVEdge]);
 DeclareOperation("GV_RemoveNode", [IsGVGraph, IsGVNode]);
 DeclareOperation("GV_FilterEdges", [IsGVGraph, IsFunction]);
 DeclareOperation("GV_FilterEnds", [IsGVGraph, IsString, IsString]);
+
+# Input
+
+# Output
+DeclareOperation("GV_String", [IsGVGraph]);
