@@ -241,3 +241,42 @@ function(x, edge)
   return x;
 end);
 
+InstallMethod(GV_RemoveNode, "for a graphviz graph and node",
+[IsGVGraph, IsGVNode],
+function(g, n)
+  local nodes, name, out;
+  nodes := GV_Nodes(g);
+  name := GV_Name(n);
+  Unbind(nodes.(name));
+
+  GV_FilterEdges(g, 
+    function(e)
+      local head, tail;
+      head := GV_Head(e);
+      tail := GV_Tail(e);
+      return name <> GV_Name(tail) and name <> GV_Name(head); 
+    end);
+
+  return g;
+end); 
+
+InstallMethod(GV_FilterEdges, "for a graphviz graph and edge filter",
+[IsGVGraph, IsFunction],
+function(g, filter)
+  g!.Edges := Filtered(GV_Edges(g), filter);
+  return g;
+end);
+
+InstallMethod(GV_FilterEnds, "for a graphviz graph and two strings",
+[IsGVGraph, IsString, IsString],
+function(g, hn, tn)
+  g!.Edges := Filtered(GV_Edges(g), 
+    function(e)
+      local head, tail;
+      head := GV_Head(e);
+      tail := GV_Tail(e);
+      return tn <> GV_Name(tail) or hn <> GV_Name(head); 
+    end);
+  return g;
+end);
+

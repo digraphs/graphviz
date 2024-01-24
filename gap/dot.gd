@@ -40,5 +40,6 @@ DeclareOperation("GV_EdgeAttrs", [IsGVObject, IsRecord]);
 DeclareOperation("GV_AddNode", [IsGVGraph, IsGVNode]);
 DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVEdge]);
 
-# gap> GV_AddNode(g, GV_Node("x"));
-# <graph with 2 nodes and 0 edges>
+DeclareOperation("GV_RemoveNode", [IsGVGraph, IsGVNode]);
+DeclareOperation("GV_FilterEdges", [IsGVGraph, IsFunction]);
+DeclareOperation("GV_FilterEnds", [IsGVGraph, IsString, IsString]);
