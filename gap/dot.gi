@@ -82,10 +82,10 @@ function(head, tail)
 end);
 
 # Graph constructors
-InstallMethod(GV_Graph, "for a record", [IsRecord],
-function(attrs)
+InstallMethod(GV_Graph, "for a string", [IsString],
+function(name)
   return Objectify(GV_GraphType,
-                      rec(Name       := attrs.name,
+                      rec(Name       := name,
                           Nodes      := rec(),
                           Edges      := [],
                           Attrs      := [],

@@ -9,8 +9,8 @@ DeclareCategory("IsGVEdge", IsGVObject);
 DeclareOperation("GV_Node", [IsString, IsRecord]);
 DeclareOperation("GV_Node", [IsString]);
 
-DeclareOperation("GV_Edge", [IsString, IsString, IsRecord]);
-DeclareOperation("GV_Edge", [IsString, IsString]);
+DeclareOperation("GV_Edge", [IsGVNode, IsGVNode, IsRecord]);
+DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
 
 DeclareOperation("GV_Graph", [IsString]);
 DeclareOperation("GV_Graph", []);

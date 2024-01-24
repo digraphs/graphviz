@@ -30,11 +30,11 @@ Persons := [
 
 #SourceRepository := rec( Type := "TODO", URL := "URL" ),
 #IssueTrackerURL := "TODO",
-PackageWWWHome := "None/",
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-ArchiveURL     := Concatenation( ~.PackageWWWHome,
-                                 "/", ~.PackageName, "-", ~.Version ),
+PackageWWWHome := "https://google.com", # "None/",
+PackageInfoURL := "https://google.com", # Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+README_URL     := "https://google.com", # Concatenation( ~.PackageWWWHome, "README.md" ),
+ArchiveURL     := "https://google.com", # Concatenation( ~.PackageWWWHome,
+                  #               "/", ~.PackageName, "-", ~.Version ),
 
 ArchiveFormats := ".tar.gz",
 
