@@ -24,12 +24,14 @@ DeclareOperation("GV_Nodes", [IsGVObject]);
 DeclareOperation("GV_Edges", [IsGVObject]);
 DeclareOperation("GV_Head", [IsGVEdge]);
 DeclareOperation("GV_Tail", [IsGVEdge]);
+DeclareOperation("GV_Type", [IsGVGraph]);
 
 
 
 # Setters
-DeclareOperation("GV_Name",
-                 [IsGVObject, IsString]);
+DeclareOperation("GV_Name",[IsGVObject, IsString]);
+DeclareOperation("GV_Type",[IsGVGraph, IsString]);
+
 DeclareOperation("GV_GraphAttr",
                  [IsGVObject, IsRecord, IsPosInt]);
 DeclareOperation("GV_GraphAttr",
