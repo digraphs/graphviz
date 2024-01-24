@@ -109,8 +109,8 @@ InstallMethod(ViewString, "", [IsGVGraph],
 function(g)
   local result, edges, nodes;
   result := "";
-  edges := GV_Edges(g);
-  nodes := GV_Nodes(g);
+  edges := Length(GV_Edges(g));
+  nodes := Length(RecNames(GV_Nodes(g)));
 
   if GV_Type(g) = GV_GRAPH then
     Append(result, StringFormatted("<graph ", GV_Name(g)));
@@ -122,9 +122,17 @@ function(g)
     Append(result, StringFormatted("{} ", GV_Name(g)));
   fi;
 
-  Append(result, StringFormatted("with {} nodes and {} edges>", 
-                                  Length(RecNames(nodes)),
-                                  Length(edges)));
+  if nodes = 1 then
+    Append(result, "with 1 node ");
+  else
+    Append(result, StringFormatted("with {} nodes ", nodes));
+  fi;
+
+  if edges = 1 then
+    Append(result, "and 1 edge>");
+  else
+    Append(result, StringFormatted("and {} edges>", edges));
+  fi;
   return result;
 end);
 
@@ -138,10 +146,15 @@ InstallMethod(GV_NodeAttrs, "for a graphviz graph", [IsGVGraph], x -> x!.NodeAtt
 InstallMethod(GV_EdgeAttrs, "for a graphviz graph", [IsGVGraph], x -> x!.EdgeAttrs);
 InstallMethod(GV_Nodes, "for a graphviz graph", [IsGVGraph], x -> x!.Nodes);
 InstallMethod(GV_Edges, "for a graphviz graph", [IsGVGraph], x -> x!.Edges);
-InstallMethod(GV_Type, "got a graphviz graph", [IsGVGraph], x -> x!.Type);
+InstallMethod(GV_Type, "for a graphviz graph", [IsGVGraph], x -> x!.Type);
 
-InstallMethod(GV_Tail, "got a graphviz edge", [IsGVEdge], x -> x!.Tail);
-InstallMethod(GV_Head, "got a graphviz edge", [IsGVEdge], x -> x!.Head);
+InstallMethod(GV_Tail, "for a graphviz edge", [IsGVEdge], x -> x!.Tail);
+InstallMethod(GV_Head, "for a graphviz edge", [IsGVEdge], x -> x!.Head);
+
+InstallMethod(GV_HasNode, "for a graphviz graph", [IsGVGraph, IsString], 
+function(g, name)
+  return IsBound(GV_Nodes(g).(name));
+end);
 
 ############################################################
 # Setters
@@ -192,6 +205,39 @@ function(x, attrs)
   for name in RecNames(attrs) do
     GV_EdgeAttrs(x).(name) := attrs.(name);
   od;
+  return x;
+end);
+
+InstallMethod(GV_AddNode, "for a graphviz graph and node",
+[IsGVGraph, IsGVNode], 
+function(x, node)
+  local name, nodes;
+  name := GV_Name(node);
+  nodes := GV_Nodes(x);
+
+  # dont add if already node with the same name
+  if IsBound(nodes.(name)) then
+    Print(StringFormatted("FAIL: Already node with name {}.\n", name));
+    return fail;
+  fi;
+
+  nodes.(name) := node;
+  return x;
+end);
+
+InstallMethod(GV_AddEdge, "for a graphviz graph and edge",
+[IsGVGraph, IsGVEdge], 
+function(x, edge)
+  local help;
+  help := function(node) 
+    if not GV_HasNode(x, GV_Name(node)) then
+      GV_AddNode(x, node);
+    fi;
+  end;
+
+  help(GV_Head(edge));
+  help(GV_Tail(edge));
+  InsertElmList(x!.Edges, 1, edge);
   return x;
 end);
 

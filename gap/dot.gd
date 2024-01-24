@@ -27,6 +27,7 @@ DeclareOperation("GV_Tail", [IsGVEdge]);
 DeclareOperation("GV_Type", [IsGVGraph]);
 
 
+DeclareOperation("GV_HasNode",[IsGVGraph, IsString]);
 
 # Setters
 DeclareOperation("GV_Name",[IsGVObject, IsString]);
@@ -39,5 +40,5 @@ DeclareOperation("GV_EdgeAttrs", [IsGVObject, IsRecord]);
 DeclareOperation("GV_AddNode", [IsGVGraph, IsGVNode]);
 DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVEdge]);
 
-DeclareOperation("GV_Node", [IsGVObject, IsPosInt]);
-DeclareOperation("GV_Edge", [IsGVObject, IsPosInt]);
+# gap> GV_AddNode(g, GV_Node("x"));
+# <graph with 2 nodes and 0 edges>
