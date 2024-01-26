@@ -296,25 +296,6 @@ end);
 # Stringifying
 ###############################################################################
 
-#@ Return comment header line.
-InstallMethod(GV_StringifyComment, "for a string", [IsString],
-function(line)
-  return StringFormatted("//{}\n", line);
-end);
-
-#@ Return DOT subgraph start line.
-InstallMethod(GV_StringifySubgraphBegin, "for a string", [IsString],
-function(name)
-  return StringFormatted("\tsubgraph {} {{\n", name);
-end);
-
-#@ Return DOT subgraph end line.
-InstallMethod(GV_StringifySubgraphEnd, "for a string", [],
-function()
-  return StringFormatted("\t}}\n");
-end);
-
-
 #@ Return DOT graph head line.
 InstallMethod(GV_StringifyGraphHead, "for a string", [IsString],
 function(name)
@@ -329,31 +310,40 @@ end);
 
 #@ Return DOT node statement line.
 InstallMethod(GV_StringifyNode, "for string and record",
-[IsString, IsRecord],
-function(name, attrs)
+[IsGVNode],
+function(node)
+  local attrs, name;
+  name := GV_Name(node);
+  attrs := GV_Attrs(node);
   return StringFormatted("\t{}{}\n", name, GV_StringifyNodeEdgeAttrs(attrs));
 end);
 
 #@ Return DOT graph edge statement line.
-InstallMethod(GV_StringifyGraphEdge, "for string, string, record",
-[IsString, IsString, IsRecord],
-function(tail, head, attrs)
+InstallMethod(GV_StringifyGraphEdge, "for a graphviz edge",
+[IsGVEdge],
+function(edge)
+  local head, tail, attrs;
+  head := GV_Name(GV_Head(edge));
+  tail := GV_Name(GV_Head(edge));
+  attrs := GV_Attrs(node);
   return StringFormatted("\t{} -- {}{}\n",
                          tail,
                          head,
                          GV_StringifyNodeEdgeAttrs(attrs));
-
 end);
 
 #@ Return DOT digraph edge statement line.
-InstallMethod(GV_StringifyDigraphEdge, "for string, string, record",
-[IsString, IsString, IsRecord],
-function(tail, head, attrs)
+InstallMethod(GV_StringifyDigraphEdge, "for a graphviz edge",
+[IsGVEdge],
+function(edge)
+  local head, tail, attrs;
+  head := GV_Name(GV_Head(edge));
+  tail := GV_Name(GV_Head(edge));
+  attrs := GV_Attrs(node);
   return StringFormatted("\t{} -> {}{}\n",
                          tail,
                          head,
                          GV_StringifyNodeEdgeAttrs(attrs));
-
 end);
 
 #@ Return DOT subgraph head line.
@@ -370,9 +360,10 @@ function(name)
   return StringFormatted("{}{{\n", name);
 end);
 
-InstallMethod(GV_StringifyGraphAttrs, "for a record", [IsRecord],
-function(attrs)
-  local result, attr_names, n, i;
+InstallMethod(GV_StringifyGraphAttrs, "for a record", [IsGVGraph],
+function(graph)
+  local result, attrs, attr_names, n, i;
+  attrs := GV_Attrs(graph);
   result := "";
   attr_names := NamesOfComponents(attrs);
   n := Length(attr_names);
@@ -426,73 +417,55 @@ function(attrs)
   return result;
 end);
 
-DeclareOperation("GV_ValidateSubgraphs", [IsGVObject]);
-InstallMethod(GV_ValidateSubgraphs, "validate graphviz subgraphs",
-[IsGVObject],
-function(x)
-  local depth, lineIdx, line, lines;
-
-  lineIdx := 0;
-  depth := 0;
-  lines := GV_Lines(x);
-  for lineIdx in [1..Length(lines)] do
-    line := lines[lineIdx];
-
-    if line[1] = "SubBegin" then
-      depth := depth + 1;
-    elif line[1] = "SubEnd" then
-      depth := depth - 1;
-    fi;
-
-    if depth < 0 then
-      return [depth, lineIdx];
-    fi;
-  od;
-
-  return [depth, lineIdx];
+InstallMethod(GV_StringifyEdgeAttrs, "for a graphviz graph",
+[IsGVGraph],
+function(graph)
+  local result, attrs;
+  attrs := GV_EdgeAttrs(graph);
+  result := "";
+  Append(result, "edge ");
+  Append(result, GV_StringifyNodeEdgeAttrs(attrs));
+  return result;
 end);
 
-InstallMethod(GV_String, "for a graphviz object",
-[IsGVObject],
-function(x)
-  local result, info, line, i;
+InstallMethod(GV_StringifyNodeAttrs, "for a graphviz graph",
+[IsGVGraph],
+function(graph)
+  local result, attrs;
+  attrs := GV_NodeAttrs(graph);
+  result := "";
+  Append(result, "node ");
+  Append(result, GV_StringifyNodeEdgeAttrs(attrs));
+  return result;
+end);
 
-  info := GV_ValidateSubgraphs(x);
-  if info[1] < 0 then
-    return StringFormatted("Failed to output - Too many ending brackets. Line: {}\n", info[2]);
-  elif info[1] > 0 then 
-    return "Failed to output - Too few ending brackets\n";
+InstallMethod(GV_String, "for a graphviz graph",
+[IsGVGraph],
+function(graph)
+  local result, info, elem, line, i;
+  result := "";
+
+  if GV_Type(graph) = GV_DIGRAPH then
+    Append(result, GV_StringifyGraphHead(graph));
+  else
+    Append(result, GV_StringifyDigraphHead(graph));
   fi;
 
-  result := "";
-  for i in [1 .. Length(GV_Lines(x))] do
-    line := GV_Lines(x)[i];
-    if line[1] = "Head" then
-      Append(result, GV_Head(x));
-    elif line[1] = "Node" then
-      Append(result,
-             CallFuncList(GV_StringifyNode, [line[2], GV_Nodes(x).(line[2])]));
-    elif line[1] = "Edge" then
-      Append(result, CallFuncList(x!.EdgeFunc, GV_Edges(x)[line[2]]));
-    elif line[1] = "GraphAttr" then
-      Append(result, GV_StringifyGraphAttrs(GV_GraphAttrs(x)[line[2]]));
-    elif line[1] = "NodeAttr" then
-      Append(result,
-             StringFormatted("\tnode {}\n",
-                             GV_StringifyNodeEdgeAttrs(GV_NodeAttrs(x)[line[2]])));
-    elif line[1] = "EdgeAttr" then
-      Append(result,
-             StringFormatted("\tedge {}\n",
-                             GV_StringifyNodeEdgeAttrs(GV_EdgeAttrs(x)[line[2]])));
-    elif line[1] = "Comment" then
-      Append(result, GV_StringifyComment(GV_Comments(x)[line[2]]));
-    elif line[1] = "SubBegin" then
-      Append(result, GV_StringifySubgraphBegin(GV_Subgraphs(x)[line[2]]));
-    elif line[1] = "SubEnd" then
-      Append(result, GV_StringifySubgraphEnd());
-    fi;
+  Append(result, GV_StringifyGraphAttrs(graph));
+  Append(result, GV_StringifyNodeAttrs(graph));
+  Append(result, GV_StringifyEdgeAttrs(graph));
+
+  for elem in GV_Nodes(graph) do
+    Append(result, GV_StringifyNode(elem));
   od;
-  Append(result, "}\n");
+
+
+  for elem in GV_Edges(graph) do
+    Append(result, GV_StringifyEdge(elem));
+  od;
+
+
+  Append(result, GV_Head(graph));
   return result;
 end);
 
