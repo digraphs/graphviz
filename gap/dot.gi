@@ -6,14 +6,16 @@
 # Private functionality
 ###############################################################################
 
-DeclareOperation("GV_StringifyGraphHead", [IsString]);
-DeclareOperation("GV_StringifyDigraphHead", [IsString]);
-DeclareOperation("GV_StringifyGraphEdge", [IsString, IsString, IsRecord]);
-DeclareOperation("GV_StringifyDigraphEdge", [IsString, IsString, IsRecord]);
+DeclareOperation("GV_StringifyGraphHead", [IsGVGraph]);
+DeclareOperation("GV_StringifyDigraphHead", [IsGVGraph]);
+DeclareOperation("GV_StringifyGraphEdge", [IsGVEdge]);
+DeclareOperation("GV_StringifyDigraphEdge", [IsGVEdge]);
 DeclareOperation("GV_StringifySubgraph", [IsString]);
 DeclareOperation("GV_StringifyPlainSubgraph", [IsString]);
-DeclareOperation("GV_StringifyNode", [IsString, IsRecord]);
-DeclareOperation("GV_StringifyGraphAttrs", [IsRecord]);
+DeclareOperation("GV_StringifyNode", [IsGVNode]);
+DeclareOperation("GV_StringifyGraphAttrs", [IsGVGraph]);
+DeclareOperation("GV_StringifyEdgeAttrs", [IsGVGraph]);
+DeclareOperation("GV_StringifyNodeAttrs", [IsGVGraph]);
 DeclareOperation("GV_StringifyNodeEdgeAttrs", [IsRecord]);
 
 ###############################################################################
@@ -50,6 +52,12 @@ BindGlobal("GV_GRAPH", "GRAPH");
 # Node constructors
 InstallMethod(GV_Node, "for a string and a record", [IsString, IsRecord],
 function(name, attrs)
+  local namew;
+
+  namew := Compacted(Filtered(name, x -> not x in [' ', '\t', '\r', '\n']));
+  if Length(namew) = 0 then
+    return fail;
+  fi;
   return Objectify(GV_NodeType, 
                   rec(
                     Name  := name,
@@ -297,15 +305,15 @@ end);
 ###############################################################################
 
 #@ Return DOT graph head line.
-InstallMethod(GV_StringifyGraphHead, "for a string", [IsString],
-function(name)
-  return StringFormatted("graph {} {{\n", name);
+InstallMethod(GV_StringifyGraphHead, "for a string", [IsGVGraph],
+function(graph)
+  return StringFormatted("graph {} {{\n", GV_Name(graph));
 end);
 
 #@ Return DOT digraph head line.
-InstallMethod(GV_StringifyDigraphHead, "for a string", [IsString],
-function(name)
-  return StringFormatted("digraph {} {{\n", name);
+InstallMethod(GV_StringifyDigraphHead, "for a string", [IsGVGraph],
+function(graph)
+  return StringFormatted("digraph {} {{\n", GV_Name(graph));
 end);
 
 #@ Return DOT node statement line.
@@ -324,8 +332,8 @@ InstallMethod(GV_StringifyGraphEdge, "for a graphviz edge",
 function(edge)
   local head, tail, attrs;
   head := GV_Name(GV_Head(edge));
-  tail := GV_Name(GV_Head(edge));
-  attrs := GV_Attrs(node);
+  tail := GV_Name(GV_Tail(edge));
+  attrs := GV_Attrs(edge);
   return StringFormatted("\t{} -- {}{}\n",
                          tail,
                          head,
@@ -338,8 +346,8 @@ InstallMethod(GV_StringifyDigraphEdge, "for a graphviz edge",
 function(edge)
   local head, tail, attrs;
   head := GV_Name(GV_Head(edge));
-  tail := GV_Name(GV_Head(edge));
-  attrs := GV_Attrs(node);
+  tail := GV_Name(GV_Tail(edge));
+  attrs := GV_Attrs(edge);
   return StringFormatted("\t{} -> {}{}\n",
                          tail,
                          head,
@@ -422,9 +430,14 @@ InstallMethod(GV_StringifyEdgeAttrs, "for a graphviz graph",
 function(graph)
   local result, attrs;
   attrs := GV_EdgeAttrs(graph);
-  result := "";
-  Append(result, "edge ");
+  if Length(RecNames(attrs)) = 0 then
+    return "";
+  fi;
+
+  result := "\t";
+  Append(result, "edge");
   Append(result, GV_StringifyNodeEdgeAttrs(attrs));
+  Append(result, "\n");
   return result;
 end);
 
@@ -433,39 +446,49 @@ InstallMethod(GV_StringifyNodeAttrs, "for a graphviz graph",
 function(graph)
   local result, attrs;
   attrs := GV_NodeAttrs(graph);
-  result := "";
-  Append(result, "node ");
+  if Length(RecNames(attrs)) = 0 then
+    return "";
+  fi;
+
+  result := "\t";
+  Append(result, "node");
   Append(result, GV_StringifyNodeEdgeAttrs(attrs));
+  Append(result, "\n");
   return result;
 end);
 
 InstallMethod(GV_String, "for a graphviz graph",
 [IsGVGraph],
 function(graph)
-  local result, info, elem, line, i;
+  local result, nodes, edges, elem, i;
+  nodes := GV_Nodes(graph);
+  edges := GV_Edges(graph);
+  
   result := "";
 
   if GV_Type(graph) = GV_DIGRAPH then
-    Append(result, GV_StringifyGraphHead(graph));
-  else
     Append(result, GV_StringifyDigraphHead(graph));
+  else
+    Append(result, GV_StringifyGraphHead(graph));
   fi;
 
   Append(result, GV_StringifyGraphAttrs(graph));
   Append(result, GV_StringifyNodeAttrs(graph));
   Append(result, GV_StringifyEdgeAttrs(graph));
 
-  for elem in GV_Nodes(graph) do
-    Append(result, GV_StringifyNode(elem));
+  for elem in RecNames(nodes) do
+    Append(result, GV_StringifyNode(nodes.(elem)));
   od;
 
-
-  for elem in GV_Edges(graph) do
-    Append(result, GV_StringifyEdge(elem));
+  for elem in edges do
+    if GV_Type(graph) = GV_DIGRAPH then
+      Append(result, GV_StringifyDigraphEdge(elem));
+    else
+      Append(result, GV_StringifyGraphEdge(elem));
+    fi;
   od;
 
-
-  Append(result, GV_Head(graph));
+  Append(result, "}\n");
   return result;
 end);
 
