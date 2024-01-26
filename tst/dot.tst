@@ -88,5 +88,10 @@ gap> GV_String(g);
 "graph name {\n\tcolor=\"red\" \n\tnode [color=green]\n\tedge [color=blue]\n\t\
 b [color=red]\n\ta [color=blue]\n\tb -- a [color=green]\n}\n"
 
+# Test stringify empty
+gap> g := GV_Graph();;
+gap> GV_String(g);
+"graph  {\n}\n"
+
 #
 gap> STOP_TEST("Digraphs package: standard/oper.tst", 0);
