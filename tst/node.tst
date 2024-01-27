@@ -36,4 +36,19 @@ fail
 gap> n := GV_Node("a  a   ");
 <node aa>
 
+# Test modifying attributes
+gap> n := GV_Node("t", rec( color := "red" ));;
+gap> GV_Attrs(n, rec( color := "blue", shape := "round" ));;
+gap> GV_Attrs(n);
+rec( color := "blue", shape := "round" )
+gap> GV_Attrs(n, rec( color := "green", label := "test" ));;
+gap> GV_Attrs(n);
+rec( color := "green", label := "test", shape := "round" )
+
+# Test removing attributes
+gap> n := GV_Node("t", rec( color := "red", shape := "circle" ));;
+gap> GV_RemoveAttr(n, "color");;
+gap> GV_Attrs(n);
+rec( shape := "circle" )
+
 #

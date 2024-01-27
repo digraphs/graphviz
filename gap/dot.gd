@@ -172,4 +172,22 @@ DeclareOperation("GV_FilterEdges", [IsGVGraph, IsFunction]);
 #    Filters the graph's edges, removing edges between nodes with the specified names.
 DeclareOperation("GV_FilterEnds", [IsGVGraph, IsString, IsString]);
 
+#! @Arguments obj, attr
+#! @Returns the modified object.
+#! @Description 
+#    Removes an attribute from the object provided.
+DeclareOperation("GV_RemoveAttr", [IsGVObject, IsString]);
+
+#! @Arguments graph, attr
+#! @Returns the modified graphviz graph.
+#! @Description 
+#    Removes an attribute from the global edge attributes of the graph provided.
+DeclareOperation("GV_RemoveEdgeAttr", [IsGVGraph, IsString]);
+
+#! @Arguments graph, attr
+#! @Returns the modified graphviz graph.
+#! @Description 
+#    Removes an attribute from the global node attributes of the graph provided.
+DeclareOperation("GV_RemoveNodeAttr", [IsGVGraph, IsString]);
+
 DeclareOperation("GV_String", [IsGVGraph]);

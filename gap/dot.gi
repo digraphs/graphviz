@@ -309,6 +309,33 @@ function(g, hn, tn)
   return g;
 end);
 
+InstallMethod(GV_RemoveAttr, "for a graphviz object and string", 
+[IsGVObject, IsString],
+function(obj, attr)
+  local attrs;
+  attrs := GV_Attrs(obj);
+  Unbind(attrs.(attr));
+  return obj;
+end);
+
+InstallMethod(GV_RemoveEdgeAttr, "for a graphviz graph and string", 
+[IsGVGraph, IsString],
+function(graph, attr)
+  local attrs;
+  attrs := GV_EdgeAttrs(graph);
+  Unbind(attrs.(attr));
+  return graph;
+end);
+
+InstallMethod(GV_RemoveNodeAttr, "for a graphviz graph and string", 
+[IsGVGraph, IsString],
+function(graph, attr)
+  local attrs;
+  attrs := GV_NodeAttrs(graph);
+  Unbind(attrs.(attr));
+  return graph;
+end);
+
 ###############################################################################
 # Stringifying
 ###############################################################################

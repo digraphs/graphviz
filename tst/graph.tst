@@ -113,4 +113,18 @@ gap> g := GV_Graph();;
 gap> GV_Name(g, "test");
 <graph test with 0 nodes and 0 edges>
 
+# Removing edge attributes
+gap> g := GV_Graph();;
+gap> GV_EdgeAttrs(g, rec( color := "blue", shape := "round" ));;
+gap> GV_RemoveEdgeAttr(g, "color");;
+gap> GV_EdgeAttrs(g);
+rec( shape := "round" )
+
+# Test removing node attributes
+gap> g := GV_Graph();;
+gap> GV_NodeAttrs(g, rec( color := "blue", shape := "round" ));;
+gap> GV_RemoveNodeAttr(g, "color");;
+gap> GV_NodeAttrs(g);
+rec( shape := "round" )
+
 #
