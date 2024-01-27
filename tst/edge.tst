@@ -73,4 +73,18 @@ gap> GV_Edges(g);
 gap> GV_FilterEnds(g, "c", "d");
 <graph with 4 nodes and 0 edges>
 
+# Test adding edge between nodes which are not in the graph, but there exists nodes in the graph which share their names.
+gap> g := GV_Graph();;
+gap> a1 := GV_Node("a");;
+gap> d := GV_Node("d");;
+gap> a2 := GV_Node("a");;
+gap> c := GV_Node("c");;
+gap> e1 := GV_Edge(d, a1);;
+gap> e2 := GV_Edge(a2, c);;
+gap> GV_AddEdge(g, e1);;
+gap> GV_AddEdge(g, e2);
+fail
+gap> GV_Edges(g);
+[ <edge (d, a)> ]
+
 #

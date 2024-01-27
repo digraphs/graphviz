@@ -1,5 +1,4 @@
  - remove ability to change the name of a node post creation
  - create ability to clone an objects attributes to another object
  - remove an attribute
- - test adding edge between nodes which are not in the graph, but there exists nodes in the graph which share their names.
  
