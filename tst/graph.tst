@@ -108,29 +108,4 @@ gap> GV_RemoveNode(g, b);
 gap> GV_Nodes(g);
 rec( c := <node c>, d := <node d> )
 
-# Test filtering edges by names
-gap> g := GV_Graph();;
-gap> a := GV_Node("a");;
-gap> b := GV_Node("b");;
-gap> c := GV_Node("c");;
-gap> d := GV_Node("d");;
-gap> ab := GV_Edge(a, b);;
-gap> cd := GV_Edge(c, d);;
-gap> GV_AddEdge(g, ab);;
-gap> GV_AddEdge(g, cd);;
-gap> GV_FilterEnds(g, "a", "c");
-<graph with 4 nodes and 2 edges>
-gap> GV_FilterEnds(g, "b", "d");
-<graph with 4 nodes and 2 edges>
-gap> GV_FilterEnds(g, "a", "b");
-<graph with 4 nodes and 1 edge>
-gap> GV_Edges(g);
-[ <edge (c, d)> ]
-gap> GV_FilterEnds(g, "c", "d");
-<graph with 4 nodes and 0 edges>
-gap> GV_Edges(g);
-[  ]
-gap> GV_FilterEnds(g, "c", "d");
-<graph with 4 nodes and 0 edges>
-
 #

@@ -300,20 +300,11 @@ function(g, hn, tn)
       local head, tail;
       head := GV_Head(e);
       tail := GV_Tail(e);
-      return tn <> GV_Name(tail) or hn <> GV_Name(head); 
-    end);
-  return g;
-end);
-
-InstallMethod(GV_FilterEnds, "for a graphviz graph and two strings",
-[IsGVGraph, IsString, IsString],
-function(g, hn, tn)
-  g!.Edges := Filtered(GV_Edges(g), 
-    function(e)
-      local head, tail;
-      head := GV_Head(e);
-      tail := GV_Tail(e);
-      return tn <> GV_Name(tail) or hn <> GV_Name(head); 
+      if GV_Type(g) = GV_GRAPH then
+        return (tn <> GV_Name(tail) or hn <> GV_Name(head)) and (hn <> GV_Name(tail) or tn <> GV_Name(head)); 
+      else 
+        return tn <> GV_Name(tail) or hn <> GV_Name(head); 
+      fi; 
     end);
   return g;
 end);

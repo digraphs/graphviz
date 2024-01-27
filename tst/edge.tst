@@ -16,10 +16,61 @@ gap> b := GV_Node("b");;
 gap> GV_Edge(a, b, rec(color := "red"));
 <edge (a, b)>
 
-# Test node constructor
+# Test edge constructor
 gap> n := GV_Node("test-node", rec(color := "red"));
 <node test-node>
 gap> GV_Attrs(n);
 rec( color := "red" )
+
+# Test filtering edges by names (digraph)
+gap> g := GV_Graph();;
+gap> a := GV_Node("a");;
+gap> b := GV_Node("b");;
+gap> c := GV_Node("c");;
+gap> d := GV_Node("d");;
+gap> ab := GV_Edge(a, b);;
+gap> cd := GV_Edge(c, d);;
+gap> GV_AddEdge(g, ab);;
+gap> GV_AddEdge(g, cd);;
+gap> GV_Type(g, GV_DIGRAPH);;
+gap> GV_FilterEnds(g, "a", "c");
+<digraph with 4 nodes and 2 edges>
+gap> GV_FilterEnds(g, "b", "d");
+<digraph with 4 nodes and 2 edges>
+gap> GV_FilterEnds(g, "a", "b");
+<digraph with 4 nodes and 1 edge>
+gap> GV_Edges(g);
+[ <edge (c, d)> ]
+gap> GV_FilterEnds(g, "c", "d");
+<digraph with 4 nodes and 0 edges>
+gap> GV_Edges(g);
+[  ]
+gap> GV_FilterEnds(g, "c", "d");
+<digraph with 4 nodes and 0 edges>
+
+# Test filtering edges by names (graph)
+gap> g := GV_Graph();;
+gap> a := GV_Node("a");;
+gap> b := GV_Node("b");;
+gap> c := GV_Node("c");;
+gap> d := GV_Node("d");;
+gap> ab := GV_Edge(a, b);;
+gap> cd := GV_Edge(c, d);;
+gap> GV_AddEdge(g, ab);;
+gap> GV_AddEdge(g, cd);;
+gap> GV_FilterEnds(g, "a", "c");
+<graph with 4 nodes and 2 edges>
+gap> GV_FilterEnds(g, "b", "d");
+<graph with 4 nodes and 2 edges>
+gap> GV_FilterEnds(g, "b", "a");
+<graph with 4 nodes and 1 edge>
+gap> GV_Edges(g);
+[ <edge (c, d)> ]
+gap> GV_FilterEnds(g, "d", "c");
+<graph with 4 nodes and 0 edges>
+gap> GV_Edges(g);
+[  ]
+gap> GV_FilterEnds(g, "c", "d");
+<graph with 4 nodes and 0 edges>
 
 #
