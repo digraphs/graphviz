@@ -120,11 +120,25 @@ gap> GV_RemoveEdgeAttr(g, "color");;
 gap> GV_EdgeAttrs(g);
 rec( shape := "round" )
 
+# Removing edge attributes (NOT PRESENT)
+gap> g := GV_Graph();;
+gap> GV_EdgeAttrs(g, rec( color := "blue" ));;
+gap> GV_RemoveEdgeAttr(g, "AWWWW");;
+gap> GV_EdgeAttrs(g);
+rec( color := "blue" )
+
 # Test removing node attributes
 gap> g := GV_Graph();;
 gap> GV_NodeAttrs(g, rec( color := "blue", shape := "round" ));;
 gap> GV_RemoveNodeAttr(g, "color");;
 gap> GV_NodeAttrs(g);
 rec( shape := "round" )
+
+# Removing node attributes (NOT PRESENT)
+gap> g := GV_Graph();;
+gap> GV_NodeAttrs(g, rec( color := "blue" ));;
+gap> GV_RemoveNodeAttr(g, "AWWWW");;
+gap> GV_NodeAttrs(g);
+rec( color := "blue" )
 
 #
