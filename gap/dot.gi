@@ -44,7 +44,7 @@ BindGlobal("GV_EdgeType", NewType(GV_ObjectFamily,
 ###############################################################################
 # Constuctors etc
 ###############################################################################
-
+#! @Chapter test1
 # Graph types
 BindGlobal("GV_DIGRAPH", "DIGRAPH");
 BindGlobal("GV_GRAPH", "GRAPH");
@@ -235,15 +235,33 @@ end);
 InstallMethod(GV_AddEdge, "for a graphviz graph and edge",
 [IsGVGraph, IsGVEdge], 
 function(x, edge)
-  local help;
-  help := function(node) 
-    if not GV_HasNode(x, GV_Name(node)) then
+  local help, o;
+  help := function(node)
+    local gn, name;
+    name := GV_Name(node); 
+    if not GV_HasNode(x, name) then
       GV_AddNode(x, node);
+      return true;
     fi;
+
+    gn := GV_Nodes(x).(name);
+    if not IsIdenticalObj(gn, node) then
+      return false;
+    fi;
+    return true;
   end;
 
-  help(GV_Head(edge));
+  o := help(GV_Head(edge));
+  if not o then 
+    return fail;
+  fi;
+
   help(GV_Tail(edge));
+  if not o then 
+    GV_RemoveNode(GV_Head(edge)); # cleanup :)
+    return fail;
+  fi;
+
   InsertElmList(x!.Edges, 1, edge);
   return x;
 end);
