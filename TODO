@@ -1,2 +1,4 @@
  - fix doc generation 
-- subgraphs & clusters
+ - subgraphs & clusters
+ - save & load 6-strings
+ - implement existing digraphs displaying defaults
