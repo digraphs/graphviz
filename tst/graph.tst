@@ -108,4 +108,9 @@ gap> GV_RemoveNode(g, b);
 gap> GV_Nodes(g);
 rec( c := <node c>, d := <node d> )
 
+# Test renaming graph
+gap> g := GV_Graph();;
+gap> GV_Name(g, "test");
+<graph test with 0 nodes and 0 edges>
+
 #

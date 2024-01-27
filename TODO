@@ -1,4 +1,2 @@
- - remove ability to change the name of a node post creation
- - create ability to clone an objects attributes to another object
  - remove an attribute
- 
+ - fix doc generation 

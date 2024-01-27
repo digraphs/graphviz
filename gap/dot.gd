@@ -102,11 +102,11 @@ DeclareOperation("GV_Type", [IsGVGraph]);
 #    Whether the graphviz graph contains a node with the provided name.
 DeclareOperation("GV_HasNode",[IsGVGraph, IsString]);
 
-#! @Arguments obj, name
+#! @Arguments graph, name
 #! @Returns the modified object.
 #! @Description 
-#    Sets the name of the object.
-DeclareOperation("GV_Name",[IsGVObject, IsString]);
+#    Sets the name of a graphviz graph.
+DeclareOperation("GV_Name",[IsGVGraph, IsString]);
 
 #! @Arguments graph, type
 #! @Returns the modified graph.

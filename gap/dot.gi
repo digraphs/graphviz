@@ -60,7 +60,7 @@ function(name, attrs)
   fi;
   return Objectify(GV_NodeType, 
                   rec(
-                    Name  := name,
+                    Name  := namew,
                     Attrs := attrs                
                   ));
 end);
@@ -167,7 +167,7 @@ end);
 # Setters
 ############################################################
 InstallMethod(GV_Name, "for a graphviz object and string",
-[IsGVObject, IsString], 
+[IsGVGraph, IsString], 
 function(x, name)
   x!.Name := name;
   return x;
