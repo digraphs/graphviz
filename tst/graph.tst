@@ -52,8 +52,7 @@ gap> GV_AddNode(g, n);
 gap> GV_Nodes(g);
 rec( n := <node n> )
 gap> GV_AddNode(g, n);
-FAIL: Already node with name n.
-fail
+Error, Already node with name n.
 gap> GV_AddNode(g, GV_Node("x"));
 <graph with 2 nodes and 0 edges>
 gap> GV_Nodes(g);

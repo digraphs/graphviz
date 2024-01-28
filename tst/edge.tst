@@ -83,7 +83,7 @@ gap> e1 := GV_Edge(d, a1);;
 gap> e2 := GV_Edge(a2, c);;
 gap> GV_AddEdge(g, e1);;
 gap> GV_AddEdge(g, e2);
-fail
+Error, Different in graph with name a.
 gap> GV_Edges(g);
 [ <edge (d, a)> ]
 

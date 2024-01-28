@@ -28,9 +28,9 @@ Error, no 1st choice method found for `GV_Name' on 2 arguments
 
 # Test making a node with a whitespace name fails
 gap> n := GV_Node("");
-fail
+Error, Node name cannot be empty.
 gap> n := GV_Node("  ");
-fail
+Error, Node name cannot be empty.
 
 # Test whitespace is removed from node names
 gap> n := GV_Node("a  a   ");

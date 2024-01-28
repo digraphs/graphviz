@@ -56,7 +56,7 @@ function(name, attrs)
 
   namew := Compacted(Filtered(name, x -> not x in [' ', '\t', '\r', '\n']));
   if Length(namew) = 0 then
-    return fail;
+    return ErrorNoReturn("Node name cannot be empty.");
   fi;
   return Objectify(GV_NodeType, 
                   rec(
@@ -176,10 +176,9 @@ end);
 InstallMethod(GV_Type, "for a graphviz object and string",
 [IsGVGraph, IsString], 
 function(x, type)
-  if type <> GV_GRAPH and type <> GV_DIGRAPH then
-    Print(StringFormatted("Invalid graph type. Must be {} or {}.",
-                          GV_GRAPH, GV_DIGRAPH));
-    return fail;
+  if type <> GV_GRAPH and type <> GV_DIGRAPH then          
+    return ErrorNoReturn(StringFormatted("Invalid graph type. Must be {} or {}.",
+                GV_GRAPH, GV_DIGRAPH));
   fi;
   x!.Type := type;
   return x;
@@ -224,8 +223,7 @@ function(x, node)
 
   # dont add if already node with the same name
   if IsBound(nodes.(name)) then
-    Print(StringFormatted("FAIL: Already node with name {}.\n", name));
-    return fail;
+    return ErrorNoReturn(StringFormatted("Already node with name {}.", name));
   fi;
 
   nodes.(name) := node;
@@ -253,13 +251,13 @@ function(x, edge)
 
   o := help(GV_Head(edge));
   if not o then 
-    return fail;
+    return ErrorNoReturn(StringFormatted("Different in graph with name {}.", GV_Name(GV_Head(edge))));
   fi;
 
   help(GV_Tail(edge));
   if not o then 
     GV_RemoveNode(GV_Head(edge)); # cleanup :)
-    return fail;
+    return ErrorNoReturn(StringFormatted("Different in graph with name {}.", GV_Name(GV_Tail(edge))));
   fi;
 
   InsertElmList(x!.Edges, 1, edge);
