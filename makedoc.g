@@ -7,4 +7,5 @@ if fail = LoadPackage("AutoDoc", "2022.10.20") then
     Error("AutoDoc version 2018.02.14 or newer is required.");
 fi;
 
-AutoDoc( rec( ) );
+AutoDoc( rec( scaffold := true, autodoc := true ) );
+QUIT;

@@ -6,4 +6,6 @@
 #
 
 ReadPackage( "graphviz", "gap/dot.gd");
+ReadPackage( "graphviz", "gap/dot.gi");
 ReadPackage( "graphviz", "gap/defaults.gd");
+ReadPackage( "graphviz", "gap/defaults.gi");

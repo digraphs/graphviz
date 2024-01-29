@@ -1,4 +1,9 @@
-
+#! @Arguments conv
+#! @Returns a toric variety
+#! @Description
+#!  Creates a toric variety out
+#!  of the convex object <A>conv</A>.
+DeclareOperation( "ToricVariety", [ IsConvexObject ] );
 
 
 
