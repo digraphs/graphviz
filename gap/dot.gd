@@ -1,42 +1,47 @@
-#! @Chapter test
-#! @ChapterLabel test
-#! @ChapterTitle title
-#! @Section test1
+#! @Chapter 1
+#! @ChapterTitle Creating graphviz objects
+#! In this chapter we will cover the constructors and categories for graphviz objects.
 
-DeclareCategory("IsGVObject", IsObject);
+#! @Section Creating graphviz objects
+
+#! @BeginGroup Filters
+#! @Description Every object in graphviz belongs to the IsGVObject category. 
+#! The categories following it are for further specificity on the type of objects.
+#! These are graphs, nodes and edges respectively.
+#! Digraphs are in the same category as graphs, but have a different type flag <Ref Attr="GV_Type"/>.
+DeclareCategory("IsGVObject", IsObject); 
 DeclareCategory("IsGVGraph", IsGVObject);
 DeclareCategory("IsGVNode", IsGVObject);
 DeclareCategory("IsGVEdge", IsGVObject);
+#! @EndGroup
 
+
+#! @BeginGroup
+#! @GroupTitle Constructors for Nodes
 #! @Arguments name, attrs
 #! @Returns a new graphviz node 
 #! @Description 
-#!    Creates a new graphviz node with the provided name and attritbutes. 
+#! Creates a new graphviz node with the provided name and optionally attritbutes. 
 DeclareOperation("GV_Node", [IsString, IsRecord]);
-
-#! @Arguments name
-#! @Returns a new graphviz node 
-#! @Description 
-#!    Creates a new graphviz node with the provided name. 
 DeclareOperation("GV_Node", [IsString]);
+#! @EndGroup
 
+#! @BeginGroup
+#! @GroupTitle Constructors for Edges
 #! @Arguments head, tail, attrs
 #! @Returns a new graphviz edge
 #! @Description 
-#!    Creates a new graphviz edge between the 
-#!    with the provided nodes with the provided attribtues name. 
+#! Creates a new graphviz edge between the provided nodes with optionally provided attribtues. 
 DeclareOperation("GV_Edge", [IsGVNode, IsGVNode, IsRecord]);
-
-#! @Arguments head, tail
-#! @Returns a new graphviz edge
-#! @Description 
-#!    Creates a new graphviz edge between the with the provided nodes. 
 DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
+#! @EndGroup
 
+
+#! @BeginGroup
+#! @GroupTitle Constructors for Graphs
 #! @Arguments name
 #! @Returns a new graphviz graph
-#! @Description 
-#!    Creates a new graphviz graph with the provided name. 
+#! @Description Creates a new graphviz graph with the provided name. 
 DeclareOperation("GV_Graph", [IsString]);
 
 #! @Returns a new graphviz graph
