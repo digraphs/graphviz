@@ -459,7 +459,7 @@ InstallMethod(GV_DotHighlightedDigraph,
 "for a digraph by out-neighbours, list, and two strings",
 [IsDigraphByOutNeighboursRep, IsList, IsString, IsString],
 function(D, highverts, highcolour, lowcolour)
-  local lowverts, out, str, i, j;
+  local lowverts, graph, node, edge, nodes, out, i, j;
 
   if not IsSubset(DigraphVertices(D), highverts) then
     ErrorNoReturn("the 2nd argument <highverts> must be a list of vertices ",
@@ -478,51 +478,33 @@ function(D, highverts, highcolour, lowcolour)
   graph := GV_Graph("hgn");
   GV_Type(graph, GV_DIGRAPH);
 
-  Append(str, "subgraph lowverts{\n");
-  Append(str, Concatenation("node [shape=circle, color=",
-                            lowcolour,
-                            "]\n edge [color=",
-                            lowcolour,
-                            "]\n"));
-
   for i in lowverts do
-    Append(str, Concatenation(String(i), "\n"));
+    node := GV_Node(String(i), rec( shape := "circle", color := lowcolour));
+    GV_AddNode(graph, node);
   od;
 
-  Append(str, "}\n");
-
-  Append(str, "subgraph highverts{\n");
-  Append(str, Concatenation("node [shape=circle, color=",
-                            highcolour,
-                            "]\n edge [color=",
-                            highcolour,
-                            "]\n"));
 
   for i in highverts do
-    Append(str, Concatenation(String(i), "\n"));
+    node := GV_Node(String(i), rec( shape := "circle", color := highcolour));
+    GV_AddNode(node);
   od;
 
-  Append(str, "}\n");
-
-  Append(str, "subgraph lowverts{\n");
+  nodes := GV_Nodes(graph);
   for i in lowverts do
     for j in out[i] do
-      Append(str, Concatenation(String(i), " -> ", String(j), "\n"));
+      edge := GV_Edge(nodes.(String(j)), nodes.(String(i)), rec(color := lowcolour));
+      GV_AddEdge(graph, edge);
     od;
   od;
-  Append(str, "}\n");
 
-  Append(str, "subgraph highverts{\n");
   for i in highverts do
     for j in out[i] do
-      Append(str, Concatenation(String(i), " -> ", String(j)));
+      edge := GV_Edge(nodes.(String(j)), nodes.(String(i)), rec(color := highcolour));
       if j in lowverts then
-        Append(str, Concatenation(" [color=", lowcolour, "]"));
+        GV_Attrs(edge, rec(color := lowcolour));
       fi;
-      Append(str, "\n");
     od;
   od;
-  Append(str, "}\n}\n");
 
-  return str;
+  return graph;
 end);
