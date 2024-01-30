@@ -449,7 +449,7 @@ function(D)
     ErrorNoReturn("the argument <D> must be a partial order digraph,");
   fi;
   D := DigraphMutableCopyIfMutable(D);
-  return DotDigraph(DigraphReflexiveTransitiveReduction(D));
+  return GV_DotDigraph(DigraphReflexiveTransitiveReduction(D));
 end);
 
 InstallMethod(DotPartialOrderDigraph, "for a partial order digraph",

@@ -431,7 +431,7 @@ function(attrs)
                                attrs.(attr_names[i])));
       else
         Append(result,
-               StringFormatted("{}={}, ",
+               StringFormatted("{}=\"{}\", ",
                                attr_names[i],
                                attrs.(attr_names[i])));
       fi;
@@ -443,7 +443,7 @@ function(attrs)
                              attrs.(attr_names[n])));
     else
       Append(result,
-             StringFormatted("{}={}]",
+             StringFormatted("{}=\"{}\"]",
                              attr_names[n],
                              attrs.(attr_names[n])));
     fi;
