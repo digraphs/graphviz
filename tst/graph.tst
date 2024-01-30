@@ -28,19 +28,19 @@ gap> GV_SetType(x, GV_DIGRAPH);
 
 # Test node attrs
 gap> g := GV_Graph("test");;
-gap> GV_NodeAttrs(g, rec( color := "red", shape := "square" ));;
+gap> GV_SetNodeAttrs(g, rec( color := "red", shape := "square" ));;
 gap> GV_NodeAttrs(g);
 rec( color := "red", shape := "square" )
-gap> GV_NodeAttrs(g, rec( color := "blue", shape := "square" ));;
+gap> GV_SetNodeAttrs(g, rec( color := "blue", shape := "square" ));;
 gap> GV_NodeAttrs(g);
 rec( color := "blue", shape := "square" )
 
 # Test edge attrs
 gap> g := GV_Graph("test");;
-gap> GV_EdgeAttrs(g, rec( color := "red", shape := "square" ));;
+gap> GV_SetEdgeAttrs(g, rec( color := "red", shape := "square" ));;
 gap> GV_EdgeAttrs(g);
 rec( color := "red", shape := "square" )
-gap> GV_EdgeAttrs(g, rec( color := "blue", shape := "square" ));;
+gap> GV_SetEdgeAttrs(g, rec( color := "blue", shape := "square" ));;
 gap> GV_EdgeAttrs(g);
 rec( color := "blue", shape := "square" )
 
@@ -109,33 +109,33 @@ rec( c := <node c>, d := <node d> )
 
 # Test renaming graph
 gap> g := GV_Graph();;
-gap> GV_Name(g, "test");
+gap> GV_SetName(g, "test");
 <graph test with 0 nodes and 0 edges>
 
 # Removing edge attributes
 gap> g := GV_Graph();;
-gap> GV_EdgeAttrs(g, rec( color := "blue", shape := "round" ));;
+gap> GV_SetEdgeAttrs(g, rec( color := "blue", shape := "round" ));;
 gap> GV_RemoveEdgeAttr(g, "color");;
 gap> GV_EdgeAttrs(g);
 rec( shape := "round" )
 
 # Removing edge attributes (NOT PRESENT)
 gap> g := GV_Graph();;
-gap> GV_EdgeAttrs(g, rec( color := "blue" ));;
+gap> GV_SetEdgeAttrs(g, rec( color := "blue" ));;
 gap> GV_RemoveEdgeAttr(g, "AWWWW");;
 gap> GV_EdgeAttrs(g);
 rec( color := "blue" )
 
 # Test removing node attributes
 gap> g := GV_Graph();;
-gap> GV_NodeAttrs(g, rec( color := "blue", shape := "round" ));;
+gap> GV_SetNodeAttrs(g, rec( color := "blue", shape := "round" ));;
 gap> GV_RemoveNodeAttr(g, "color");;
 gap> GV_NodeAttrs(g);
 rec( shape := "round" )
 
 # Removing node attributes (NOT PRESENT)
 gap> g := GV_Graph();;
-gap> GV_NodeAttrs(g, rec( color := "blue" ));;
+gap> GV_SetNodeAttrs(g, rec( color := "blue" ));;
 gap> GV_RemoveNodeAttr(g, "AWWWW");;
 gap> GV_NodeAttrs(g);
 rec( color := "blue" )

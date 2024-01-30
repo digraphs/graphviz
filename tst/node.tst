@@ -38,10 +38,10 @@ gap> n := GV_Node("a  a   ");
 
 # Test modifying attributes
 gap> n := GV_Node("t", rec( color := "red" ));;
-gap> GV_Attrs(n, rec( color := "blue", shape := "round" ));;
+gap> GV_SetAttrs(n, rec( color := "blue", shape := "round" ));;
 gap> GV_Attrs(n);
 rec( color := "blue", shape := "round" )
-gap> GV_Attrs(n, rec( color := "green", label := "test" ));;
+gap> GV_SetAttrs(n, rec( color := "green", label := "test" ));;
 gap> GV_Attrs(n);
 rec( color := "green", label := "test", shape := "round" )
 

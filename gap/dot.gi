@@ -158,7 +158,7 @@ end);
 ############################################################
 # Setters
 ############################################################
-InstallMethod(GV_Name, "for a graphviz object and string",
+InstallMethod(GV_SetName, "for a graphviz object and string",
 [IsGVGraph, IsString], 
 function(x, name)
   x!.Name := name;
@@ -176,7 +176,7 @@ function(x, type)
   return x;
 end);
 
-InstallMethod(GV_Attrs, "for a graphviz object and record",
+InstallMethod(GV_SetAttrs, "for a graphviz object and record",
 [IsGVObject, IsRecord], 
 function(x, attrs)
   local name;
@@ -186,7 +186,7 @@ function(x, attrs)
   return x;
 end);
 
-InstallMethod(GV_NodeAttrs, "for a graphviz graph and record",
+InstallMethod(GV_SetNodeAttrs, "for a graphviz graph and record",
 [IsGVGraph, IsRecord], 
 function(x, attrs)
   local name;
@@ -196,7 +196,7 @@ function(x, attrs)
   return x;
 end);
 
-InstallMethod(GV_EdgeAttrs, "for a graphviz graph and record",
+InstallMethod(GV_SetEdgeAttrs, "for a graphviz graph and record",
 [IsGVGraph, IsRecord], 
 function(x, attrs)
   local name;

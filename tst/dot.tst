@@ -12,27 +12,27 @@ gap> LoadPackage("graphviz", false);;
 
 # Test setting attributes
 gap> n := GV_Node("test");;
-gap> GV_Attrs(n, rec(color:="red", label:="lab"));;
+gap> GV_SetAttrs(n, rec(color:="red", label:="lab"));;
 gap> GV_Attrs(n);
 rec( color := "red", label := "lab" )
-gap> GV_Attrs(n, rec(color:="blue"));;
+gap> GV_SetAttrs(n, rec(color:="blue"));;
 gap> GV_Attrs(n);
 rec( color := "blue", label := "lab" )
 
 # Test gloabals
 gap> g := GV_Graph();;
-gap> GV_Attrs(g, rec( color := "red", shape := "circle" ));;
-gap> GV_NodeAttrs(g, rec( color := "red", shape := "circle" ));;
-gap> GV_EdgeAttrs(g, rec( color := "red", shape := "circle" ));;
+gap> GV_SetAttrs(g, rec( color := "red", shape := "circle" ));;
+gap> GV_SetNodeAttrs(g, rec( color := "red", shape := "circle" ));;
+gap> GV_SetEdgeAttrs(g, rec( color := "red", shape := "circle" ));;
 gap> GV_Attrs(g);
 rec( color := "red", shape := "circle" )
 gap> GV_NodeAttrs(g);
 rec( color := "red", shape := "circle" )
 gap> GV_EdgeAttrs(g);
 rec( color := "red", shape := "circle" )
-gap> GV_Attrs(g, rec( color := "blue", label := "test" ));;
-gap> GV_NodeAttrs(g, rec( color := "blue", label := "test" ));;
-gap> GV_EdgeAttrs(g, rec( color := "blue", label := "test" ));;
+gap> GV_SetAttrs(g, rec( color := "blue", label := "test" ));;
+gap> GV_SetNodeAttrs(g, rec( color := "blue", label := "test" ));;
+gap> GV_SetEdgeAttrs(g, rec( color := "blue", label := "test" ));;
 gap> GV_Attrs(g);
 rec( color := "blue", label := "test", shape := "circle" )
 gap> GV_NodeAttrs(g);
@@ -42,7 +42,7 @@ rec( color := "blue", label := "test", shape := "circle" )
 
 # Test stringify
 gap> n := GV_Node("test");;
-gap> GV_Attrs(n, rec(color:="red", label:="lab"));;
+gap> GV_SetAttrs(n, rec(color:="red", label:="lab"));;
 gap> g := GV_Graph();;
 gap> GV_AddNode(g, n);;
 gap> GV_String(g);
@@ -52,10 +52,10 @@ gap> GV_String(g);
 gap> g := GV_Graph();;
 gap> a := GV_Node("a");;
 gap> b := GV_Node("b");;
-gap> GV_Attrs(a, rec(color:="blue"));;
-gap> GV_Attrs(b, rec(color:="red"));;
+gap> GV_SetAttrs(a, rec(color:="blue"));;
+gap> GV_SetAttrs(b, rec(color:="red"));;
 gap> e := GV_Edge(a, b);;
-gap> GV_Attrs(e, rec(color:="green"));;
+gap> GV_SetAttrs(e, rec(color:="green"));;
 gap> GV_AddEdge(g, e);;
 gap> GV_String(g);
 "graph  {\n\tb [color=red]\n\ta [color=blue]\n\tb -- a [color=green]\n}\n"
@@ -65,24 +65,24 @@ gap> GV_String(g);
 
 # Test stringify global attrs
 gap> g := GV_Graph("name");;
-gap> GV_Attrs(g, rec(color := "red"));;
-gap> GV_NodeAttrs(g, rec(color := "green"));;
-gap> GV_EdgeAttrs(g, rec(color := "blue"));;
+gap> GV_SetAttrs(g, rec(color := "red"));;
+gap> GV_SetNodeAttrs(g, rec(color := "green"));;
+gap> GV_SetEdgeAttrs(g, rec(color := "blue"));;
 gap> GV_String(g);
 "graph name {\n\tcolor=\"red\" \n\tnode [color=green]\n\tedge [color=blue]\n}\
 \n"
 
 # Test stringify complex
 gap> g := GV_Graph("name");;
-gap> GV_Attrs(g, rec(color := "red"));;
-gap> GV_NodeAttrs(g, rec(color := "green"));;
-gap> GV_EdgeAttrs(g, rec(color := "blue"));;
+gap> GV_SetAttrs(g, rec(color := "red"));;
+gap> GV_SetNodeAttrs(g, rec(color := "green"));;
+gap> GV_SetEdgeAttrs(g, rec(color := "blue"));;
 gap> a := GV_Node("a");;
 gap> b := GV_Node("b");;
-gap> GV_Attrs(a, rec(color:="blue"));;
-gap> GV_Attrs(b, rec(color:="red"));;
+gap> GV_SetAttrs(a, rec(color:="blue"));;
+gap> GV_SetAttrs(b, rec(color:="red"));;
 gap> e := GV_Edge(a, b);;
-gap> GV_Attrs(e, rec(color:="green"));;
+gap> GV_SetAttrs(e, rec(color:="green"));;
 gap> GV_AddEdge(g, e);;
 gap> GV_String(g);
 "graph name {\n\tcolor=\"red\" \n\tnode [color=green]\n\tedge [color=blue]\n\t\

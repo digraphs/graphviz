@@ -109,7 +109,7 @@ DeclareOperation("GV_HasNode",[IsGVGraph, IsString]);
 #! @Arguments graph, name
 #! @Returns the modified object.
 #! @Description Sets the name of a graphviz graph.
-DeclareOperation("GV_Name",[IsGVGraph, IsString]);
+DeclareOperation("GV_SetName",[IsGVGraph, IsString]);
 
 #! @Label GV_SetType
 #! @Arguments graph, type
@@ -123,21 +123,21 @@ DeclareOperation("GV_SetType",[IsGVGraph, IsString]);
 #!    Updates the attribtues of the object.
 #!    All current attributes remain.
 #!    If an attribute already exists and a new value is provided, the old value will be overwritten.
-DeclareOperation("GV_Attrs", [IsGVObject, IsRecord]);
+DeclareOperation("GV_SetAttrs", [IsGVObject, IsRecord]);
 
 #! @Arguments graph, attrs
 #! @Returns the modified graph.
 #! @Description Updates the global node attribtues of the graph.
 #! All current attributes remain.
 #! If an attribute already exists and a new value is provided, the old value will be overwritten.
-DeclareOperation("GV_NodeAttrs", [IsGVObject, IsRecord]);
+DeclareOperation("GV_SetNodeAttrs", [IsGVObject, IsRecord]);
 
 #! @Arguments graph, attrs
 #! @Returns the modified graph.
 #! @Description Updates the global edge attribtues of the graph.
 #! All current attributes remain.
 #! If an attribute already exists and a new value is provided, the old value will be overwritten.
-DeclareOperation("GV_EdgeAttrs", [IsGVObject, IsRecord]);
+DeclareOperation("GV_SetEdgeAttrs", [IsGVObject, IsRecord]);
 
 
 #! @Arguments graph, node
