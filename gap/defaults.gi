@@ -14,8 +14,8 @@ function(D, node_funcs, edge_funcs)
   local out, nodes, tail, head, node, edge, graph, i, func, j, l;
 
   graph := GV_Graph("hgn");
-  GV_Type(graph, GV_DIGRAPH);
-  GV_NodeAttrs(graph, rec( shape := "circle"));
+  GV_SetType(graph, GV_DIGRAPH);
+  GV_SetNodeAttrs(graph, rec( shape := "circle"));
 
   for i in DigraphVertices(D) do
     node := GV_Node(StringFormatted("{}", i));
@@ -158,8 +158,8 @@ InstallMethod(GV_DotColoredDigraph, "for a digraph by out-neighbours and two lis
 function(D, vert, edge)
   local vert_func, edge_func;
   if DIGRAPHS_ValidVertColors(D, vert) and DIGRAPHS_ValidEdgeColors(D, edge) then
-    vert_func := {g, n, i} -> GV_Attrs(n, rec(color := vert[i], style := "filled"));
-    edge_func := {g, e, i, j} -> GV_Attrs(e, rec(color := edge[i][j]));
+    vert_func := {g, n, i} -> GV_SetAttrs(n, rec(color := vert[i], style := "filled"));
+    edge_func := {g, e, i, j} -> GV_SetAttrs(e, rec(color := edge[i][j]));
     return DIGRAPHS_DotDigraph(D, [vert_func], [edge_func]);
   fi;
 end);
@@ -170,7 +170,7 @@ InstallMethod(GV_DotVertexColoredDigraph,
 function(D, vert)
   local func;
   if DIGRAPHS_ValidVertColors(D, vert) then
-    func := {g, n, i} -> GV_Attrs(n, rec(color := vert[i], style := "filled"));
+    func := {g, n, i} -> GV_SetAttrs(n, rec(color := vert[i], style := "filled"));
     return DIGRAPHS_DotDigraph(D, [func], []);
   fi;
 end);
@@ -181,7 +181,7 @@ InstallMethod(GV_DotEdgeColoredDigraph,
 function(D, edge)
   local func;
   if DIGRAPHS_ValidEdgeColors(D, edge) then
-    func := {g, e, i, j} -> GV_Attrs(e, rec(color := edge[i][j]));
+    func := {g, e, i, j} -> GV_SetAttrs(e, rec(color := edge[i][j]));
     return DIGRAPHS_DotDigraph(D, [], [func]);
   fi;
 end);
@@ -190,7 +190,7 @@ InstallMethod(GV_DotVertexLabelledDigraph, "for a digraph by out-neighbours",
 [IsDigraphByOutNeighboursRep],
 function(D)
   local func;
-  func := {g, n, i} -> GV_Attrs(n, rec(label := DigraphVertexLabel(D, i)));
+  func := {g, n, i} -> GV_SetAttrs(n, rec(label := DigraphVertexLabel(D, i)));
   return DIGRAPHS_DotDigraph(D, [func], []);
 end);
 
@@ -204,7 +204,7 @@ function(D, node_funcs, edge_funcs)
   out := OutNeighbours(D);
   
   graph := GV_Graph("hgn");
-  GV_NodeAttrs(graph, rec(shape := "circle"));
+  GV_SetNodeAttrs(graph, rec(shape := "circle"));
   for i in DigraphVertices(D) do
     node := GV_Node(StringFormatted("{}", i));
     GV_AddNode(graph, node);
@@ -240,8 +240,8 @@ InstallMethod(DotSymmetricColoredDigraph,
 function(D, vert, edge)
   local vert_func, edge_func;
   if DIGRAPHS_ValidVertColors(D, vert) and DIGRAPHS_ValidEdgeColors(D, edge) then
-    vert_func := {g, n, i} -> GV_Attrs(n, rec(color := vert[i], style := "filled"));
-    edge_func := {g, e, i, j} -> GV_Attrs(e, rec(color := edge[i][j]));
+    vert_func := {g, n, i} -> GV_SetAttrs(n, rec(color := vert[i], style := "filled"));
+    edge_func := {g, e, i, j} -> GV_SetAttrs(e, rec(color := edge[i][j]));
     return DIGRAPHS_DotSymmetricDigraph(D, [vert_func], [edge_func]);
   fi;
 end);
@@ -252,7 +252,7 @@ InstallMethod(DotSymmetricVertexColoredDigraph,
 function(D, vert)
   local func;
   if DIGRAPHS_ValidVertColors(D, vert) then
-    func := {g, n, i} -> GV_Attrs(n, rec(color := vert[i], style := "filled"));
+    func := {g, n, i} -> GV_SetAttrs(n, rec(color := vert[i], style := "filled"));
     return DIGRAPHS_DotSymmetricDigraph(D, [func], []);
   fi;
 end);
@@ -263,7 +263,7 @@ InstallMethod(DotSymmetricEdgeColoredDigraph,
 function(D, edge)
   local func;
   if DIGRAPHS_ValidEdgeColors(D, edge) then
-    func := {g, e, i, j} -> GV_Attrs(e, rec(color := edge[i][j]));
+    func := {g, e, i, j} -> GV_SetAttrs(e, rec(color := edge[i][j]));
     return DIGRAPHS_DotSymmetricDigraph(D, [], [func]);
   fi;
 end);
@@ -418,9 +418,9 @@ function(D)
   red    := DigraphReflexiveTransitiveReduction(quo);
 
   graph := GV_Graph("graphname");
-  GV_Type(graph, GV_DIGRAPH);
-  GV_NodeAttrs(graph, rec(shape := "Mrecord", height := "0.5", fixedsize := "true"));
-  GV_Attrs(graph, rec( rankstep := "1"));
+  GV_SetType(graph, GV_DIGRAPH);
+  GV_SetNodeAttrs(graph, rec(shape := "Mrecord", height := "0.5", fixedsize := "true"));
+  GV_SetAttrs(graph, rec( rankstep := "1"));
 
   # Each vertex of the quotient D is labelled by its preimage.
   for c in [1 .. Length(comps)] do
@@ -435,7 +435,7 @@ function(D)
     od;
     Append(label, "\"");
 
-    GV_Attrs(node, rec(label := label, width := String(Float(Length(comps[c]) / 2))));
+    GV_SetAttrs(node, rec(label := label, width := String(Float(Length(comps[c]) / 2))));
     GV_AddNode(graph, node);
   od;
 
@@ -476,7 +476,7 @@ function(D, highverts, highcolour, lowcolour)
   out       := OutNeighbours(D);
 
   graph := GV_Graph("hgn");
-  GV_Type(graph, GV_DIGRAPH);
+  GV_SetType(graph, GV_DIGRAPH);
 
   for i in lowverts do
     node := GV_Node(String(i), rec( shape := "circle", color := lowcolour));
@@ -501,7 +501,7 @@ function(D, highverts, highcolour, lowcolour)
     for j in out[i] do
       edge := GV_Edge(nodes.(String(j)), nodes.(String(i)), rec(color := highcolour));
       if j in lowverts then
-        GV_Attrs(edge, rec(color := lowcolour));
+        GV_SetAttrs(edge, rec(color := lowcolour));
       fi;
     od;
   od;
