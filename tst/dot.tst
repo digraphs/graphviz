@@ -59,7 +59,7 @@ gap> GV_Attrs(e, rec(color:="green"));;
 gap> GV_AddEdge(g, e);;
 gap> GV_String(g);
 "graph  {\n\tb [color=red]\n\ta [color=blue]\n\tb -- a [color=green]\n}\n"
-gap> GV_Type(g, GV_DIGRAPH);;
+gap> GV_SetType(g, GV_DIGRAPH);;
 gap> GV_String(g);
 "digraph  {\n\tb [color=red]\n\ta [color=blue]\n\tb -> a [color=green]\n}\n"
 

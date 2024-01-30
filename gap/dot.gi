@@ -40,10 +40,6 @@ BindGlobal("GV_EdgeType", NewType(GV_ObjectFamily,
 ###############################################################################
 # Constuctors etc
 ###############################################################################
-#! @Chapter test1
-# Graph types
-BindGlobal("GV_DIGRAPH", "DIGRAPH");
-BindGlobal("GV_GRAPH", "GRAPH");
 
 # Node constructors
 InstallMethod(GV_Node, "for a string and a record", [IsString, IsRecord],
@@ -169,7 +165,7 @@ function(x, name)
   return x;
 end);
 
-InstallMethod(GV_Type, "for a graphviz object and string",
+InstallMethod(GV_SetType, "for a graphviz object and string",
 [IsGVGraph, IsString], 
 function(x, type)
   if type <> GV_GRAPH and type <> GV_DIGRAPH then          

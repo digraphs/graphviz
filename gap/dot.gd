@@ -8,7 +8,7 @@
 #! @Description Every object in graphviz belongs to the IsGVObject category. 
 #! The categories following it are for further specificity on the type of objects.
 #! These are graphs, nodes and edges respectively.
-#! Digraphs are in the same category as graphs, but have a different type flag <Ref Func="GV_Type"/>.
+#! Digraphs are in the same category as graphs, but have a different type flag <Ref Oper="GV_SetType" Label="GV_SetType"/>.
 DeclareCategory("IsGVObject", IsObject); 
 DeclareCategory("IsGVGraph", IsGVObject);
 DeclareCategory("IsGVNode", IsGVObject);
@@ -41,7 +41,9 @@ DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
 #! @GroupTitle Constructors for Graphs
 #! @Arguments name
 #! @Returns a new graphviz graph
-#! @Description Creates a new graphviz graph optionally with the provided name. 
+#! @Description Creates a new graphviz graph optionally with the provided name.
+#! The graph by default is not a digraph.
+#! To make it a digraph use the <Ref Oper="GV_SetType"/> operation.
 DeclareOperation("GV_Graph", [IsString]);
 DeclareOperation("GV_Graph", []);
 #! @EndGroup
@@ -109,11 +111,11 @@ DeclareOperation("GV_HasNode",[IsGVGraph, IsString]);
 #! @Description Sets the name of a graphviz graph.
 DeclareOperation("GV_Name",[IsGVGraph, IsString]);
 
+#! @Label GV_SetType
 #! @Arguments graph, type
 #! @Returns the modified graph.
-#! @Description 
-#!    Sets the type of the graph. (graph or digraph)
-DeclareOperation("GV_Type",[IsGVGraph, IsString]);
+#! @Description Sets the type of the graph. (graph or digraph)
+DeclareOperation("GV_SetType",[IsGVGraph, IsString]);
 
 #! @Arguments obj, attrs
 #! @Returns the modified object.
@@ -186,3 +188,8 @@ DeclareOperation("GV_RemoveNodeAttr", [IsGVGraph, IsString]);
 #! @Arguments graph
 #! @Returns the dot representation of the graphviz object.
 DeclareOperation("GV_String", [IsGVGraph]);
+
+# Graph types
+BindGlobal("GV_DIGRAPH", "DIGRAPH");
+BindGlobal("GV_GRAPH", "GRAPH");
+

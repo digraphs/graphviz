@@ -32,7 +32,7 @@ gap> ab := GV_Edge(a, b);;
 gap> cd := GV_Edge(c, d);;
 gap> GV_AddEdge(g, ab);;
 gap> GV_AddEdge(g, cd);;
-gap> GV_Type(g, GV_DIGRAPH);;
+gap> GV_SetType(g, GV_DIGRAPH);;
 gap> GV_FilterEnds(g, "a", "c");
 <digraph with 4 nodes and 2 edges>
 gap> GV_FilterEnds(g, "b", "d");

@@ -20,10 +20,10 @@ gap> GV_Graph("test-name");
 
 # Test digraph printing
 gap> x := GV_Graph("test-name");;
-gap> GV_Type(x, GV_DIGRAPH);
+gap> GV_SetType(x, GV_DIGRAPH);
 <digraph test-name with 0 nodes and 0 edges>
 gap> x := GV_Graph();;
-gap> GV_Type(x, GV_DIGRAPH);
+gap> GV_SetType(x, GV_DIGRAPH);
 <digraph with 0 nodes and 0 edges>
 
 # Test node attrs
