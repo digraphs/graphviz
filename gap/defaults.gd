@@ -82,3 +82,7 @@ DeclareOperation("GV_DotHighlightedDigraph", [IsDigraph, IsList]);
 #! highlighted verticies in the high_color and the others in the low_color. 
 #! @Description Converts a highlighted digraph to it's graphviz representation 
 DeclareOperation("GV_DotHighlightedDigraph", [IsDigraph, IsList, IsString, IsString]);
+
+#! @Arguments digraph, record
+#! @Description displays the provided graphviz graph, configured with options from the record. 
+DeclareOperation("GV_Splash", [IsGVGraph, IsRecord]);
