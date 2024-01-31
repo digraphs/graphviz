@@ -61,7 +61,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">= 4.11",
-  NeededOtherPackages := [ [ "digraphs", "*" ] ],
+         NeededOtherPackages := [ [ "digraphs", "*" ] , ["datastructures", "0.3.0"]],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
 ),
@@ -73,5 +73,3 @@ TestFile := "tst/testall.g",
 #Keywords := [ "TODO" ],
 
 ));
-
-

@@ -5,24 +5,27 @@
 #! @Section Creating graphviz objects
 
 #! @BeginGroup Filters
-#! @Description Every object in graphviz belongs to the IsGVObject category. 
+#! @Description Every object in graphviz belongs to the IsGVObject category.
 #! The categories following it are for further specificity on the type of objects.
 #! These are graphs, nodes and edges respectively.
 #! Digraphs are in the same category as graphs, but have a different type flag <Ref Oper="GV_SetType" Label="GV_SetType"/>.
-DeclareCategory("IsGVObject", IsObject); 
+DeclareCategory("IsGVObject", IsObject);
 DeclareCategory("IsGVGraph", IsGVObject);
+DeclareCategory("IsGVDigraph", IsGVObject);
 DeclareCategory("IsGVNode", IsGVObject);
 DeclareCategory("IsGVEdge", IsGVObject);
 #! @EndGroup
 
+DeclareOperation("GV_Attribute", [IsGVObject, IsObject, IsObject]);
+
+DeclareOperation("GV_Attribute", [IsGVObject, IsObject]);
 
 #! @BeginGroup
 #! @GroupTitle Constructors for Nodes
 #! @Arguments name, attrs
-#! @Returns a new graphviz node 
-#! @Description 
-#! Creates a new graphviz node with the provided name and optionally attritbutes. 
-DeclareOperation("GV_Node", [IsString, IsRecord]);
+#! @Returns a new graphviz node
+#! @Description
+#! Creates a new graphviz node with the provided name and optionally attritbutes.
 DeclareOperation("GV_Node", [IsString]);
 #! @EndGroup
 
@@ -30,9 +33,8 @@ DeclareOperation("GV_Node", [IsString]);
 #! @GroupTitle Constructors for Edges
 #! @Arguments head, tail, attrs
 #! @Returns a new graphviz edge
-#! @Description 
-#! Creates a new graphviz edge between the provided nodes with optionally provided attribtues. 
-DeclareOperation("GV_Edge", [IsGVNode, IsGVNode, IsRecord]);
+#! @Description
+#! Creates a new graphviz edge between the provided nodes with optionally provided attribtues.
 DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
 #! @EndGroup
 
@@ -119,7 +121,7 @@ DeclareOperation("GV_SetType",[IsGVGraph, IsString]);
 
 #! @Arguments obj, attrs
 #! @Returns the modified object.
-#! @Description 
+#! @Description
 #!    Updates the attribtues of the object.
 #!    All current attributes remain.
 #!    If an attribute already exists and a new value is provided, the old value will be overwritten.
@@ -175,7 +177,7 @@ DeclareOperation("GV_RemoveAttr", [IsGVObject, IsString]);
 
 #! @Arguments graph, attr
 #! @Returns the modified graphviz graph.
-#! @Description 
+#! @Description
 #!    Removes an attribute from the global edge attributes of the graph provided.
 DeclareOperation("GV_RemoveEdgeAttr", [IsGVGraph, IsString]);
 
@@ -192,4 +194,3 @@ DeclareOperation("GV_String", [IsGVGraph]);
 # Graph types
 BindGlobal("GV_DIGRAPH", "DIGRAPH");
 BindGlobal("GV_GRAPH", "GRAPH");
-
