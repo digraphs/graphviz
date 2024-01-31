@@ -10,8 +10,6 @@ DeclareOperation("GV_StringifySubgraph", [IsString]);
 DeclareOperation("GV_StringifyPlainSubgraph", [IsString]);
 DeclareOperation("GV_StringifyNode", [IsGVNode]);
 DeclareOperation("GV_StringifyGraphAttrs", [IsGVGraph]);
-DeclareOperation("GV_StringifyEdgeAttrs", [IsGVGraph]);
-DeclareOperation("GV_StringifyNodeAttrs", [IsGVGraph]);
 DeclareOperation("GV_StringifyNodeEdgeAttrs", [IsRecord]);
 
 ###############################################################################
@@ -47,8 +45,8 @@ BindGlobal("GV_EdgeType", NewType(GV_ObjectFamily,
 ###############################################################################
 
 # Node constructors
-InstallMethod(GV_Node, "for a string and a record", [IsString, IsRecord],
-function(name, attrs)
+InstallMethod(GV_Node, "for a string", [IsString],
+function(name)
   local namew;
 
   namew := Compacted(Filtered(name, x -> not x in [' ', '\t', '\r', '\n']));
@@ -58,29 +56,21 @@ function(name, attrs)
   return Objectify(GV_NodeType, 
                   rec(
                     Name  := namew,
-                    Attrs := attrs                
+                    Attrs := HashMap()                
                   ));
-end);
-InstallMethod(GV_Node, "for a string", [IsString],
-function(name)
-  return GV_Node(name, rec());
 end);
 
 # Edge constructors
-InstallMethod(GV_Edge, "for a node, a node and a record", 
-[IsGVNode, IsGVNode, IsRecord],
-function(head, tail, attrs)
+InstallMethod(GV_Edge, "for two graphviz nodes", 
+[IsGVNode, IsGVNode],
+function(head, tail)
   return Objectify(GV_EdgeType, 
                 rec(
                   Name  := "",
                   Head  := head,
                   Tail  := tail,
-                  Attrs := attrs                
+                  Attrs := HashMap()                
                 ));
-end);
-InstallMethod(GV_Edge, "for a node and a node", [IsGVNode, IsGVNode],
-function(head, tail)
-  return GV_Edge(head, tail, rec());
 end);
 
 # Graph constructors
@@ -90,9 +80,9 @@ function(name)
                       rec(Name       := name,
                           Nodes      := rec(),
                           Edges      := [],
-                          Attrs      := rec(),
-                          NodeAttrs  := rec(),
-                          EdgeAttrs  := rec()));
+                          Attrs      := HashMap(),
+                          NodeAttrs  := HashMap(),
+                          EdgeAttrs  := HashMap()));
 end);
 
 # Graph constructors
@@ -100,11 +90,11 @@ InstallMethod(GV_Digraph, "for a string", [IsString],
 function(name)
   return Objectify(GV_DigraphType,
                       rec(Name       := name,
-                          Nodes      := rec(),
+                          Nodes      := HashMap(),
                           Edges      := [],
-                          Attrs      := rec(),
-                          NodeAttrs  := rec(),
-                          EdgeAttrs  := rec()));
+                          Attrs      := HashMap(),
+                          NodeAttrs  := HashMap(),
+                          EdgeAttrs  := HashMap()));
 end);
 
 InstallMethod(GV_Graph, "for no args", [], {} -> GV_Graph(""));
@@ -166,8 +156,6 @@ end);
 InstallMethod(GV_Name, "for a graphviz object", [IsGVObject], x -> x!.Name);
 InstallMethod(GV_Attrs, "for a graphviz object", [IsGVObject], x -> x!.Attrs);
 
-InstallMethod(GV_NodeAttrs, "for a graphviz graph", [IsGVGraph], x -> x!.NodeAttrs);
-InstallMethod(GV_EdgeAttrs, "for a graphviz graph", [IsGVGraph], x -> x!.EdgeAttrs);
 InstallMethod(GV_Nodes, "for a graphviz graph", [IsGVGraph], x -> x!.Nodes);
 InstallMethod(GV_Edges, "for a graphviz graph", [IsGVGraph], x -> x!.Edges);
 
@@ -194,27 +182,7 @@ InstallMethod(GV_SetAttrs, "for a graphviz object and record",
 function(x, attrs)
   local name;
   for name in RecNames(attrs) do
-    GV_Attrs(x).(name) := attrs.(name);
-  od;
-  return x;
-end);
-
-InstallMethod(GV_SetNodeAttrs, "for a graphviz graph and record",
-[IsGVGraph, IsRecord], 
-function(x, attrs)
-  local name;
-  for name in RecNames(attrs) do
-    GV_NodeAttrs(x).(name) := attrs.(name);
-  od;
-  return x;
-end);
-
-InstallMethod(GV_SetEdgeAttrs, "for a graphviz graph and record",
-[IsGVGraph, IsRecord], 
-function(x, attrs)
-  local name;
-  for name in RecNames(attrs) do
-    GV_EdgeAttrs(x).(name) := attrs.(name);
+    GV_Attrs(x)[name] := attrs.(name);
   od;
   return x;
 end);
@@ -321,24 +289,6 @@ function(obj, attr)
   return obj;
 end);
 
-InstallMethod(GV_RemoveEdgeAttr, "for a graphviz graph and string", 
-[IsGVGraph, IsString],
-function(graph, attr)
-  local attrs;
-  attrs := GV_EdgeAttrs(graph);
-  Unbind(attrs.(attr));
-  return graph;
-end);
-
-InstallMethod(GV_RemoveNodeAttr, "for a graphviz graph and string", 
-[IsGVGraph, IsString],
-function(graph, attr)
-  local attrs;
-  attrs := GV_NodeAttrs(graph);
-  Unbind(attrs.(attr));
-  return graph;
-end);
-
 ###############################################################################
 # Stringifying
 ###############################################################################
@@ -409,18 +359,15 @@ end);
 
 InstallMethod(GV_StringifyGraphAttrs, "for a record", [IsGVGraph],
 function(graph)
-  local result, attrs, attr_names, n, i;
+  local result, attrs, kv, i;
   attrs := GV_Attrs(graph);
   result := "";
-  attr_names := NamesOfComponents(attrs);
-  n := Length(attr_names);
-  if n <> 0 then
+
+  if Size(attrs) <> 0 then
     Append(result, "\t");
-    for i in [1 .. n] do
+    for kv in KeyValueIterator(attrs) do
       Append(result,
-             StringFormatted("{}=\"{}\" ",
-                             attr_names[i],
-                             attrs.(attr_names[i])));
+             StringFormatted("{}=\"{}\" ", kv[0], kv[1]));
     od;
     Append(result, "\n");
   fi;
@@ -464,38 +411,6 @@ function(attrs)
   return result;
 end);
 
-InstallMethod(GV_StringifyEdgeAttrs, "for a graphviz graph",
-[IsGVGraph],
-function(graph)
-  local result, attrs;
-  attrs := GV_EdgeAttrs(graph);
-  if Length(RecNames(attrs)) = 0 then
-    return "";
-  fi;
-
-  result := "\t";
-  Append(result, "edge");
-  Append(result, GV_StringifyNodeEdgeAttrs(attrs));
-  Append(result, "\n");
-  return result;
-end);
-
-InstallMethod(GV_StringifyNodeAttrs, "for a graphviz graph",
-[IsGVGraph],
-function(graph)
-  local result, attrs;
-  attrs := GV_NodeAttrs(graph);
-  if Length(RecNames(attrs)) = 0 then
-    return "";
-  fi;
-
-  result := "\t";
-  Append(result, "node");
-  Append(result, GV_StringifyNodeEdgeAttrs(attrs));
-  Append(result, "\n");
-  return result;
-end);
-
 InstallMethod(GV_String, "for a graphviz graph",
 [IsGVGraph],
 function(graph)
@@ -512,8 +427,6 @@ function(graph)
   fi;
 
   Append(result, GV_StringifyGraphAttrs(graph));
-  Append(result, GV_StringifyNodeAttrs(graph));
-  Append(result, GV_StringifyEdgeAttrs(graph));
 
   for elem in RecNames(nodes) do
     Append(result, GV_StringifyNode(nodes.(elem)));

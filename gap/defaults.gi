@@ -14,7 +14,7 @@ function(D, node_funcs, edge_funcs)
   local out, nodes, tail, head, node, edge, graph, i, func, j, l;
 
   graph := GV_Digraph("hgn");
-  GV_SetNodeAttrs(graph, rec( shape := "circle"));
+  GV_SetAttrs(graph, rec( shape := "circle"));
 
   for i in DigraphVertices(D) do
     node := GV_Node(StringFormatted("{}", i));
@@ -226,7 +226,7 @@ function(D, node_funcs, edge_funcs)
   out := OutNeighbours(D);
   
   graph := GV_Graph("hgn");
-  GV_SetNodeAttrs(graph, rec(shape := "circle"));
+  GV_SetAttrs(graph, rec(shape := "circle"));
   for i in DigraphVertices(D) do
     node := GV_Node(StringFormatted("{}", i));
     GV_AddNode(graph, node);
@@ -471,7 +471,7 @@ function(D)
   red    := DigraphReflexiveTransitiveReduction(quo);
 
   graph := GV_Digraph("graphname");
-  GV_SetNodeAttrs(graph, rec(shape := "Mrecord", height := "0.5", fixedsize := "true"));
+  GV_SetAttrs(graph, rec(shape := "Mrecord", height := "0.5", fixedsize := "true"));
   GV_SetAttrs(graph, rec( ranksep := "1"));
 
   # Each vertex of the quotient D is labelled by its preimage.

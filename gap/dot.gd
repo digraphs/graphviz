@@ -22,7 +22,6 @@ DeclareCategory("IsGVEdge", IsGVObject);
 #! @Returns a new graphviz node 
 #! @Description 
 #! Creates a new graphviz node with the provided name and optionally attritbutes. 
-DeclareOperation("GV_Node", [IsString, IsRecord]);
 DeclareOperation("GV_Node", [IsString]);
 #! @EndGroup
 
@@ -32,7 +31,6 @@ DeclareOperation("GV_Node", [IsString]);
 #! @Returns a new graphviz edge
 #! @Description 
 #! Creates a new graphviz edge between the provided nodes with optionally provided attribtues. 
-DeclareOperation("GV_Edge", [IsGVNode, IsGVNode, IsRecord]);
 DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
 #! @EndGroup
 
@@ -69,16 +67,6 @@ DeclareOperation("GV_Name", [IsGVObject]);
 #! @Returns the attributes of the provided graphviz object
 #! @Description Gets the attributes of the provided graphviz object.
 DeclareOperation("GV_Attrs", [IsGVObject]);
-
-#! @Arguments graph
-#! @Returns the global node attributes of the provided graphviz graph
-#! @Description Gets the gloabl node of the provided graphviz graph.
-DeclareOperation("GV_NodeAttrs", [IsGVGraph]);
-
-#! @Arguments graph
-#! @Returns the global edge attributes of the provided graphviz graph
-#! @Description Gets the gloabl edge of the provided graphviz graph.
-DeclareOperation("GV_EdgeAttrs", [IsGVGraph]);
 
 #! @Arguments graph
 #! @Returns the nodes of the provided graphviz graph.
@@ -121,21 +109,10 @@ DeclareOperation("GV_SetName",[IsGVGraph, IsString]);
 #!    All current attributes remain.
 #!    If an attribute already exists and a new value is provided, the old value will be overwritten.
 DeclareOperation("GV_SetAttrs", [IsGVObject, IsRecord]);
-
-#! @Arguments graph, attrs
-#! @Returns the modified graph.
-#! @Description Updates the global node attribtues of the graph.
-#! All current attributes remain.
-#! If an attribute already exists and a new value is provided, the old value will be overwritten.
-DeclareOperation("GV_SetNodeAttrs", [IsGVObject, IsRecord]);
-
-#! @Arguments graph, attrs
-#! @Returns the modified graph.
-#! @Description Updates the global edge attribtues of the graph.
-#! All current attributes remain.
-#! If an attribute already exists and a new value is provided, the old value will be overwritten.
-DeclareOperation("GV_SetEdgeAttrs", [IsGVObject, IsRecord]);
-
+DeclareOperation("GV_SetAttr", [IsGVObject, IsString, IsString]);
+DeclareOperation("GV_SetAttr", [IsGVObject, IsObject, IsObject]);
+DeclareOperation("GV_SetAttr", [IsGVObject, IsString]);
+DeclareOperation("GV_SetAttr", [IsGVObject, IsObject]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
@@ -169,17 +146,6 @@ DeclareOperation("GV_FilterEnds", [IsGVGraph, IsString, IsString]);
 #! @Returns the modified object.
 #! @Description Removes an attribute from the object provided.
 DeclareOperation("GV_RemoveAttr", [IsGVObject, IsString]);
-
-#! @Arguments graph, attr
-#! @Returns the modified graphviz graph.
-#! @Description 
-#!    Removes an attribute from the global edge attributes of the graph provided.
-DeclareOperation("GV_RemoveEdgeAttr", [IsGVGraph, IsString]);
-
-#! @Arguments graph, attr
-#! @Returns the modified graphviz graph.
-#! @Description Removes an attribute from the global node attributes of the graph provided.
-DeclareOperation("GV_RemoveNodeAttr", [IsGVGraph, IsString]);
 
 #! @Section Outputting
 #! @Arguments graph
