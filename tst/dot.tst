@@ -46,7 +46,7 @@ gap> GV_SetAttrs(n, rec(color:="red", label:="lab"));;
 gap> g := GV_Graph();;
 gap> GV_AddNode(g, n);;
 gap> GV_String(g);
-"graph  {\n\ttest [label=\"lab\", color=red]\n}\n"
+"graph  {\n\ttest [label=\"lab\", color=\"red\"]\n}\n"
 
 # Test stringify with edge (and digraphs)
 gap> g := GV_Graph();;
@@ -58,10 +58,12 @@ gap> e := GV_Edge(a, b);;
 gap> GV_SetAttrs(e, rec(color:="green"));;
 gap> GV_AddEdge(g, e);;
 gap> GV_String(g);
-"graph  {\n\tb [color=red]\n\ta [color=blue]\n\tb -- a [color=green]\n}\n"
+"graph  {\n\tb [color=\"red\"]\n\ta [color=\"blue\"]\n\tb -- a [color=\"green\
+\"]\n}\n"
 gap> GV_SetType(g, GV_DIGRAPH);;
 gap> GV_String(g);
-"digraph  {\n\tb [color=red]\n\ta [color=blue]\n\tb -> a [color=green]\n}\n"
+"digraph  {\n\tb [color=\"red\"]\n\ta [color=\"blue\"]\n\tb -> a [color=\"gree\
+n\"]\n}\n"
 
 # Test stringify global attrs
 gap> g := GV_Graph("name");;
@@ -69,8 +71,8 @@ gap> GV_SetAttrs(g, rec(color := "red"));;
 gap> GV_SetNodeAttrs(g, rec(color := "green"));;
 gap> GV_SetEdgeAttrs(g, rec(color := "blue"));;
 gap> GV_String(g);
-"graph name {\n\tcolor=\"red\" \n\tnode [color=green]\n\tedge [color=blue]\n}\
-\n"
+"graph name {\n\tcolor=\"red\" \n\tnode [color=\"green\"]\n\tedge [color=\"blu\
+e\"]\n}\n"
 
 # Test stringify complex
 gap> g := GV_Graph("name");;
@@ -85,8 +87,9 @@ gap> e := GV_Edge(a, b);;
 gap> GV_SetAttrs(e, rec(color:="green"));;
 gap> GV_AddEdge(g, e);;
 gap> GV_String(g);
-"graph name {\n\tcolor=\"red\" \n\tnode [color=green]\n\tedge [color=blue]\n\t\
-b [color=red]\n\ta [color=blue]\n\tb -- a [color=green]\n}\n"
+"graph name {\n\tcolor=\"red\" \n\tnode [color=\"green\"]\n\tedge [color=\"blu\
+e\"]\n\tb [color=\"red\"]\n\ta [color=\"blue\"]\n\tb -- a [color=\"green\"]\n}\
+\n"
 
 # Test stringify empty
 gap> g := GV_Graph();;
