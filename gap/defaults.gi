@@ -13,8 +13,7 @@ BindGlobal("GV_DIGRAPHS_DotDigraph",
 function(D, node_funcs, edge_funcs)
   local out, nodes, tail, head, node, edge, graph, i, func, j, l;
 
-  graph := GV_Graph("hgn");
-  GV_SetType(graph, GV_DIGRAPH);
+  graph := GV_Digraph("hgn");
   GV_SetNodeAttrs(graph, rec( shape := "circle"));
 
   for i in DigraphVertices(D) do
@@ -471,8 +470,7 @@ function(D)
   quo    := DigraphRemoveAllMultipleEdges(QuotientDigraph(D, comps));
   red    := DigraphReflexiveTransitiveReduction(quo);
 
-  graph := GV_Graph("graphname");
-  GV_SetType(graph, GV_DIGRAPH);
+  graph := GV_Digraph("graphname");
   GV_SetNodeAttrs(graph, rec(shape := "Mrecord", height := "0.5", fixedsize := "true"));
   GV_SetAttrs(graph, rec( ranksep := "1"));
 
@@ -537,8 +535,7 @@ function(D, highverts, highcolour, lowcolour)
   lowverts  := Difference(DigraphVertices(D), highverts);
   out       := OutNeighbours(D);
 
-  graph := GV_Graph("hgn");
-  GV_SetType(graph, GV_DIGRAPH);
+  graph := GV_Digraph("hgn");
 
   for i in lowverts do
     node := GV_Node(String(i), rec( shape := "circle", color := lowcolour));

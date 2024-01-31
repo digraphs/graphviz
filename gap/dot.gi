@@ -23,12 +23,12 @@ BindGlobal("GV_ObjectFamily",
                      IsGVObject));
 
 BindGlobal("GV_DigraphType", NewType(GV_ObjectFamily,
-                                    IsGVGraph and
+                                    IsGVDigraph and
                                     IsComponentObjectRep and
                                     IsAttributeStoringRep));
 
 BindGlobal("GV_GraphType", NewType(GV_ObjectFamily,
-                                    IsGVDigraph and
+                                    IsGVGraph and
                                     IsComponentObjectRep and
                                     IsAttributeStoringRep));
 
@@ -87,8 +87,19 @@ end);
 InstallMethod(GV_Graph, "for a string", [IsString],
 function(name)
   return Objectify(GV_GraphType,
-                      rec(Type       := GV_GRAPH, 
-                          Name       := name,
+                      rec(Name       := name,
+                          Nodes      := rec(),
+                          Edges      := [],
+                          Attrs      := rec(),
+                          NodeAttrs  := rec(),
+                          EdgeAttrs  := rec()));
+end);
+
+# Graph constructors
+InstallMethod(GV_Digraph, "for a string", [IsString],
+function(name)
+  return Objectify(GV_DigraphType,
+                      rec(Name       := name,
                           Nodes      := rec(),
                           Edges      := [],
                           Attrs      := rec(),
@@ -97,46 +108,55 @@ function(name)
 end);
 
 InstallMethod(GV_Graph, "for no args", [], {} -> GV_Graph(""));
+InstallMethod(GV_Digraph, "for no args", [], {} -> GV_Digraph(""));
 
 ############################################################
 # Stringify
 ############################################################
-InstallMethod(ViewString, "", [IsGVNode], n -> StringFormatted("<node {}>", GV_Name(n)));
-InstallMethod(ViewString, "", [IsGVEdge], 
+InstallMethod(ViewString, "for a graphviz node", [IsGVNode], n -> StringFormatted("<node {}>", GV_Name(n)));
+InstallMethod(ViewString, "for a graphviz edge", [IsGVEdge], 
 function(e)
   local head, tail;
   head := GV_Head(e);
   tail := GV_Tail(e);
   return StringFormatted("<edge ({}, {})>", GV_Name(head), GV_Name(tail));
 end);
-InstallMethod(ViewString, "", [IsGVGraph], 
+
+InstallMethod(ViewString, "for a graphviz graph", [IsGVGraph], 
 function(g)
   local result, edges, nodes;
   result := "";
   edges := Length(GV_Edges(g));
   nodes := Length(RecNames(GV_Nodes(g)));
 
-  if GV_Type(g) = GV_GRAPH then
-    Append(result, StringFormatted("<graph ", GV_Name(g)));
-  elif GV_Type(g) = GV_DIGRAPH then
-    Append(result, StringFormatted("<digraph ", GV_Name(g))); 
-  fi;
+  Append(result, StringFormatted("<graph ", GV_Name(g)));
 
   if GV_Name(g) <> "" then
     Append(result, StringFormatted("{} ", GV_Name(g)));
   fi;
 
-  if nodes = 1 then
-    Append(result, "with 1 node ");
-  else
-    Append(result, StringFormatted("with {} nodes ", nodes));
+  Append(result, StringFormatted("with {} ", Pluralize(nodes, "node")));
+  Append(result, StringFormatted("and {}>", Pluralize(edges, "edge")));
+
+  return result;
+end);
+
+InstallMethod(ViewString, "for a graphviz graph", [IsGVDigraph], 
+function(g)
+  local result, edges, nodes;
+  result := "";
+  edges := Length(GV_Edges(g));
+  nodes := Length(RecNames(GV_Nodes(g)));
+
+  Append(result, StringFormatted("<digraph ", GV_Name(g))); 
+
+  if GV_Name(g) <> "" then
+    Append(result, StringFormatted("{} ", GV_Name(g)));
   fi;
 
-  if edges = 1 then
-    Append(result, "and 1 edge>");
-  else
-    Append(result, StringFormatted("and {} edges>", edges));
-  fi;
+  Append(result, StringFormatted("with {} ", Pluralize(nodes, "node")));
+  Append(result, StringFormatted("and {}>", Pluralize(edges, "edge")));
+
   return result;
 end);
 
@@ -150,7 +170,6 @@ InstallMethod(GV_NodeAttrs, "for a graphviz graph", [IsGVGraph], x -> x!.NodeAtt
 InstallMethod(GV_EdgeAttrs, "for a graphviz graph", [IsGVGraph], x -> x!.EdgeAttrs);
 InstallMethod(GV_Nodes, "for a graphviz graph", [IsGVGraph], x -> x!.Nodes);
 InstallMethod(GV_Edges, "for a graphviz graph", [IsGVGraph], x -> x!.Edges);
-InstallMethod(GV_Type, "for a graphviz graph", [IsGVGraph], x -> x!.Type);
 
 InstallMethod(GV_Tail, "for a graphviz edge", [IsGVEdge], x -> x!.Tail);
 InstallMethod(GV_Head, "for a graphviz edge", [IsGVEdge], x -> x!.Head);
@@ -167,17 +186,6 @@ InstallMethod(GV_SetName, "for a graphviz object and string",
 [IsGVGraph, IsString], 
 function(x, name)
   x!.Name := name;
-  return x;
-end);
-
-InstallMethod(GV_SetType, "for a graphviz object and string",
-[IsGVGraph, IsString], 
-function(x, type)
-  if type <> GV_GRAPH and type <> GV_DIGRAPH then          
-    return ErrorNoReturn(StringFormatted("Invalid graph type. Must be {} or {}.",
-                GV_GRAPH, GV_DIGRAPH));
-  fi;
-  x!.Type := type;
   return x;
 end);
 
@@ -295,10 +303,10 @@ function(g, hn, tn)
       local head, tail;
       head := GV_Head(e);
       tail := GV_Tail(e);
-      if GV_Type(g) = GV_GRAPH then
-        return (tn <> GV_Name(tail) or hn <> GV_Name(head)) and (hn <> GV_Name(tail) or tn <> GV_Name(head)); 
-      else 
+      if IsGVDigraph(g) then
         return tn <> GV_Name(tail) or hn <> GV_Name(head); 
+      else 
+        return (tn <> GV_Name(tail) or hn <> GV_Name(head)) and (hn <> GV_Name(tail) or tn <> GV_Name(head)); 
       fi; 
     end);
   return g;
@@ -497,7 +505,7 @@ function(graph)
   
   result := "";
 
-  if GV_Type(graph) = GV_DIGRAPH then
+  if IsGVDigraph(graph) then
     Append(result, GV_StringifyDigraphHead(graph));
   else
     Append(result, GV_StringifyGraphHead(graph));
@@ -512,7 +520,7 @@ function(graph)
   od;
 
   for elem in edges do
-    if GV_Type(graph) = GV_DIGRAPH then
+    if IsGVDigraph(graph) then
       Append(result, GV_StringifyDigraphEdge(elem));
     else
       Append(result, GV_StringifyGraphEdge(elem));

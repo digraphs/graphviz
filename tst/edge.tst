@@ -23,7 +23,7 @@ gap> GV_Attrs(n);
 rec( color := "red" )
 
 # Test filtering edges by names (digraph)
-gap> g := GV_Graph();;
+gap> g := GV_Digraph();;
 gap> a := GV_Node("a");;
 gap> b := GV_Node("b");;
 gap> c := GV_Node("c");;
@@ -32,7 +32,6 @@ gap> ab := GV_Edge(a, b);;
 gap> cd := GV_Edge(c, d);;
 gap> GV_AddEdge(g, ab);;
 gap> GV_AddEdge(g, cd);;
-gap> GV_SetType(g, GV_DIGRAPH);;
 gap> GV_FilterEnds(g, "a", "c");
 <digraph with 4 nodes and 2 edges>
 gap> GV_FilterEnds(g, "b", "d");

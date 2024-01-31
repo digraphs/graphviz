@@ -8,10 +8,9 @@
 #! @Description Every object in graphviz belongs to the IsGVObject category. 
 #! The categories following it are for further specificity on the type of objects.
 #! These are graphs, nodes and edges respectively.
-#! Digraphs are in the same category as graphs, but have a different type flag <Ref Oper="GV_SetType" Label="GV_SetType"/>.
 DeclareCategory("IsGVObject", IsObject); 
-DeclareCategory("IsGVDigraph", IsGVObject);
-DeclareCategory("IsGVGraph", IsGVDigraph);
+DeclareCategory("IsGVGraph", IsGVObject);
+DeclareCategory("IsGVDigraph", IsGVGraph);
 DeclareCategory("IsGVNode", IsGVObject);
 DeclareCategory("IsGVEdge", IsGVObject);
 #! @EndGroup
@@ -44,9 +43,18 @@ DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
 #! @Returns a new graphviz graph
 #! @Description Creates a new graphviz graph optionally with the provided name.
 #! The graph by default is not a digraph.
-#! To make it a digraph use the <Ref Oper="GV_SetType"/> operation.
 DeclareOperation("GV_Graph", [IsString]);
 DeclareOperation("GV_Graph", []);
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle Constructors for Digraphs
+#! @Arguments name
+#! @Returns a new graphviz digraph
+#! @Description Creates a new graphviz digraph optionally with the provided name.
+#! The graph by default is not a digraph.
+DeclareOperation("GV_Digraph", [IsString]);
+DeclareOperation("GV_Digraph", []);
 #! @EndGroup
 
 #! @Section Get Operations
@@ -92,12 +100,6 @@ DeclareOperation("GV_Head", [IsGVEdge]);
 #! @Description Gets the tail of the provided graphviz graph.
 DeclareOperation("GV_Tail", [IsGVEdge]);
 
-#! @Arguments graph
-#! @Returns the type of the graphviz graph (digraph or graph).
-#! @Description Gets the type of the graphviz graph (digraph or graph).
-#! Fails if the type is invalid.
-DeclareOperation("GV_Type", [IsGVGraph]);
-
 #! @Arguments graph, node_name
 #! @Returns whether the graphviz graph contains a node with the provided name.
 #! @Description Whether the graphviz graph contains a node with the provided name.
@@ -111,12 +113,6 @@ DeclareOperation("GV_HasNode",[IsGVGraph, IsString]);
 #! @Returns the modified object.
 #! @Description Sets the name of a graphviz graph.
 DeclareOperation("GV_SetName",[IsGVGraph, IsString]);
-
-#! @Label GV_SetType
-#! @Arguments graph, type
-#! @Returns the modified graph.
-#! @Description Sets the type of the graph. (graph or digraph)
-DeclareOperation("GV_SetType",[IsGVGraph, IsString]);
 
 #! @Arguments obj, attrs
 #! @Returns the modified object.
