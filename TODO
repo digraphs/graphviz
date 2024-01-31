@@ -1,6 +1,0 @@
- - improve docs
- - subgraphs & clusters
- - save & load 6-strings
- - test all displaying defaults
- - condense code in displaying defaults using the new graphviz pkg model
-    - ex. all the symmetric vs not symmetric methods can be made a single method which chooses automatically relatively easily.
