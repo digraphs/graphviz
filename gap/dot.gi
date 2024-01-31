@@ -22,8 +22,13 @@ BindGlobal("GV_ObjectFamily",
            NewFamily("GV_ObjectFamily",
                      IsGVObject));
 
-BindGlobal("GV_GraphType", NewType(GV_ObjectFamily,
+BindGlobal("GV_DigraphType", NewType(GV_ObjectFamily,
                                     IsGVGraph and
+                                    IsComponentObjectRep and
+                                    IsAttributeStoringRep));
+
+BindGlobal("GV_GraphType", NewType(GV_ObjectFamily,
+                                    IsGVDigraph and
                                     IsComponentObjectRep and
                                     IsAttributeStoringRep));
 

@@ -10,7 +10,8 @@
 #! These are graphs, nodes and edges respectively.
 #! Digraphs are in the same category as graphs, but have a different type flag <Ref Oper="GV_SetType" Label="GV_SetType"/>.
 DeclareCategory("IsGVObject", IsObject); 
-DeclareCategory("IsGVGraph", IsGVObject);
+DeclareCategory("IsGVDigraph", IsGVObject);
+DeclareCategory("IsGVGraph", IsGVDigraph);
 DeclareCategory("IsGVNode", IsGVObject);
 DeclareCategory("IsGVEdge", IsGVObject);
 #! @EndGroup
