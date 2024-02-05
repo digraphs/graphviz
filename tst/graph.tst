@@ -92,4 +92,29 @@ gap> g := GV_Graph();;
 gap> GV_SetName(g, "test");
 <graph test with 0 nodes and 0 edges>
 
+# Test global attributes graph
+gap> g := GV_Graph();;
+gap> GV_SetName(g, "test");
+<graph test with 0 nodes and 0 edges>
+
+# Test global attributes graph
+gap> g := GV_Graph();;
+gap> GV_SetAttr(g, "color", "red");;
+gap> GV_Attrs(g);
+[ [ "color", "red" ] ]
+
+# Test global attributes graph (duplicates)
+gap> g := GV_Graph();;
+gap> GV_SetAttr(g, "color", "red");;
+gap> GV_SetAttr(g, "color", "blue");;
+gap> GV_Attrs(g);
+[ [ "color", "red" ], [ "color", "blue" ] ]
+
+# Test stringify attributes graph
+gap> g := GV_Graph();;
+gap> GV_SetAttr(g, "color", "red");;
+gap> GV_SetAttr(g, "color", "blue");;
+gap> GV_String(g);
+"graph  {\n\tcolor=\"red\" color=\"blue\" \n}\n"
+
 #

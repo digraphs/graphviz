@@ -80,9 +80,7 @@ function(name)
                       rec(Name       := name,
                           Nodes      := HashMap(),
                           Edges      := [],
-                          Attrs      := HashMap(),
-                          NodeAttrs  := HashMap(),
-                          EdgeAttrs  := HashMap()));
+                          Attrs      := []));
 end);
 
 # Graph constructors
@@ -92,9 +90,7 @@ function(name)
                       rec(Name       := name,
                           Nodes      := HashMap(),
                           Edges      := [],
-                          Attrs      := HashMap(),
-                          NodeAttrs  := HashMap(),
-                          EdgeAttrs  := HashMap()));
+                          Attrs      := []));
 end);
 
 InstallMethod(GV_Graph, "for no args", [], {} -> GV_Graph(""));
@@ -182,10 +178,37 @@ InstallMethod(GV_SetAttrs, "for a graphviz object and record",
 function(x, attrs)
   local name;
   for name in RecNames(attrs) do
-    GV_Attrs(x)[name] := attrs.(name);
+    GV_SetAttr(x, name, attrs.(name));
   od;
   return x;
 end);
+
+InstallMethod(GV_SetAttrs, "for a graphviz object and record",
+[IsGVGraph, IsRecord], 
+function(x, attrs)
+  local name;
+  for name in RecNames(attrs) do
+    GV_SetAttr(x, name, attrs.(name));
+  od;
+  return x;
+end);
+
+InstallMethod(GV_SetAttr, "for a graphviz object, object and object",
+[IsGVObject, IsObject, IsObject], 
+function(x, name, value)
+  GV_Attrs(x)[String(name)] := String(value);
+  return x;
+end);
+
+InstallMethod(GV_SetAttr, "for a graphviz object, object and object",
+[IsGVGraph, IsObject, IsObject], 
+function(x, name, value)
+  Add(GV_Attrs(x), [String(name), String(value)]);
+  return x;
+end);
+
+
+
 
 InstallMethod(GV_AddNode, "for a graphviz graph and node",
 [IsGVGraph, IsGVNode], 
@@ -280,12 +303,12 @@ function(g, hn, tn)
   return g;
 end);
 
-InstallMethod(GV_RemoveAttr, "for a graphviz object and string", 
-[IsGVObject, IsString],
+InstallMethod(GV_RemoveAttr, "for a graphviz object and an object", 
+[IsGVObject, IsObject],
 function(obj, attr)
   local attrs;
   attrs := GV_Attrs(obj);
-  Unbind(attrs[attr]);
+  Unbind(attrs[String(attr)]);
   return obj;
 end);
 
@@ -357,7 +380,7 @@ function(name)
   return StringFormatted("{}{{\n", name);
 end);
 
-InstallMethod(GV_StringifyGraphAttrs, "for a record", [IsGVGraph],
+InstallMethod(GV_StringifyGraphAttrs, "for a graphviz graph", [IsGVGraph],
 function(graph)
   local result, attrs, kv, i;
   attrs := GV_Attrs(graph);
@@ -365,9 +388,9 @@ function(graph)
 
   if Size(attrs) <> 0 then
     Append(result, "\t");
-    for kv in KeyValueIterator(attrs) do
+    for kv in attrs do
       Append(result,
-             StringFormatted("{}=\"{}\" ", kv[0], kv[1]));
+             StringFormatted("{}=\"{}\" ", kv[1], kv[2]));
     od;
     Append(result, "\n");
   fi;

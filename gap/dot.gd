@@ -109,9 +109,7 @@ DeclareOperation("GV_SetName",[IsGVGraph, IsString]);
 #!    All current attributes remain.
 #!    If an attribute already exists and a new value is provided, the old value will be overwritten.
 DeclareOperation("GV_SetAttrs", [IsGVObject, IsRecord]);
-DeclareOperation("GV_SetAttr", [IsGVObject, IsString, IsString]);
 DeclareOperation("GV_SetAttr", [IsGVObject, IsObject, IsObject]);
-DeclareOperation("GV_SetAttr", [IsGVObject, IsString]);
 DeclareOperation("GV_SetAttr", [IsGVObject, IsObject]);
 
 #! @Arguments graph, node
@@ -145,7 +143,7 @@ DeclareOperation("GV_FilterEnds", [IsGVGraph, IsString, IsString]);
 #! @Arguments obj, attr
 #! @Returns the modified object.
 #! @Description Removes an attribute from the object provided.
-DeclareOperation("GV_RemoveAttr", [IsGVObject, IsString]);
+DeclareOperation("GV_RemoveAttr", [IsGVObject, IsObject]);
 
 #! @Section Outputting
 #! @Arguments graph

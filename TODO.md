@@ -11,26 +11,24 @@
  ```
 
 ## Meeting with James
- - Add function for adding attributes as just pairs / list of pairs 
-   - Use datatrsuctures package
- - GV_Attr(gv, "shape", "box");
- - GV_Attr(gv, "size", 1); // call string method on 1 automatically
- - gv["a"]; // gv get node
  - GV_Attr(node, "");
 
- - node name to index in node list
+ - Allow photos to be used as nodes & composition of graphviz output photos (later)
+ - Sort edges before outputting (nondeterminim) ???
+ - pip install gaplint (linting gap)!
+ - make it so when duplicates are added to global graph attrs the old values are automatically replaced
 
- - remove ability to convert from digraph to graph and vice versa
-   - declare attribute
-
- - scrap the constructors which take in a record.
+## Done
+ - Add function for adding attributes as just pairs
+ - Replace global edge and node attrs with strings instead 
+ - USE datastructures PACKAGE (hashmaps)
+ - Sort nodes before outputting (nondeterminim)
+ - Sort attrs before outputting (nondeterminim)
+ - Pluralize
  - add declare operation `DeclareOperation("GV_Attr", [IsGVObject, IsObject, IsObject]);`
  - add declare operation `DeclareOperation("GV_Attr", [IsGVObject, IsString, IsObject]);`
-
- - pip install gaplint (linting gap)!
- - USE datastructures PACKAGE 
- - Sort nodes before outputting (nondeterminim)
- - Allow photos to be used as nodes & composition of graphviz output photos (later)
- - Replace edge and node attrs with strings instead 
-
- - Pluralize
+    - GV_Attr(gv, "shape", "box");
+    - GV_Attr(gv, "size", 1); // call string method on 1 automatically
+ - scrap the constructors which take in a record.
+ - access nodes by index
+    - gv["a"]; // gv get node
