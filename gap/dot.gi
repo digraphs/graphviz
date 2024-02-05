@@ -312,6 +312,15 @@ function(obj, attr)
   return obj;
 end);
 
+InstallMethod(GV_RemoveAttr, "for a graphviz graph and an object", 
+[IsGVGraph, IsObject],
+function(obj, attr)
+  local attrs;
+  attrs := GV_Attrs(obj);
+  obj!.Attrs := Filtered(attrs, item -> item[1] <> String(attr));
+  return obj;
+end);
+
 ###############################################################################
 # Stringifying
 ###############################################################################
