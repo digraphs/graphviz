@@ -10,7 +10,7 @@ DeclareOperation("GV_StringifySubgraph", [IsString]);
 DeclareOperation("GV_StringifyPlainSubgraph", [IsString]);
 DeclareOperation("GV_StringifyNode", [IsGVNode]);
 DeclareOperation("GV_StringifyGraphAttrs", [IsGVGraph]);
-DeclareOperation("GV_StringifyNodeEdgeAttrs", [IsRecord]);
+DeclareOperation("GV_StringifyNodeEdgeAttrs", [IsHashMap]);
 
 ###############################################################################
 # Family + type
@@ -78,7 +78,7 @@ InstallMethod(GV_Graph, "for a string", [IsString],
 function(name)
   return Objectify(GV_GraphType,
                       rec(Name       := name,
-                          Nodes      := rec(),
+                          Nodes      := HashMap(),
                           Edges      := [],
                           Attrs      := HashMap(),
                           NodeAttrs  := HashMap(),
@@ -117,7 +117,7 @@ function(g)
   local result, edges, nodes;
   result := "";
   edges := Length(GV_Edges(g));
-  nodes := Length(RecNames(GV_Nodes(g)));
+  nodes := Size(GV_Nodes(g));
 
   Append(result, StringFormatted("<graph ", GV_Name(g)));
 
@@ -136,7 +136,7 @@ function(g)
   local result, edges, nodes;
   result := "";
   edges := Length(GV_Edges(g));
-  nodes := Length(RecNames(GV_Nodes(g)));
+  nodes := Size(GV_Nodes(g));
 
   Append(result, StringFormatted("<digraph ", GV_Name(g))); 
 
@@ -164,7 +164,7 @@ InstallMethod(GV_Head, "for a graphviz edge", [IsGVEdge], x -> x!.Head);
 
 InstallMethod(GV_HasNode, "for a graphviz graph", [IsGVGraph, IsString], 
 function(g, name)
-  return IsBound(GV_Nodes(g).(name));
+  return name in GV_Nodes(g);
 end);
 
 ############################################################
@@ -195,11 +195,11 @@ function(x, node)
   nodes := GV_Nodes(x);
 
   # dont add if already node with the same name
-  if IsBound(nodes.(name)) then
+  if GV_HasNode(x, name) then
     return ErrorNoReturn(StringFormatted("Already node with name {}.", name));
   fi;
 
-  nodes.(name) := node;
+  nodes[name] := node;
   return x;
 end);
 
@@ -215,7 +215,7 @@ function(x, edge)
       return true;
     fi;
 
-    gn := GV_Nodes(x).(name);
+    gn := GV_Nodes(x)[name];
     if not IsIdenticalObj(gn, node) then
       return false;
     fi;
@@ -243,7 +243,7 @@ function(g, n)
   local nodes, name, out;
   nodes := GV_Nodes(g);
   name := GV_Name(n);
-  Unbind(nodes.(name));
+  Unbind(nodes[name]);
 
   GV_FilterEdges(g, 
     function(e)
@@ -285,7 +285,7 @@ InstallMethod(GV_RemoveAttr, "for a graphviz object and string",
 function(obj, attr)
   local attrs;
   attrs := GV_Attrs(obj);
-  Unbind(attrs.(attr));
+  Unbind(attrs[attr]);
   return obj;
 end);
 
@@ -374,39 +374,29 @@ function(graph)
   return result;
 end);
 
-InstallMethod(GV_StringifyNodeEdgeAttrs, "for a record", [IsRecord],
+InstallMethod(GV_StringifyNodeEdgeAttrs, "for a record", [IsHashMap],
 function(attrs)
-  local result, attr_names, n, i;
+  local result, keys, key, n, i;
 
   result := "";
-  attr_names := NamesOfComponents(attrs);
-  n := Length(attr_names);
+  n := Size(attrs);
+  keys := SSortedList(Keys(attrs));
+
   if n <> 0 then
     Append(result, " [");
-    for i in [1 .. n - 1] do
-      if attr_names[i] = "label" then
+    for i in [1..n-1] do
+        key := keys[i];
         Append(result,
                StringFormatted("{}=\"{}\", ",
-                               attr_names[i],
-                               attrs.(attr_names[i])));
-      else
-        Append(result,
-               StringFormatted("{}=\"{}\", ",
-                               attr_names[i],
-                               attrs.(attr_names[i])));
-      fi;
+                               key,
+                               attrs[key]));
     od;
-    if attr_names[n] = "label" then
-      Append(result,
-             StringFormatted("{}=\"{}\"]",
-                             attr_names[n],
-                             attrs.(attr_names[n])));
-    else
-      Append(result,
-             StringFormatted("{}=\"{}\"]",
-                             attr_names[n],
-                             attrs.(attr_names[n])));
-    fi;
+
+    key := keys[n];
+    Append(result,
+        StringFormatted("{}=\"{}\"]",
+                        key,
+                        attrs[key]));
   fi;
   return result;
 end);
@@ -414,7 +404,7 @@ end);
 InstallMethod(GV_String, "for a graphviz graph",
 [IsGVGraph],
 function(graph)
-  local result, nodes, edges, elem, i;
+  local result, nodes, edges, keys, elem, i;
   nodes := GV_Nodes(graph);
   edges := GV_Edges(graph);
   
@@ -428,8 +418,8 @@ function(graph)
 
   Append(result, GV_StringifyGraphAttrs(graph));
 
-  for elem in RecNames(nodes) do
-    Append(result, GV_StringifyNode(nodes.(elem)));
+  for elem in SSortedList(Keys(nodes)) do
+    Append(result, GV_StringifyNode(nodes[elem]));
   od;
 
   for elem in edges do

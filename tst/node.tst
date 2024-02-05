@@ -14,12 +14,6 @@ gap> LoadPackage("graphviz", false);;
 gap> GV_Node("test-node");
 <node test-node>
 
-# Test node constructor
-gap> n := GV_Node("test-node", rec(color := "red"));
-<node test-node>
-gap> GV_Attrs(n);
-rec( color := "red" )
-
 # Test renaming nodes fails
 gap> n := GV_Node("a");;
 gap> GV_Name(n, "test");
@@ -37,18 +31,20 @@ gap> n := GV_Node("a  a   ");
 <node aa>
 
 # Test modifying attributes
-gap> n := GV_Node("t", rec( color := "red" ));;
+gap> n := GV_Node("t");;
+gap> GV_SetAttrs(n, rec( color := "red" ));;
 gap> GV_SetAttrs(n, rec( color := "blue", shape := "round" ));;
 gap> GV_Attrs(n);
-rec( color := "blue", shape := "round" )
+HashMap([[ "color", "blue" ], [ "shape", "round" ]])
 gap> GV_SetAttrs(n, rec( color := "green", label := "test" ));;
 gap> GV_Attrs(n);
-rec( color := "green", label := "test", shape := "round" )
+HashMap([[ "color", "green" ], [ "shape", "round" ], [ "label", "test" ]])
 
 # Test removing attributes
-gap> n := GV_Node("t", rec( color := "red", shape := "circle" ));;
+gap> n := GV_Node("t");;
+gap> GV_SetAttrs(n, rec( color := "red", shape := "circle" ));;
 gap> GV_RemoveAttr(n, "color");;
 gap> GV_Attrs(n);
-rec( shape := "circle" )
+HashMap([[ "shape", "circle" ]])
 
 #

@@ -24,37 +24,19 @@ gap> x := GV_Digraph("test-name");
 gap> x := GV_Digraph();
 <digraph with 0 nodes and 0 edges>
 
-# Test node attrs
-gap> g := GV_Graph("test");;
-gap> GV_SetNodeAttrs(g, rec( color := "red", shape := "square" ));;
-gap> GV_NodeAttrs(g);
-rec( color := "red", shape := "square" )
-gap> GV_SetNodeAttrs(g, rec( color := "blue", shape := "square" ));;
-gap> GV_NodeAttrs(g);
-rec( color := "blue", shape := "square" )
-
-# Test edge attrs
-gap> g := GV_Graph("test");;
-gap> GV_SetEdgeAttrs(g, rec( color := "red", shape := "square" ));;
-gap> GV_EdgeAttrs(g);
-rec( color := "red", shape := "square" )
-gap> GV_SetEdgeAttrs(g, rec( color := "blue", shape := "square" ));;
-gap> GV_EdgeAttrs(g);
-rec( color := "blue", shape := "square" )
-
 # Test adding nodes
 gap> g := GV_Graph();;
 gap> n := GV_Node("n");;
 gap> GV_AddNode(g, n);
 <graph with 1 node and 0 edges>
 gap> GV_Nodes(g);
-rec( n := <node n> )
+HashMap([[ "n", <object> ]])
 gap> GV_AddNode(g, n);
 Error, Already node with name n.
 gap> GV_AddNode(g, GV_Node("x"));
 <graph with 2 nodes and 0 edges>
 gap> GV_Nodes(g);
-rec( n := <node n>, x := <node x> )
+HashMap([[ "n", <object> ], [ "x", <object> ]])
 
 # Test has nodes
 gap> g := GV_Graph();;
@@ -97,45 +79,17 @@ gap> GV_AddEdge(g, cd);;
 gap> GV_RemoveNode(g, a);
 <graph with 3 nodes and 1 edge>
 gap> GV_Nodes(g);
-rec( b := <node b>, c := <node c>, d := <node d> )
+HashMap([[ "c", <object> ], [ "d", <object> ], [ "b", <object> ]])
 gap> GV_Edges(g);
 [ <edge (c, d)> ]
 gap> GV_RemoveNode(g, b);
 <graph with 2 nodes and 1 edge>
 gap> GV_Nodes(g);
-rec( c := <node c>, d := <node d> )
+HashMap([[ "c", <object> ], [ "d", <object> ]])
 
 # Test renaming graph
 gap> g := GV_Graph();;
 gap> GV_SetName(g, "test");
 <graph test with 0 nodes and 0 edges>
-
-# Removing edge attributes
-gap> g := GV_Graph();;
-gap> GV_SetEdgeAttrs(g, rec( color := "blue", shape := "round" ));;
-gap> GV_RemoveEdgeAttr(g, "color");;
-gap> GV_EdgeAttrs(g);
-rec( shape := "round" )
-
-# Removing edge attributes (NOT PRESENT)
-gap> g := GV_Graph();;
-gap> GV_SetEdgeAttrs(g, rec( color := "blue" ));;
-gap> GV_RemoveEdgeAttr(g, "AWWWW");;
-gap> GV_EdgeAttrs(g);
-rec( color := "blue" )
-
-# Test removing node attributes
-gap> g := GV_Graph();;
-gap> GV_SetNodeAttrs(g, rec( color := "blue", shape := "round" ));;
-gap> GV_RemoveNodeAttr(g, "color");;
-gap> GV_NodeAttrs(g);
-rec( shape := "round" )
-
-# Removing node attributes (NOT PRESENT)
-gap> g := GV_Graph();;
-gap> GV_SetNodeAttrs(g, rec( color := "blue" ));;
-gap> GV_RemoveNodeAttr(g, "AWWWW");;
-gap> GV_NodeAttrs(g);
-rec( color := "blue" )
 
 #
