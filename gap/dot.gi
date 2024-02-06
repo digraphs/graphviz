@@ -203,7 +203,14 @@ end);
 InstallMethod(GV_SetAttr, "for a graphviz object, object and object",
 [IsGVGraph, IsObject, IsObject], 
 function(x, name, value)
-  Add(GV_Attrs(x), [String(name), String(value)]);
+  Add(GV_Attrs(x), StringFormatted("{}=\"{}\"", String(name), String(value)));
+  return x;
+end);
+
+InstallMethod(GV_SetAttr, "for a graphviz object, object and object",
+[IsGVGraph, IsObject], 
+function(x, value)
+  Add(GV_Attrs(x), String(value));
   return x;
 end);
 
@@ -399,7 +406,7 @@ function(graph)
     Append(result, "\t");
     for kv in attrs do
       Append(result,
-             StringFormatted("{}=\"{}\" ", kv[1], kv[2]));
+             StringFormatted("{} ", kv));
     od;
     Append(result, "\n");
   fi;

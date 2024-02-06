@@ -23,11 +23,10 @@ HashMap([[ "color", "blue" ], [ "label", "lab" ]])
 gap> g := GV_Graph();;
 gap> GV_SetAttrs(g, rec( color := "red", shape := "circle" ));;
 gap> GV_Attrs(g);
-[ [ "shape", "circle" ], [ "color", "red" ] ]
+[ "color=\"red\"", "shape=\"circle\"" ]
 gap> GV_SetAttrs(g, rec( color := "blue", label := "test" ));;
 gap> GV_Attrs(g);
-[ [ "shape", "circle" ], [ "color", "red" ], [ "label", "test" ], 
-  [ "color", "blue" ] ]
+[ "color=\"red\"", "shape=\"circle\"", "label=\"test\"", "color=\"blue\"" ]
 
 # Test stringify
 gap> n := GV_Node("test");;

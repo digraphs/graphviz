@@ -14,7 +14,7 @@ function(D, node_funcs, edge_funcs)
   local out, nodes, tail, head, node, edge, graph, i, func, j, l;
 
   graph := GV_Digraph("hgn");
-  GV_SetAttrs(graph, rec( shape := "circle"));
+  GV_SetAttr(graph, "node [shape=\"circle\"]");
 
   for i in DigraphVertices(D) do
     node := GV_Node(StringFormatted("{}", i));
@@ -29,8 +29,8 @@ function(D, node_funcs, edge_funcs)
   for i in DigraphVertices(D) do
     l := Length(out[i]);
     for j in [1 .. l] do
-      tail := nodes.(StringFormatted("{}", i));
-      head := nodes.(StringFormatted("{}", out[i][j]));
+      tail := nodes[String(i)];
+      head := nodes[String(out[i][j])];
       edge := GV_Edge(head, tail);
       GV_AddEdge(graph, edge);
       for func in edge_funcs do
@@ -226,7 +226,7 @@ function(D, node_funcs, edge_funcs)
   out := OutNeighbours(D);
   
   graph := GV_Graph("hgn");
-  GV_SetAttrs(graph, rec(shape := "circle"));
+  GV_SetAttr(graph, "node [shape=\"circle\"]");
   for i in DigraphVertices(D) do
     node := GV_Node(StringFormatted("{}", i));
     GV_AddNode(graph, node);
@@ -239,8 +239,8 @@ function(D, node_funcs, edge_funcs)
   for i in DigraphVertices(D) do
     for j in [1 .. Length(out[i])] do
       if out[i][j] >= i then
-        n1 := nodes.(StringFormatted("{}", i));
-        n2 := nodes.(StringFormatted("{}", out[i][j]));
+        n1 := nodes[String(i)];
+        n2 := nodes[String(out[i][j])];
         edge := GV_Edge(n2, n1);
         GV_AddEdge(graph, edge);
         for func in edge_funcs do
@@ -272,11 +272,6 @@ function(D, vert, edge)
   fi;
 end);
 
-InstallMethod(GV_DotSymmetricColoredDigraph,
-"for a digraph by out-neighbours and two lists",
-[IsDigraphByOutNeighboursRep, IsList, IsList],
-{D, vert, edge} -> GV_String(GV_DotSymmetricColoredDigraph(D, vert, edge)));
-
 InstallMethod(GV_DotSymmetricVertexColoredDigraph,
 "for a digraph by out-neighbours and a list",
 [IsDigraphByOutNeighboursRep, IsList],
@@ -287,11 +282,6 @@ function(D, vert)
     return GV_DIGRAPHS_DotSymmetricDigraph(D, [func], []);
   fi;
 end);
-
-InstallMethod(GV_DotSymmetricVertexColoredDigraph,
-"for a digraph by out-neighbours and a list",
-[IsDigraphByOutNeighboursRep, IsList],
-{D, vert} -> GV_String(GV_DotSymmetricVertexColoredDigraph(D, vert)));
 
 InstallMethod(GV_DotSymmetricEdgeColoredDigraph,
 "for a digraph by out-neighbours and a list",
@@ -471,8 +461,10 @@ function(D)
   red    := DigraphReflexiveTransitiveReduction(quo);
 
   graph := GV_Digraph("graphname");
-  GV_SetAttrs(graph, rec(shape := "Mrecord", height := "0.5", fixedsize := "true"));
-  GV_SetAttrs(graph, rec( ranksep := "1"));
+  GV_SetAttr(graph, "node [shape=\"Mrecord\"]");
+  GV_SetAttr(graph, "height=\"0.5\"");
+  GV_SetAttr(graph, "fixedsize=\"true\"");
+  GV_SetAttr(graph, "ranksep=\"1\"");
 
   # Each vertex of the quotient D is labelled by its preimage.
   for c in [1 .. Length(comps)] do
@@ -494,8 +486,8 @@ function(D)
   # Add the edges of the quotient D.
   nodes := GV_Nodes(graph);
   for e in DigraphEdges(red) do
-    tail := nodes.(String(e[1]));
-    head := nodes.(String(e[2]));
+    tail := nodes[String(e[1])];
+    head := nodes[String(e[2])];
     GV_AddEdge(graph, GV_Edge(head, tail));
   od;
 
@@ -538,27 +530,31 @@ function(D, highverts, highcolour, lowcolour)
   graph := GV_Digraph("hgn");
 
   for i in lowverts do
-    node := GV_Node(String(i), rec( shape := "circle", color := lowcolour));
+    node := GV_Node(String(i));
+    GV_SetAttrs(node, rec( shape := "circle", color := lowcolour));
     GV_AddNode(graph, node);
   od;
 
 
   for i in highverts do
-    node := GV_Node(String(i), rec( shape := "circle", color := highcolour));
+    node := GV_Node(String(i));
+    GV_SetAttrs(node, rec( shape := "circle", color := highcolour));
     GV_AddNode(graph, node);
   od;
 
   nodes := GV_Nodes(graph);
   for i in lowverts do
     for j in out[i] do
-      edge := GV_Edge(nodes.(String(j)), nodes.(String(i)), rec(color := lowcolour));
+      edge := GV_Edge(nodes[String(j)], nodes[String(i)]);
+      GV_SetAttrs(edge, rec(color := lowcolour));
       GV_AddEdge(graph, edge);
     od;
   od;
 
   for i in highverts do
     for j in out[i] do
-      edge := GV_Edge(nodes.(String(j)), nodes.(String(i)), rec(color := highcolour));
+      edge := GV_Edge(nodes[String(j)], nodes[String(i)]);
+      GV_SetAttrs(edge, rec(color := highcolour));
       GV_AddEdge(graph, edge);
       if j in lowverts then
         GV_SetAttrs(edge, rec(color := lowcolour));
