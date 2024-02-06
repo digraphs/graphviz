@@ -1,0 +1,14 @@
+LoadPackage("graphviz");
+g := GV_Graph("example_1");
+n1 := GV_Node("node_1");
+n2 := GV_Node("node_2");
+e1 := GV_Edge(n1, n2);
+GV_AddNode(g, n1);
+GV_AddEdge(g, e1);
+GV_SetAttr(n1, "color", "red");
+GV_SetAttr(n2, "shape", "circle");
+n3 := GV_Node("node_3");
+GV_AddNode(g, n3);
+GV_SetAttr(g, "edge [color=\"green\"]");
+Print(GV_String(g));
+GV_Splash(g, rec(type := "dot"));
