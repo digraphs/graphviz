@@ -7,7 +7,6 @@
 
 ## Meeting with James
 - ask james about prefered behaviour for adding node with the same name as an existing node. Currently fails.
- - clear out dependencies on digraphs
  - Test all example from the python graphviz docs.
  - GV_Attr(node, "");
 
