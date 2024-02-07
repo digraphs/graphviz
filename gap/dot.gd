@@ -1,13 +1,30 @@
 #! @Chapter
+#! @ChapterTitle An introduction to the DOT language and Graphviz.
+#! This chapter explains what the DOT and graphviz are, key basic concepts relating to them, and how this package interacts with them.
+
+#! @Section A Brief Introduction
+#! DOT is a language for descrbing to a computer how to display a visualization for a graph or digraph.
+#! Graphviz is a graph vizualization software which can consume DOT and produce vizual outputs.
+#! This package is designed to allow users to programmatically construct objects in GAP which can then be converted into DOT.
+#! That DOT can then be inputted into the graphviz software to produce a visual output.
+#! As DOT is central to the design of this package it will likely be helpful to have a basic understanding of the language.
+
+#! @Section Basic concepts of DOT
+#! This is a breif overview, for further concepts see Graphviz's website here (https://graphviz.org/about/).
+#! DOT language programmes are primarily composed of nodes, edges, graphs, subgraphs and attribtues.
+
+
+#! @Chapter
 #! @ChapterTitle Creating graphviz objects
 #! In this chapter we will cover the constructors and categories for graphviz objects.
 
-#! @Section Creating graphviz objects
+#! @Section Graphviz Categories
 
 #! @BeginGroup Filters
 #! @Description Every object in graphviz belongs to the IsGVObject category. 
 #! The categories following it are for further specificity on the type of objects.
-#! These are graphs, nodes and edges respectively.
+#! These are graphs, digraphs, nodes and edges respectively.
+#! All are direct subcategories of IsGVObject excluding IsGVDigraph which is a subcategory of is GVGraph. 
 DeclareCategory("IsGVObject", IsObject); 
 DeclareCategory("IsGVGraph", IsGVObject);
 DeclareCategory("IsGVDigraph", IsGVGraph);
@@ -15,22 +32,23 @@ DeclareCategory("IsGVNode", IsGVObject);
 DeclareCategory("IsGVEdge", IsGVObject);
 #! @EndGroup
 
+#! @Section Constructors
 
 #! @BeginGroup
 #! @GroupTitle Constructors for Nodes
-#! @Arguments name, attrs
+#! @Arguments name
 #! @Returns a new graphviz node 
 #! @Description 
-#! Creates a new graphviz node with the provided name and optionally attritbutes. 
+#! Creates a new graphviz node with the provided name. 
 DeclareOperation("GV_Node", [IsString]);
 #! @EndGroup
 
 #! @BeginGroup
 #! @GroupTitle Constructors for Edges
-#! @Arguments head, tail, attrs
+#! @Arguments head, tail
 #! @Returns a new graphviz edge
 #! @Description 
-#! Creates a new graphviz edge between the provided nodes with optionally provided attribtues. 
+#! Creates a new graphviz edge between the provided nodes. 
 DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
 #! @EndGroup
 
@@ -40,7 +58,6 @@ DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
 #! @Arguments name
 #! @Returns a new graphviz graph
 #! @Description Creates a new graphviz graph optionally with the provided name.
-#! The graph by default is not a digraph.
 DeclareOperation("GV_Graph", [IsString]);
 DeclareOperation("GV_Graph", []);
 #! @EndGroup
@@ -50,7 +67,6 @@ DeclareOperation("GV_Graph", []);
 #! @Arguments name
 #! @Returns a new graphviz digraph
 #! @Description Creates a new graphviz digraph optionally with the provided name.
-#! The graph by default is not a digraph.
 DeclareOperation("GV_Digraph", [IsString]);
 DeclareOperation("GV_Digraph", []);
 #! @EndGroup
@@ -63,10 +79,15 @@ DeclareOperation("GV_Digraph", []);
 #! @Description Gets the name of the provided graphviz object.
 DeclareOperation("GV_Name", [IsGVObject]);
 
+
+#! @Subsection For all graphviz objects.
+
 #! @Arguments obj
 #! @Returns the attributes of the provided graphviz object
 #! @Description Gets the attributes of the provided graphviz object.
 DeclareOperation("GV_Attrs", [IsGVObject]);
+
+#! @Subsection For only graphs and digraphs.
 
 #! @Arguments graph
 #! @Returns the nodes of the provided graphviz graph.
@@ -78,6 +99,13 @@ DeclareOperation("GV_Nodes", [IsGVGraph]);
 #! @Description Gets the edges of the provided graphviz graph.
 DeclareOperation("GV_Edges", [IsGVGraph]);
 
+#! @Arguments graph, node_name
+#! @Returns whether the graphviz graph contains a node with the provided name.
+#! @Description Whether the graphviz graph contains a node with the provided name.
+DeclareOperation("GV_HasNode",[IsGVGraph, IsString]);
+
+#! @Subsection For only edges.
+
 #! @Arguments edge
 #! @Returns the head of the provided graphviz edge.
 #! @Description Gets the head of the provided graphviz graph.
@@ -88,29 +116,15 @@ DeclareOperation("GV_Head", [IsGVEdge]);
 #! @Description Gets the tail of the provided graphviz graph.
 DeclareOperation("GV_Tail", [IsGVEdge]);
 
-#! @Arguments graph, node_name
-#! @Returns whether the graphviz graph contains a node with the provided name.
-#! @Description Whether the graphviz graph contains a node with the provided name.
-DeclareOperation("GV_HasNode",[IsGVGraph, IsString]);
-
-
 #! @Section Set Operations
 #! This section covers operations for modifying graphviz objects.
+
+#! @Subsection For modifying graphs.
 
 #! @Arguments graph, name
 #! @Returns the modified object.
 #! @Description Sets the name of a graphviz graph.
 DeclareOperation("GV_SetName",[IsGVGraph, IsString]);
-
-#! @Arguments obj, attrs
-#! @Returns the modified object.
-#! @Description 
-#!    Updates the attribtues of the object.
-#!    All current attributes remain.
-#!    If an attribute already exists and a new value is provided, the old value will be overwritten.
-DeclareOperation("GV_SetAttrs", [IsGVObject, IsRecord]);
-DeclareOperation("GV_SetAttr", [IsGVObject, IsObject, IsObject]);
-DeclareOperation("GV_SetAttr", [IsGVObject, IsObject]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
@@ -139,6 +153,18 @@ DeclareOperation("GV_FilterEdges", [IsGVGraph, IsFunction]);
 #! @Returns the modified graph.
 #! @Description Filters the graph's edges, removing edges between nodes with the specified names.
 DeclareOperation("GV_FilterEnds", [IsGVGraph, IsString, IsString]);
+
+#! @Subsection For modifying object attributes.
+
+#! @Arguments obj, attrs
+#! @Returns the modified object.
+#! @Description 
+#!    Updates the attribtues of the object.
+#!    All current attributes remain.
+#!    If an attribute already exists and a new value is provided, the old value will be overwritten.
+DeclareOperation("GV_SetAttrs", [IsGVObject, IsRecord]);
+DeclareOperation("GV_SetAttr", [IsGVObject, IsObject, IsObject]);
+DeclareOperation("GV_SetAttr", [IsGVObject, IsObject]);
 
 #! @Arguments obj, attr
 #! @Returns the modified object.
