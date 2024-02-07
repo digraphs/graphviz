@@ -9,10 +9,13 @@
 #! That DOT can then be inputted into the graphviz software to produce a visual output.
 #! As DOT is central to the design of this package it will likely be helpful to have a basic understanding of the language.
 
-#! @Section Basic concepts of DOT
+#! @Section Basic concepts of DOT (TODO needs work)
 #! This is a breif overview, for further concepts see Graphviz's website here (https://graphviz.org/about/).
 #! DOT language programmes are primarily composed of nodes, edges, graphs, subgraphs and attribtues.
-
+#! The first 3 are what you would expect, and attributes describe how these objects should be displayed.
+#! For example, attributes can include color, shape, etc.
+#! Attributes may be assigned globally to all nodes and edges in a graph or subgraph, the subgraph or graph itself, or to individual nodes and edges. 
+#! This package contains operations for manipulating the graph objects and their attributes, and translating the programme representation to DOT language.
 
 #! @Chapter
 #! @ChapterTitle Creating graphviz objects
@@ -92,6 +95,7 @@ DeclareOperation("GV_Attrs", [IsGVObject]);
 #! @Arguments graph
 #! @Returns the nodes of the provided graphviz graph.
 #! @Description Gets the nodes of the provided graphviz graph.
+#! Node names can only be [a-zA-Z0-9_£] TODO check exact docs.
 DeclareOperation("GV_Nodes", [IsGVGraph]);
 
 #! @Arguments graph
@@ -122,8 +126,8 @@ DeclareOperation("GV_Tail", [IsGVEdge]);
 #! @Subsection For modifying graphs.
 
 #! @Arguments graph, name
-#! @Returns the modified object.
-#! @Description Sets the name of a graphviz graph.
+#! @Returns the modified graph.
+#! @Description Sets the name of a graphviz graph or digraph.
 DeclareOperation("GV_SetName",[IsGVGraph, IsString]);
 
 #! @Arguments graph, node

@@ -3,14 +3,16 @@
  - save & load (potentially with 6-strings)
  - condense code in displaying defaults using the new graphviz pkg model
     - ex. all the symmetric vs not symmetric methods can be made a single method which chooses automatically relatively easily.
- - add nicer shorthands for other methods. Eg. 
+- todo improve node name valdiation (ex. node-1 should not be a valid name)
+
+## Meeting with James
+- add nicer shorthands for other methods. Eg. 
  ```gap
  GV_Edge(IsString, IsString) # creates an edge between two new nodes w/ the provided name strings
  GV_AddEdge(IsGVGraph, IsString, IsString) # creates an edge between two new nodes w/ the provided name strings and adds it to the graph
  ```
-- todo improve node name valdiation (ex. node-1 should not be a valid name)
-
-## Meeting with James
+ - clear out dependencies on digraphs
+ - Test all example from the python graphviz docs.
  - GV_Attr(node, "");
 
  - Allow photos to be used as nodes & composition of graphviz output photos (later)

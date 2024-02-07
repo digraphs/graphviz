@@ -61,7 +61,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">= 4.11",
-  NeededOtherPackages := [ [ "digraphs", "*" ], [ "datastructures", "*" ]  ],
+  NeededOtherPackages := [ [ "datastructures", "*" ]  ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
 ),
