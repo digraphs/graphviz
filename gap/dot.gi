@@ -73,6 +73,15 @@ function(head, tail)
                 ));
 end);
 
+InstallMethod(GV_Edge, "for two strings",
+[IsString, IsString],
+function(head_name, tail_name)
+  local head, tail; 
+  head := GV_Node(head_name);
+  tail := GV_Node(tail_name);
+  return GV_Edge(head, tail);
+end);
+
 # Graph constructors
 InstallMethod(GV_Graph, "for a string", [IsString],
 function(name)
@@ -214,9 +223,6 @@ function(x, value)
   return x;
 end);
 
-
-
-
 InstallMethod(GV_AddNode, "for a graphviz graph and node",
 [IsGVGraph, IsGVNode], 
 function(x, node)
@@ -231,6 +237,14 @@ function(x, node)
 
   nodes[name] := node;
   return x;
+end);
+
+InstallMethod(GV_AddNode, "for a graphviz graph and string",
+[IsGVGraph, IsString], 
+function(x, name)
+  local node, nodes;
+  node := GV_Node(name);
+  return GV_AddNode(x, node);
 end);
 
 InstallMethod(GV_AddEdge, "for a graphviz graph and edge",
@@ -254,17 +268,35 @@ function(x, edge)
 
   o := help(GV_Head(edge));
   if not o then 
-    return ErrorNoReturn(StringFormatted("Different in graph with name {}.", GV_Name(GV_Head(edge))));
+    return ErrorNoReturn(StringFormatted("Different node in graph with name {}.", GV_Name(GV_Head(edge))));
   fi;
 
-  help(GV_Tail(edge));
+  o := help(GV_Tail(edge));
   if not o then 
-    GV_RemoveNode(GV_Head(edge)); # cleanup :)
-    return ErrorNoReturn(StringFormatted("Different in graph with name {}.", GV_Name(GV_Tail(edge))));
+    GV_RemoveNode(x, GV_Head(edge)); # cleanup :)
+    return ErrorNoReturn(StringFormatted("Different node in graph with name {}.", GV_Name(GV_Tail(edge))));
   fi;
 
   InsertElmList(x!.Edges, 1, edge);
   return x;
+end);
+
+InstallMethod(GV_AddEdge, 
+"for a graphviz graph and two graphviz nodes", 
+[IsGVGraph, IsGVNode, IsGVNode],
+function(x, head, tail)
+  local edge;
+  edge := GV_Edge(head, tail);
+  return GV_AddEdge(x, edge);
+end);
+
+InstallMethod(GV_AddEdge, 
+"for a graphviz graph and two graphviz nodes", 
+[IsGVGraph, IsString, IsString],
+function(x, head, tail)
+  local edge;
+  edge := GV_Edge(head, tail);
+  return GV_AddEdge(x, edge);
 end);
 
 InstallMethod(GV_RemoveNode, "for a graphviz graph and node",
@@ -273,6 +305,24 @@ function(g, n)
   local nodes, name, out;
   nodes := GV_Nodes(g);
   name := GV_Name(n);
+  Unbind(nodes[name]);
+
+  GV_FilterEdges(g, 
+    function(e)
+      local head, tail;
+      head := GV_Head(e);
+      tail := GV_Tail(e);
+      return name <> GV_Name(tail) and name <> GV_Name(head); 
+    end);
+
+  return g;
+end); 
+
+InstallMethod(GV_RemoveNode, "for a graphviz graph and a string",
+[IsGVGraph, IsString],
+function(g, name)
+  local nodes, out;
+  nodes := GV_Nodes(g);
   Unbind(nodes[name]);
 
   GV_FilterEdges(g, 

@@ -16,6 +16,14 @@ gap> b := GV_Node("b");;
 gap> GV_Edge(a, b);
 <edge (a, b)>
 
+# Test edge constructor (two strings)
+gap> e := GV_Edge("a", "b");
+<edge (a, b)>
+gap> GV_Head(e);
+<node a>
+gap> GV_Tail(e);
+<node b>
+
 # Test filtering edges by names (digraph)
 gap> g := GV_Digraph();;
 gap> a := GV_Node("a");;
@@ -76,7 +84,7 @@ gap> e1 := GV_Edge(d, a1);;
 gap> e2 := GV_Edge(a2, c);;
 gap> GV_AddEdge(g, e1);;
 gap> GV_AddEdge(g, e2);
-Error, Different in graph with name a.
+Error, Different node in graph with name a.
 gap> GV_Edges(g);
 [ <edge (d, a)> ]
 

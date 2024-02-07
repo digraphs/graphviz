@@ -53,6 +53,7 @@ DeclareOperation("GV_Node", [IsString]);
 #! @Description 
 #! Creates a new graphviz edge between the provided nodes. 
 DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
+DeclareOperation("GV_Edge", [IsString, IsString]);
 #! @EndGroup
 
 
@@ -135,6 +136,7 @@ DeclareOperation("GV_SetName",[IsGVGraph, IsString]);
 #! @Description Adds a node to the graph.
 #! If a node with the same name is already present the operation fails.
 DeclareOperation("GV_AddNode", [IsGVGraph, IsGVNode]);
+DeclareOperation("GV_AddNode", [IsGVGraph, IsString]);
 
 #! @Arguments graph, edge
 #! @Returns the modified graph.
@@ -142,11 +144,14 @@ DeclareOperation("GV_AddNode", [IsGVGraph, IsGVNode]);
 #! If no nodes with the same name are in the graph then the edge's nodes will be added to the graph.
 #! If different nodes with the same name are in the graph then the operation fails.
 DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVEdge]);
+DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVNode, IsGVNode]);
+DeclareOperation("GV_AddEdge", [IsGVGraph, IsString, IsString]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
 #! @Description Removes the node from the graph.
 DeclareOperation("GV_RemoveNode", [IsGVGraph, IsGVNode]);
+DeclareOperation("GV_RemoveNode", [IsGVGraph, IsString]);
 
 #! @Arguments graph, predicate
 #! @Returns the modified graph.

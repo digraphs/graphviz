@@ -6,11 +6,7 @@
 - todo improve node name valdiation (ex. node-1 should not be a valid name)
 
 ## Meeting with James
-- add nicer shorthands for other methods. Eg. 
- ```gap
- GV_Edge(IsString, IsString) # creates an edge between two new nodes w/ the provided name strings
- GV_AddEdge(IsGVGraph, IsString, IsString) # creates an edge between two new nodes w/ the provided name strings and adds it to the graph
- ```
+- ask james about prefered behaviour for adding node with the same name as an existing node. Currently fails.
  - clear out dependencies on digraphs
  - Test all example from the python graphviz docs.
  - GV_Attr(node, "");
