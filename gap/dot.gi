@@ -251,7 +251,8 @@ InstallMethod(GV_AddNode, "for a graphviz graph and string",
 function(x, name)
   local node, nodes;
   node := GV_Node(name);
-  return GV_AddNode(x, node);
+  GV_AddNode(x, node);
+  return node;
 end);
 
 InstallMethod(GV_AddEdge, "for a graphviz graph and edge",
@@ -294,7 +295,8 @@ InstallMethod(GV_AddEdge,
 function(x, head, tail)
   local edge;
   edge := GV_Edge(head, tail);
-  return GV_AddEdge(x, edge);
+  GV_AddEdge(x, edge);
+  return edge;
 end);
 
 InstallMethod(GV_AddEdge, 
@@ -317,7 +319,8 @@ function(x, head, tail)
 
   # add to graph
   edge := GV_Edge(head_node, tail_node);
-  return GV_AddEdge(x, edge);
+  GV_AddEdge(x, edge);
+  return edge;
 end);
 
 InstallMethod(GV_RemoveNode, "for a graphviz graph and node",
