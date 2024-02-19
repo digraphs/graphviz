@@ -425,7 +425,7 @@ function(node)
   local attrs, name;
   name := GV_Name(node);
   attrs := GV_Attrs(node);
-  return StringFormatted("\t{}{}\n", name, GV_StringifyNodeEdgeAttrs(attrs));
+  return StringFormatted("\t\"{}\"{}\n", name, GV_StringifyNodeEdgeAttrs(attrs));
 end);
 
 #@ Return DOT graph edge statement line.
@@ -436,7 +436,7 @@ function(edge)
   head := GV_Name(GV_Head(edge));
   tail := GV_Name(GV_Tail(edge));
   attrs := GV_Attrs(edge);
-  return StringFormatted("\t{} -- {}{}\n",
+  return StringFormatted("\t\"{}\" -- \"{}\"{}\n",
                          tail,
                          head,
                          GV_StringifyNodeEdgeAttrs(attrs));
@@ -450,7 +450,7 @@ function(edge)
   head := GV_Name(GV_Head(edge));
   tail := GV_Name(GV_Tail(edge));
   attrs := GV_Attrs(edge);
-  return StringFormatted("\t{} -> {}{}\n",
+  return StringFormatted("\t\"{}\" -> \"{}\"{}\n",
                          tail,
                          head,
                          GV_StringifyNodeEdgeAttrs(attrs));

@@ -11,4 +11,3 @@
  - Sort edges before outputting (nondeterminim) ???
  - pip install gaplint (linting gap)!
  - make it so when duplicates are added to global graph attrs the old values are automatically replaced
-

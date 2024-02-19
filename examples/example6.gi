@@ -1,47 +1,34 @@
-LoadPackage("graphviz");
-f := GV_Digraph("finite_state_machine");
-GV_SetAttr(f, "rankdir='LR'");
-GV_SetAttr(f, "size='8,5'");
-GV_SetAttr(f, "node shape='doublecircle'");
+# https://graphviz.readthedocs.io/en/stable/examples.html
+# """https://graphviz.org/Gallery/directed/cluster.html"""
 
-e := GV_AddEdge(f, "LR_0", "LR_2");
-GV_SetAttr(e, "label", "SS(B)");
-e := GV_AddEdge(f, "LR_0", "LR_1");
-GV_SetAttr(e, "label", "SS(S)");
-e := GV_AddEdge(f, "LR_1", "LR_3");
-GV_SetAttr(e, "label", "S($end)");
-e := GV_AddEdge(f, "LR_2", "LR_6");
-GV_SetAttr(e, "label", "SS(b)");
-e := GV_AddEdge(f, "LR_2", "LR_5");
-GV_SetAttr(e, "label", "SS(a)");
-e := GV_AddEdge(f, "LR_2", "LR_4");
-GV_SetAttr(e, "label", "S(A)");
-e := GV_AddEdge(f, "LR_5", "LR_7");
-GV_SetAttr(e, "label", "S(b)");
-e := GV_AddEdge(f, "LR_5", "LR_5");
-GV_SetAttr(e, "label", "S(a)");
-e := GV_AddEdge(f, "LR_6", "LR_6");
-GV_SetAttr(e, "label", "S(b)");
-e := GV_AddEdge(f, "LR_6", "LR_5");
-GV_SetAttr(e, "label", "S(a)");
-e := GV_AddEdge(f, "LR_7", "LR_8");
-GV_SetAttr(e, "label", "S(b)");
-e := GV_AddEdge(f, "LR_7", "LR_5");
-GV_SetAttr(e, "label", "S(a)");
-e := GV_AddEdge(f, "LR_8", "LR_6");
-GV_SetAttr(e, "label", "S(b)");
-e := GV_AddEdge(f, "LR_8", "LR_5");
-GV_SetAttr(e, "label", "S(a)");
+# from graphviz import Digraph
 
-GV_SetAttr(f["LR_0"], "shape", "doublecircle");
-GV_SetAttr(f["LR_3"], "shape", "doublecircle");
-GV_SetAttr(f["LR_4"], "shape", "doublecircle");
-GV_SetAttr(f["LR_8"], "shape", "doublecircle");
+# g = Digraph('G', filename='cluster.gv')
 
-GV_SetAttr(f["LR_1"], "shape", "circle");
-GV_SetAttr(f["LR_2"], "shape", "circle");
-GV_SetAttr(f["LR_5"], "shape", "circle");
-GV_SetAttr(f["LR_6"], "shape", "circle");
-GV_SetAttr(f["LR_7"], "shape", "circle");
+# # NOTE: the subgraph name needs to begin with 'cluster' (all lowercase)
+# #       so that Graphviz recognizes it as a special cluster subgraph
 
-Print(GV_String(f));
+# with g.subgraph(name='cluster_0') as c:
+#     c.attr(style='filled', color='lightgrey')
+#     c.node_attr.update(style='filled', color='white')
+#     c.edges([('a0', 'a1'), ('a1', 'a2'), ('a2', 'a3')])
+#     c.attr(label='process #1')
+
+# with g.subgraph(name='cluster_1') as c:
+#     c.attr(color='blue')
+#     c.node_attr['style'] = 'filled'
+#     c.edges([('b0', 'b1'), ('b1', 'b2'), ('b2', 'b3')])
+#     c.attr(label='process #2')
+
+# g.edge('start', 'a0')
+# g.edge('start', 'b0')
+# g.edge('a1', 'b3')
+# g.edge('b2', 'a3')
+# g.edge('a3', 'a0')
+# g.edge('a3', 'end')
+# g.edge('b3', 'end')
+
+# g.node('start', shape='Mdiamond')
+# g.node('end', shape='Msquare')
+
+# g.view()
