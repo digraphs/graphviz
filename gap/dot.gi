@@ -298,11 +298,25 @@ function(x, head, tail)
 end);
 
 InstallMethod(GV_AddEdge, 
-"for a graphviz graph and two graphviz nodes", 
+"for a graphviz graph and two strings", 
 [IsGVGraph, IsString, IsString],
 function(x, head, tail)
-  local edge;
-  edge := GV_Edge(head, tail);
+  local edge, head_node, tail_node;
+
+  # try to get existing nodes
+  head_node := x[head];
+  tail_node := x[tail];
+
+  # if dont exist make new ones
+  if head_node = fail then
+    head_node := GV_Node(head);
+  fi;
+  if tail_node = fail then
+    tail_node := GV_Node(tail);
+  fi;
+
+  # add to graph
+  edge := GV_Edge(head_node, tail_node);
   return GV_AddEdge(x, edge);
 end);
 

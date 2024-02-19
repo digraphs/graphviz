@@ -2,7 +2,6 @@
  - save & load (potentially with 6-strings)
  - condense code in displaying defaults using the new graphviz pkg model
     - ex. all the symmetric vs not symmetric methods can be made a single method which chooses automatically relatively easily.
-- todo improve node name valdiation (ex. node-1 should not be a valid name)
 
 ## TODO?
  - ask james about prefered behaviour for adding node with the same name as an existing node. Currently fails.
