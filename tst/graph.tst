@@ -203,4 +203,15 @@ gap> GV_String(g);
 # gap> GV_Attrs(g);
 # [  ]
 
+# Test gettting a node using bracket notation
+gap> n1 := GV_Node("test");;
+gap> n2 := GV_Node("abc");;
+gap> g := GV_Graph();;
+gap> GV_AddNode(g, n1);;
+gap> GV_AddNode(g, n2);;
+gap> g["test"];
+<node test>
+gap> g["abc"];
+<node abc>
+
 #

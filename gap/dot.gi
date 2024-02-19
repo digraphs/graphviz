@@ -223,6 +223,13 @@ function(x, value)
   return x;
 end);
 
+InstallMethod(\[\], 
+"for a graphviz graph and string",
+[IsGVGraph, IsString],
+function(graph, node)
+  return GV_Nodes(graph)[node];
+end);
+
 InstallMethod(GV_AddNode, "for a graphviz graph and node",
 [IsGVGraph, IsGVNode], 
 function(x, node)

@@ -8,18 +8,10 @@
 #! This package is designed to allow users to programmatically construct objects in GAP which can then be converted into DOT.
 #! That DOT can then be inputted into the graphviz software to produce a visual output.
 #! As DOT is central to the design of this package it will likely be helpful to have a basic understanding of the language.
-
-#! @Section Basic concepts of DOT (TODO needs work)
-#! This is a breif overview, for further concepts see Graphviz's website here (https://graphviz.org/about/).
-#! DOT language programmes are primarily composed of nodes, edges, graphs, subgraphs and attribtues.
-#! The first 3 are what you would expect, and attributes describe how these objects should be displayed.
-#! For example, attributes can include color, shape, etc.
-#! Attributes may be assigned globally to all nodes and edges in a graph or subgraph, the subgraph or graph itself, or to individual nodes and edges. 
-#! This package contains operations for manipulating the graph objects and their attributes, and translating the programme representation to DOT language.
+#! For more information about DOT see <URL>https://graphviz.org/doc/info/lang.html</URL>.
 
 #! @Chapter
-#! @ChapterTitle Creating graphviz objects
-#! In this chapter we will cover the constructors and categories for graphviz objects.
+#! @ChapterTitle The Graphviz Package
 
 #! @Section Graphviz Categories
 
@@ -45,6 +37,17 @@ DeclareCategory("IsGVEdge", IsGVObject);
 #! Creates a new graphviz node with the provided name. 
 DeclareOperation("GV_Node", [IsString]);
 #! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle Getting a node from a graph
+#! @Arguments grapph, node name
+#! @Returns the graphviz node with that name 
+#! @Description 
+#! Gets a graphviz node from a graph. 
+DeclareOperation("\[\]", [IsGVGraph, IsString]);
+#! @EndGroup
+
+
 
 #! @BeginGroup
 #! @GroupTitle Constructors for Edges
@@ -184,8 +187,3 @@ DeclareOperation("GV_RemoveAttr", [IsGVObject, IsObject]);
 #! @Arguments graph
 #! @Returns the dot representation of the graphviz object.
 DeclareOperation("GV_String", [IsGVGraph]);
-
-# Graph types
-BindGlobal("GV_DIGRAPH", "DIGRAPH");
-BindGlobal("GV_GRAPH", "GRAPH");
-
