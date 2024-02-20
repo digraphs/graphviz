@@ -47,15 +47,13 @@ BindGlobal("GV_EdgeType", NewType(GV_ObjectFamily,
 # Node constructors
 InstallMethod(GV_Node, "for a string", [IsString],
 function(name)
-  local namew;
 
-  namew := Compacted(Filtered(name, x -> not x in [' ', '\t', '\r', '\n']));
-  if Length(namew) = 0 then
+  if Length(name) = 0 then
     return ErrorNoReturn("Node name cannot be empty.");
   fi;
   return Objectify(GV_NodeType, 
                   rec(
-                    Name  := namew,
+                    Name  := name,
                     Attrs := HashMap()                
                   ));
 end);
@@ -212,7 +210,12 @@ end);
 InstallMethod(GV_SetAttr, "for a graphviz object, object and object",
 [IsGVGraph, IsObject, IsObject], 
 function(x, name, value)
-  Add(GV_Attrs(x), StringFormatted("{}=\"{}\"", String(name), String(value)));
+  if name = "label" then
+    Add(GV_Attrs(x), StringFormatted("{}={}", String(name), String(value)));
+  else 
+    Add(GV_Attrs(x), StringFormatted("{}=\"{}\"", String(name), String(value)));
+  fi;
+
   return x;
 end);
 
@@ -422,21 +425,44 @@ end);
 InstallMethod(GV_StringifyNode, "for string and record",
 [IsGVNode],
 function(node)
-  local attrs, name;
+  local attrs, name, split;
+  
   name := GV_Name(node);
   attrs := GV_Attrs(node);
-  return StringFormatted("\t\"{}\"{}\n", name, GV_StringifyNodeEdgeAttrs(attrs));
+  if ':' in name then
+    split := SplitString(name, ":");
+    name := StringFormatted("\"{}\":{}", split[1], split[2]);
+  else
+    name := StringFormatted("\"{}\"", name);
+  fi;
+
+  return StringFormatted("\t{}{}\n", name, GV_StringifyNodeEdgeAttrs(attrs));
 end);
 
 #@ Return DOT graph edge statement line.
 InstallMethod(GV_StringifyGraphEdge, "for a graphviz edge",
 [IsGVEdge],
 function(edge)
-  local head, tail, attrs;
+  local head, split, tail, attrs;
   head := GV_Name(GV_Head(edge));
   tail := GV_Name(GV_Tail(edge));
   attrs := GV_Attrs(edge);
-  return StringFormatted("\t\"{}\" -- \"{}\"{}\n",
+
+  # handle : syntax
+  if ':' in head then
+    split := SplitString(head, ':');
+    head := StringFormatted("\"{}\":{}", split[1], split[2]);
+  else 
+    head := StringFormatted("\"{}\"", head);
+  fi;
+  if ':' in tail then
+    split := SplitString(tail, ':');
+    tail := StringFormatted("\"{}\":{}", split[1], split[2]);
+  else 
+    tail := StringFormatted("\"{}\"", tail);
+  fi;
+
+  return StringFormatted("\t{} -- {}{}\n",
                          tail,
                          head,
                          GV_StringifyNodeEdgeAttrs(attrs));
@@ -450,7 +476,22 @@ function(edge)
   head := GV_Name(GV_Head(edge));
   tail := GV_Name(GV_Tail(edge));
   attrs := GV_Attrs(edge);
-  return StringFormatted("\t\"{}\" -> \"{}\"{}\n",
+
+  # handle : syntax
+  if ':' in head then
+    split := SplitString(head, ':');
+    head := StringFormatted("\"{}\":{}", split[1], split[2]);
+  else 
+    head := StringFormatted("\"{}\"", head);
+  fi;
+  if ':' in tail then
+    split := SplitString(tail, ':');
+    tail := StringFormatted("\"{}\":{}", split[1], split[2]);
+  else 
+    tail := StringFormatted("\"{}\"", tail);
+  fi;
+
+  return StringFormatted("\t{} -> {}{}\n",
                          tail,
                          head,
                          GV_StringifyNodeEdgeAttrs(attrs));
@@ -499,17 +540,31 @@ function(attrs)
     Append(result, " [");
     for i in [1..n-1] do
         key := keys[i];
-        Append(result,
-               StringFormatted("{}=\"{}\", ",
-                               key,
-                               attrs[key]));
+        if key = "label" then
+          Append(result,
+                StringFormatted("{}={}, ",
+                                key,
+                                attrs[key]));
+        else 
+          Append(result,
+                StringFormatted("{}=\"{}\", ",
+                                key,
+                                attrs[key]));
+        fi;
     od;
 
     key := keys[n];
-    Append(result,
-        StringFormatted("{}=\"{}\"]",
-                        key,
-                        attrs[key]));
+    if key = "label" then
+      Append(result,
+            StringFormatted("{}={}]",
+                            key,
+                            attrs[key]));
+    else 
+      Append(result,
+            StringFormatted("{}=\"{}\"]",
+                            key,
+                            attrs[key]));
+    fi;
   fi;
   return result;
 end);

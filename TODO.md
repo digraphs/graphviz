@@ -4,6 +4,7 @@
     - ex. all the symmetric vs not symmetric methods can be made a single method which chooses automatically relatively easily.
 
 ## TODO?
+ - write tests for the ":" synatx stuff
  - ask james about prefered behaviour for adding node with the same name as an existing node. Currently fails.
  - Test all example from the python graphviz docs.
  - GV_Attr(node, "");
