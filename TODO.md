@@ -2,6 +2,7 @@
  - save & load (potentially with 6-strings)
  - condense code in displaying defaults using the new graphviz pkg model
     - ex. all the symmetric vs not symmetric methods can be made a single method which chooses automatically relatively easily.
+- for node/edge removal from subgraphs do you think it is better to remove the node from the parent if it is removed from the subgraph, or just to remove it from the subgraph. I Chose the latter for now as it seemed nicer - gives the user more fine grained control.
 
 ## TODO?
  - write tests for the ":" synatx stuff

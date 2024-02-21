@@ -23,6 +23,7 @@
 DeclareCategory("IsGVObject", IsObject); 
 DeclareCategory("IsGVGraph", IsGVObject);
 DeclareCategory("IsGVDigraph", IsGVGraph);
+DeclareCategory("IsGVContext", IsGVGraph);
 DeclareCategory("IsGVNode", IsGVObject);
 DeclareCategory("IsGVEdge", IsGVObject);
 #! @EndGroup
@@ -102,6 +103,9 @@ DeclareOperation("GV_Attrs", [IsGVObject]);
 #! Node names can only be [a-zA-Z0-9_£] TODO check exact docs.
 DeclareOperation("GV_Nodes", [IsGVGraph]);
 
+#!
+DeclareOperation("GV_Subgraphs", [IsGVGraph]);
+
 #! @Arguments graph
 #! @Returns the edges of the provided graphviz graph.
 #! @Description Gets the edges of the provided graphviz graph.
@@ -149,6 +153,12 @@ DeclareOperation("GV_AddNode", [IsGVGraph, IsString]);
 DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVEdge]);
 DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVNode, IsGVNode]);
 DeclareOperation("GV_AddEdge", [IsGVGraph, IsString, IsString]);
+
+#! @Arguments graph, filter, name
+#! @Returns the new subgraph.
+#! @Description Adds a subgraph graph.
+DeclareOperation("GV_AddSubgraph", [IsGVGraph, IsFunction, IsString]);
+DeclareOperation("GV_AddSubgraph", [IsGVGraph, IsFunction]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.

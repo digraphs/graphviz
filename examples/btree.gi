@@ -15,13 +15,13 @@ GV_SetAttr(GV_AddNode(s, "node6"), "label", "\"<f0> |<f1> Y|<f2> \"");
 GV_SetAttr(GV_AddNode(s, "node7"), "label", "\"<f0> |<f1> A|<f2> \"");
 GV_SetAttr(GV_AddNode(s, "node8"), "label", "\"<f0> |<f1> C|<f2> \"");
 
-GV_AddEdge(s, "node4:f1", "node0:f2");
-GV_AddEdge(s, "node1:f1", "node0:f0");
-GV_AddEdge(s, "node2:f1", "node1:f0");
-GV_AddEdge(s, "node3:f1", "node1:f2");
-GV_AddEdge(s, "node8:f1", "node2:f2");
-GV_AddEdge(s, "node7:f1", "node2:f0");
-GV_AddEdge(s, "node6:f1", "node4:f2");
-GV_AddEdge(s, "node5:f1", "node4:f0");
+GV_AddEdge(s, "node0:f2", "node4:f1");
+GV_AddEdge(s, "node0:f0", "node1:f1");
+GV_AddEdge(s, "node1:f0", "node2:f1");
+GV_AddEdge(s, "node1:f2", "node3:f1");
+GV_AddEdge(s, "node2:f2", "node8:f1");
+GV_AddEdge(s, "node2:f0", "node7:f1");
+GV_AddEdge(s, "node4:f2", "node6:f1");
+GV_AddEdge(s, "node4:f0", "node5:f1");
 
 Print(GV_String(s));
