@@ -20,15 +20,17 @@ gap> GV_Name(n, "test");
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `GV_Name' on 2 arguments
 
-# Test making a node with a whitespace name fails
+# Test making a node with an all whitespace name
+gap> n := GV_Node("  ");
+<node   >
+
+# Test making a node with empty name fails
 gap> n := GV_Node("");
 Error, Node name cannot be empty.
-gap> n := GV_Node("  ");
-Error, Node name cannot be empty.
 
-# Test whitespace is removed from node names
+# Test whitespace in node names
 gap> n := GV_Node("a  a   ");
-<node aa>
+<node a  a   >
 
 # Test modifying attributes
 gap> n := GV_Node("t");;

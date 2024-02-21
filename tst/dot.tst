@@ -26,7 +26,7 @@ gap> GV_Attrs(g);
 [ "color=\"red\"", "shape=\"circle\"" ]
 gap> GV_SetAttrs(g, rec( color := "blue", label := "test" ));;
 gap> GV_Attrs(g);
-[ "color=\"red\"", "shape=\"circle\"", "label=\"test\"", "color=\"blue\"" ]
+[ "color=\"red\"", "shape=\"circle\"", "label=test", "color=\"blue\"" ]
 
 # Test stringify
 gap> n := GV_Node("test");;
@@ -34,7 +34,7 @@ gap> GV_SetAttrs(n, rec(color:="red", label:="lab"));;
 gap> g := GV_Graph();;
 gap> GV_AddNode(g, n);;
 gap> GV_String(g);
-"graph  {\n\ttest [color=\"red\", label=\"lab\"]\n}\n"
+"graph  {\n\t\"test\" [color=\"red\", label=lab]\n}\n"
 
 # Test stringify with edge (digraphs)
 gap> g := GV_Digraph();;
@@ -46,8 +46,8 @@ gap> e := GV_Edge(a, b);;
 gap> GV_SetAttrs(e, rec(color:="green"));;
 gap> GV_AddEdge(g, e);;
 gap> GV_String(g);
-"digraph  {\n\ta [color=\"blue\"]\n\tb [color=\"red\"]\n\tb -> a [color=\"gree\
-n\"]\n}\n"
+"digraph  {\n\t\"a\" [color=\"blue\"]\n\t\"b\" [color=\"red\"]\n\t\"a\" -> \"b\
+\" [color=\"green\"]\n}\n"
 
 # Test stringify with edge (graph)
 gap> g := GV_Graph();;
@@ -59,8 +59,8 @@ gap> e := GV_Edge(a, b);;
 gap> GV_SetAttrs(e, rec(color:="green"));;
 gap> GV_AddEdge(g, e);;
 gap> GV_String(g);
-"graph  {\n\ta [color=\"blue\"]\n\tb [color=\"red\"]\n\tb -- a [color=\"green\
-\"]\n}\n"
+"graph  {\n\t\"a\" [color=\"blue\"]\n\t\"b\" [color=\"red\"]\n\t\"a\" -- \"b\"\
+ [color=\"green\"]\n}\n"
 
 # Test stringify empty
 gap> g := GV_Graph();;

@@ -32,7 +32,7 @@ gap> GV_AddNode(g, n);
 gap> GV_Nodes(g);
 HashMap([[ "n", <object> ]])
 gap> GV_AddNode(g, n);
-Error, Already node with name n.
+<graph with 1 node and 0 edges>
 gap> GV_AddNode(g, GV_Node("x"));
 <graph with 2 nodes and 0 edges>
 gap> GV_Nodes(g);
@@ -41,13 +41,13 @@ HashMap([[ "n", <object> ], [ "x", <object> ]])
 # Test add node (name)
 gap> g := GV_Graph();;
 gap> GV_AddNode(g, "n");
-<graph with 1 node and 0 edges>
+<node n>
 gap> GV_Nodes(g);
 HashMap([[ "n", <object> ]])
 gap> GV_AddNode(g, "n");
-Error, Already node with name n.
+<node n>
 gap> GV_AddNode(g, "x");
-<graph with 2 nodes and 0 edges>
+<node x>
 gap> GV_Nodes(g);
 HashMap([[ "n", <object> ], [ "x", <object> ]])
 
@@ -77,7 +77,7 @@ gap> GV_AddNode(g, d);;
 gap> GV_AddEdge(g, cd);
 <graph with 4 nodes and 2 edges>
 gap> GV_Edges(g);
-[ <edge (c, d)>, <edge (a, b)> ]
+[ <edge (a, b)>, <edge (c, d)> ]
 
 # Test adding edges (two nodes)
 gap> g := GV_Graph();;
@@ -86,44 +86,56 @@ gap> b := GV_Node("b");;
 gap> c := GV_Node("c");;
 gap> d := GV_Node("d");;
 gap> GV_AddEdge(g, a, b);
+<edge (a, b)>
+gap> g;
 <graph with 2 nodes and 1 edge>
 gap> GV_Edges(g);
 [ <edge (a, b)> ]
 gap> GV_AddNode(g, c);;
 gap> GV_AddNode(g, d);;
 gap> GV_AddEdge(g, c, d);
+<edge (c, d)>
+gap> g;
 <graph with 4 nodes and 2 edges>
 gap> GV_Edges(g);
-[ <edge (c, d)>, <edge (a, b)> ]
+[ <edge (a, b)>, <edge (c, d)> ]
 
 # Test adding edges (two strings)
 gap> g := GV_Graph();;
 gap> GV_AddEdge(g, "a", "b");
+<edge (a, b)>
+gap> g;
 <graph with 2 nodes and 1 edge>
 gap> GV_Edges(g);
 [ <edge (a, b)> ]
 gap> GV_AddEdge(g, "c", "d");
+<edge (c, d)>
+gap> g;
 <graph with 4 nodes and 2 edges>
 gap> GV_Edges(g);
-[ <edge (c, d)>, <edge (a, b)> ]
+[ <edge (a, b)>, <edge (c, d)> ]
 
 # Test adding edge with different nodes with the same name
 gap> g := GV_Graph();;
 gap> GV_AddEdge(g, "a", "b");;
 gap> GV_AddEdge(g, "a", "c");
-Error, Different node in graph with name a.
+<edge (a, c)>
+gap> GV_Nodes(g);
+HashMap([[ "c", <object> ], [ "a", <object> ], [ "b", <object> ]])
 gap> GV_AddEdge(g, "c", "a");
-Error, Different node in graph with name a.
+<edge (c, a)>
 gap> GV_AddEdge(g, "b", "d");
-Error, Different node in graph with name b.
+<edge (b, d)>
 gap> GV_AddEdge(g, "d", "b");
-Error, Different node in graph with name b.
+<edge (d, b)>
 gap> GV_AddEdge(g, "a", "b");
-Error, Different node in graph with name a.
+<edge (a, b)>
 gap> GV_AddEdge(g, "b", "a");
-Error, Different node in graph with name b.
+<edge (b, a)>
 gap> GV_AddEdge(g, "c", "d");
-<graph with 4 nodes and 2 edges>
+<edge (c, d)>
+gap> g;
+<graph with 4 nodes and 8 edges>
 
 # Test removing node
 gap> g := GV_Graph();;

@@ -496,7 +496,7 @@ function(g, filter)
   idx := Length(edges);
   while idx > 0 do
     edge := edges[idx];
-    if filter(edge) then
+    if not filter(edge) then
       Remove(edges, idx);
     fi;
     idx := idx - 1;
