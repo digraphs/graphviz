@@ -103,7 +103,9 @@ DeclareOperation("GV_Attrs", [IsGVObject]);
 #! Node names can only be [a-zA-Z0-9_£] TODO check exact docs.
 DeclareOperation("GV_Nodes", [IsGVGraph]);
 
-#!
+#! @Arguments graph
+#! @Returns the subgraphs of the provided graphviz graph.
+#! @Description gets the subgraphs of a provided graphviz graph.
 DeclareOperation("GV_Subgraphs", [IsGVGraph]);
 
 #! @Arguments graph

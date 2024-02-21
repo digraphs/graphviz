@@ -14,3 +14,4 @@
  - make it so when duplicates are added to global graph attrs the old values are automatically replaced
  - Should the parent graph have the child nodes in its node list even if it was not directly added to the parent?
  - nail down behaviour for subgraphs digraphs with the same name 
+ - Potentially add history for graph contructions
