@@ -15,3 +15,4 @@
  - Should the parent graph have the child nodes in its node list even if it was not directly added to the parent?
  - nail down behaviour for subgraphs digraphs with the same name 
  - Potentially add history for graph contructions
+ - make it so a graph cannot be a subgraph of a digraph and vice-versa
