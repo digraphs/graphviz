@@ -155,7 +155,7 @@ function(g)
   return result;
 end);
 
-InstallMethod(ViewString, "for a graphviz graph", [IsGVDigraph], 
+InstallMethod(ViewString, "for a graphviz digraph", [IsGVDigraph], 
 function(g)
   local result, edges, nodes;
   result := "";
@@ -163,6 +163,25 @@ function(g)
   nodes := Size(GV_Nodes(g));
 
   Append(result, StringFormatted("<digraph ", GV_Name(g))); 
+
+  if GV_Name(g) <> "" then
+    Append(result, StringFormatted("{} ", GV_Name(g)));
+  fi;
+
+  Append(result, StringFormatted("with {} ", Pluralize(nodes, "node")));
+  Append(result, StringFormatted("and {}>", Pluralize(edges, "edge")));
+
+  return result;
+end);
+
+InstallMethod(ViewString, "for a graphviz context", [IsGVContext], 
+function(g)
+  local result, edges, nodes;
+  result := "";
+  edges := Length(GV_Edges(g));
+  nodes := Size(GV_Nodes(g));
+
+  Append(result, StringFormatted("<context ", GV_Name(g))); 
 
   if GV_Name(g) <> "" then
     Append(result, StringFormatted("{} ", GV_Name(g)));

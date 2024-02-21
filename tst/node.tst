@@ -49,4 +49,10 @@ gap> GV_RemoveAttr(n, "color");;
 gap> GV_Attrs(n);
 HashMap([[ "shape", "circle" ]])
 
+# Test name containing ':'
+gap> g := GV_Graph();;
+gap> GV_AddNode(g, "test:colon");;
+gap> GV_String(g);
+"graph  {\n\t\"test\":colon\n}\n"
+
 #
