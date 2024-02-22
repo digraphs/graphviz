@@ -52,27 +52,24 @@ HashMap([[ "n", <object> ]])
 # Test adding a node to a subgraph which is already in parent uses the parent's node
 gap> g := GV_Graph();;
 gap> s := GV_AddSubgraph(g, IsGVGraph, "a");;
-gap> nodeg := GV_AddNode(g, "n");;
-gap> nodes := GV_AddNode(s, "n");;
-gap> IsIdenticalObj(nodeg, nodes);
-true
+gap> GV_AddNode(g, "n");;
+gap> GV_AddNode(s, "n");
+Error, Already node with name n.
 
 # Test adding a node to a graph which is already in child uses the child's node
 gap> g := GV_Graph();;
 gap> s := GV_AddSubgraph(g, IsGVGraph, "a");;
-gap> nodes := GV_AddNode(s, "n");;
-gap> nodeg := GV_AddNode(g, "n");;
-gap> IsIdenticalObj(nodeg, nodes);
-true
+gap> GV_AddNode(s, "n");;
+gap> GV_AddNode(g, "n");
+Error, Already node with name n.
 
 # Test adding a node to a graph which is already in sibling uses the siblings's node
 gap> g := GV_Graph();;
 gap> s1 := GV_AddSubgraph(g, IsGVGraph, "a");;
 gap> s2 := GV_AddSubgraph(g, IsGVGraph, "b");;
-gap> nodes := GV_AddNode(s1, "n");;
-gap> nodeg := GV_AddNode(s2, "n");;
-gap> IsIdenticalObj(nodeg, nodes);
-true
+gap> GV_AddNode(s1, "n");;
+gap> GV_AddNode(s2, "n");
+Error, Already node with name n.
 
 # Test fails adding a new node to a graph which when sibling has different node with same name
 gap> g := GV_Graph();;
@@ -112,28 +109,6 @@ gap> g := GV_Graph();;
 gap> s := GV_AddSubgraph(g, IsGVContext, "a");;
 gap> GV_AddEdge(s, "a", "b");
 <edge (a, b)>
-
-# Test removing node from parent removes from children
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, IsGVGraph, "a");;
-gap> GV_AddNode(g, "n");;
-gap> GV_AddNode(s, "n");;
-gap> GV_RemoveNode(g, "n");;
-gap> GV_Nodes(g);
-HashMap([])
-gap> GV_Nodes(s);
-HashMap([])
-
-# Test removing node from children does not remove from parent
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, IsGVGraph, "a");;
-gap> GV_AddNode(g, "n");;
-gap> GV_AddNode(s, "n");;
-gap> GV_RemoveNode(s, "n");;
-gap> GV_Nodes(g);
-HashMap([[ "n", <object> ]])
-gap> GV_Nodes(s);
-HashMap([])
 
 # Test removing edge from parent removes from children
 gap> g := GV_Graph();;
@@ -206,5 +181,33 @@ gap> g := GV_Digraph();;
 gap> s := GV_AddSubgraph(g, IsGVDigraph);;
 gap> GV_String(g);
 "digraph  {\nsubgraph  {\n}\n}\n"
+
+# finding a node in a sibling graph
+gap> g := GV_Digraph();;
+gap> s1 := GV_AddSubgraph(g, IsGVDigraph);;
+gap> GV_AddNode(s1, "a");;
+gap> s2 := GV_AddSubgraph(g, IsGVDigraph);;
+gap> GV_FindNodeS(s2, "a");
+<node a>
+gap> GV_FindNodeS(s2, "b");
+fail
+
+# finding a node in a child graph
+gap> g := GV_Digraph();;
+gap> s1 := GV_AddSubgraph(g, IsGVDigraph);;
+gap> GV_AddNode(s1, "a");;
+gap> GV_FindNodeS(g, "a");
+<node a>
+gap> GV_FindNodeS(g, "b");
+fail
+
+# finding a node in a parent graph
+gap> g := GV_Digraph();;
+gap> s1 := GV_AddSubgraph(g, IsGVDigraph);;
+gap> GV_AddNode(g, "a");;
+gap> GV_FindNodeS(s1, "a");
+<node a>
+gap> GV_FindNodeS(s1, "b");
+fail
 
 #

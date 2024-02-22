@@ -19,7 +19,7 @@ gap> GV_SetAttrs(n, rec(color:="blue"));;
 gap> GV_Attrs(n);
 HashMap([[ "color", "blue" ], [ "label", "lab" ]])
 
-# Test gloabals
+# Test globals
 gap> g := GV_Graph();;
 gap> GV_SetAttrs(g, rec( color := "red", shape := "circle" ));;
 gap> GV_Attrs(g);

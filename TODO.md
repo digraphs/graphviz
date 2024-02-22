@@ -22,7 +22,7 @@
  - associate indicies  / do in order
  - run gaplint ASAP
  - get subgraph by name
- - dont allow subgraphs and graphs to contain the same set of nodes
+ - dont allow subgraphs and parent graphs to contain the same set of nodes
     - add nice error message where to find it
  - make adding nodes and edges as object private.
  - make sure all functions can take objects as well as strings

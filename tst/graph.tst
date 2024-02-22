@@ -31,8 +31,6 @@ gap> GV_AddNode(g, n);
 <graph with 1 node and 0 edges>
 gap> GV_Nodes(g);
 HashMap([[ "n", <object> ]])
-gap> GV_AddNode(g, n);
-<graph with 1 node and 0 edges>
 gap> GV_AddNode(g, GV_Node("x"));
 <graph with 2 nodes and 0 edges>
 gap> GV_Nodes(g);
@@ -44,8 +42,6 @@ gap> GV_AddNode(g, "n");
 <node n>
 gap> GV_Nodes(g);
 HashMap([[ "n", <object> ]])
-gap> GV_AddNode(g, "n");
-<node n>
 gap> GV_AddNode(g, "x");
 <node x>
 gap> GV_Nodes(g);

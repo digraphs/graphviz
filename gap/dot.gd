@@ -28,16 +28,9 @@ DeclareCategory("IsGVNode", IsGVObject);
 DeclareCategory("IsGVEdge", IsGVObject);
 #! @EndGroup
 
-#! @Section Constructors
+DeclareOperation("GV_FindNodeS", [IsGVGraph, IsString]);
 
-#! @BeginGroup
-#! @GroupTitle Constructors for Nodes
-#! @Arguments name
-#! @Returns a new graphviz node 
-#! @Description 
-#! Creates a new graphviz node with the provided name. 
-DeclareOperation("GV_Node", [IsString]);
-#! @EndGroup
+#! @Section Constructors
 
 #! @BeginGroup
 #! @GroupTitle Getting a node from a graph
@@ -47,19 +40,6 @@ DeclareOperation("GV_Node", [IsString]);
 #! Gets a graphviz node from a graph. 
 DeclareOperation("\[\]", [IsGVGraph, IsString]);
 #! @EndGroup
-
-
-
-#! @BeginGroup
-#! @GroupTitle Constructors for Edges
-#! @Arguments head, tail
-#! @Returns a new graphviz edge
-#! @Description 
-#! Creates a new graphviz edge between the provided nodes. 
-DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
-DeclareOperation("GV_Edge", [IsString, IsString]);
-#! @EndGroup
-
 
 #! @BeginGroup
 #! @GroupTitle Constructors for Graphs
@@ -113,6 +93,8 @@ DeclareOperation("GV_Subgraphs", [IsGVGraph]);
 #! @Description Gets the edges of the provided graphviz graph.
 DeclareOperation("GV_Edges", [IsGVGraph]);
 
+
+# TODO fix this
 #! @Arguments graph, node_name
 #! @Returns whether the graphviz graph contains a node with the provided name.
 #! @Description Whether the graphviz graph contains a node with the provided name.
@@ -144,7 +126,6 @@ DeclareOperation("GV_SetName",[IsGVGraph, IsString]);
 #! @Returns the modified graph.
 #! @Description Adds a node to the graph.
 #! If a node with the same name is already present the operation fails.
-DeclareOperation("GV_AddNode", [IsGVGraph, IsGVNode]);
 DeclareOperation("GV_AddNode", [IsGVGraph, IsString]);
 
 #! @Arguments graph, edge
@@ -152,7 +133,6 @@ DeclareOperation("GV_AddNode", [IsGVGraph, IsString]);
 #! @Description Adds an edge to the graph.
 #! If no nodes with the same name are in the graph then the edge's nodes will be added to the graph.
 #! If different nodes with the same name are in the graph then the operation fails.
-DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVEdge]);
 DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVNode, IsGVNode]);
 DeclareOperation("GV_AddEdge", [IsGVGraph, IsString, IsString]);
 
