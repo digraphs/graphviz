@@ -469,16 +469,14 @@ end);
 
 InstallMethod(GV_AddSubgraph, 
 "for a graph, filter and string",
-[IsGVGraph, IsFunction, IsString],
-function(graph, filter, name)
+[IsGVGraph, IsString],
+function(graph, name)
   local subgraph;
 
-  if filter = IsGVGraph then
-    subgraph := GV_Graph(name);
-  elif filter = IsGVDigraph then
+  if IsGVDigraph(graph) then
     subgraph := GV_Digraph(name);
-  elif filter = IsGVContext then
-    subgraph := GV_Context(name);
+  elif IsGVGraph(graph) then
+    subgraph := GV_Graph(name);
   else
     return ErrorNoReturn("Filter must be a filter for a graph category.");
   fi;
@@ -490,10 +488,25 @@ end);
 
 InstallMethod(GV_AddSubgraph, 
 "for a graph and filter",
-[IsGVGraph, IsFunction],
-function(graph, filter)
-  return GV_AddSubgraph(graph, filter, "");
+[IsGVGraph],
+function(graph)
+  return GV_AddSubgraph(graph, "");
 end);
+
+InstallMethod(GV_AddContext, 
+"for a graphviz graph and a string",
+[IsGVGraph, IsString],
+function(graph, name)
+  local ctx;
+  ctx := GV_Context(name);
+  Add(GV_Subgraphs(graph), ctx);
+  return ctx;
+end);
+
+InstallMethod(GV_AddContext, 
+"for a graphviz graph",
+[IsGVGraph],
+g -> GV_AddContext(g, ""));
 
 InstallMethod(GV_RemoveNode, "for a graphviz graph and node",
 [IsGVGraph, IsGVNode],

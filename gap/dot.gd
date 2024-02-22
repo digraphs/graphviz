@@ -139,8 +139,10 @@ DeclareOperation("GV_AddEdge", [IsGVGraph, IsString, IsString]);
 #! @Arguments graph, filter, name
 #! @Returns the new subgraph.
 #! @Description Adds a subgraph graph.
-DeclareOperation("GV_AddSubgraph", [IsGVGraph, IsFunction, IsString]);
-DeclareOperation("GV_AddSubgraph", [IsGVGraph, IsFunction]);
+DeclareOperation("GV_AddSubgraph", [IsGVGraph, IsString]);
+DeclareOperation("GV_AddSubgraph", [IsGVGraph]);
+DeclareOperation("GV_AddContext", [IsGVGraph, IsString]);
+DeclareOperation("GV_AddContext", [IsGVGraph]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
