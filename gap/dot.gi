@@ -551,9 +551,6 @@ function(g, filter)
     idx := idx - 1;
   od;
 
-  # handle subgraphs
-  Perform(GV_Subgraphs(g), s -> GV_FilterEdges(s, filter));
-
   return g;
 end);
 
@@ -806,6 +803,10 @@ function(graph, is_subgraph)
   od;
 
   if IsGVContext(graph) then
+    # reset attributes following the context
+    if GV_GetParent(graph) <> fail then
+      Append(GV_StringifyGraphAttrs(GV_GetParent(graph)));
+    fi;
     Append(result, "\n");
   else 
     Append(result, "}\n");

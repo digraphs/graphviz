@@ -110,27 +110,24 @@ gap> s := GV_AddContext(g, "a");;
 gap> GV_AddEdge(s, "a", "b");
 <edge (a, b)>
 
-# Test removing edge from parent removes from children
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> GV_AddEdge(g, "x", "y");;
-gap> GV_AddEdge(s, "x", "y");;
-gap> GV_FilterEnds(g, "x", "y");;
+# Test removing edge from graph does not remove from children, sibling, parent, etc
+gap> parent := GV_Graph();;
+gap> main := GV_AddSubgraph(parent, "main");;
+gap> sibling := GV_AddSubgraph(parent, "sibling");;
+gap> child := GV_AddSubgraph(main, "child");;
+gap> GV_AddEdge(parent, "x", "y");;
+gap> GV_AddEdge(main, "x", "y");;
+gap> GV_AddEdge(sibling, "x", "y");;
+gap> GV_AddEdge(child, "x", "y");;
+gap> GV_FilterEnds(main, "x", "y");;
 gap> GV_Edges(g);
 [  ]
-gap> GV_Edges(s);
-[  ]
-
-# Test removing edge from parent removes from children
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> GV_AddEdge(g, "x", "y");;
-gap> GV_AddEdge(s, "x", "y");;
-gap> GV_FilterEnds(s, "x", "y");;
-gap> GV_Edges(g);
+gap> GV_Edges(parent);
 [ <edge (x, y)> ]
-gap> GV_Edges(s);
-[  ]
+gap> GV_Edges(sibling);
+[ <edge (x, y)> ]
+gap> GV_Edges(child);
+[ <edge (x, y)> ]
 
 # Test stringifying subgraph digraph
 gap> g := GV_Digraph();;
@@ -220,5 +217,34 @@ gap> GV_FindNodeS(s11, "a");
 <node a>
 gap> GV_FindNodeS(s11, "b");
 fail
+
+# Test removing a node from a graph
+gap> parent := GV_Digraph();;
+gap> g := GV_AddSubgraph(parent);;
+gap> sibling := GV_AddSubgraph(parent);;
+gap> child := GV_AddSubgraph(g);;
+gap> a := GV_AddNode(parent, "a");;
+gap> GV_AddNode(sibling, "b");;
+gap> GV_AddNode(child, "c");;
+gap> GV_AddNode(g, "d");;
+gap> GV_RemoveNode(g, "d");;
+gap> GV_Nodes(g);
+HashMap([])
+gap> GV_Nodes(parent);
+HashMap([[ "a", <object> ]])
+gap> GV_Nodes(sibling);
+HashMap([[ "b", <object> ]])
+gap> GV_Nodes(child);
+HashMap([[ "c", <object> ]])
+
+# Test context attribute resetting
+gap> g := GV_Digraph();;
+gap> ctx := GV_AddContext(g);;
+gap> GV_SetAttr(ctx, "node[color=\"red\"]");;
+gap> GV_AddNode(ctx, "a");;
+gap> GV_SetAttr(g, "node[color=\"blue\"]");;
+gap> GV_String(g);
+"digraph  {\n\tnode[color=\"blue\"] \n//  context \n\tnode[color=\"red\"] \n\t\
+\"a\"\n\n}\n"
 
 #
