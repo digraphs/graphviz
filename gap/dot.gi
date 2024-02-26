@@ -527,16 +527,24 @@ InstallMethod(GV_AddContext,
 [IsGVGraph, IsString],
 function(graph, name)
   local ctx;
+
+  if ForAny(GV_Subgraphs(graph), x -> GV_Name(x) = name) then
+    return ErrorNoReturn(StringFormatted("The graph already contains a subgraph with name {}.",
+                        name));
+  fi;
+
   ctx := GV_Context(name);
   Add(GV_Subgraphs(graph), ctx);
   GV_SetParent(ctx, graph);
+  GV_IncCounter(graph);
   return ctx;
 end);
 
 InstallMethod(GV_AddContext, 
 "for a graphviz graph",
 [IsGVGraph],
-g -> GV_AddContext(g, ""));
+g -> GV_AddContext(g, StringFormatted("no_name_{}", 
+                                               String(GV_GetCounter(g)))));
 
 InstallMethod(GV_RemoveNode, "for a graphviz graph and node",
 [IsGVGraph, IsGVNode],

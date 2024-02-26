@@ -30,7 +30,7 @@ gap> GV_AddSubgraph(g);
 <digraph no_name_0 with 0 nodes and 0 edges>
 gap> g := GV_Graph();;
 gap> GV_AddContext(g);
-<context with 0 nodes and 0 edges>
+<context no_name_0 with 0 nodes and 0 edges>
 
 # Test no-name constructor graphs' names increment
 gap> g := GV_Graph();;
@@ -41,7 +41,16 @@ gap> GV_AddSubgraph(g);
 gap> GV_AddSubgraph(g);
 <graph no_name_2 with 0 nodes and 0 edges>
 gap> GV_AddContext(g);
-<context with 0 nodes and 0 edges>
+<context no_name_3 with 0 nodes and 0 edges>
+
+# Test no-name constructor graphs' names increment (contexts)
+gap> g := GV_Graph();;
+gap> GV_AddContext(g);
+<context no_name_0 with 0 nodes and 0 edges>
+gap> GV_AddContext(g);
+<context no_name_1 with 0 nodes and 0 edges>
+gap> GV_AddContext(g);
+<context no_name_2 with 0 nodes and 0 edges>
 
 # Test getting subgraphs
 gap> g := GV_Graph();;
@@ -259,9 +268,9 @@ gap> GV_SetAttr(ctx, "node[color=\"red\"]");;
 gap> GV_AddNode(ctx, "a");;
 gap> GV_String(g);
 "digraph  {\n\tcolor=\"green\" edge [label=\"testing123\"] node[color=\"blue\"\
-] edge[color=\"blue\"] \n//  context \n\tnode[color=\"red\"] \n\t\"a\"\n\tcolo\
-r=\"green\" edge [label=\"testing123\"] node[color=\"blue\"] edge[color=\"blue\
-\"] \n\n}\n"
+] edge[color=\"blue\"] \n// no_name_0 context \n\tnode[color=\"red\"] \n\t\"a\
+\"\n\tcolor=\"green\" edge [label=\"testing123\"] node[color=\"blue\"] edge[co\
+lor=\"blue\"] \n\n}\n"
 
 # Test adding subgraphs with the same name
 gap> g := GV_Digraph();;
@@ -279,5 +288,14 @@ gap> GV_GetSubgraph(g, "b");
 <digraph b with 0 nodes and 0 edges>
 gap> GV_GetSubgraph(g, "d");
 fail
+
+# Test getting context (subgraph) by name
+gap> g := GV_Digraph();;
+gap> s1 := GV_AddSubgraph(g, "a");;
+gap> s2 := GV_AddContext(g, "c");;
+gap> GV_GetSubgraph(g, "a");
+<digraph a with 0 nodes and 0 edges>
+gap> GV_GetSubgraph(g, "c");
+<context c with 0 nodes and 0 edges>
 
 #
