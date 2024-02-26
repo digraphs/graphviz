@@ -240,11 +240,16 @@ HashMap([[ "c", <object> ]])
 # Test context attribute resetting
 gap> g := GV_Digraph();;
 gap> ctx := GV_AddContext(g);;
+gap> GV_SetAttr(g, "color", "green");;
+gap> GV_SetAttr(g, "edge [label=\"testing123\"]");;
+gap> GV_SetAttr(g, "node[color=\"blue\"]");;
+gap> GV_SetAttr(g, "edge[color=\"blue\"]");;
 gap> GV_SetAttr(ctx, "node[color=\"red\"]");;
 gap> GV_AddNode(ctx, "a");;
-gap> GV_SetAttr(g, "node[color=\"blue\"]");;
 gap> GV_String(g);
-"digraph  {\n\tnode[color=\"blue\"] \n//  context \n\tnode[color=\"red\"] \n\t\
-\"a\"\n\n}\n"
+"digraph  {\n\tcolor=\"green\" edge [label=\"testing123\"] node[color=\"blue\"\
+] edge[color=\"blue\"] \n//  context \n\tnode[color=\"red\"] \n\t\"a\"\n\tcolo\
+r=\"green\" edge [label=\"testing123\"] node[color=\"blue\"] edge[color=\"blue\
+\"] \n\n}\n"
 
 #

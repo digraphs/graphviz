@@ -11,7 +11,6 @@
  - make it so when duplicates are added to global graph attrs the old values are automatically replaced
  - nail down behaviour for subgraphs digraphs with the same name 
  - add history for graph contructions (and order string output based on the history)
- - add attribute reseting after contexts
  - get subgraph by name
  - dont allow subgraphs and parent graphs to contain the same set of nodes
     - add nice error message where to find it

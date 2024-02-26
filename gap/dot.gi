@@ -500,6 +500,7 @@ function(graph, name)
   local ctx;
   ctx := GV_Context(name);
   Add(GV_Subgraphs(graph), ctx);
+  GV_SetParent(ctx, graph);
   return ctx;
 end);
 
@@ -805,7 +806,7 @@ function(graph, is_subgraph)
   if IsGVContext(graph) then
     # reset attributes following the context
     if GV_GetParent(graph) <> fail then
-      Append(GV_StringifyGraphAttrs(GV_GetParent(graph)));
+      Append(result, GV_StringifyGraphAttrs(GV_GetParent(graph)));
     fi;
     Append(result, "\n");
   else 
