@@ -87,6 +87,7 @@ DeclareOperation("GV_Nodes", [IsGVGraph]);
 #! @Returns the subgraphs of the provided graphviz graph.
 #! @Description gets the subgraphs of a provided graphviz graph.
 DeclareOperation("GV_Subgraphs", [IsGVGraph]);
+DeclareOperation("GV_GetSubgraph", [IsGVGraph, IsString]);
 
 #! @Arguments graph
 #! @Returns the edges of the provided graphviz graph.

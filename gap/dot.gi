@@ -94,6 +94,7 @@ InstallMethod(GV_Graph, "for a string", [IsString],
 function(name)
   return Objectify(GV_GraphType,
                       rec(Name       := name,
+                          Counter    := 0,
                           Nodes      := HashMap(),
                           Subgraphs  := [],
                           Edges      := [],
@@ -106,6 +107,7 @@ InstallMethod(GV_Digraph, "for a string", [IsString],
 function(name)
   return Objectify(GV_DigraphType,
                       rec(Name       := name,
+                          Counter    := 0,
                           Nodes      := HashMap(),
                           Subgraphs  := [],
                           Edges      := [],
@@ -118,6 +120,7 @@ InstallMethod(GV_Context, "for a string", [IsString],
 function(name)
   return Objectify(GV_ContextType,
                       rec(Name        := name,
+                          Counter     := 0,
                           Nodes       := HashMap(),
                           Edges       := [],
                           Subgraphs   := [],
@@ -211,6 +214,24 @@ InstallMethod(GV_Edges, "for a graphviz graph", [IsGVGraph], x -> x!.Edges);
 InstallMethod(GV_Tail, "for a graphviz edge", [IsGVEdge], x -> x!.Tail);
 InstallMethod(GV_Head, "for a graphviz edge", [IsGVEdge], x -> x!.Head);
 InstallMethod(GV_Subgraphs, "for a graphviz graph", [IsGVGraph], x -> x!.Subgraphs);
+InstallMethod(GV_GetSubgraph, 
+"for a graphviz graph and string", 
+[IsGVGraph, IsString], 
+{x, name} -> First(GV_Subgraphs(x), s -> GV_Name(s) = name));
+
+DeclareOperation("GV_IncCounter", [IsGVGraph]);
+InstallMethod(GV_IncCounter, 
+"for a graphviz graph",
+[IsGVGraph], 
+function(x) 
+  x!.Counter := x!.Counter + 1;
+end);
+
+DeclareOperation("GV_GetCounter", [IsGVGraph]);
+InstallMethod(GV_GetCounter, 
+"for a graphviz graph",
+[IsGVGraph], 
+x -> x!.Counter);
 
 InstallMethod(GV_HasNode, 
 "for a graphviz graph", 
@@ -468,10 +489,15 @@ function(x, head, tail)
 end);
 
 InstallMethod(GV_AddSubgraph, 
-"for a graph, filter and string",
+"for a graphviz graph and string",
 [IsGVGraph, IsString],
 function(graph, name)
   local subgraph;
+
+  if ForAny(GV_Subgraphs(graph), x -> GV_Name(x) = name) then
+    return ErrorNoReturn(StringFormatted("The graph already contains a subgraph with name {}.",
+                        name));
+  fi;
 
   if IsGVDigraph(graph) then
     subgraph := GV_Digraph(name);
@@ -483,14 +509,17 @@ function(graph, name)
 
   Add(GV_Subgraphs(graph), subgraph);
   GV_SetParent(subgraph, graph);
+  GV_IncCounter(graph);
   return subgraph;
 end);
 
 InstallMethod(GV_AddSubgraph, 
-"for a graph and filter",
+"for a grpahviz graph",
 [IsGVGraph],
 function(graph)
-  return GV_AddSubgraph(graph, "");
+  local name;
+  return GV_AddSubgraph(graph, StringFormatted("no_name_{}", 
+                                               String(GV_GetCounter(graph))));
 end);
 
 InstallMethod(GV_AddContext, 

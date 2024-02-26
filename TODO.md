@@ -12,9 +12,9 @@
  - nail down behaviour for subgraphs digraphs with the same name 
  - add history for graph contructions (and order string output based on the history)
  - get subgraph by name
- - dont allow subgraphs and parent graphs to contain the same set of nodes
-    - add nice error message where to find it
+ - add nice error message when adding a node fails (tell them where to find it)
  - make sure all functions can take objects as well as strings
+ - Make it so all constructors /  adding methods can contain objects!
 
 ## Other
  - relates to deadnaut github issue https://www.mankier.com/1/nauty-dretodot
