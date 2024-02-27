@@ -6,14 +6,14 @@ LoadPackage("graphviz");
 g := GV_Digraph("G");
 GV_SetAttr(g, "compound=true");
 
-cluster0 := GV_AddSubgraph(g, IsGVDigraph, "cluster0");
+cluster0 := GV_AddSubgraph(g, "cluster0");
 GV_AddEdge(cluster0, "a", "b");
 GV_AddEdge(cluster0, "a", "c");
 GV_AddEdge(cluster0, "b", "d");
 GV_AddEdge(cluster0, "c", "d");
 
 
-cluster1 := GV_AddSubgraph(g, IsGVDigraph, "cluster1");
+cluster1 := GV_AddSubgraph(g, "cluster1");
 GV_AddEdge(cluster1, "e", "g");
 GV_AddEdge(cluster1, "e", "f");
 

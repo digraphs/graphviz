@@ -5,7 +5,7 @@ LoadPackage("graphviz");
 g := GV_Digraph("G");
 GV_SetAttr(g, "bgcolor", "blue");
 
-cluster1 := GV_AddSubgraph(g, IsGVDigraph, "cluster_1");
+cluster1 := GV_AddSubgraph(g, "cluster_1");
 GV_SetAttr(cluster1, "fontcolor", "white");
 GV_SetAttr(cluster1, "node[shape=circle, style=filled, fillcolor=\"white:black\", gradientangle=360, label=\"n9:n360\", fontcolor=black]");
 GV_AddNode(cluster1, "n9");
@@ -20,7 +20,7 @@ od;
 GV_SetAttr(cluster1, "label", "\"Linear Angle Variations (white to black gradient)\"");
 
 
-cluster2 := GV_AddSubgraph(g, IsGVDigraph, "cluster_2");
+cluster2 := GV_AddSubgraph(g, "cluster_2");
 GV_SetAttr(cluster2, "fontcolor", "white");
 GV_SetAttr(cluster2, "node[shape=circle, style=radial, fillcolor=\"white:black\", gradientangle=360, label=\"n9:n360\", fontcolor=black]");
 GV_AddNode(cluster2, "n18");

@@ -567,7 +567,7 @@ function(graph, name)
 
   if ForAny(GV_Subgraphs(graph), x -> GV_Name(x) = name) then
     return ErrorNoReturn(StringFormatted("The graph already contains a subgraph with name {}.",
-                        name));
+                                         name));
   fi;
 
   ctx := GV_Context(graph, name);
@@ -579,7 +579,7 @@ InstallMethod(GV_AddContext,
 "for a graphviz graph",
 [IsGVGraph],
 g -> GV_AddContext(g, StringFormatted("no_name_{}", 
-                                               String(GV_GetCounter(g)))));
+                                      String(GV_GetCounter(g)))));
 
 InstallMethod(GV_RemoveNode, "for a graphviz graph and node",
 [IsGVGraph, IsGVNode],
@@ -602,9 +602,6 @@ function(g, name)
       tail := GV_Tail(e);
       return name <> GV_Name(tail) and name <> GV_Name(head); 
     end);
-  
-  # handle subgraphs
-  Perform(GV_Subgraphs(g), s -> GV_RemoveNode(s, name));
 
   return g;
 end); 
@@ -825,18 +822,40 @@ function(attrs)
   return result;
 end);
 
+DeclareOperation("GV_GetIdx", [IsGVObject]);
+InstallMethod(GV_GetIdx, 
+"for a graphviz object",
+[IsGVObject],
+x -> x!.Idx);
+
+DeclareOperation("GV_ConstructHistory", [IsGVGraph]);
+InstallMethod(GV_ConstructHistory, 
+"for a graphviz graph",
+[IsGVGraph],
+function(graph)
+  local nodes, edges, subs, node_hist, edge_hist, subs_hist, hist;
+  
+  nodes := GV_Nodes(graph); 
+  edges := GV_Edges(graph); 
+  subs  := GV_Subgraphs(graph); 
+  
+  node_hist := List(Keys(nodes), name -> [GV_GetIdx(nodes[name]), nodes[name]]);
+  subs_hist := List(subs, s -> [GV_GetIdx(s), s]);
+  edge_hist := List(edges, e -> [GV_GetIdx(e), e]);
+
+  hist := Concatenation(node_hist, edge_hist, subs_hist);
+  SortBy(hist, v -> v[1]);
+
+  Apply(hist, x -> x[2]);
+  return hist;
+end);
+
 InstallMethod(GV_StringifyGraph, 
 "for a graphviz graph and a string",
 [IsGVGraph, IsBool],
 function(graph, is_subgraph)
-  local nodes, edges, subgraphs, result, elem, i;
-  nodes := GV_Nodes(graph);
-  edges := GV_Edges(graph);
-  subgraphs := GV_Subgraphs(graph);
+  local result, obj;
   result := "";
-
-  # List(Keys(nodes), name -> [name, GV_GetIdx(nodes[name])]);
-  # objs := Concatenation(edges, )
 
   # get the correct head to use
   if is_subgraph then
@@ -857,24 +876,22 @@ function(graph, is_subgraph)
     return ErrorNoReturn("Invalid graph type.");
   fi;
 
-  # String attributes
   Append(result, GV_StringifyGraphAttrs(graph));
 
-  # stringify subgraphs
-  for elem in subgraphs do
-    Append(result, GV_StringifyGraph(elem, true));
-  od;
-
-  # stringify attributes, nodes and edges.
-  for elem in SSortedList(Keys(nodes)) do
-    Append(result, GV_StringifyNode(nodes[elem]));
-  od;
-
-  for elem in edges do
-    if IsGVDigraph(graph) or (IsGVContext(graph) and IsGVDigraph(GV_GetParent(graph))) then
-      Append(result, GV_StringifyDigraphEdge(elem));
-    else
-      Append(result, GV_StringifyGraphEdge(elem));
+  # Add child graphviz objects
+  for obj in GV_ConstructHistory(graph) do
+    if IsGVGraph(obj) then
+      Append(result, GV_StringifyGraph(obj, true));
+    elif IsGVNode(obj) then
+      Append(result, GV_StringifyNode(obj));
+    elif IsGVEdge(obj) then
+      if IsGVDigraph(graph) or (IsGVContext(graph) and IsGVDigraph(GV_GetParent(graph))) then
+        Append(result, GV_StringifyDigraphEdge(obj));
+      else
+        Append(result, GV_StringifyGraphEdge(obj));
+      fi;
+    else 
+      return ErrorNoReturn("Invalid graphviz object type.");
     fi;
   od;
 

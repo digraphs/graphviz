@@ -1,6 +1,7 @@
 # https://graphviz.readthedocs.io/en/stable/examples.html
 LoadPackage("graphviz");
 graph := GV_Graph("G");
+GV_SetAttr(graph, "engine=\"sfdp\"");
 
 GV_AddEdge(graph, "run", "intr");
 GV_AddEdge(graph, "intr", "runbl");

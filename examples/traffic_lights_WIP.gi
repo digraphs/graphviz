@@ -5,7 +5,7 @@ LoadPackage("graphviz");
 t := GV_Digraph("TrafficLights");
 GV_SetAttr(t, "engine=neato");
 
-ctx1 := GV_AddSubgraph(t, IsGVContext, "ctx1");
+ctx1 := GV_AddSubgraph(t, "ctx1");
 GV_SetAttr(ctx1, "node [shape=\"box\"]");
 for i in [2, 1] do
     GV_AddNode(ctx1, StringFormatted("gy{}", i));
@@ -14,7 +14,7 @@ for i in [2, 1] do
 od;
 
 
-ctx2 := GV_AddSubgraph(t, IsGVContext, "ctx2");
+ctx2 := GV_AddSubgraph(t, "ctx2");
 GV_SetAttr(ctx2, "node [shape=\"circle\", fixedsize=true, width=0.9]");
 for i in [2, 1] do
     GV_AddNode(ctx2, StringFormatted("green{}", i));

@@ -4,13 +4,13 @@ LoadPackage("graphviz");
 e := GV_Graph("ER");
 GV_SetAttr(e, "engine=\"neato\"");
 
-start := GV_AddSubgraph(e, IsGVContext, "context_start");
+start := GV_AddContext(e, "context_start");
 GV_SetAttr(start, "node[shape=\"box\"]");
 GV_AddNode(start, "course");
 GV_AddNode(start, "institute");
 GV_AddNode(start, "student");
 
-context1 := GV_AddSubgraph(e, IsGVContext, "context1");
+context1 := GV_AddContext(e, "context1");
 GV_SetAttr(context1, "node [shape=\"ellipse\"]");
 GV_SetAttr(GV_AddNode(context1, "name0"), "label", "name");
 GV_SetAttr(GV_AddNode(context1, "name1"), "label", "name");
@@ -19,13 +19,7 @@ GV_AddNode(context1, "code");
 GV_AddNode(context1, "grade");
 GV_AddNode(context1, "number");
 
-context2 := GV_AddSubgraph(e, IsGVContext, "context2");
-GV_SetAttr(context2, "node [shape=\"diamond\", style=\"filled\", color=\"lightgrey\"]");
-GV_AddNode(context2, "C-I");
-GV_AddNode(context2, "S-C");
-GV_AddNode(context2, "S-I");
-
-context2 := GV_AddSubgraph(e, IsGVContext, "context2");
+context2 := GV_AddContext(e, "context2");
 GV_SetAttr(context2, "node [shape=\"diamond\", style=\"filled\", color=\"lightgrey\"]");
 GV_AddNode(context2, "C-I");
 GV_AddNode(context2, "S-C");

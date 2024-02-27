@@ -4,14 +4,14 @@
 LoadPackage("graphviz");
 g := GV_Digraph();
 
-s1 := GV_AddSubgraph(g, IsGVDigraph);
+s1 := GV_AddSubgraph(g);
 GV_SetAttr(s1, "rank=same");
 GV_AddNode(s1, "A");
 GV_AddNode(s1, "X");
 
 GV_AddNode(g, "C");
 
-s2 := GV_AddSubgraph(g, IsGVDigraph);
+s2 := GV_AddSubgraph(g);
 GV_SetAttr(s2, "rank=same");
 GV_AddNode(s2, "B");
 GV_AddNode(s2, "D");
