@@ -2,6 +2,9 @@
 # Private functionality
 ###############################################################################
 
+DeclareOperation("GV_GetCounter", [IsGVGraph]);
+DeclareOperation("GV_IncCounter", [IsGVGraph]);
+
 DeclareOperation("GV_StringifyGraphHead", [IsGVGraph]);
 DeclareOperation("GV_StringifyDigraphHead", [IsGVGraph]);
 DeclareOperation("GV_StringifySubgraphHead", [IsGVGraph]);
@@ -49,87 +52,135 @@ BindGlobal("GV_ContextType", NewType(GV_ObjectFamily,
 ###############################################################################
 # Constuctors etc
 ###############################################################################
+DeclareOperation("GV_Node", [IsGVGraph, IsString]);
+DeclareOperation("GV_Edge", [IsGVGraph, IsGVNode, IsGVNode]);
+DeclareOperation("GV_Graph", [IsGVGraph, IsString]);
+DeclareOperation("GV_Digraph", [IsGVDigraph, IsString]);
+DeclareOperation("GV_Context", [IsGVGraph, IsString]);
 
-# Node constructors
-DeclareOperation("GV_Node", [IsString]);
-InstallMethod(GV_Node, "for a string", [IsString],
-function(name)
-
+InstallMethod(GV_Node, 
+"for a string", 
+[IsGVGraph, IsString],
+function(graph, name)
+  local out;
   if Length(name) = 0 then
     return ErrorNoReturn("Node name cannot be empty.");
   fi;
-  return Objectify(GV_NodeType, 
+  out := Objectify(GV_NodeType, 
                   rec(
                     Name  := name,
-                    Attrs := HashMap()                
+                    Attrs := HashMap(),
+                    Idx   := GV_GetCounter(graph)                
                   ));
+  GV_IncCounter(graph);
+  return out;
 end);
 
-# Edge constructors
-DeclareOperation("GV_Edge", [IsGVNode, IsGVNode]);
 InstallMethod(GV_Edge, "for two graphviz nodes", 
-[IsGVNode, IsGVNode],
-function(head, tail)
-  return Objectify(GV_EdgeType, 
+[IsGVGraph, IsGVNode, IsGVNode],
+function(graph, head, tail)
+  local out;
+  out :=  Objectify(GV_EdgeType, 
                 rec(
                   Name  := "",
                   Head  := head,
                   Tail  := tail,
-                  Attrs := HashMap()                
+                  Attrs := HashMap(),
+                  Idx   := GV_GetCounter(graph)                
                 ));
-end);
-
-DeclareOperation("GV_Edge", [IsString, IsString]);
-InstallMethod(GV_Edge, "for two strings",
-[IsString, IsString],
-function(head_name, tail_name)
-  local head, tail; 
-  head := GV_Node(head_name);
-  tail := GV_Node(tail_name);
-  return GV_Edge(head, tail);
+  GV_IncCounter(graph);
+  return out;
 end);
 
 # Graph constructors
-InstallMethod(GV_Graph, "for a string", [IsString],
+
+InstallMethod(GV_Digraph, 
+"for a graphviz digraph and a string", 
+[IsGVDigraph, IsString],
+function(parent, name)
+  local out;
+
+  out := GV_Digraph(name);
+  out!.Parent := parent;
+  out!.Idx := GV_GetCounter(parent);
+  
+  GV_IncCounter(parent);
+  return out;
+end);
+
+InstallMethod(GV_Graph, 
+"for a graphviz graph and a string", 
+[IsGVGraph, IsString],
+function(parent, name)
+  local out;
+
+  out := GV_Graph(name);
+  out!.Parent := parent;
+  out!.Idx := GV_GetCounter(parent);
+  
+  GV_IncCounter(parent);
+  return out;
+end);
+
+InstallMethod(GV_Context, 
+"for a string and a positive integer", 
+[IsGVGraph, IsString],
+function(parent, name)
+  local out;
+
+  out := Objectify(GV_ContextType,
+                      rec(
+                        Name      := name,
+                        Subgraphs := [],
+                        Nodes     := HashMap(),
+                        Edges     := [],
+                        Attrs     := [],
+                        Parent    := parent,
+                        Idx       := GV_GetCounter(parent),               
+                        Counter   := 1
+                      ));
+  
+  GV_IncCounter(parent);
+  return out;
+end);
+
+# public constructors
+
+
+InstallMethod(GV_Graph, 
+"for a string and a positive integer", 
+[IsString],
 function(name)
   return Objectify(GV_GraphType,
-                      rec(Name       := name,
-                          Counter    := 0,
-                          Nodes      := HashMap(),
-                          Subgraphs  := [],
-                          Edges      := [],
-                          Parent     := fail,
-                          Attrs      := []));
+                      rec(
+                        Name      := name,
+                        Subgraphs := [],
+                        Nodes     := HashMap(),
+                        Edges     := [],
+                        Attrs     := [],
+                        Parent    := fail,
+                        Idx       := 1,               
+                        Counter   := 1
+                      ));
 end);
 
-# Graph constructors
-InstallMethod(GV_Digraph, "for a string", [IsString],
+InstallMethod(GV_Digraph, 
+"for a string", 
+[IsString],
 function(name)
   return Objectify(GV_DigraphType,
-                      rec(Name       := name,
-                          Counter    := 0,
-                          Nodes      := HashMap(),
-                          Subgraphs  := [],
-                          Edges      := [],
-                          Parent     := fail,
-                          Attrs      := []));
+                      rec(
+                        Name      := name,
+                        Subgraphs := [],
+                        Nodes     := HashMap(),
+                        Edges     := [],
+                        Attrs     := [],
+                        Parent    := fail,
+                        Idx       := 1,
+                        Counter   := 1
+                      ));
 end);
 
-DeclareOperation("GV_Context", [IsString]);
-InstallMethod(GV_Context, "for a string", [IsString],
-function(name)
-  return Objectify(GV_ContextType,
-                      rec(Name        := name,
-                          Counter     := 0,
-                          Nodes       := HashMap(),
-                          Edges       := [],
-                          Subgraphs   := [],
-                          Parent      := fail,
-                          Attrs       := []));
-end);
-
-DeclareOperation("GV_Context", []);
-InstallMethod(GV_Context, "for no args", [], {} -> GV_Context(""));
 InstallMethod(GV_Graph, "for no args", [], {} -> GV_Graph(""));
 InstallMethod(GV_Digraph, "for no args", [], {} -> GV_Digraph(""));
 
@@ -219,7 +270,6 @@ InstallMethod(GV_GetSubgraph,
 [IsGVGraph, IsString], 
 {x, name} -> First(GV_Subgraphs(x), s -> GV_Name(s) = name));
 
-DeclareOperation("GV_IncCounter", [IsGVGraph]);
 InstallMethod(GV_IncCounter, 
 "for a graphviz graph",
 [IsGVGraph], 
@@ -227,7 +277,6 @@ function(x)
   x!.Counter := x!.Counter + 1;
 end);
 
-DeclareOperation("GV_GetCounter", [IsGVGraph]);
 InstallMethod(GV_GetCounter, 
 "for a graphviz graph",
 [IsGVGraph], 
@@ -286,14 +335,6 @@ function(graph, name)
   od;
 
   return fail;
-end);
-
-DeclareOperation("GV_SetParent", [IsGVGraph, IsGVGraph]);
-InstallMethod(GV_SetParent, 
-"for a graphviz graph", 
-[IsGVGraph, IsGVGraph],
-function(subgraph, graph)
-  subgraph!.Parent := graph;
 end);
 
 DeclareOperation("GV_HasParent", [IsGVGraph]);
@@ -384,8 +425,6 @@ function(graph, node)
   return GV_Nodes(graph)[node];
 end);
 
-# Private Helper Function
-DeclareOperation("GV_AddNode", [IsGVGraph, IsGVNode]);
 InstallMethod(GV_AddNode, 
 "for a graphviz graph and node",
 [IsGVGraph, IsGVNode], 
@@ -408,14 +447,14 @@ InstallMethod(GV_AddNode, "for a graphviz graph and string",
 [IsGVGraph, IsString], 
 function(x, name)
   local node;
-  node := GV_Node(name);
+  node := GV_Node(x, name);
   GV_AddNode(x, node);
   return node;
 end);
 
-# Private Helper Function
 DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVEdge]);
-InstallMethod(GV_AddEdge, "for a graphviz graph and edge",
+InstallMethod(GV_AddEdge, 
+"for a graphviz graph and edge",
 [IsGVGraph, IsGVEdge], 
 function(x, edge)
   local head_curr, tail_curr, head, head_name, tail_name, tail;
@@ -464,7 +503,7 @@ function(x, head, tail)
     GV_AddNode(x, tail);
   fi;
 
-  edge := GV_Edge(head, tail);
+  edge := GV_Edge(x, head, tail);
   GV_AddEdge(x, edge);
   return edge;
 end);
@@ -477,12 +516,12 @@ function(x, head, tail)
 
   head_node := GV_FindNodeS(x, head);
   if head_node = fail then
-    head_node := GV_Node(head);
+    head_node := GV_Node(x, head);
   fi;
 
   tail_node := GV_FindNodeS(x, tail);
   if tail_node = fail then
-    tail_node := GV_Node(tail);
+    tail_node := GV_Node(x, tail);
   fi;
 
   return GV_AddEdge(x, head_node, tail_node);
@@ -500,16 +539,14 @@ function(graph, name)
   fi;
 
   if IsGVDigraph(graph) then
-    subgraph := GV_Digraph(name);
+    subgraph := GV_Digraph(graph, name);
   elif IsGVGraph(graph) then
-    subgraph := GV_Graph(name);
+    subgraph := GV_Graph(graph, name);
   else
     return ErrorNoReturn("Filter must be a filter for a graph category.");
   fi;
 
   Add(GV_Subgraphs(graph), subgraph);
-  GV_SetParent(subgraph, graph);
-  GV_IncCounter(graph);
   return subgraph;
 end);
 
@@ -533,10 +570,8 @@ function(graph, name)
                         name));
   fi;
 
-  ctx := GV_Context(name);
+  ctx := GV_Context(graph, name);
   Add(GV_Subgraphs(graph), ctx);
-  GV_SetParent(ctx, graph);
-  GV_IncCounter(graph);
   return ctx;
 end);
 
@@ -799,6 +834,9 @@ function(graph, is_subgraph)
   edges := GV_Edges(graph);
   subgraphs := GV_Subgraphs(graph);
   result := "";
+
+  # List(Keys(nodes), name -> [name, GV_GetIdx(nodes[name])]);
+  # objs := Concatenation(edges, )
 
   # get the correct head to use
   if is_subgraph then

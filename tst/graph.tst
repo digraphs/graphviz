@@ -26,12 +26,15 @@ gap> x := GV_Digraph();
 
 # Test adding nodes
 gap> g := GV_Graph();;
-gap> n := GV_Node("n");;
-gap> GV_AddNode(g, n);
+gap> n := GV_AddNode(g, "n");
+<node n>
+gap> g;
 <graph with 1 node and 0 edges>
 gap> GV_Nodes(g);
 HashMap([[ "n", <object> ]])
-gap> GV_AddNode(g, GV_Node("x"));
+gap> GV_AddNode(g, "x");
+<node x>
+gap> g;
 <graph with 2 nodes and 0 edges>
 gap> GV_Nodes(g);
 HashMap([[ "n", <object> ], [ "x", <object> ]])
@@ -49,8 +52,8 @@ HashMap([[ "n", <object> ], [ "x", <object> ]])
 
 # Test has nodes
 gap> g := GV_Graph();;
-gap> n := GV_Node("n");;
-gap> GV_AddNode(g, n);;
+gap> n := GV_AddNode(g, "n");
+<node n>
 gap> GV_HasNode(g, "n");
 true
 gap> GV_HasNode(g, "x");
@@ -58,39 +61,16 @@ false
 
 # Test adding edges
 gap> g := GV_Graph();;
-gap> a := GV_Node("a");;
-gap> b := GV_Node("b");;
-gap> c := GV_Node("c");;
-gap> d := GV_Node("d");;
-gap> ab := GV_Edge(a, b);;
-gap> cd := GV_Edge(c, d);;
-gap> GV_AddEdge(g, ab);
-<graph with 2 nodes and 1 edge>
-gap> GV_Edges(g);
-[ <edge (a, b)> ]
-gap> GV_AddNode(g, c);;
-gap> GV_AddNode(g, d);;
-gap> GV_AddEdge(g, cd);
-<graph with 4 nodes and 2 edges>
-gap> GV_Edges(g);
-[ <edge (a, b)>, <edge (c, d)> ]
-
-# Test adding edges (two nodes)
-gap> g := GV_Graph();;
-gap> a := GV_Node("a");;
-gap> b := GV_Node("b");;
-gap> c := GV_Node("c");;
-gap> d := GV_Node("d");;
-gap> GV_AddEdge(g, a, b);
-<edge (a, b)>
+gap> a := GV_AddNode(g, "a");;
+gap> b := GV_AddNode(g, "b");;
+gap> ab := GV_AddEdge(g, a, b);;
 gap> g;
 <graph with 2 nodes and 1 edge>
 gap> GV_Edges(g);
 [ <edge (a, b)> ]
-gap> GV_AddNode(g, c);;
-gap> GV_AddNode(g, d);;
-gap> GV_AddEdge(g, c, d);
-<edge (c, d)>
+gap> c := GV_AddNode(g, "c");;
+gap> d := GV_AddNode(g, "d");;
+gap> cd := GV_AddEdge(g, c, d);;
 gap> g;
 <graph with 4 nodes and 2 edges>
 gap> GV_Edges(g);
@@ -135,12 +115,12 @@ gap> g;
 
 # Test removing node
 gap> g := GV_Graph();;
-gap> a := GV_Node("a");;
-gap> b := GV_Node("b");;
-gap> c := GV_Node("c");;
-gap> d := GV_Node("d");;
-gap> ab := GV_Edge(a, b);;
-gap> cd := GV_Edge(c, d);;
+gap> a := GV_AddNode(g, "a");;
+gap> b := GV_AddNode(g, "b");;
+gap> c := GV_AddNode(g, "c");;
+gap> d := GV_AddNode(g, "d");;
+gap> ab := GV_Edge(g, a, b);;
+gap> cd := GV_Edge(g, c, d);;
 gap> GV_AddEdge(g, ab);;
 gap> GV_AddEdge(g, cd);;
 gap> GV_RemoveNode(g, a);
@@ -212,11 +192,9 @@ gap> GV_String(g);
 # [  ]
 
 # Test gettting a node using bracket notation
-gap> n1 := GV_Node("test");;
-gap> n2 := GV_Node("abc");;
 gap> g := GV_Graph();;
-gap> GV_AddNode(g, n1);;
-gap> GV_AddNode(g, n2);;
+gap> n1 := GV_AddNode(g, "test");;
+gap> n2 := GV_AddNode(g, "abc");;
 gap> g["test"];
 <node test>
 gap> g["abc"];

@@ -24,33 +24,33 @@ gap> GV_AddContext(g, "test-context");
 # Test no-name constructors
 gap> g := GV_Graph();;
 gap> GV_AddSubgraph(g);
-<graph no_name_0 with 0 nodes and 0 edges>
+<graph no_name_1 with 0 nodes and 0 edges>
 gap> g := GV_Digraph();;
 gap> GV_AddSubgraph(g);
-<digraph no_name_0 with 0 nodes and 0 edges>
+<digraph no_name_1 with 0 nodes and 0 edges>
 gap> g := GV_Graph();;
 gap> GV_AddContext(g);
-<context no_name_0 with 0 nodes and 0 edges>
+<context no_name_1 with 0 nodes and 0 edges>
 
 # Test no-name constructor graphs' names increment
 gap> g := GV_Graph();;
 gap> GV_AddSubgraph(g);
-<graph no_name_0 with 0 nodes and 0 edges>
-gap> GV_AddSubgraph(g);
 <graph no_name_1 with 0 nodes and 0 edges>
 gap> GV_AddSubgraph(g);
 <graph no_name_2 with 0 nodes and 0 edges>
+gap> GV_AddSubgraph(g);
+<graph no_name_3 with 0 nodes and 0 edges>
 gap> GV_AddContext(g);
-<context no_name_3 with 0 nodes and 0 edges>
+<context no_name_4 with 0 nodes and 0 edges>
 
 # Test no-name constructor graphs' names increment (contexts)
 gap> g := GV_Graph();;
 gap> GV_AddContext(g);
-<context no_name_0 with 0 nodes and 0 edges>
-gap> GV_AddContext(g);
 <context no_name_1 with 0 nodes and 0 edges>
 gap> GV_AddContext(g);
 <context no_name_2 with 0 nodes and 0 edges>
+gap> GV_AddContext(g);
+<context no_name_3 with 0 nodes and 0 edges>
 
 # Test getting subgraphs
 gap> g := GV_Graph();;
@@ -95,25 +95,22 @@ Error, Already node with name n.
 gap> g := GV_Graph();;
 gap> s1 := GV_AddSubgraph(g, "a");;
 gap> s2 := GV_AddSubgraph(g, "b");;
-gap> new_node := GV_Node("n");;
 gap> nodes := GV_AddNode(s1, "n");;
-gap> nodeg := GV_AddNode(s2, new_node);
+gap> nodeg := GV_AddNode(s2, "n");
 Error, Already node with name n.
 
 # Test fails adding a new node to a graph which when parent has different node with same name
 gap> g := GV_Graph();;
 gap> s := GV_AddSubgraph(g, "a");;
-gap> new_node := GV_Node("n");;
 gap> nodes := GV_AddNode(g, "n");;
-gap> nodeg := GV_AddNode(s, new_node);
+gap> nodeg := GV_AddNode(s, "n");
 Error, Already node with name n.
 
 # Test fails adding a new node to a graph which when child has different node with same name
 gap> g := GV_Graph();;
 gap> s := GV_AddSubgraph(g, "a");;
-gap> new_node := GV_Node("n");;
 gap> nodes := GV_AddNode(s, "n");;
-gap> nodeg := GV_AddNode(g, new_node);
+gap> nodeg := GV_AddNode(g, "n");
 Error, Already node with name n.
 
 # Test adding edges to subgraphs
@@ -197,7 +194,7 @@ gap> GV_String(g);
 gap> g := GV_Digraph();;
 gap> s := GV_AddSubgraph(g);;
 gap> GV_String(g);
-"digraph  {\nsubgraph no_name_0 {\n}\n}\n"
+"digraph  {\nsubgraph no_name_1 {\n}\n}\n"
 
 # finding a node in a sibling graph
 gap> g := GV_Digraph();;
@@ -268,7 +265,7 @@ gap> GV_SetAttr(ctx, "node[color=\"red\"]");;
 gap> GV_AddNode(ctx, "a");;
 gap> GV_String(g);
 "digraph  {\n\tcolor=\"green\" edge [label=\"testing123\"] node[color=\"blue\"\
-] edge[color=\"blue\"] \n// no_name_0 context \n\tnode[color=\"red\"] \n\t\"a\
+] edge[color=\"blue\"] \n// no_name_1 context \n\tnode[color=\"red\"] \n\t\"a\
 \"\n\tcolor=\"green\" edge [label=\"testing123\"] node[color=\"blue\"] edge[co\
 lor=\"blue\"] \n\n}\n"
 
