@@ -131,7 +131,7 @@ function(parent, name)
   out := Objectify(GV_ContextType,
                       rec(
                         Name      := name,
-                        Subgraphs := [],
+                        Subgraphs := HashMap(),
                         Nodes     := HashMap(),
                         Edges     := [],
                         Attrs     := [],
@@ -154,7 +154,7 @@ function(name)
   return Objectify(GV_GraphType,
                       rec(
                         Name      := name,
-                        Subgraphs := [],
+                        Subgraphs := HashMap(),
                         Nodes     := HashMap(),
                         Edges     := [],
                         Attrs     := [],
@@ -171,7 +171,7 @@ function(name)
   return Objectify(GV_DigraphType,
                       rec(
                         Name      := name,
-                        Subgraphs := [],
+                        Subgraphs := HashMap(),
                         Nodes     := HashMap(),
                         Edges     := [],
                         Attrs     := [],
@@ -268,7 +268,7 @@ InstallMethod(GV_Subgraphs, "for a graphviz graph", [IsGVGraph], x -> x!.Subgrap
 InstallMethod(GV_GetSubgraph, 
 "for a graphviz graph and string", 
 [IsGVGraph, IsString], 
-{x, name} -> First(GV_Subgraphs(x), s -> GV_Name(s) = name));
+{x, name} -> GV_Subgraphs(x)[name]);
 
 InstallMethod(GV_IncCounter, 
 "for a graphviz graph",
@@ -316,7 +316,7 @@ function(graph, name)
     od;
 
     # add subgraphs to list of to visit if not visited
-    for subgraph in GV_Subgraphs(g) do
+    for subgraph in Values(GV_Subgraphs(g)) do
       if not ForAny(seen, s -> IsIdenticalObj(s, subgraph)) then
         Add(seen, subgraph);
         Add(to_visit, subgraph);
@@ -355,7 +355,7 @@ function(graph, name)
     return graph[name];
   fi;
 
-  for elem in GV_Subgraphs(graph) do
+  for elem in Values(GV_Subgraphs(graph)) do
     node := GV_FindNode(elem, name);
     if node <> fail then
       return node;
@@ -531,9 +531,10 @@ InstallMethod(GV_AddSubgraph,
 "for a graphviz graph and string",
 [IsGVGraph, IsString],
 function(graph, name)
-  local subgraph;
+  local subgraphs, subgraph;
 
-  if ForAny(GV_Subgraphs(graph), x -> GV_Name(x) = name) then
+  subgraphs := GV_Subgraphs(graph);
+  if IsBound(subgraphs[name]) then
     return ErrorNoReturn(StringFormatted("The graph already contains a subgraph with name {}.",
                         name));
   fi;
@@ -546,7 +547,7 @@ function(graph, name)
     return ErrorNoReturn("Filter must be a filter for a graph category.");
   fi;
 
-  Add(GV_Subgraphs(graph), subgraph);
+  subgraphs[name] := subgraph;
   return subgraph;
 end);
 
@@ -563,15 +564,16 @@ InstallMethod(GV_AddContext,
 "for a graphviz graph and a string",
 [IsGVGraph, IsString],
 function(graph, name)
-  local ctx;
+  local ctx, subgraphs;
 
-  if ForAny(GV_Subgraphs(graph), x -> GV_Name(x) = name) then
+  subgraphs := GV_Subgraphs(graph);
+  if IsBound(subgraphs[name]) then
     return ErrorNoReturn(StringFormatted("The graph already contains a subgraph with name {}.",
                                          name));
   fi;
 
   ctx := GV_Context(graph, name);
-  Add(GV_Subgraphs(graph), ctx);
+  subgraphs[name] := ctx;
   return ctx;
 end);
 
@@ -839,8 +841,8 @@ function(graph)
   edges := GV_Edges(graph); 
   subs  := GV_Subgraphs(graph); 
   
-  node_hist := List(Keys(nodes), name -> [GV_GetIdx(nodes[name]), nodes[name]]);
-  subs_hist := List(subs, s -> [GV_GetIdx(s), s]);
+  node_hist := List(Values(nodes), n -> [GV_GetIdx(n), n]);
+  subs_hist := List(Values(subs), s -> [GV_GetIdx(s), s]);
   edge_hist := List(edges, e -> [GV_GetIdx(e), e]);
 
   hist := Concatenation(node_hist, edge_hist, subs_hist);

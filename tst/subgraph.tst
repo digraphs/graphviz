@@ -57,7 +57,7 @@ gap> g := GV_Graph();;
 gap> GV_AddSubgraph(g, "a");;
 gap> GV_AddContext(g, "b");;
 gap> GV_Subgraphs(g);
-[ <graph a with 0 nodes and 0 edges>, <context b with 0 nodes and 0 edges> ]
+HashMap([[ "a", <object> ], [ "b", <object> ]])
 
 # Test adding a node to a subgraph (does or does not add to parent???)
 # TODO need to nail down expected behaviour!
