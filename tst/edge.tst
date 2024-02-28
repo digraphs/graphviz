@@ -85,4 +85,10 @@ Error, Different node in graph with name a.
 gap> GV_Edges(g);
 [ <edge (d, a)> ]
 
+# Test adding an edge resuses a node automatically
+gap> g := GV_Graph();;
+gap> GV_AddNode(g, "a");;
+gap> GV_AddEdge(g, "a", "a");
+<edge (a, a)>
+
 #
