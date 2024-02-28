@@ -329,4 +329,57 @@ gap> GV_AddContext(g, [ "a" ]);;
 gap> GV_GetSubgraph(g, [ "a" ]);
 <context [ "a" ] with 0 nodes and 0 edges>
 
+# Test finding subgraph (parent)
+gap> g := GV_Graph("a");;
+gap> s := GV_AddSubgraph(g, "b");;
+gap> o := GV_FindGraph(s, "a");
+<graph a with 0 nodes and 0 edges>
+gap> IsIdenticalObj(o, g);
+true
+
+# Test finding subgraph (child)
+gap> g := GV_Graph("a");;
+gap> s := GV_AddSubgraph(g, "b");;
+gap> o := GV_FindGraph(g, "b");
+<graph b with 0 nodes and 0 edges>
+gap> IsIdenticalObj(o, s);
+true
+
+# Test finding subgraph (sibling)
+gap> g := GV_Graph("a");;
+gap> s := GV_AddSubgraph(g, "b");;
+gap> s2 := GV_AddSubgraph(g, "c");;
+gap> o := GV_FindGraph(s, "c");
+<graph c with 0 nodes and 0 edges>
+gap> IsIdenticalObj(o, s2);
+true
+
+# Test finding subgraph (self)
+gap> g := GV_Graph("a");;
+gap> o := GV_FindGraph(g, "a");
+<graph a with 0 nodes and 0 edges>
+gap> IsIdenticalObj(o, g);
+true
+
+# Test finding subgraph (far)
+gap> g := GV_Graph("r");;
+gap> a1 := GV_AddSubgraph(g, "a1");;
+gap> a2 := GV_AddSubgraph(a1, "a2");;
+gap> a3 := GV_AddSubgraph(a2, "a3");;
+gap> b1 := GV_AddSubgraph(g, "b1");;
+gap> b2 := GV_AddSubgraph(b1, "b2");;
+gap> b3 := GV_AddSubgraph(b2, "b3");;
+gap> o := GV_FindGraph(a3, "b3");
+<graph b3 with 0 nodes and 0 edges>
+gap> IsIdenticalObj(o, b3);
+true
+
+# Test finding subgraph (non-string name)
+gap> g := GV_Graph("r");;
+gap> s := GV_AddSubgraph(g, 1);;
+gap> o := GV_FindGraph(g, 1);
+<graph 1 with 0 nodes and 0 edges>
+gap> IsIdenticalObj(o, s);
+true
+
 #

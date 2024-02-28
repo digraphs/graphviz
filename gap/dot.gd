@@ -33,7 +33,7 @@ DeclareCategory("IsGVEdge", IsGVObject);
 
 #! @BeginGroup
 #! @GroupTitle Getting a node from a graph
-#! @Arguments grapph, node name
+#! @Arguments graph, node name
 #! @Returns the graphviz node with that name 
 #! @Description 
 #! Gets a graphviz node from a graph. 
@@ -61,12 +61,13 @@ DeclareOperation("GV_Digraph", []);
 #! @Section Get Operations
 #! This section covers the operations for getting information about graphviz objects.
 
+#! @Subsection For all graphviz objects. 
+
 #! @Arguments obj
 #! @Returns the name of the provided graphviz object
 #! @Description Gets the name of the provided graphviz object.
 DeclareOperation("GV_Name", [IsGVObject]);
 
-#! @Subsection For all graphviz objects.
 
 #! @Arguments obj
 #! @Returns the attributes of the provided graphviz object
@@ -86,6 +87,14 @@ DeclareOperation("GV_Nodes", [IsGVGraph]);
 #! @Description gets the subgraphs of a provided graphviz graph.
 DeclareOperation("GV_Subgraphs", [IsGVGraph]);
 DeclareOperation("GV_GetSubgraph", [IsGVGraph, IsObject]);
+
+#! @Arguments graph, name
+#! @Returns a graph with the provided name.
+#! @Description 
+#! Searches through the tree of subgraphs connected to this subgraph for a graph with the provided name. 
+#! It returns the graph if it exists. 
+#! If no such graph exists then it will return fail.
+DeclareOperation("GV_FindGraph", [IsGVGraph, IsObject]);
 
 #! @Arguments graph
 #! @Returns the edges of the provided graphviz graph.
@@ -163,13 +172,13 @@ DeclareOperation("GV_FilterEnds", [IsGVGraph, IsObject, IsObject]);
 #!    All current attributes remain.
 #!    If an attribute already exists and a new value is provided, the old value will be overwritten.
 DeclareOperation("GV_SetAttrs", [IsGVObject, IsRecord]);
-DeclareOperation("GV_SetAttr", [IsGVObject, IsString, IsString]);
-DeclareOperation("GV_SetAttr", [IsGVObject, IsString]);
+DeclareOperation("GV_SetAttr", [IsGVObject, IsObject, IsObject]);
+DeclareOperation("GV_SetAttr", [IsGVObject, IsObject]);
 
 #! @Arguments obj, attr
 #! @Returns the modified object.
 #! @Description Removes an attribute from the object provided.
-DeclareOperation("GV_RemoveAttr", [IsGVObject, IsString]);
+DeclareOperation("GV_RemoveAttr", [IsGVObject, IsObject]);
 
 #! @Section Outputting
 #! @Arguments graph

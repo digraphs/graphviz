@@ -273,10 +273,10 @@ InstallMethod(GV_Attrs, "for a graphviz object", [IsGVObject], x -> x!.Attrs);
 
 InstallMethod(GV_Nodes, "for a graphviz graph", [IsGVGraph], x -> x!.Nodes);
 InstallMethod(GV_Edges, "for a graphviz graph", [IsGVGraph], x -> x!.Edges);
+InstallMethod(GV_Subgraphs, "for a graphviz graph", [IsGVGraph], x -> x!.Subgraphs);
 
 InstallMethod(GV_Tail, "for a graphviz edge", [IsGVEdge], x -> x!.Tail);
 InstallMethod(GV_Head, "for a graphviz edge", [IsGVEdge], x -> x!.Head);
-InstallMethod(GV_Subgraphs, "for a graphviz graph", [IsGVGraph], x -> x!.Subgraphs);
 
 InstallMethod(GV_GetSubgraph, 
 "for a graphviz graph and string", 
@@ -316,7 +316,6 @@ function(graph)
   return graph!.Parent;
 end);
 
-DeclareOperation("GV_FindGraph", [IsGVGraph, IsString]);
 InstallMethod(GV_FindGraph, 
 "for a graphviz graph and a string",
 [IsGVGraph, IsString],
@@ -354,6 +353,11 @@ function(graph, name)
 
   return fail;
 end);
+
+InstallMethod(GV_FindGraph, 
+"for a graphviz graph and a string",
+[IsGVGraph, IsObject],
+{g, o} -> GV_FindGraph(g, ViewString(o)));
 
 DeclareOperation("GV_GetRoot", [IsGVGraph]);
 InstallMethod(GV_GetRoot,
