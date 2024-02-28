@@ -179,27 +179,27 @@ gap> g := GV_Digraph();;
 gap> s1 := GV_AddSubgraph(g);;
 gap> GV_AddNode(s1, "a");;
 gap> s2 := GV_AddSubgraph(g);;
-gap> GV_FindNodeS(s2, "a");
+gap> GV_FindNode(s2, "a");
 <node a>
-gap> GV_FindNodeS(s2, "b");
+gap> GV_FindNode(s2, "b");
 fail
 
 # finding a node in a child graph
 gap> g := GV_Digraph();;
 gap> s1 := GV_AddSubgraph(g);;
 gap> GV_AddNode(s1, "a");;
-gap> GV_FindNodeS(g, "a");
+gap> GV_FindNode(g, "a");
 <node a>
-gap> GV_FindNodeS(g, "b");
+gap> GV_FindNode(g, "b");
 fail
 
 # finding a node in a parent graph
 gap> g := GV_Digraph();;
 gap> s1 := GV_AddSubgraph(g);;
 gap> GV_AddNode(g, "a");;
-gap> GV_FindNodeS(s1, "a");
+gap> GV_FindNode(s1, "a");
 <node a>
-gap> GV_FindNodeS(s1, "b");
+gap> GV_FindNode(s1, "b");
 fail
 
 # finding a node in a parent's sibling graph
@@ -208,9 +208,9 @@ gap> s1 := GV_AddSubgraph(g);;
 gap> s2 := GV_AddSubgraph(g);;
 gap> s11 := GV_AddSubgraph(s1);;
 gap> GV_AddNode(s2, "a");;
-gap> GV_FindNodeS(s11, "a");
+gap> GV_FindNode(s11, "a");
 <node a>
-gap> GV_FindNodeS(s11, "b");
+gap> GV_FindNode(s11, "b");
 fail
 
 # Test removing a node from a graph

@@ -16,7 +16,7 @@ DeclareOperation("GV_StringifyGraphAttrs", [IsGVGraph]);
 DeclareOperation("GV_StringifyNodeEdgeAttrs", [IsHashMap]);
 DeclareOperation("GV_StringifyGraph", [IsGVGraph, IsBool]);
 
-DeclareOperation("GV_FindNodeS", [IsGVGraph, IsObject]);
+DeclareOperation("GV_FindNode", [IsGVGraph, IsObject]);
 
 ###############################################################################
 # Family + type
@@ -365,40 +365,7 @@ InstallMethod(GV_FindGraphWithNode,
 InstallMethod(GV_FindGraph, 
 "for a graphviz graph and a string",
 [IsGVGraph, IsString],
-function(graph, name)
-  local seen, to_visit, g, subgraph, parent;
-  seen     := [graph];
-  to_visit := [graph];
-
-  while Length(to_visit) > 0 do
-    g := Remove(to_visit, Length(to_visit));
-
-    # Check this graph
-    if GV_Name(g) = name then
-      return g;
-    fi;
-
-    # add subgraphs to list of to visit if not visited
-    for subgraph in Values(GV_Subgraphs(g)) do
-      if not ForAny(seen, s -> IsIdenticalObj(s, subgraph)) then
-        Add(seen, subgraph);
-        Add(to_visit, subgraph);
-      fi;
-    od;
-
-    # add parent if not visited
-    parent := GV_GetParent(g);
-    if not IsGVGraph(parent) then
-      continue;
-    fi;
-    if not ForAny(seen, s -> IsIdenticalObj(s, parent)) then
-      Add(seen, parent);
-      Add(to_visit, parent);
-    fi;
-  od;
-
-  return fail;
-end);
+{g, s} -> GV_GraphTreeSearch(g, v -> GV_Name(v) = s));
 
 InstallMethod(GV_FindGraph, 
 "for a graphviz graph and a string",
@@ -416,70 +383,16 @@ function(graph)
   return graph;
 end);
 
-InstallMethod(GV_FindNodeS, 
+InstallMethod(GV_FindNode, 
 "for a graphviz graph and a string",
 [IsGVGraph, IsString],
-function(graph, name)
-  local node_name, subgraph, seen, to_visit, parent, g;
-  seen     := [graph];
-  to_visit := [graph];
-
-  while Length(to_visit) > 0 do
-    g := Remove(to_visit, Length(to_visit));
-
-    # look for node in this graph
-    if g[name] <> fail then
-      return g[name];
-    fi;
-
-    # add subgraphs to list of to visit if not visited
-    for subgraph in Values(GV_Subgraphs(g)) do
-      if not ForAny(seen, s -> IsIdenticalObj(s, subgraph)) then
-        Add(seen, subgraph);
-        Add(to_visit, subgraph);
-      fi;
-    od;
-    
-    # add parent if not visited
-    parent := GV_GetParent(g);
-    if not IsGVGraph(parent) then
-      continue;
-    fi;
-    if not ForAny(seen, s -> IsIdenticalObj(s, parent)) then
-      Add(seen, parent);
-      Add(to_visit, parent);
-    fi;
-  od;
-
-  return fail;
-end);
-
-DeclareOperation("GV_HasParent", [IsGVGraph]);
-InstallMethod(GV_HasParent, 
-"for a graphviz graph", 
-[IsGVGraph],
-function(graph)
-  return GV_GetParent(graph) <> fail;
-end);
-
-DeclareOperation("GV_FindNode", [IsGVGraph, IsString]);
-InstallMethod(GV_FindNode, 
-"for a graphviz graph and a string", 
-[IsGVGraph, IsString],
-function(graph, name)
-  local elem, node;
-  if GV_HasNode(graph, name) then
-    return graph[name];
+function(g, n) 
+  local graph;
+  graph := GV_FindGraphWithNode(g, n);
+  if graph = fail then
+    return graph;
   fi;
-
-  for elem in Values(GV_Subgraphs(graph)) do
-    node := GV_FindNode(elem, name);
-    if node <> fail then
-      return node;
-    fi;
-  od;
-
-  return fail;
+  return graph[n];
 end);
 
 ############################################################
@@ -638,10 +551,10 @@ function(x, head, tail)
   tail_name := GV_Name(tail);
 
   # add the nodes to the graph if not present
-  if GV_FindNodeS(x, head_name) = fail then
+  if GV_FindNode(x, head_name) = fail then
     GV_AddNodePriv(x, head);
   fi;
-  if GV_FindNodeS(x, tail_name) = fail then
+  if GV_FindNode(x, tail_name) = fail then
     GV_AddNodePriv(x, tail);
   fi;
 
@@ -656,12 +569,12 @@ InstallMethod(GV_AddEdge,
 function(x, head, tail)
   local head_node, tail_node;
 
-  head_node := GV_FindNodeS(x, head);
+  head_node := GV_FindNode(x, head);
   if head_node = fail then
     head_node := GV_Node(x, head);
   fi;
 
-  tail_node := GV_FindNodeS(x, tail);
+  tail_node := GV_FindNode(x, tail);
   if tail_node = fail then
     tail_node := GV_Node(x, tail);
   fi;
