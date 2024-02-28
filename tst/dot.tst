@@ -33,8 +33,6 @@ gap> GV_Attrs(g);
 gap> g := GV_Graph();;
 gap> n := GV_AddNode(g, "test");;
 gap> GV_SetAttrs(n, rec(color:="red", label:="lab"));;
-gap> g := GV_Graph();;
-gap> GV_AddNode(g, n);;
 gap> GV_String(g);
 "graph  {\n\t\"test\" [color=\"red\", label=lab]\n}\n"
 

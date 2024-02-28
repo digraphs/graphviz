@@ -10,7 +10,6 @@
 
 ## TODO (ONCE THIS IS EMPTY THEN DONE!)
  - Fix gaplint whitespace / small formatting complaints
- - add nice error message when adding a node fails (tell them where to find it)
 
 ## Other
  - relates to deadnaut github issue https://www.mankier.com/1/nauty-dretodot

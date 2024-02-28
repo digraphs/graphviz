@@ -81,7 +81,7 @@ gap> a2 := GV_AddNode(g1, "a");;
 gap> c := GV_AddNode(g1, "c");;
 gap> e1 := GV_AddEdge(g, d, a1);;
 gap> e2 := GV_AddEdge(g, a2, c);;
-Error, Different node in graph with name a.
+Error, Different node in graph  with name a.
 gap> GV_Edges(g);
 [ <edge (d, a)> ]
 

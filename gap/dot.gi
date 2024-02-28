@@ -316,6 +316,52 @@ function(graph)
   return graph!.Parent;
 end);
 
+
+DeclareOperation("GV_GraphTreeSearch", [IsGVGraph, IsFunction]);
+InstallMethod(GV_GraphTreeSearch, 
+"for a graphviz graph and a predicate",
+[IsGVGraph, IsFunction],
+function(graph, pred)
+  local seen, to_visit, g, subgraph, parent;
+  seen     := [graph];
+  to_visit := [graph];
+
+  while Length(to_visit) > 0 do
+    g := Remove(to_visit, Length(to_visit));
+
+    # Check this graph
+    if pred(g) then
+      return g;
+    fi;
+
+    # add subgraphs to list of to visit if not visited
+    for subgraph in Values(GV_Subgraphs(g)) do
+      if not ForAny(seen, s -> IsIdenticalObj(s, subgraph)) then
+        Add(seen, subgraph);
+        Add(to_visit, subgraph);
+      fi;
+    od;
+
+    # add parent if not visited
+    parent := GV_GetParent(g);
+    if not IsGVGraph(parent) then
+      continue;
+    fi;
+    if not ForAny(seen, s -> IsIdenticalObj(s, parent)) then
+      Add(seen, parent);
+      Add(to_visit, parent);
+    fi;
+  od;
+
+  return fail;
+end);
+
+DeclareOperation("GV_FindGraphWithNode", [IsGVGraph, IsString]);
+InstallMethod(GV_FindGraphWithNode, 
+"for a graphviz graph and a node",
+[IsGVGraph, IsString],
+{g, n} -> GV_GraphTreeSearch(g, v -> v[n] <> fail));
+
 InstallMethod(GV_FindGraph, 
 "for a graphviz graph and a string",
 [IsGVGraph, IsString],
@@ -382,11 +428,9 @@ function(graph, name)
     g := Remove(to_visit, Length(to_visit));
 
     # look for node in this graph
-    for node_name in Keys(GV_Nodes(g)) do
-      if node_name = name then
-        return g[node_name];
-      fi;
-    od;
+    if g[name] <> fail then
+      return g[name];
+    fi;
 
     # add subgraphs to list of to visit if not visited
     for subgraph in Values(GV_Subgraphs(g)) do
@@ -507,7 +551,8 @@ InstallMethod(\[\],
 [IsGVGraph, IsObject],
 {g, o} ->  g[ViewString(o)]);
 
-InstallMethod(GV_AddNode, 
+DeclareOperation("GV_AddNodePriv", [IsGVGraph, IsGVNode]);
+InstallMethod(GV_AddNodePriv, 
 "for a graphviz graph and node",
 [IsGVGraph, IsGVNode], 
 function(x, node)
@@ -516,9 +561,9 @@ function(x, node)
   nodes := GV_Nodes(x);
 
   # dont add if already node with the same name
-  found := GV_FindNodeS(x, name);
+  found := GV_FindGraphWithNode(x, name);
   if found <> fail then
-    return ErrorNoReturn(StringFormatted("Already node with name {}.", name));
+    return ErrorNoReturn(StringFormatted("Already node with name {} in graph {}.", name, GV_Name(found)));
   fi;
 
   nodes[name] := node;
@@ -530,9 +575,13 @@ InstallMethod(GV_AddNode, "for a graphviz graph and string",
 function(x, name)
   local node;
   node := GV_Node(x, name);
-  GV_AddNode(x, node);
+  GV_AddNodePriv(x, node);
   return node;
 end);
+
+InstallMethod(GV_AddNode, "for a graphviz graph and string",
+[IsGVGraph, IsGVNode], 
+{_, __} -> ErrorNoReturn("Cannot add node objects directly to graphs. Please use the node's name."));
 
 InstallMethod(GV_AddNode, 
 "for a graphviz graph and string",
@@ -541,34 +590,38 @@ function(x, name)
   return GV_AddNode(x, ViewString(name));
 end);
 
-DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVEdge]);
-InstallMethod(GV_AddEdge, 
+DeclareOperation("GV_AddEdgePriv", [IsGVGraph, IsGVEdge]);
+InstallMethod(GV_AddEdgePriv, 
 "for a graphviz graph and edge",
 [IsGVGraph, IsGVEdge], 
 function(x, edge)
-  local head_curr, tail_curr, head, head_name, tail_name, tail;
+  local head, head_name, tail_name, tail, hg, tg;
 
   head := GV_Head(edge);
   tail := GV_Tail(edge);
   head_name := GV_Name(head);
   tail_name := GV_Name(tail);
-  head_curr := GV_FindNodeS(x, head_name);
-  tail_curr := GV_FindNodeS(x, tail_name);
+  hg := GV_FindGraphWithNode(x, head_name);
+  tg := GV_FindGraphWithNode(x, tail_name);
 
   # if not already existing, add the nodes to the graph
-  if head_curr = fail then
-    GV_AddNode(x, head);
+  if hg = fail then
+    GV_AddNodePriv(x, head);
   fi;
-  if tail_curr = fail then
-    GV_AddNode(x, tail);
+  if tg = fail then
+    GV_AddNodePriv(x, tail);
   fi;
 
   # make sure the nodes exist / are the same as existing ones
-  if head_curr <> fail and not IsIdenticalObj(head, head_curr) then
-    return ErrorNoReturn(StringFormatted("Different node in graph with name {}.", head_name));
+  if hg <> fail and not IsIdenticalObj(head, hg[head_name]) then
+    return ErrorNoReturn(StringFormatted("Different node in graph {} with name {}.",
+                                        GV_Name(hg),
+                                        head_name));
   fi;
-  if tail_curr <> fail and not IsIdenticalObj(tail, tail_curr) then
-    return ErrorNoReturn(StringFormatted("Different node in graph with name {}.", tail_name));
+  if tg <> fail and not IsIdenticalObj(tail, tg[tail_name]) then
+    return ErrorNoReturn(StringFormatted("Different node in graph {} with name {}.", 
+                                         GV_Name(tg), 
+                                         tail_name));
   fi;
 
   Add(x!.Edges, edge);
@@ -586,14 +639,14 @@ function(x, head, tail)
 
   # add the nodes to the graph if not present
   if GV_FindNodeS(x, head_name) = fail then
-    GV_AddNode(x, head);
+    GV_AddNodePriv(x, head);
   fi;
   if GV_FindNodeS(x, tail_name) = fail then
-    GV_AddNode(x, tail);
+    GV_AddNodePriv(x, tail);
   fi;
 
   edge := GV_Edge(x, head, tail);
-  GV_AddEdge(x, edge);
+  GV_AddEdgePriv(x, edge);
   return edge;
 end);
 

@@ -70,18 +70,18 @@ gap> GV_Nodes(s);
 HashMap([[ "n", <object> ]])
 
 # Test adding a node to a subgraph which is already in parent fails (by name)
-gap> g := GV_Graph();;
+gap> g := GV_Graph("r");;
 gap> s := GV_AddSubgraph(g, "a");;
 gap> GV_AddNode(g, "n");;
 gap> GV_AddNode(s, "n");
-Error, Already node with name n.
+Error, Already node with name n in graph r.
 
 # Test adding a node to a graph which is already in child fails (by name)
 gap> g := GV_Graph();;
 gap> s := GV_AddSubgraph(g, "a");;
 gap> GV_AddNode(s, "n");;
 gap> GV_AddNode(g, "n");
-Error, Already node with name n.
+Error, Already node with name n in graph a.
 
 # Test adding a node to a graph which is already in sibling fails (by name)
 gap> g := GV_Graph();;
@@ -89,29 +89,7 @@ gap> s1 := GV_AddSubgraph(g, "a");;
 gap> s2 := GV_AddSubgraph(g, "b");;
 gap> GV_AddNode(s1, "n");;
 gap> GV_AddNode(s2, "n");
-Error, Already node with name n.
-
-# Test fails adding a new node to a graph which when sibling has different node with same name
-gap> g := GV_Graph();;
-gap> s1 := GV_AddSubgraph(g, "a");;
-gap> s2 := GV_AddSubgraph(g, "b");;
-gap> nodes := GV_AddNode(s1, "n");;
-gap> nodeg := GV_AddNode(s2, "n");
-Error, Already node with name n.
-
-# Test fails adding a new node to a graph which when parent has different node with same name
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> nodes := GV_AddNode(g, "n");;
-gap> nodeg := GV_AddNode(s, "n");
-Error, Already node with name n.
-
-# Test fails adding a new node to a graph which when child has different node with same name
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> nodes := GV_AddNode(s, "n");;
-gap> nodeg := GV_AddNode(g, "n");
-Error, Already node with name n.
+Error, Already node with name n in graph a.
 
 # Test adding edges to subgraphs
 gap> g := GV_Graph();;

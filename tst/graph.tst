@@ -119,10 +119,8 @@ gap> a := GV_AddNode(g, "a");;
 gap> b := GV_AddNode(g, "b");;
 gap> c := GV_AddNode(g, "c");;
 gap> d := GV_AddNode(g, "d");;
-gap> ab := GV_Edge(g, a, b);;
-gap> cd := GV_Edge(g, c, d);;
-gap> GV_AddEdge(g, ab);;
-gap> GV_AddEdge(g, cd);;
+gap> GV_AddEdge(g, a, b);;
+gap> GV_AddEdge(g, c, d);;
 gap> GV_RemoveNode(g, a);
 <graph with 3 nodes and 1 edge>
 gap> GV_Nodes(g);
