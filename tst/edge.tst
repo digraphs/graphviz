@@ -91,4 +91,31 @@ gap> GV_AddNode(g, "a");;
 gap> GV_AddEdge(g, "a", "a");
 <edge (a, a)>
 
+# Test edges with non-string names
+gap> g := GV_Graph();;
+gap> GV_AddEdge(g, "a", 1);
+<edge (a, 1)>
+gap> GV_AddEdge(g, 1, "a");
+<edge (1, a)>
+gap> GV_AddEdge(g, 1, 1);
+<edge (1, 1)>
+
+# Test removing edges with non-string names
+gap> g := GV_Digraph();;
+gap> GV_AddEdge(g, "a", 1);
+<edge (a, 1)>
+gap> GV_AddEdge(g, 1, "a");
+<edge (1, a)>
+gap> GV_AddEdge(g, 1, 1);
+<edge (1, 1)>
+gap> GV_FilterEnds(g, "a", 1);;
+gap> GV_Edges(g);
+[ <edge (1, a)>, <edge (1, 1)> ]
+gap> GV_FilterEnds(g, 1, "a");;
+gap> GV_Edges(g);
+[ <edge (1, 1)> ]
+gap> GV_FilterEnds(g, 1, 1);;
+gap> GV_Edges(g);
+[  ]
+
 #

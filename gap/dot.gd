@@ -1,6 +1,7 @@
 #! @Chapter
 #! @ChapterTitle An introduction to the DOT language and Graphviz.
-#! This chapter explains what the DOT and graphviz are, key basic concepts relating to them, and how this package interacts with them.
+#! This chapter explains what the DOT and graphviz are, 
+#! key basic concepts relating to them, and how this package interacts with them.
 
 #! @Section A Brief Introduction
 #! DOT is a language for descrbing to a computer how to display a visualization for a graph or digraph.
@@ -27,8 +28,6 @@ DeclareCategory("IsGVContext", IsGVGraph);
 DeclareCategory("IsGVNode", IsGVObject);
 DeclareCategory("IsGVEdge", IsGVObject);
 #! @EndGroup
-
-DeclareOperation("GV_FindNodeS", [IsGVGraph, IsObject]);
 
 #! @Section Constructors
 
@@ -67,7 +66,6 @@ DeclareOperation("GV_Digraph", []);
 #! @Description Gets the name of the provided graphviz object.
 DeclareOperation("GV_Name", [IsGVObject]);
 
-
 #! @Subsection For all graphviz objects.
 
 #! @Arguments obj
@@ -93,13 +91,6 @@ DeclareOperation("GV_GetSubgraph", [IsGVGraph, IsObject]);
 #! @Returns the edges of the provided graphviz graph.
 #! @Description Gets the edges of the provided graphviz graph.
 DeclareOperation("GV_Edges", [IsGVGraph]);
-
-
-# TODO fix this
-#! @Arguments graph, node_name
-#! @Returns whether the graphviz graph contains a node with the provided name.
-#! @Description Whether the graphviz graph contains a node with the provided name.
-DeclareOperation("GV_HasNode",[IsGVGraph, IsObject]);
 
 #! @Subsection For only edges.
 
@@ -138,9 +129,13 @@ DeclareOperation("GV_AddEdge", [IsGVGraph, IsObject, IsObject]);
 
 #! @Arguments graph, filter, name
 #! @Returns the new subgraph.
-#! @Description Adds a subgraph graph.
+#! @Description Adds a subgraph to a graph.
 DeclareOperation("GV_AddSubgraph", [IsGVGraph, IsObject]);
 DeclareOperation("GV_AddSubgraph", [IsGVGraph]);
+
+#! @Arguments graph, filter, name
+#! @Returns the new context.
+#! @Description Adds a context to a graph.
 DeclareOperation("GV_AddContext", [IsGVGraph, IsObject]);
 DeclareOperation("GV_AddContext", [IsGVGraph]);
 
@@ -168,13 +163,13 @@ DeclareOperation("GV_FilterEnds", [IsGVGraph, IsObject, IsObject]);
 #!    All current attributes remain.
 #!    If an attribute already exists and a new value is provided, the old value will be overwritten.
 DeclareOperation("GV_SetAttrs", [IsGVObject, IsRecord]);
-DeclareOperation("GV_SetAttr", [IsGVObject, IsObject, IsObject]);
-DeclareOperation("GV_SetAttr", [IsGVObject, IsObject]);
+DeclareOperation("GV_SetAttr", [IsGVObject, IsString, IsString]);
+DeclareOperation("GV_SetAttr", [IsGVObject, IsString]);
 
 #! @Arguments obj, attr
 #! @Returns the modified object.
 #! @Description Removes an attribute from the object provided.
-DeclareOperation("GV_RemoveAttr", [IsGVObject, IsObject]);
+DeclareOperation("GV_RemoveAttr", [IsGVObject, IsString]);
 
 #! @Section Outputting
 #! @Arguments graph

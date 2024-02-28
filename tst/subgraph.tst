@@ -295,4 +295,38 @@ gap> GV_GetSubgraph(g, "a");
 gap> GV_GetSubgraph(g, "c");
 <context c with 0 nodes and 0 edges>
 
+# Test adding a nested subgraph
+gap> g := GV_Graph();;
+gap> s1 := GV_AddSubgraph(g, "a");;
+gap> s2 := GV_AddSubgraph(s1, "c");;
+gap> GV_GetSubgraph(g, "a");
+<graph a with 0 nodes and 0 edges>
+gap> GV_GetSubgraph(g, "c");
+fail
+gap> GV_GetSubgraph(s1, "c");
+<graph c with 0 nodes and 0 edges>
+
+# Test displaying a nested subgraph
+gap> g := GV_Graph();;
+gap> s1 := GV_AddSubgraph(g, "a");;
+gap> s2 := GV_AddSubgraph(s1, "c");;
+gap> GV_String(g);
+"graph  {\nsubgraph a {\nsubgraph c {\n}\n}\n}\n"
+
+# Test subgraphs with non-string names
+gap> g := GV_Graph();;
+gap> GV_AddSubgraph(g, 11);
+<graph 11 with 0 nodes and 0 edges>
+
+# Test contexts with non-string names
+gap> g := GV_Graph();;
+gap> GV_AddContext(g, 11);
+<context 11 with 0 nodes and 0 edges>
+
+# Test getting subgraphs with non-string names
+gap> g := GV_Graph();;
+gap> GV_AddContext(g, [ "a" ]);;
+gap> GV_GetSubgraph(g, [ "a" ]);
+<context [ "a" ] with 0 nodes and 0 edges>
+
 #

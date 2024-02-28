@@ -200,4 +200,33 @@ gap> g["test"];
 gap> g["abc"];
 <node abc>
 
+# Test gettting a node with a non-string name using bracket notation
+gap> g := GV_Graph();;
+gap> n1 := GV_AddNode(g, 1);;
+gap> n2 := GV_AddNode(g, ["a"]);;
+gap> g[1];
+<node 1>
+gap> g[["a"]];
+<node [ "a" ]>
+
+# Test making a graph with a non-string name
+gap> g := GV_Graph(11);
+<graph 11 with 0 nodes and 0 edges>
+
+# Test setting a graph name to a non-string value
+gap> g := GV_Graph(11);
+<graph 11 with 0 nodes and 0 edges>
+gap> GV_SetName(g, ["a"]);
+<graph [ "a" ] with 0 nodes and 0 edges>
+
+# Test making a digraph with a non-string name
+gap> g := GV_Digraph(11);
+<digraph 11 with 0 nodes and 0 edges>
+
+# Test setting a digraph name to a non-string value
+gap> g := GV_Digraph(11);
+<digraph 11 with 0 nodes and 0 edges>
+gap> GV_SetName(g, ["a"]);
+<digraph [ "a" ] with 0 nodes and 0 edges>
+
 #
