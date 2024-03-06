@@ -10,6 +10,18 @@
 
 ## TODO (ONCE THIS IS EMPTY THEN DONE!)
  - Fix gaplint whitespace / small formatting complaints
+ - Change `GV_String` to `AsString`
+ - Add [] syntax for accessing and modifying the graphviz graph node attrs
+ - Add shortcut functions (GV_SetColor, Set_Label)
+ - Add replace Graphviz... instead of GV_... for external things
+ - Fix node name implementation. (AddNode(node) -> node name is <node c>)
+ - Make previous existing digraphs to dot functions return string and add ones which return graphviz objects Graphviz...
+ - Make splash keep name splash and if the object given is GVObject then splash the string of the object (no intermediate)
+ - Switch HashMaps back to records
+ - Add warnings for non-recognized attributes
+ - Add (Graphviz [IsObject]) decl which dependent packages implement use 
+    - Add validation on quoted input
+    - <graphviz graph object named "" ...>
 
 ## Other
  - relates to deadnaut github issue https://www.mankier.com/1/nauty-dretodot
