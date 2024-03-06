@@ -21,7 +21,6 @@
  - Add warnings for non-recognized attributes
  - Add (Graphviz [IsObject]) decl which dependent packages implement use 
     - Add validation on quoted input
-    - <graphviz graph object named "" ...>
 
 ## Other
  - relates to deadnaut github issue https://www.mankier.com/1/nauty-dretodot
