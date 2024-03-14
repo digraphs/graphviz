@@ -30,4 +30,4 @@ GV_AddEdge(graph, "b3", "end");
 GV_SetAttr(graph["start"], "shape", "Mdiamond");
 GV_SetAttr(graph["end"], "shape", "Msquare");
 
-Print(GV_String(graph));
+Print(AsString(graph));

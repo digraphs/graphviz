@@ -10,4 +10,4 @@ GV_SetAttr(cluster1, "fillcolor=\"blue:cyan\" label=\"acluster\" fontcolor=\"whi
 GV_SetAttr(cluster1, "node [shape=box, fillcolor=\"red:yellow\", style=\"filled\", gradientangle=90]");
 GV_AddNode(cluster1, "anode");
 
-Print(GV_String(g));
+Print(AsString(g));

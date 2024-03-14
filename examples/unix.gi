@@ -55,4 +55,4 @@ GV_AddEdge(u, "TS 4.0", "System V.0");
 GV_AddEdge(u, "System V.0", "System V.2");
 GV_AddEdge(u, "System V.2", "System V.3");
 
-Print(GV_String(u));
+Print(AsString(u));

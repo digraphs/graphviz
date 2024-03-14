@@ -10,7 +10,6 @@
 
 ## TODO (ONCE THIS IS EMPTY THEN DONE!)
  - Fix gaplint whitespace / small formatting complaints
- - Change `GV_String` to `AsString`
  - Add [] syntax for accessing and modifying the graphviz graph node attrs
  - Add shortcut functions (GV_SetColor, Set_Label)
  - Add replace Graphviz... instead of GV_... for external things

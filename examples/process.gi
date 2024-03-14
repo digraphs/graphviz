@@ -15,4 +15,4 @@ GV_AddEdge(graph, "swap", "runswap");
 GV_AddEdge(graph, "runswap", "new");
 GV_AddEdge(graph, "runswap", "runmem");
 GV_AddEdge(graph, "new", "runmem");
-Print(GV_String(graph));
+Print(AsString(graph));

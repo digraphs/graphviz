@@ -29,4 +29,4 @@ GV_SetAttr(e, "ltail", "cluster0");
 
 GV_AddEdge(g, "d", "h");
 
-Print(GV_String(g));
+Print(AsString(g));

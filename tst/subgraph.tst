@@ -131,7 +131,7 @@ gap> GV_AddEdge(g, "x", "y");;
 gap> GV_SetAttr(s, "color", "red");;
 gap> GV_SetAttr(s, "node [color=red]");;
 gap> GV_SetAttr(s, "edge [color=red]");;
-gap> GV_String(g);
+gap> AsString(g);
 "digraph  {\nsubgraph a {\n\tcolor=\"red\" node [color=red] edge [color=red] \
 \n}\n\t\"x\"\n\t\"y\"\n\t\"x\" -> \"y\"\n}\n"
 
@@ -142,7 +142,7 @@ gap> GV_AddEdge(g, "x", "y");;
 gap> GV_SetAttr(s, "color", "red");;
 gap> GV_SetAttr(s, "node [color=red]");;
 gap> GV_SetAttr(s, "edge [color=red]");;
-gap> GV_String(g);
+gap> AsString(g);
 "graph  {\nsubgraph a {\n\tcolor=\"red\" node [color=red] edge [color=red] \n}\
 \n\t\"x\"\n\t\"y\"\n\t\"x\" -- \"y\"\n}\n"
 
@@ -153,7 +153,7 @@ gap> GV_AddEdge(g, "x", "y");;
 gap> GV_SetAttr(s, "color", "red");;
 gap> GV_SetAttr(s, "node [color=red]");;
 gap> GV_SetAttr(s, "edge [color=red]");;
-gap> GV_String(g);
+gap> AsString(g);
 "graph  {\n// a context \n\tcolor=\"red\" node [color=red] edge [color=red] \n\
 \n\t\"x\"\n\t\"y\"\n\t\"x\" -- \"y\"\n}\n"
 
@@ -164,14 +164,14 @@ gap> GV_AddEdge(g, "x", "y");;
 gap> GV_SetAttr(s, "color", "red");;
 gap> GV_SetAttr(s, "node [color=red]");;
 gap> GV_SetAttr(s, "edge [color=red]");;
-gap> GV_String(g);
+gap> AsString(g);
 "digraph  {\n// a context \n\tcolor=\"red\" node [color=red] edge [color=red] \
 \n\n\t\"x\"\n\t\"y\"\n\t\"x\" -> \"y\"\n}\n"
 
 # Test stringifying subgraph w/o name
 gap> g := GV_Digraph();;
 gap> s := GV_AddSubgraph(g);;
-gap> GV_String(g);
+gap> AsString(g);
 "digraph  {\nsubgraph no_name_1 {\n}\n}\n"
 
 # finding a node in a sibling graph
@@ -241,7 +241,7 @@ gap> GV_SetAttr(g, "node[color=\"blue\"]");;
 gap> GV_SetAttr(g, "edge[color=\"blue\"]");;
 gap> GV_SetAttr(ctx, "node[color=\"red\"]");;
 gap> GV_AddNode(ctx, "a");;
-gap> GV_String(g);
+gap> AsString(g);
 "digraph  {\n\tcolor=\"green\" edge [label=\"testing123\"] node[color=\"blue\"\
 ] edge[color=\"blue\"] \n// no_name_1 context \n\tnode[color=\"red\"] \n\t\"a\
 \"\n\tcolor=\"green\" edge [label=\"testing123\"] node[color=\"blue\"] edge[co\
@@ -288,7 +288,7 @@ gap> GV_GetSubgraph(s1, "c");
 gap> g := GV_Graph();;
 gap> s1 := GV_AddSubgraph(g, "a");;
 gap> s2 := GV_AddSubgraph(s1, "c");;
-gap> GV_String(g);
+gap> AsString(g);
 "graph  {\nsubgraph a {\nsubgraph c {\n}\n}\n}\n"
 
 # Test subgraphs with non-string names

@@ -22,4 +22,4 @@ node := GV_AddNode(g, "name deeppink");
 GV_SetAttr(node, "style", "filled");
 GV_SetAttr(node, "fillcolor", "deeppink");
 
-Print(GV_String(g));
+Print(AsString(g));

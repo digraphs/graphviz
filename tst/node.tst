@@ -52,14 +52,14 @@ HashMap([[ "shape", "circle" ]])
 # Test name containing ':'
 gap> g := GV_Graph();;
 gap> GV_AddNode(g, "test:colon");;
-gap> GV_String(g);
+gap> AsString(g);
 "graph  {\n\t\"test\":colon\n}\n"
 
 # Test non-string name containing ':'
 gap> g := GV_Graph();;
 gap> GV_AddNode(g, 111);
 <node 111>
-gap> GV_String(g);
+gap> AsString(g);
 "graph  {\n\t\"111\"\n}\n"
 
 # Test removing a node with a non-string name

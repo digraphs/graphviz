@@ -41,4 +41,4 @@ GV_SetAttr(t, "overlap=\"false\"");
 GV_SetAttr(t, "label=\"PetriNet Model TrafficLights\nExtracted from ConceptBase and layed out by Graphviz\"");
 GV_SetAttr(t, "fontsize=12");
 
-Print(GV_String(t));
+Print(AsString(t));

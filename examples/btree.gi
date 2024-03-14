@@ -24,4 +24,4 @@ GV_AddEdge(s, "node2:f0", "node7:f1");
 GV_AddEdge(s, "node4:f2", "node6:f1");
 GV_AddEdge(s, "node4:f0", "node5:f1");
 
-Print(GV_String(s));
+Print(AsString(s));

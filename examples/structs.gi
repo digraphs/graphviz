@@ -12,4 +12,4 @@ GV_SetAttr(GV_AddNode(s, "struct3"), "label", "<<TABLE BORDER=\"0\" CELLBORDER=\
 GV_AddEdge(s, "struct1:f1", "struct2:f0");
 GV_AddEdge(s, "struct1:f2", "struct3:here");
 
-Print(GV_String(s));
+Print(AsString(s));

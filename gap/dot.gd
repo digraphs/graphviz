@@ -183,4 +183,4 @@ DeclareOperation("GV_RemoveAttr", [IsGVObject, IsObject]);
 #! @Section Outputting
 #! @Arguments graph
 #! @Returns the dot representation of the graphviz object.
-DeclareOperation("GV_String", [IsGVGraph]);
+DeclareOperation("AsString", [IsGVGraph]);

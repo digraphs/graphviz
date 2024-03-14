@@ -30,4 +30,4 @@ GV_SetAttr(GV_AddEdge(nodes, "LR_7", "LR_5"), "label", "\"S(a)\"");
 GV_SetAttr(GV_AddEdge(nodes, "LR_8", "LR_6"), "label", "\"S(b)\"");
 GV_SetAttr(GV_AddEdge(nodes, "LR_8", "LR_5"), "label", "\"S(a)\"");
 
-Print(GV_String(f));
+Print(AsString(f));

@@ -41,4 +41,4 @@ GV_SetAttrs(GV_AddEdge(e, "course", "S-C"), rec(label:="n", len:="1.00"));
 GV_SetAttr(e, "label=\"Entity Relation Diagram\ndrawn by NEATO\"");
 GV_SetAttr(e, "fontsize=\"20\"");
 
-Print(GV_String(e));
+Print(AsString(e));

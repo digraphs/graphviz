@@ -34,4 +34,4 @@ od;
 GV_SetAttr(cluster2, "label", "\"Radial Angle Variations (white to black gradient)\"");
 
 GV_AddEdge(g, "n5", "n14");
-Print(GV_String(g));
+Print(AsString(g));

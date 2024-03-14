@@ -22,4 +22,4 @@ GV_AddEdge(g, "A", "C");
 GV_AddEdge(g, "C", "D");
 GV_AddEdge(g, "X", "Y");
 
-Print(GV_String(g));
+Print(AsString(g));

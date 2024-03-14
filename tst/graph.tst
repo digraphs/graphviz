@@ -174,7 +174,7 @@ gap> GV_Attrs(g);
 gap> g := GV_Graph();;
 gap> GV_SetAttr(g, "color", "red");;
 gap> GV_SetAttr(g, "color", "blue");;
-gap> GV_String(g);
+gap> AsString(g);
 "graph  {\n\tcolor=\"red\" color=\"blue\" \n}\n"
 
 # # Test removing attributes from a graph

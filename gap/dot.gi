@@ -1007,7 +1007,7 @@ function(graph, is_subgraph)
   return result;
 end);
 
-InstallMethod(GV_String, "for a graphviz graph",
+InstallMethod(AsString, "for a graphviz graph",
 [IsGVGraph],
 function(graph)
   return GV_StringifyGraph(graph, false);
