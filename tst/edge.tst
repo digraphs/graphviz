@@ -138,4 +138,18 @@ gap> n["color"] := "red";;
 gap> n["color"];
 "red"
 
+# Test set label (edge)
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddEdge(g, "n", "m");;
+gap> GraphvizSetLabel(n, "test");;
+gap> GraphvizAttrs(n);
+rec( label := "test" )
+
+# Test set color (edge)
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddEdge(g, "n", "m");;
+gap> GraphvizSetColor(n, "red");;
+gap> GraphvizAttrs(n);
+rec( color := "red" )
+
 #

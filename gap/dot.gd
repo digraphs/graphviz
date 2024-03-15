@@ -32,35 +32,6 @@ DeclareCategory("IsGVEdge", IsGVObject);
 #! @Section Constructors
 
 #! @BeginGroup
-#! @GroupTitle Getting a node from a graph
-#! @Arguments graph, node name
-#! @Returns the graphviz node with that name 
-#! @Description 
-#! Gets a graphviz node from a graph. 
-DeclareOperation("\[\]", [IsGVGraph, IsObject]);
-#! @EndGroup
-
-#! @BeginGroup
-#! @GroupTitle Getting an attribute of a node
-#! @Arguments node, attribute name name
-#! @Returns the value of the attribute 
-#! @Description 
-#! Gets an attribute from a node. 
-DeclareOperation("\[\]\:\=", [IsGVNode, IsObject, IsObject]);
-DeclareOperation("\[\]", [IsGVNode, IsObject]);
-#! @EndGroup
-
-#! @BeginGroup
-#! @GroupTitle Getting an attribute of a node
-#! @Arguments edge, attribute name
-#! @Returns the the value of the attribute 
-#! @Description 
-#! Gets an attribute from an edge. 
-DeclareOperation("\[\]", [IsGVEdge, IsObject]);
-DeclareOperation("\[\]\:\=", [IsGVEdge, IsObject, IsObject]);
-#! @EndGroup
-
-#! @BeginGroup
 #! @GroupTitle Constructors for Graphs
 #! @Arguments name
 #! @Returns a new graphviz graph
@@ -194,6 +165,21 @@ DeclareOperation("GraphvizFilterEnds", [IsGVGraph, IsObject, IsObject]);
 DeclareOperation("GraphvizSetAttrs", [IsGVObject, IsRecord]);
 DeclareOperation("GraphvizSetAttr", [IsGVObject, IsObject, IsObject]);
 DeclareOperation("GraphvizSetAttr", [IsGVObject, IsObject]);
+
+
+#! @Arguments obj, label
+#! @Returns the modified object.
+#! @Description 
+#!    Updates the label of the object.
+#!    If a label already exists and a new value is provided, the old value will be overwritten.
+DeclareOperation("GraphvizSetLabel", [IsGVObject, IsObject]);
+
+#! @Arguments obj, color
+#! @Returns the modified object.
+#! @Description 
+#!    Updates the color of the object.
+#!    If a color already exists and a new value is provided, the old value will be overwritten.
+DeclareOperation("GraphvizSetColor", [IsGVObject, IsObject]);
 
 #! @Arguments obj, attr
 #! @Returns the modified object.

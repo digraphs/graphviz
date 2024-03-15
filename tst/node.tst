@@ -89,4 +89,18 @@ gap> n["color"] := "red";;
 gap> n["color"];
 "red"
 
+# Test set label (node)
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddNode(g, "n");;
+gap> GraphvizSetLabel(n, "test");;
+gap> GraphvizAttrs(n);
+rec( label := "test" )
+
+# Test set color (node)
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddNode(g, "n");;
+gap> GraphvizSetColor(n, "red");;
+gap> GraphvizAttrs(n);
+rec( color := "red" )
+
 #

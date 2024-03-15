@@ -364,81 +364,93 @@ x -> x!.Counter);
 
 # Converting strings
 
-DeclareOperation("GraphvizEnsureString", [IsObject]);
-InstallMethod(GraphvizEnsureString,
+DeclareOperation("GRAPHVIZ_EnsureString", [IsObject]);
+InstallMethod(GRAPHVIZ_EnsureString,
 "for an object",
 [IsObject],
 x -> ViewString(x));
 
-InstallMethod(GraphvizEnsureString,
+InstallMethod(GRAPHVIZ_EnsureString,
 "for a string",
 [IsString],
 x -> x);
 
 # Accessing node attributes
 
-InstallMethod(\[\],
+InstallOtherMethod(\[\],
 "for a graphviz node and a string",
 [IsGVNode, IsString],
 {node, key} -> GraphvizAttrs(node)[key]);
 
-InstallMethod(\[\],
+InstallOtherMethod(\[\],
 "for a graphviz node and an object",
 [IsGVNode, IsObject],
-{node, key} -> node[GraphvizEnsureString(key)]);
+{node, key} -> node[GRAPHVIZ_EnsureString(key)]);
 
 # Setting node attributes
 
-InstallMethod(\[\]\:\=,
+InstallOtherMethod(\[\]\:\=,
 "for a graphviz node and two strings",
 [IsGVNode, IsString, IsString],
 function(node, key, val) 
   GraphvizAttrs(node)[key] := val;
 end);
 
-InstallMethod(\[\]\:\=,
+InstallOtherMethod(\[\]\:\=,
 "for a graphviz node and two strings",
 [IsGVNode, IsObject, IsObject],
 function(node, key, val) 
-  node[GraphvizEnsureString(key)] := GraphvizEnsureString(val);
+  node[GRAPHVIZ_EnsureString(key)] := GRAPHVIZ_EnsureString(val);
 end);
 
 # Accessing edge attributes
 
-InstallMethod(\[\],
+InstallOtherMethod(\[\],
 "for a graphviz node and a string",
 [IsGVEdge, IsString],
 {edge, key} -> GraphvizAttrs(edge)[key]);
 
-InstallMethod(\[\],
+InstallOtherMethod(\[\],
 "for a graphviz node and an object",
 [IsGVEdge, IsObject],
-{edge, key} -> edge[GraphvizEnsureString(key)]);
+{edge, key} -> edge[GRAPHVIZ_EnsureString(key)]);
 
-InstallMethod(\[\]\:\=,
+InstallOtherMethod(\[\]\:\=,
 "for a graphviz node and a string",
 [IsGVEdge, IsString, IsString],
 function(edge, key, val)
   GraphvizAttrs(edge)[key] := val;
 end);
 
-InstallMethod(\[\]\:\=,
+InstallOtherMethod(\[\]\:\=,
 "for a graphviz node and an object",
 [IsGVEdge, IsObject, IsObject],
 function(edge, key, val)
-  edge[GraphvizEnsureString(key)] := GraphvizEnsureString(val);
+  edge[GRAPHVIZ_EnsureString(key)] := GRAPHVIZ_EnsureString(val);
 end);
 
-DeclareOperation("GraphvizHasNode",[IsGVGraph, IsObject]);
-InstallMethod(GraphvizHasNode, 
+InstallOtherMethod(\[\],
+"for a graphviz graph and string",
+[IsGVGraph, IsString],
+function(graph, node)
+  return GraphvizNodes(graph)[node];
+end);
+
+InstallOtherMethod(\[\],
+"for a graphviz graph and string",
+[IsGVGraph, IsObject],
+{g, o} ->  g[ViewString(o)]);
+
+DeclareOperation("GRAPHVIZ_HasNode",[IsGVGraph, IsObject]);
+InstallMethod(GRAPHVIZ_HasNode, 
 "for a graphviz graph", 
 [IsGVGraph, IsString], 
 function(g, name)
   return name in GRAPHVIZ_MapNames(GraphvizNodes(g));
 end);
 
-DeclareOperation("GraphvizGetParent", [IsGVGraph]);
-InstallMethod(GraphvizGetParent, 
+DeclareOperation("GRAPHVIZ_GetParent", [IsGVGraph]);
+InstallMethod(GRAPHVIZ_GetParent, 
 "for a graphviz graph", 
 [IsGVGraph],
 function(graph)
@@ -446,8 +458,8 @@ function(graph)
 end);
 
 
-DeclareOperation("GraphvizGraphTreeSearch", [IsGVGraph, IsFunction]);
-InstallMethod(GraphvizGraphTreeSearch, 
+DeclareOperation("GRAPHVIZ_GraphTreeSearch", [IsGVGraph, IsFunction]);
+InstallMethod(GRAPHVIZ_GraphTreeSearch, 
 "for a graphviz graph and a predicate",
 [IsGVGraph, IsFunction],
 function(graph, pred)
@@ -473,7 +485,7 @@ function(graph, pred)
     od;
 
     # add parent if not visited
-    parent := GraphvizGetParent(g);
+    parent := GRAPHVIZ_GetParent(g);
     if not IsGVGraph(parent) then
       continue;
     fi;
@@ -486,39 +498,39 @@ function(graph, pred)
   return fail;
 end);
 
-DeclareOperation("GraphvizFindGraphWithNode", [IsGVGraph, IsString]);
-InstallMethod(GraphvizFindGraphWithNode, 
+DeclareOperation("GRAPHVIZ_FindGraphWithNode", [IsGVGraph, IsString]);
+InstallMethod(GRAPHVIZ_FindGraphWithNode, 
 "for a graphviz graph and a node",
 [IsGVGraph, IsString],
-{g, n} -> GraphvizGraphTreeSearch(g, v -> v[n] <> fail));
+{g, n} -> GRAPHVIZ_GraphTreeSearch(g, v -> v[n] <> fail));
+
+DeclareOperation("GRAPHVIZ_GetRoot", [IsGVGraph]);
+InstallMethod(GRAPHVIZ_GetRoot,
+"for a graphviz graph",
+[IsGVGraph],
+function(graph)
+  while GRAPHVIZ_GetParent(graph) <> fail do
+    graph := GRAPHVIZ_GetParent(graph);
+  od;
+  return graph;
+end);
 
 InstallMethod(GraphvizFindGraph, 
 "for a graphviz graph and a string",
 [IsGVGraph, IsString],
-{g, s} -> GraphvizGraphTreeSearch(g, v -> GraphvizName(v) = s));
+{g, s} -> GRAPHVIZ_GraphTreeSearch(g, v -> GraphvizName(v) = s));
 
 InstallMethod(GraphvizFindGraph, 
 "for a graphviz graph and a string",
 [IsGVGraph, IsObject],
 {g, o} -> GraphvizFindGraph(g, ViewString(o)));
 
-DeclareOperation("GraphvizGetRoot", [IsGVGraph]);
-InstallMethod(GraphvizGetRoot,
-"for a graphviz graph",
-[IsGVGraph],
-function(graph)
-  while GraphvizGetParent(graph) <> fail do
-    graph := GraphvizGetParent(graph);
-  od;
-  return graph;
-end);
-
 InstallMethod(GraphvizFindNode, 
 "for a graphviz graph and a string",
 [IsGVGraph, IsString],
 function(g, n) 
   local graph;
-  graph := GraphvizFindGraphWithNode(g, n);
+  graph := GRAPHVIZ_FindGraphWithNode(g, n);
   if graph = fail then
     return graph;
   fi;
@@ -582,20 +594,18 @@ function(x, value)
   return x;
 end);
 
-InstallMethod(\[\],
-"for a graphviz graph and string",
-[IsGVGraph, IsString],
-function(graph, node)
-  return GraphvizNodes(graph)[node];
-end);
+InstallMethod(GraphvizSetLabel, 
+"for a graphviz object and an object",
+[IsGVObject, IsObject], 
+{x, label} -> GraphvizSetAttr(x, "label", label));
 
-InstallMethod(\[\],
-"for a graphviz graph and string",
-[IsGVGraph, IsObject],
-{g, o} ->  g[ViewString(o)]);
+InstallMethod(GraphvizSetColor, 
+"for a graphviz object and an object",
+[IsGVObject, IsObject], 
+{x, color} -> GraphvizSetAttr(x, "color", color));
 
-DeclareOperation("GraphvizAddNodePriv", [IsGVGraph, IsGVNode]);
-InstallMethod(GraphvizAddNodePriv, 
+DeclareOperation("GRAPHVIZ_AddNode", [IsGVGraph, IsGVNode]);
+InstallMethod(GRAPHVIZ_AddNode, 
 "for a graphviz graph and node",
 [IsGVGraph, IsGVNode], 
 function(x, node)
@@ -604,7 +614,7 @@ function(x, node)
   nodes := GraphvizNodes(x);
 
   # dont add if already node with the same name
-  found := GraphvizFindGraphWithNode(x, name);
+  found := GRAPHVIZ_FindGraphWithNode(x, name);
   if found <> fail then
     return ErrorNoReturn(StringFormatted("Already node with name {} in graph {}.", name, GraphvizName(found)));
   fi;
@@ -618,7 +628,7 @@ InstallMethod(GraphvizAddNode, "for a graphviz graph and string",
 function(x, name)
   local node;
   node := GraphvizNode(x, name);
-  GraphvizAddNodePriv(x, node);
+  GRAPHVIZ_AddNode(x, node);
   return node;
 end);
 
@@ -633,8 +643,8 @@ function(x, name)
   return GraphvizAddNode(x, ViewString(name));
 end);
 
-DeclareOperation("GraphvizAddEdgePriv", [IsGVGraph, IsGVEdge]);
-InstallMethod(GraphvizAddEdgePriv, 
+DeclareOperation("GRAPHVIZ_AddEdge", [IsGVGraph, IsGVEdge]);
+InstallMethod(GRAPHVIZ_AddEdge, 
 "for a graphviz graph and edge",
 [IsGVGraph, IsGVEdge], 
 function(x, edge)
@@ -644,15 +654,15 @@ function(x, edge)
   tail := GraphvizTail(edge);
   head_name := GraphvizName(head);
   tail_name := GraphvizName(tail);
-  hg := GraphvizFindGraphWithNode(x, head_name);
-  tg := GraphvizFindGraphWithNode(x, tail_name);
+  hg := GRAPHVIZ_FindGraphWithNode(x, head_name);
+  tg := GRAPHVIZ_FindGraphWithNode(x, tail_name);
 
   # if not already existing, add the nodes to the graph
   if hg = fail then
-    GraphvizAddNodePriv(x, head);
+    GRAPHVIZ_AddNode(x, head);
   fi;
   if tg = fail then
-    GraphvizAddNodePriv(x, tail);
+    GRAPHVIZ_AddNode(x, tail);
   fi;
 
   # make sure the nodes exist / are the same as existing ones
@@ -682,14 +692,14 @@ function(x, head, tail)
 
   # add the nodes to the graph if not present
   if GraphvizFindNode(x, head_name) = fail then
-    GraphvizAddNodePriv(x, head);
+    GRAPHVIZ_AddNode(x, head);
   fi;
   if GraphvizFindNode(x, tail_name) = fail then
-    GraphvizAddNodePriv(x, tail);
+    GRAPHVIZ_AddNode(x, tail);
   fi;
 
   edge := GraphvizEdge(x, head, tail);
-  GraphvizAddEdgePriv(x, edge);
+  GRAPHVIZ_AddEdge(x, edge);
   return edge;
 end);
 
@@ -1115,7 +1125,7 @@ function(graph, is_subgraph)
     elif IsGVNode(obj) then
       Append(result, GraphvizStringifyNode(obj));
     elif IsGVEdge(obj) then
-      if IsGVDigraph(graph) or (IsGVContext(graph) and IsGVDigraph(GraphvizGetParent(graph))) then
+      if IsGVDigraph(graph) or (IsGVContext(graph) and IsGVDigraph(GRAPHVIZ_GetParent(graph))) then
         Append(result, GraphvizStringifyDigraphEdge(obj));
       else
         Append(result, GraphvizStringifyGraphEdge(obj));
@@ -1127,8 +1137,8 @@ function(graph, is_subgraph)
 
   if IsGVContext(graph) then
     # reset attributes following the context
-    if GraphvizGetParent(graph) <> fail then
-      Append(result, GraphvizStringifyGraphAttrs(GraphvizGetParent(graph)));
+    if GRAPHVIZ_GetParent(graph) <> fail then
+      Append(result, GraphvizStringifyGraphAttrs(GRAPHVIZ_GetParent(graph)));
     fi;
     Append(result, "\n");
   else

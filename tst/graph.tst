@@ -54,9 +54,9 @@ rec( n := <object>, x := <object> )
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "n");
 <node n>
-gap> GraphvizHasNode(g, "n");
+gap> GRAPHVIZ_HasNode(g, "n");
 true
-gap> GraphvizHasNode(g, "x");
+gap> GRAPHVIZ_HasNode(g, "x");
 false
 
 # Test adding edges
@@ -226,5 +226,17 @@ gap> g := GraphvizDigraph(11);
 <digraph 11 with 0 nodes and 0 edges>
 gap> GraphvizSetName(g, ["a"]);
 <digraph [ "a" ] with 0 nodes and 0 edges>
+
+# Test set label (graph)
+gap> g := GraphvizGraph();;
+gap> GraphvizSetLabel(g, "test");;
+gap> GraphvizAttrs(g);
+[ "label=test" ]
+
+# Test set color (graph)
+gap> g := GraphvizGraph();;
+gap> GraphvizSetColor(g, "red");;
+gap> GraphvizAttrs(g);
+[ "color=\"red\"" ]
 
 #
