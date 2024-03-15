@@ -14,9 +14,8 @@
  - Fix node name implementation. (AddNode(node) -> node name is <graphviz node c>)
  - Make previous existing digraphs to dot functions return string and add ones which return graphviz objects Graphviz...
  - Make splash keep name splash and if the object given is GVObject then splash the string of the object (no intermediate)
- - Add (Graphviz [IsObject]) decl which dependent packages implement use 
-    - Add validation on quoted input
-    - Make only quoted if 100% needed and when quoted minimal quoted (for attributes)
+ - Add validation on quoted input
+ - Make only quoted if 100% needed and when quoted minimal quoted (for attributes)
 
 ## Other
  - relates to deadnaut github issue https://www.mankier.com/1/nauty-dretodot

@@ -190,3 +190,10 @@ DeclareOperation("GraphvizRemoveAttr", [IsGVObject, IsObject]);
 #! @Arguments graph
 #! @Returns the dot representation of the graphviz object.
 DeclareOperation("AsString", [IsGVGraph]);
+
+#! @Arguments obj
+#! @Returns the graphviz representation of the object.
+#! @Description
+#!  Unimplemented operation which depending packages can implement.
+#!  Should output the graphviz package representation of the object.
+DeclareOperation("Graphviz", [IsObject]);
