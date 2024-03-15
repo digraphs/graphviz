@@ -14,7 +14,7 @@
  - Fix node name implementation. (AddNode(node) -> node name is <node c>)
  - Make previous existing digraphs to dot functions return string and add ones which return graphviz objects Graphviz...
  - Make splash keep name splash and if the object given is GVObject then splash the string of the object (no intermediate)
- - Add warnings for non-recognized attributes
+ - switch display form <graph ... > to <graphviz graph ...>
  - Add (Graphviz [IsObject]) decl which dependent packages implement use 
     - Add validation on quoted input
 
