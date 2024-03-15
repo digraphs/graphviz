@@ -65,5 +65,18 @@ gap> g := GraphvizGraph();;
 gap> AsString(g);
 "graph  {\n}\n"
 
+# Test unknown attributes (node)
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddNode(g, "n");;
+gap> GraphvizSetAttr(n, "test", "false");
+[WARNING] Unkown attribute test
+<node n>
+
+# Test unknown attributes (graph)
+gap> g := GraphvizGraph();;
+gap> GraphvizSetAttr(g, "test", "false");
+[WARNING] Unkown attribute test
+<graph with 0 nodes and 0 edges>
+
 #
 gap> STOP_TEST("Digraphs package: standard/oper.tst", 0);
