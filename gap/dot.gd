@@ -41,6 +41,26 @@ DeclareOperation("\[\]", [IsGVGraph, IsObject]);
 #! @EndGroup
 
 #! @BeginGroup
+#! @GroupTitle Getting an attribute of a node
+#! @Arguments node, attribute name name
+#! @Returns the value of the attribute 
+#! @Description 
+#! Gets an attribute from a node. 
+DeclareOperation("\[\]\:\=", [IsGVNode, IsObject, IsObject]);
+DeclareOperation("\[\]", [IsGVNode, IsObject]);
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle Getting an attribute of a node
+#! @Arguments edge, attribute name
+#! @Returns the the value of the attribute 
+#! @Description 
+#! Gets an attribute from an edge. 
+DeclareOperation("\[\]", [IsGVEdge, IsObject]);
+DeclareOperation("\[\]\:\=", [IsGVEdge, IsObject, IsObject]);
+#! @EndGroup
+
+#! @BeginGroup
 #! @GroupTitle Constructors for Graphs
 #! @Arguments name
 #! @Returns a new graphviz graph

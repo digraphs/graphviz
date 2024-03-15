@@ -300,6 +300,73 @@ InstallMethod(GV_GetCounter,
 [IsGVGraph], 
 x -> x!.Counter);
 
+# Converting strings
+
+DeclareOperation("GV_EnsureString", [IsObject]);
+InstallMethod(GV_EnsureString,
+"for an object",
+[IsObject],
+x -> ViewString(x));
+
+InstallMethod(GV_EnsureString,
+"for a string",
+[IsString],
+x -> x);
+
+# Accessing node attributes
+
+InstallMethod(\[\],
+"for a graphviz node and a string",
+[IsGVNode, IsString],
+{node, key} -> GV_Attrs(node)[key]);
+
+InstallMethod(\[\],
+"for a graphviz node and an object",
+[IsGVNode, IsObject],
+{node, key} -> node[GV_EnsureString(key)]);
+
+# Setting node attributes
+
+InstallMethod(\[\]\:\=,
+"for a graphviz node and two strings",
+[IsGVNode, IsString, IsString],
+function(node, key, val) 
+  GV_Attrs(node)[key] := val;
+end);
+
+InstallMethod(\[\]\:\=,
+"for a graphviz node and two strings",
+[IsGVNode, IsObject, IsObject],
+function(node, key, val) 
+  node[GV_EnsureString(key)] := GV_EnsureString(val);
+end);
+
+# Accessing edge attributes
+
+InstallMethod(\[\],
+"for a graphviz node and a string",
+[IsGVEdge, IsString],
+{edge, key} -> GV_Attrs(edge)[key]);
+
+InstallMethod(\[\],
+"for a graphviz node and an object",
+[IsGVEdge, IsObject],
+{edge, key} -> edge[GV_EnsureString(key)]);
+
+InstallMethod(\[\]\:\=,
+"for a graphviz node and a string",
+[IsGVEdge, IsString, IsString],
+function(edge, key, val)
+  GV_Attrs(edge)[key] := val;
+end);
+
+InstallMethod(\[\]\:\=,
+"for a graphviz node and an object",
+[IsGVEdge, IsObject, IsObject],
+function(edge, key, val)
+  edge[GV_EnsureString(key)] := GV_EnsureString(val);
+end);
+
 DeclareOperation("GV_HasNode",[IsGVGraph, IsObject]);
 InstallMethod(GV_HasNode, 
 "for a graphviz graph", 

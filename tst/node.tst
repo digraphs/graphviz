@@ -69,4 +69,24 @@ gap> GV_RemoveNode(g, 111);;
 gap> GV_Nodes(g);
 HashMap([])
 
+# Test setting attributes using the []:= syntax
+gap> g := GV_Graph();;
+gap> n := GV_Node(g, "a");;
+gap> n["color"] := "red";;
+gap> GV_Attrs(n);
+HashMap([[ "color", "red" ]])
+gap> n["label"] := 1;;
+gap> GV_Attrs(n);
+HashMap([[ "color", "red" ], [ "label", "1" ]])
+gap> n["color"] := "blue";;
+gap> GV_Attrs(n);
+HashMap([[ "color", "blue" ], [ "label", "1" ]])
+
+# Test getting attributes using the [] syntax
+gap> g := GV_Graph();;
+gap> n := GV_Node(g, "a");;
+gap> n["color"] := "red";;
+gap> n["color"];
+"red"
+
 #

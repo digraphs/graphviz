@@ -118,4 +118,24 @@ gap> GV_FilterEnds(g, 1, 1);;
 gap> GV_Edges(g);
 [  ]
 
+# Test setting attributes using the []:= syntax
+gap> g := GV_Graph();;
+gap> n := GV_AddEdge(g, "a", "b");;
+gap> n["color"] := "red";;
+gap> GV_Attrs(n);
+HashMap([[ "color", "red" ]])
+gap> n["label"] := 1;;
+gap> GV_Attrs(n);
+HashMap([[ "color", "red" ], [ "label", "1" ]])
+gap> n["color"] := "blue";;
+gap> GV_Attrs(n);
+HashMap([[ "color", "blue" ], [ "label", "1" ]])
+
+# Test getting attributes using the [] syntax
+gap> g := GV_Graph();;
+gap> n := GV_AddEdge(g, "a", "b");;
+gap> n["color"] := "red";;
+gap> n["color"];
+"red"
+
 #
