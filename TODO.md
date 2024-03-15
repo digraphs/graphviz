@@ -17,6 +17,7 @@
  - switch display form <graph ... > to <graphviz graph ...>
  - Add (Graphviz [IsObject]) decl which dependent packages implement use 
     - Add validation on quoted input
+    - Make only quoted if 100% needed and when quoted minimal quoted (for attributes)
 
 ## Other
  - relates to deadnaut github issue https://www.mankier.com/1/nauty-dretodot
