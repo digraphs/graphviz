@@ -37,17 +37,17 @@ gap> n := GraphvizAddNode(GraphvizGraph(), "t");;
 gap> GraphvizSetAttrs(n, rec( color := "red" ));;
 gap> GraphvizSetAttrs(n, rec( color := "blue", shape := "round" ));;
 gap> GraphvizAttrs(n);
-HashMap([[ "color", "blue" ], [ "shape", "round" ]])
+rec( color := "blue", shape := "round" )
 gap> GraphvizSetAttrs(n, rec( color := "green", label := "test" ));;
 gap> GraphvizAttrs(n);
-HashMap([[ "color", "green" ], [ "shape", "round" ], [ "label", "test" ]])
+rec( color := "green", label := "test", shape := "round" )
 
 # Test removing attributes
 gap> n := GraphvizNode(GraphvizGraph(), "t");;
 gap> GraphvizSetAttrs(n, rec( color := "red", shape := "circle" ));;
 gap> GraphvizRemoveAttr(n, "color");;
 gap> GraphvizAttrs(n);
-HashMap([[ "shape", "circle" ]])
+rec( shape := "circle" )
 
 # Test name containing ':'
 gap> g := GraphvizGraph();;
@@ -67,20 +67,20 @@ gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, 111);;
 gap> GraphvizRemoveNode(g, 111);;
 gap> GraphvizNodes(g);
-HashMap([])
+rec(  )
 
 # Test setting attributes using the []:= syntax
 gap> g := GraphvizGraph();;
 gap> n := GraphvizNode(g, "a");;
 gap> n["color"] := "red";;
 gap> GraphvizAttrs(n);
-HashMap([[ "color", "red" ]])
+rec( color := "red" )
 gap> n["label"] := 1;;
 gap> GraphvizAttrs(n);
-HashMap([[ "color", "red" ], [ "label", "1" ]])
+rec( color := "red", label := "1" )
 gap> n["color"] := "blue";;
 gap> GraphvizAttrs(n);
-HashMap([[ "color", "blue" ], [ "label", "1" ]])
+rec( color := "blue", label := "1" )
 
 # Test getting attributes using the [] syntax
 gap> g := GraphvizGraph();;

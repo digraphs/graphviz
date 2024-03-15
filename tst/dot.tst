@@ -15,10 +15,10 @@ gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "test");;
 gap> GraphvizSetAttrs(n, rec(color:="red", label:="lab"));;
 gap> GraphvizAttrs(n);
-HashMap([[ "color", "red" ], [ "label", "lab" ]])
+rec( color := "red", label := "lab" )
 gap> GraphvizSetAttrs(n, rec(color:="blue"));;
 gap> GraphvizAttrs(n);
-HashMap([[ "color", "blue" ], [ "label", "lab" ]])
+rec( color := "blue", label := "lab" )
 
 # Test globals
 gap> g := GraphvizGraph();;

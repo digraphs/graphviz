@@ -4,6 +4,7 @@
 
 DeclareOperation("GraphvizGetCounter", [IsGVGraph]);
 DeclareOperation("GraphvizIncCounter", [IsGVGraph]);
+DeclareCategory("IsGRAPHVIZ_Map", IsObject);
 
 DeclareOperation("GraphvizStringifyGraphHead", [IsGVGraph]);
 DeclareOperation("GraphvizStringifyDigraphHead", [IsGVGraph]);
@@ -13,7 +14,7 @@ DeclareOperation("GraphvizStringifyGraphEdge", [IsGVEdge]);
 DeclareOperation("GraphvizStringifyDigraphEdge", [IsGVEdge]);
 DeclareOperation("GraphvizStringifyNode", [IsGVNode]);
 DeclareOperation("GraphvizStringifyGraphAttrs", [IsGVGraph]);
-DeclareOperation("GraphvizStringifyNodeEdgeAttrs", [IsHashMap]);
+DeclareOperation("GraphvizStringifyNodeEdgeAttrs", [IsGRAPHVIZ_Map]);
 DeclareOperation("GraphvizStringifyGraph", [IsGVGraph, IsBool]);
 
 DeclareOperation("GraphvizFindNode", [IsGVGraph, IsObject]);
@@ -25,6 +26,11 @@ DeclareOperation("GraphvizFindNode", [IsGVGraph, IsObject]);
 BindGlobal("GraphvizObjectFamily",
            NewFamily("GraphvizObjectFamily",
                      IsGVObject));
+
+BindGlobal("GRAPHVIZ_MapType", NewType(GraphvizObjectFamily,
+                                 IsGRAPHVIZ_Map and
+                                 IsComponentObjectRep and
+                                 IsAttributeStoringRep));
 
 BindGlobal("GraphvizDigraphType", NewType(GraphvizObjectFamily,
                                     IsGVDigraph and
@@ -59,6 +65,17 @@ DeclareOperation("GraphvizEdge", [IsGVGraph, IsGVNode, IsGVNode]);
 DeclareOperation("GraphvizGraph", [IsGVGraph, IsString]);
 DeclareOperation("GraphvizDigraph", [IsGVDigraph, IsString]);
 DeclareOperation("GraphvizContext", [IsGVGraph, IsString]);
+DeclareOperation("GRAPHVIZ_Map", []);
+
+InstallMethod(GRAPHVIZ_Map,
+"for a nothing",
+[],
+function()
+  return Objectify(GRAPHVIZ_MapType,
+                    rec(
+                      Data := rec()
+                    ));
+end);
 
 InstallMethod(GraphvizNode, 
 "for a string", 
@@ -71,7 +88,7 @@ function(graph, name)
   out := Objectify(GraphvizNodeType, 
                   rec(
                     Name  := name,
-                    Attrs := HashMap(),
+                    Attrs := GRAPHVIZ_Map(),
                     Idx   := GraphvizGetCounter(graph)                
                   ));
   GraphvizIncCounter(graph);
@@ -87,7 +104,7 @@ function(graph, head, tail)
                   Name  := "",
                   Head  := head,
                   Tail  := tail,
-                  Attrs := HashMap(),
+                  Attrs := GRAPHVIZ_Map(),
                   Idx   := GraphvizGetCounter(graph)                
                 ));
   GraphvizIncCounter(graph);
@@ -133,8 +150,8 @@ function(parent, name)
   out := Objectify(GraphvizContextType,
                       rec(
                         Name      := name,
-                        Subgraphs := HashMap(),
-                        Nodes     := HashMap(),
+                        Subgraphs := GRAPHVIZ_Map(),
+                        Nodes     := GRAPHVIZ_Map(),
                         Edges     := [],
                         Attrs     := [],
                         Parent    := parent,
@@ -156,8 +173,8 @@ function(name)
   return Objectify(GraphvizGraphType,
                       rec(
                         Name      := name,
-                        Subgraphs := HashMap(),
-                        Nodes     := HashMap(),
+                        Subgraphs := GRAPHVIZ_Map(),
+                        Nodes     := GRAPHVIZ_Map(),
                         Edges     := [],
                         Attrs     := [],
                         Parent    := fail,
@@ -178,8 +195,8 @@ function(name)
   return Objectify(GraphvizDigraphType,
                       rec(
                         Name      := name,
-                        Subgraphs := HashMap(),
-                        Nodes     := HashMap(),
+                        Subgraphs := GRAPHVIZ_Map(),
+                        Nodes     := GRAPHVIZ_Map(),
                         Edges     := [],
                         Attrs     := [],
                         Parent    := fail,
@@ -195,6 +212,51 @@ o -> GraphvizDigraph(ViewString(o)));
 
 InstallMethod(GraphvizGraph, "for no args", [], {} -> GraphvizGraph(""));
 InstallMethod(GraphvizDigraph, "for no args", [], {} -> GraphvizDigraph(""));
+
+############################################################
+# Graphviz Map Functions 
+############################################################
+InstallOtherMethod(\[\], 
+"for a graphviz map and an object",
+[IsGRAPHVIZ_Map, IsObject],
+function(m, o) 
+  if IsBound(m[o]) then 
+    return m!.Data.(o);
+  fi; 
+  return fail;
+end);
+
+InstallOtherMethod(\[\]\:\=, 
+"for a graphviz map and two objects",
+[IsGRAPHVIZ_Map, IsObject, IsObject],
+function(m, key, val)
+  m!.Data.(key) := val;
+end);
+
+InstallOtherMethod(Unbind\[\], 
+"for a graphviz map and an object",
+[IsGRAPHVIZ_Map, IsObject],
+function(m, key)
+  Unbind(m!.Data.(key));
+end);
+
+InstallOtherMethod(IsBound\[\], 
+"for a graphviz map and an object",
+[IsGRAPHVIZ_Map, IsObject],
+function(m, key)
+  return IsBound(m!.Data.(key));
+end);
+
+DeclareOperation("GRAPHVIZ_MapNames", [IsGRAPHVIZ_Map]);
+InstallMethod(GRAPHVIZ_MapNames, 
+"for a graphviz map",
+[IsGRAPHVIZ_Map],
+m -> RecNames(m!.Data));
+
+InstallMethod(ViewString, 
+"for a graphviz map",
+[IsGRAPHVIZ_Map],
+m -> String(m!.Data));
 
 ############################################################
 # Stringify
@@ -213,7 +275,7 @@ function(g)
   local result, edges, nodes;
   result := "";
   edges := Length(GraphvizEdges(g));
-  nodes := Size(GraphvizNodes(g));
+  nodes := Length(GRAPHVIZ_MapNames(GraphvizNodes(g)));
 
   Append(result, StringFormatted("<graph ", GraphvizName(g)));
 
@@ -232,7 +294,7 @@ function(g)
   local result, edges, nodes;
   result := "";
   edges := Length(GraphvizEdges(g));
-  nodes := Size(GraphvizNodes(g));
+  nodes := Length(GRAPHVIZ_MapNames(GraphvizNodes(g)));
 
   Append(result, StringFormatted("<digraph ", GraphvizName(g)));
 
@@ -251,7 +313,7 @@ function(g)
   local result, edges, nodes;
   result := "";
   edges := Length(GraphvizEdges(g));
-  nodes := Size(GraphvizNodes(g));
+  nodes := Length(GRAPHVIZ_MapNames(GraphvizNodes(g)));
 
   Append(result, StringFormatted("<context ", GraphvizName(g)));
 
@@ -372,7 +434,7 @@ InstallMethod(GraphvizHasNode,
 "for a graphviz graph", 
 [IsGVGraph, IsString], 
 function(g, name)
-  return name in Keys(GraphvizNodes(g));
+  return name in GRAPHVIZ_MapNames(GraphvizNodes(g));
 end);
 
 DeclareOperation("GraphvizGetParent", [IsGVGraph]);
@@ -389,7 +451,7 @@ InstallMethod(GraphvizGraphTreeSearch,
 "for a graphviz graph and a predicate",
 [IsGVGraph, IsFunction],
 function(graph, pred)
-  local seen, to_visit, g, subgraph, parent;
+  local seen, to_visit, g, key, subgraph, parent;
   seen     := [graph];
   to_visit := [graph];
 
@@ -402,7 +464,8 @@ function(graph, pred)
     fi;
 
     # add subgraphs to list of to visit if not visited
-    for subgraph in Values(GraphvizSubgraphs(g)) do
+    for key in GRAPHVIZ_MapNames(GraphvizSubgraphs(g)) do
+      subgraph := GraphvizSubgraphs(g)[key];
       if not ForAny(seen, s -> IsIdenticalObj(s, subgraph)) then
         Add(seen, subgraph);
         Add(to_visit, subgraph);
@@ -935,7 +998,7 @@ function(graph)
   attrs  := GraphvizAttrs(graph);
   result := "";
 
-  if Size(attrs) <> 0 then
+  if Length(attrs) <> 0 then
     Append(result, "\t");
     for kv in attrs do
       Append(result,
@@ -948,13 +1011,13 @@ end);
 
 InstallMethod(GraphvizStringifyNodeEdgeAttrs, 
 "for a record",
-[IsHashMap],
+[IsGRAPHVIZ_Map],
 function(attrs)
   local result, keys, key, n, i;
 
   result := "";
-  n      := Size(attrs);
-  keys   := SSortedList(Keys(attrs));
+  n      := Length(GRAPHVIZ_MapNames(attrs));
+  keys   := SSortedList(GRAPHVIZ_MapNames(attrs));
 
   if n <> 0 then
     Append(result, " [");
@@ -1006,8 +1069,8 @@ function(graph)
   edges := GraphvizEdges(graph);
   subs  := GraphvizSubgraphs(graph);
 
-  node_hist := List(Values(nodes), n -> [GraphvizGetIdx(n), n]);
-  subs_hist := List(Values(subs), s -> [GraphvizGetIdx(s), s]);
+  node_hist := List(GRAPHVIZ_MapNames(nodes), n -> [GraphvizGetIdx(nodes[n]), nodes[n]]);
+  subs_hist := List(GRAPHVIZ_MapNames(subs), s -> [GraphvizGetIdx(subs[s]), subs[s]]);
   edge_hist := List(edges, e -> [GraphvizGetIdx(e), e]);
 
   hist := Concatenation(node_hist, edge_hist, subs_hist);

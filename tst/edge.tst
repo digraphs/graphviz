@@ -123,13 +123,13 @@ gap> g := GraphvizGraph();;
 gap> n := GraphvizAddEdge(g, "a", "b");;
 gap> n["color"] := "red";;
 gap> GraphvizAttrs(n);
-HashMap([[ "color", "red" ]])
+rec( color := "red" )
 gap> n["label"] := 1;;
 gap> GraphvizAttrs(n);
-HashMap([[ "color", "red" ], [ "label", "1" ]])
+rec( color := "red", label := "1" )
 gap> n["color"] := "blue";;
 gap> GraphvizAttrs(n);
-HashMap([[ "color", "blue" ], [ "label", "1" ]])
+rec( color := "blue", label := "1" )
 
 # Test getting attributes using the [] syntax
 gap> g := GraphvizGraph();;

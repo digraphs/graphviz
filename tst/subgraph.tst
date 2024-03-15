@@ -57,7 +57,7 @@ gap> g := GraphvizGraph();;
 gap> GraphvizAddSubgraph(g, "a");;
 gap> GraphvizAddContext(g, "b");;
 gap> GraphvizSubgraphs(g);
-HashMap([[ "a", <object> ], [ "b", <object> ]])
+rec( a := <object>, b := <object> )
 
 # Test adding a node to a subgraph (does or does not add to parent???)
 # TODO need to nail down expected behaviour!
@@ -65,9 +65,9 @@ gap> g := GraphvizGraph();;
 gap> s := GraphvizAddSubgraph(g, "a");;
 gap> GraphvizAddNode(s, "n");;
 gap> GraphvizNodes(g);
-HashMap([])
+rec(  )
 gap> GraphvizNodes(s);
-HashMap([[ "n", <object> ]])
+rec( n := <object> )
 
 # Test adding a node to a subgraph which is already in parent fails (by name)
 gap> g := GraphvizGraph("r");;
@@ -224,13 +224,13 @@ gap> GraphvizAddNode(child, "c");;
 gap> GraphvizAddNode(g, "d");;
 gap> GraphvizRemoveNode(g, "d");;
 gap> GraphvizNodes(g);
-HashMap([])
+rec(  )
 gap> GraphvizNodes(parent);
-HashMap([[ "a", <object> ]])
+rec( a := <object> )
 gap> GraphvizNodes(sibling);
-HashMap([[ "b", <object> ]])
+rec( b := <object> )
 gap> GraphvizNodes(child);
-HashMap([[ "c", <object> ]])
+rec( c := <object> )
 
 # Test context attribute resetting
 gap> g := GraphvizDigraph();;

@@ -31,24 +31,24 @@ gap> n := GraphvizAddNode(g, "n");
 gap> g;
 <graph with 1 node and 0 edges>
 gap> GraphvizNodes(g);
-HashMap([[ "n", <object> ]])
+rec( n := <object> )
 gap> GraphvizAddNode(g, "x");
 <node x>
 gap> g;
 <graph with 2 nodes and 0 edges>
 gap> GraphvizNodes(g);
-HashMap([[ "n", <object> ], [ "x", <object> ]])
+rec( n := <object>, x := <object> )
 
 # Test add node (name)
 gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, "n");
 <node n>
 gap> GraphvizNodes(g);
-HashMap([[ "n", <object> ]])
+rec( n := <object> )
 gap> GraphvizAddNode(g, "x");
 <node x>
 gap> GraphvizNodes(g);
-HashMap([[ "n", <object> ], [ "x", <object> ]])
+rec( n := <object>, x := <object> )
 
 # Test has nodes
 gap> g := GraphvizGraph();;
@@ -97,7 +97,7 @@ gap> GraphvizAddEdge(g, "a", "b");;
 gap> GraphvizAddEdge(g, "a", "c");
 <edge (a, c)>
 gap> GraphvizNodes(g);
-HashMap([[ "c", <object> ], [ "a", <object> ], [ "b", <object> ]])
+rec( a := <object>, b := <object>, c := <object> )
 gap> GraphvizAddEdge(g, "c", "a");
 <edge (c, a)>
 gap> GraphvizAddEdge(g, "b", "d");
@@ -124,13 +124,13 @@ gap> GraphvizAddEdge(g, c, d);;
 gap> GraphvizRemoveNode(g, a);
 <graph with 3 nodes and 1 edge>
 gap> GraphvizNodes(g);
-HashMap([[ "c", <object> ], [ "d", <object> ], [ "b", <object> ]])
+rec( b := <object>, c := <object>, d := <object> )
 gap> GraphvizEdges(g);
 [ <edge (c, d)> ]
 gap> GraphvizRemoveNode(g, b);
 <graph with 2 nodes and 1 edge>
 gap> GraphvizNodes(g);
-HashMap([[ "c", <object> ], [ "d", <object> ]])
+rec( c := <object>, d := <object> )
 
 # Test removing node
 gap> g := GraphvizGraph();;
@@ -139,13 +139,13 @@ gap> GraphvizAddEdge(g, "c", "d");;
 gap> GraphvizRemoveNode(g, "a");
 <graph with 3 nodes and 1 edge>
 gap> GraphvizNodes(g);
-HashMap([[ "c", <object> ], [ "d", <object> ], [ "b", <object> ]])
+rec( b := <object>, c := <object>, d := <object> )
 gap> GraphvizEdges(g);
 [ <edge (c, d)> ]
 gap> GraphvizRemoveNode(g, "b");
 <graph with 2 nodes and 1 edge>
 gap> GraphvizNodes(g);
-HashMap([[ "c", <object> ], [ "d", <object> ]])
+rec( c := <object>, d := <object> )
 
 # Test renaming graph
 gap> g := GraphvizGraph();;
