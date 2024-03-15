@@ -265,13 +265,13 @@ m -> String(m!.Data));
 ############################################################
 # Stringify
 ############################################################
-InstallMethod(ViewString, "for a graphviz node", [IsGVNode], n -> StringFormatted("<node {}>", GraphvizName(n)));
+InstallMethod(ViewString, "for a graphviz node", [IsGVNode], n -> StringFormatted("<graphviz node {}>", GraphvizName(n)));
 InstallMethod(ViewString, "for a graphviz edge", [IsGVEdge], 
 function(e)
   local head, tail;
   head := GraphvizHead(e);
   tail := GraphvizTail(e);
-  return StringFormatted("<edge ({}, {})>", GraphvizName(head), GraphvizName(tail));
+  return StringFormatted("<graphviz edge ({}, {})>", GraphvizName(head), GraphvizName(tail));
 end);
 
 InstallMethod(ViewString, "for a graphviz graph", [IsGVGraph], 
@@ -281,7 +281,7 @@ function(g)
   edges := Length(GraphvizEdges(g));
   nodes := Length(GRAPHVIZ_MapNames(GraphvizNodes(g)));
 
-  Append(result, StringFormatted("<graph ", GraphvizName(g)));
+  Append(result, StringFormatted("<graphviz graph ", GraphvizName(g)));
 
   if GraphvizName(g) <> "" then
     Append(result, StringFormatted("{} ", GraphvizName(g)));
@@ -300,7 +300,7 @@ function(g)
   edges := Length(GraphvizEdges(g));
   nodes := Length(GRAPHVIZ_MapNames(GraphvizNodes(g)));
 
-  Append(result, StringFormatted("<digraph ", GraphvizName(g)));
+  Append(result, StringFormatted("<graphviz digraph ", GraphvizName(g)));
 
   if GraphvizName(g) <> "" then
     Append(result, StringFormatted("{} ", GraphvizName(g)));
@@ -319,7 +319,7 @@ function(g)
   edges := Length(GraphvizEdges(g));
   nodes := Length(GRAPHVIZ_MapNames(GraphvizNodes(g)));
 
-  Append(result, StringFormatted("<context ", GraphvizName(g)));
+  Append(result, StringFormatted("<graphviz context ", GraphvizName(g)));
 
   if GraphvizName(g) <> "" then
     Append(result, StringFormatted("{} ", GraphvizName(g)));

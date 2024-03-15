@@ -11,10 +11,9 @@
 ## TODO (ONCE THIS IS EMPTY THEN DONE!)
  - Fix gaplint whitespace / small formatting complaints
  - Make internal functions use GRAPHVIZ_ instrad of Graphviz...
- - Fix node name implementation. (AddNode(node) -> node name is <node c>)
+ - Fix node name implementation. (AddNode(node) -> node name is <graphviz node c>)
  - Make previous existing digraphs to dot functions return string and add ones which return graphviz objects Graphviz...
  - Make splash keep name splash and if the object given is GVObject then splash the string of the object (no intermediate)
- - switch display form <graph ... > to <graphviz graph ...>
  - Add (Graphviz [IsObject]) decl which dependent packages implement use 
     - Add validation on quoted input
     - Make only quoted if 100% needed and when quoted minimal quoted (for attributes)

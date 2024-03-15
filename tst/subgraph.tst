@@ -13,44 +13,44 @@ gap> LoadPackage("graphviz", false);;
 # Test creating subgraphs (named)
 gap> g := GraphvizGraph();;
 gap> GraphvizAddSubgraph(g, "test-graph");
-<graph test-graph with 0 nodes and 0 edges>
+<graphviz graph test-graph with 0 nodes and 0 edges>
 gap> g := GraphvizDigraph();;
 gap> GraphvizAddSubgraph(g, "test-digraph");
-<digraph test-digraph with 0 nodes and 0 edges>
+<graphviz digraph test-digraph with 0 nodes and 0 edges>
 gap> g := GraphvizGraph();;
 gap> GraphvizAddContext(g, "test-context");
-<context test-context with 0 nodes and 0 edges>
+<graphviz context test-context with 0 nodes and 0 edges>
 
 # Test no-name constructors
 gap> g := GraphvizGraph();;
 gap> GraphvizAddSubgraph(g);
-<graph no_name_1 with 0 nodes and 0 edges>
+<graphviz graph no_name_1 with 0 nodes and 0 edges>
 gap> g := GraphvizDigraph();;
 gap> GraphvizAddSubgraph(g);
-<digraph no_name_1 with 0 nodes and 0 edges>
+<graphviz digraph no_name_1 with 0 nodes and 0 edges>
 gap> g := GraphvizGraph();;
 gap> GraphvizAddContext(g);
-<context no_name_1 with 0 nodes and 0 edges>
+<graphviz context no_name_1 with 0 nodes and 0 edges>
 
 # Test no-name constructor graphs' names increment
 gap> g := GraphvizGraph();;
 gap> GraphvizAddSubgraph(g);
-<graph no_name_1 with 0 nodes and 0 edges>
+<graphviz graph no_name_1 with 0 nodes and 0 edges>
 gap> GraphvizAddSubgraph(g);
-<graph no_name_2 with 0 nodes and 0 edges>
+<graphviz graph no_name_2 with 0 nodes and 0 edges>
 gap> GraphvizAddSubgraph(g);
-<graph no_name_3 with 0 nodes and 0 edges>
+<graphviz graph no_name_3 with 0 nodes and 0 edges>
 gap> GraphvizAddContext(g);
-<context no_name_4 with 0 nodes and 0 edges>
+<graphviz context no_name_4 with 0 nodes and 0 edges>
 
 # Test no-name constructor graphs' names increment (contexts)
 gap> g := GraphvizGraph();;
 gap> GraphvizAddContext(g);
-<context no_name_1 with 0 nodes and 0 edges>
+<graphviz context no_name_1 with 0 nodes and 0 edges>
 gap> GraphvizAddContext(g);
-<context no_name_2 with 0 nodes and 0 edges>
+<graphviz context no_name_2 with 0 nodes and 0 edges>
 gap> GraphvizAddContext(g);
-<context no_name_3 with 0 nodes and 0 edges>
+<graphviz context no_name_3 with 0 nodes and 0 edges>
 
 # Test getting subgraphs
 gap> g := GraphvizGraph();;
@@ -95,15 +95,15 @@ Error, Already node with name n in graph a.
 gap> g := GraphvizGraph();;
 gap> s := GraphvizAddSubgraph(g, "a");;
 gap> GraphvizAddEdge(s, "a", "b");
-<edge (a, b)>
+<graphviz edge (a, b)>
 gap> g := GraphvizGraph();;
 gap> s := GraphvizAddSubgraph(g, "a");;
 gap> GraphvizAddEdge(s, "a", "b");
-<edge (a, b)>
+<graphviz edge (a, b)>
 gap> g := GraphvizGraph();;
 gap> s := GraphvizAddContext(g, "a");;
 gap> GraphvizAddEdge(s, "a", "b");
-<edge (a, b)>
+<graphviz edge (a, b)>
 
 # Test removing edge from graph does not remove from children, sibling, parent, etc
 gap> parent := GraphvizGraph();;
@@ -118,11 +118,11 @@ gap> GraphvizFilterEnds(main, "x", "y");;
 gap> GraphvizEdges(g);
 [  ]
 gap> GraphvizEdges(parent);
-[ <edge (x, y)> ]
+[ <graphviz edge (x, y)> ]
 gap> GraphvizEdges(sibling);
-[ <edge (x, y)> ]
+[ <graphviz edge (x, y)> ]
 gap> GraphvizEdges(child);
-[ <edge (x, y)> ]
+[ <graphviz edge (x, y)> ]
 
 # Test stringifying subgraph digraph
 gap> g := GraphvizDigraph();;
@@ -180,7 +180,7 @@ gap> s1 := GraphvizAddSubgraph(g);;
 gap> GraphvizAddNode(s1, "a");;
 gap> s2 := GraphvizAddSubgraph(g);;
 gap> GraphvizFindNode(s2, "a");
-<node a>
+<graphviz node a>
 gap> GraphvizFindNode(s2, "b");
 fail
 
@@ -189,7 +189,7 @@ gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g);;
 gap> GraphvizAddNode(s1, "a");;
 gap> GraphvizFindNode(g, "a");
-<node a>
+<graphviz node a>
 gap> GraphvizFindNode(g, "b");
 fail
 
@@ -198,7 +198,7 @@ gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g);;
 gap> GraphvizAddNode(g, "a");;
 gap> GraphvizFindNode(s1, "a");
-<node a>
+<graphviz node a>
 gap> GraphvizFindNode(s1, "b");
 fail
 
@@ -209,7 +209,7 @@ gap> s2 := GraphvizAddSubgraph(g);;
 gap> s11 := GraphvizAddSubgraph(s1);;
 gap> GraphvizAddNode(s2, "a");;
 gap> GraphvizFindNode(s11, "a");
-<node a>
+<graphviz node a>
 gap> GraphvizFindNode(s11, "b");
 fail
 
@@ -258,9 +258,9 @@ gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddSubgraph(g, "b");;
 gap> GraphvizGetSubgraph(g, "a");
-<digraph a with 0 nodes and 0 edges>
+<graphviz digraph a with 0 nodes and 0 edges>
 gap> GraphvizGetSubgraph(g, "b");
-<digraph b with 0 nodes and 0 edges>
+<graphviz digraph b with 0 nodes and 0 edges>
 gap> GraphvizGetSubgraph(g, "d");
 fail
 
@@ -269,20 +269,20 @@ gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddContext(g, "c");;
 gap> GraphvizGetSubgraph(g, "a");
-<digraph a with 0 nodes and 0 edges>
+<graphviz digraph a with 0 nodes and 0 edges>
 gap> GraphvizGetSubgraph(g, "c");
-<context c with 0 nodes and 0 edges>
+<graphviz context c with 0 nodes and 0 edges>
 
 # Test adding a nested subgraph
 gap> g := GraphvizGraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddSubgraph(s1, "c");;
 gap> GraphvizGetSubgraph(g, "a");
-<graph a with 0 nodes and 0 edges>
+<graphviz graph a with 0 nodes and 0 edges>
 gap> GraphvizGetSubgraph(g, "c");
 fail
 gap> GraphvizGetSubgraph(s1, "c");
-<graph c with 0 nodes and 0 edges>
+<graphviz graph c with 0 nodes and 0 edges>
 
 # Test displaying a nested subgraph
 gap> g := GraphvizGraph();;
@@ -294,24 +294,24 @@ gap> AsString(g);
 # Test subgraphs with non-string names
 gap> g := GraphvizGraph();;
 gap> GraphvizAddSubgraph(g, 11);
-<graph 11 with 0 nodes and 0 edges>
+<graphviz graph 11 with 0 nodes and 0 edges>
 
 # Test contexts with non-string names
 gap> g := GraphvizGraph();;
 gap> GraphvizAddContext(g, 11);
-<context 11 with 0 nodes and 0 edges>
+<graphviz context 11 with 0 nodes and 0 edges>
 
 # Test getting subgraphs with non-string names
 gap> g := GraphvizGraph();;
 gap> GraphvizAddContext(g, [ "a" ]);;
 gap> GraphvizGetSubgraph(g, [ "a" ]);
-<context [ "a" ] with 0 nodes and 0 edges>
+<graphviz context [ "a" ] with 0 nodes and 0 edges>
 
 # Test finding subgraph (parent)
 gap> g := GraphvizGraph("a");;
 gap> s := GraphvizAddSubgraph(g, "b");;
 gap> o := GraphvizFindGraph(s, "a");
-<graph a with 0 nodes and 0 edges>
+<graphviz graph a with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, g);
 true
 
@@ -319,7 +319,7 @@ true
 gap> g := GraphvizGraph("a");;
 gap> s := GraphvizAddSubgraph(g, "b");;
 gap> o := GraphvizFindGraph(g, "b");
-<graph b with 0 nodes and 0 edges>
+<graphviz graph b with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s);
 true
 
@@ -328,14 +328,14 @@ gap> g := GraphvizGraph("a");;
 gap> s := GraphvizAddSubgraph(g, "b");;
 gap> s2 := GraphvizAddSubgraph(g, "c");;
 gap> o := GraphvizFindGraph(s, "c");
-<graph c with 0 nodes and 0 edges>
+<graphviz graph c with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s2);
 true
 
 # Test finding subgraph (self)
 gap> g := GraphvizGraph("a");;
 gap> o := GraphvizFindGraph(g, "a");
-<graph a with 0 nodes and 0 edges>
+<graphviz graph a with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, g);
 true
 
@@ -348,7 +348,7 @@ gap> b1 := GraphvizAddSubgraph(g, "b1");;
 gap> b2 := GraphvizAddSubgraph(b1, "b2");;
 gap> b3 := GraphvizAddSubgraph(b2, "b3");;
 gap> o := GraphvizFindGraph(a3, "b3");
-<graph b3 with 0 nodes and 0 edges>
+<graphviz graph b3 with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, b3);
 true
 
@@ -356,7 +356,7 @@ true
 gap> g := GraphvizGraph("r");;
 gap> s := GraphvizAddSubgraph(g, 1);;
 gap> o := GraphvizFindGraph(g, 1);
-<graph 1 with 0 nodes and 0 edges>
+<graphviz graph 1 with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s);
 true
 

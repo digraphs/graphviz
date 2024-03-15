@@ -12,7 +12,7 @@ gap> LoadPackage("graphviz", false);;
 
 # Test node constructor
 gap> GraphvizAddNode(GraphvizGraph(), "test-node");
-<node test-node>
+<graphviz node test-node>
 
 # Test renaming nodes fails
 gap> n := GraphvizNode(GraphvizGraph(), "a");;
@@ -22,7 +22,7 @@ Error, no 1st choice method found for `GraphvizName' on 2 arguments
 
 # Test making a node with an all whitespace name
 gap> n := GraphvizAddNode(GraphvizGraph(), "  ");
-<node   >
+<graphviz node   >
 
 # Test making a node with empty name fails
 gap> n := GraphvizAddNode(GraphvizGraph(), "");
@@ -30,7 +30,7 @@ Error, Node name cannot be empty.
 
 # Test whitespace in node names
 gap> n := GraphvizAddNode(GraphvizGraph(), "a  a   ");
-<node a  a   >
+<graphviz node a  a   >
 
 # Test modifying attributes
 gap> n := GraphvizAddNode(GraphvizGraph(), "t");;
@@ -58,7 +58,7 @@ gap> AsString(g);
 # Test non-string name containing ':'
 gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, 111);
-<node 111>
+<graphviz node 111>
 gap> AsString(g);
 "graph  {\n\t\"111\"\n}\n"
 
