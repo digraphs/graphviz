@@ -1,33 +1,33 @@
 # https://graphviz.readthedocs.io/en/stable/examples.html
 LoadPackage("graphviz");
-graph := GV_Digraph("G");
+graph := GraphvizDigraph("G");
 
-cluster0 := GV_AddSubgraph(graph, "cluster_0");
-GV_SetAttr(cluster0, "color=\"lightgrey\"");
-GV_SetAttr(cluster0, "style=\"filled\"");
-GV_SetAttr(cluster0, "node [color=\"white\", style=\"filled\"]");
-GV_AddEdge(cluster0, "a0", "a1");
-GV_AddEdge(cluster0, "a1", "a2");
-GV_AddEdge(cluster0, "a2", "a3");
-GV_SetAttr(cluster0, "label=\"process #1\"");
+cluster0 := GraphvizAddSubgraph(graph, "cluster_0");
+GraphvizSetAttr(cluster0, "color=\"lightgrey\"");
+GraphvizSetAttr(cluster0, "style=\"filled\"");
+GraphvizSetAttr(cluster0, "node [color=\"white\", style=\"filled\"]");
+GraphvizAddEdge(cluster0, "a0", "a1");
+GraphvizAddEdge(cluster0, "a1", "a2");
+GraphvizAddEdge(cluster0, "a2", "a3");
+GraphvizSetAttr(cluster0, "label=\"process #1\"");
 
-cluster1 := GV_AddSubgraph(graph, "cluster_1");
-GV_SetAttr(cluster1, "color=\"blue\"");
-GV_SetAttr(cluster1, "node [style=\"filled\"]");
-GV_AddEdge(cluster1, "b0", "b1");
-GV_AddEdge(cluster1, "b1", "b2");
-GV_AddEdge(cluster1, "b2", "b3");
-GV_SetAttr(cluster1, "label=\"process #2\"");
+cluster1 := GraphvizAddSubgraph(graph, "cluster_1");
+GraphvizSetAttr(cluster1, "color=\"blue\"");
+GraphvizSetAttr(cluster1, "node [style=\"filled\"]");
+GraphvizAddEdge(cluster1, "b0", "b1");
+GraphvizAddEdge(cluster1, "b1", "b2");
+GraphvizAddEdge(cluster1, "b2", "b3");
+GraphvizSetAttr(cluster1, "label=\"process #2\"");
 
-GV_AddEdge(graph, "start", "a0");
-GV_AddEdge(graph, "start", "b0");
-GV_AddEdge(graph, "a1", "b3");
-GV_AddEdge(graph, "b2", "a3");
-GV_AddEdge(graph, "a3", "a0");
-GV_AddEdge(graph, "a3", "end");
-GV_AddEdge(graph, "b3", "end");
+GraphvizAddEdge(graph, "start", "a0");
+GraphvizAddEdge(graph, "start", "b0");
+GraphvizAddEdge(graph, "a1", "b3");
+GraphvizAddEdge(graph, "b2", "a3");
+GraphvizAddEdge(graph, "a3", "a0");
+GraphvizAddEdge(graph, "a3", "end");
+GraphvizAddEdge(graph, "b3", "end");
 
-GV_SetAttr(graph["start"], "shape", "Mdiamond");
-GV_SetAttr(graph["end"], "shape", "Msquare");
+GraphvizSetAttr(graph["start"], "shape", "Mdiamond");
+GraphvizSetAttr(graph["end"], "shape", "Msquare");
 
 Print(AsString(graph));

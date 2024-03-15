@@ -3,30 +3,30 @@
 
 LoadPackage("graphviz");
 
-g := GV_Digraph("G");
-GV_SetAttr(g, "compound=true");
+g := GraphvizDigraph("G");
+GraphvizSetAttr(g, "compound=true");
 
-cluster0 := GV_AddSubgraph(g, "cluster0");
-GV_AddEdge(cluster0, "a", "b");
-GV_AddEdge(cluster0, "a", "c");
-GV_AddEdge(cluster0, "b", "d");
-GV_AddEdge(cluster0, "c", "d");
+cluster0 := GraphvizAddSubgraph(g, "cluster0");
+GraphvizAddEdge(cluster0, "a", "b");
+GraphvizAddEdge(cluster0, "a", "c");
+GraphvizAddEdge(cluster0, "b", "d");
+GraphvizAddEdge(cluster0, "c", "d");
 
 
-cluster1 := GV_AddSubgraph(g, "cluster1");
-GV_AddEdge(cluster1, "e", "g");
-GV_AddEdge(cluster1, "e", "f");
+cluster1 := GraphvizAddSubgraph(g, "cluster1");
+GraphvizAddEdge(cluster1, "e", "g");
+GraphvizAddEdge(cluster1, "e", "f");
 
-GV_SetAttr(GV_AddEdge(g, "b", "f"), "lhead", "cluster1");
-GV_AddEdge(g, "d", "e");
+GraphvizSetAttr(GraphvizAddEdge(g, "b", "f"), "lhead", "cluster1");
+GraphvizAddEdge(g, "d", "e");
 
-e := GV_AddEdge(g, "c", "g");
-GV_SetAttr(e, "ltail", "cluster0");
-GV_SetAttr(e, "lhead", "cluster1");
+e := GraphvizAddEdge(g, "c", "g");
+GraphvizSetAttr(e, "ltail", "cluster0");
+GraphvizSetAttr(e, "lhead", "cluster1");
 
-e := GV_AddEdge(g, "c", "e");
-GV_SetAttr(e, "ltail", "cluster0");
+e := GraphvizAddEdge(g, "c", "e");
+GraphvizSetAttr(e, "ltail", "cluster0");
 
-GV_AddEdge(g, "d", "h");
+GraphvizAddEdge(g, "d", "h");
 
 Print(AsString(g));

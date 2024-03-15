@@ -2,43 +2,43 @@
 # """https://graphviz.org/Gallery/directed/unix.html"""
 LoadPackage("graphviz");
 
-t := GV_Digraph("TrafficLights");
-GV_SetAttr(t, "engine=neato");
+t := GraphvizDigraph("TrafficLights");
+GraphvizSetAttr(t, "engine=neato");
 
-ctx1 := GV_AddSubgraph(t, "ctx1");
-GV_SetAttr(ctx1, "node [shape=\"box\"]");
+ctx1 := GraphvizAddSubgraph(t, "ctx1");
+GraphvizSetAttr(ctx1, "node [shape=\"box\"]");
 for i in [2, 1] do
-    GV_AddNode(ctx1, StringFormatted("gy{}", i));
-    GV_AddNode(ctx1, StringFormatted("yr{}", i));
-    GV_AddNode(ctx1, StringFormatted("rg{}", i));
+    GraphvizAddNode(ctx1, StringFormatted("gy{}", i));
+    GraphvizAddNode(ctx1, StringFormatted("yr{}", i));
+    GraphvizAddNode(ctx1, StringFormatted("rg{}", i));
 od;
 
 
-ctx2 := GV_AddSubgraph(t, "ctx2");
-GV_SetAttr(ctx2, "node [shape=\"circle\", fixedsize=true, width=0.9]");
+ctx2 := GraphvizAddSubgraph(t, "ctx2");
+GraphvizSetAttr(ctx2, "node [shape=\"circle\", fixedsize=true, width=0.9]");
 for i in [2, 1] do
-    GV_AddNode(ctx2, StringFormatted("green{}", i));
-    GV_AddNode(ctx2, StringFormatted("yellow{}", i));
-    GV_AddNode(ctx2, StringFormatted("red{}", i));
-    GV_AddNode(ctx2, StringFormatted("safe{}", i));
+    GraphvizAddNode(ctx2, StringFormatted("green{}", i));
+    GraphvizAddNode(ctx2, StringFormatted("yellow{}", i));
+    GraphvizAddNode(ctx2, StringFormatted("red{}", i));
+    GraphvizAddNode(ctx2, StringFormatted("safe{}", i));
 od;
 
 pair := fail;
 for pair in [[2, 1], [1, 2]] do
     i := pair[1];
     j := pair[2];
-    GV_AddEdge(t, StringFormatted("gy{}", i), StringFormatted("yellow{}", i));
-    GV_AddEdge(t, StringFormatted("rg{}", i), StringFormatted("green{}", i));
-    GV_AddEdge(t, StringFormatted("yr{}", i), StringFormatted("safe{}", j));
-    GV_AddEdge(t, StringFormatted("yr{}", i), StringFormatted("red{}", i));
-    GV_AddEdge(t, StringFormatted("safe{}", i), StringFormatted("rg{}", i));
-    GV_AddEdge(t, StringFormatted("green{}", i), StringFormatted("gy{}", i));
-    GV_AddEdge(t, StringFormatted("yellow{}", i), StringFormatted("yr{}", i));
-    GV_AddEdge(t, StringFormatted("red{}", i), StringFormatted("rg{}", i));
+    GraphvizAddEdge(t, StringFormatted("gy{}", i), StringFormatted("yellow{}", i));
+    GraphvizAddEdge(t, StringFormatted("rg{}", i), StringFormatted("green{}", i));
+    GraphvizAddEdge(t, StringFormatted("yr{}", i), StringFormatted("safe{}", j));
+    GraphvizAddEdge(t, StringFormatted("yr{}", i), StringFormatted("red{}", i));
+    GraphvizAddEdge(t, StringFormatted("safe{}", i), StringFormatted("rg{}", i));
+    GraphvizAddEdge(t, StringFormatted("green{}", i), StringFormatted("gy{}", i));
+    GraphvizAddEdge(t, StringFormatted("yellow{}", i), StringFormatted("yr{}", i));
+    GraphvizAddEdge(t, StringFormatted("red{}", i), StringFormatted("rg{}", i));
 od;
 
-GV_SetAttr(t, "overlap=\"false\"");
-GV_SetAttr(t, "label=\"PetriNet Model TrafficLights\nExtracted from ConceptBase and layed out by Graphviz\"");
-GV_SetAttr(t, "fontsize=12");
+GraphvizSetAttr(t, "overlap=\"false\"");
+GraphvizSetAttr(t, "label=\"PetriNet Model TrafficLights\nExtracted from ConceptBase and layed out by Graphviz\"");
+GraphvizSetAttr(t, "fontsize=12");
 
 Print(AsString(t));

@@ -65,8 +65,8 @@ DeclareOperation("\[\]\:\=", [IsGVEdge, IsObject, IsObject]);
 #! @Arguments name
 #! @Returns a new graphviz graph
 #! @Description Creates a new graphviz graph optionally with the provided name.
-DeclareOperation("GV_Graph", [IsObject]);
-DeclareOperation("GV_Graph", []);
+DeclareOperation("GraphvizGraph", [IsObject]);
+DeclareOperation("GraphvizGraph", []);
 #! @EndGroup
 
 #! @BeginGroup
@@ -74,8 +74,8 @@ DeclareOperation("GV_Graph", []);
 #! @Arguments name
 #! @Returns a new graphviz digraph
 #! @Description Creates a new graphviz digraph optionally with the provided name.
-DeclareOperation("GV_Digraph", [IsObject]);
-DeclareOperation("GV_Digraph", []);
+DeclareOperation("GraphvizDigraph", [IsObject]);
+DeclareOperation("GraphvizDigraph", []);
 #! @EndGroup
 
 #! @Section Get Operations
@@ -86,13 +86,13 @@ DeclareOperation("GV_Digraph", []);
 #! @Arguments obj
 #! @Returns the name of the provided graphviz object
 #! @Description Gets the name of the provided graphviz object.
-DeclareOperation("GV_Name", [IsGVObject]);
+DeclareOperation("GraphvizName", [IsGVObject]);
 
 
 #! @Arguments obj
 #! @Returns the attributes of the provided graphviz object
 #! @Description Gets the attributes of the provided graphviz object.
-DeclareOperation("GV_Attrs", [IsGVObject]);
+DeclareOperation("GraphvizAttrs", [IsGVObject]);
 
 #! @Subsection For only graphs and digraphs.
 
@@ -100,13 +100,13 @@ DeclareOperation("GV_Attrs", [IsGVObject]);
 #! @Returns the nodes of the provided graphviz graph.
 #! @Description Gets the nodes of the provided graphviz graph.
 #! Node names can only be [a-zA-Z0-9_£] TODO check exact docs.
-DeclareOperation("GV_Nodes", [IsGVGraph]);
+DeclareOperation("GraphvizNodes", [IsGVGraph]);
 
 #! @Arguments graph
 #! @Returns the subgraphs of the provided graphviz graph.
 #! @Description gets the subgraphs of a provided graphviz graph.
-DeclareOperation("GV_Subgraphs", [IsGVGraph]);
-DeclareOperation("GV_GetSubgraph", [IsGVGraph, IsObject]);
+DeclareOperation("GraphvizSubgraphs", [IsGVGraph]);
+DeclareOperation("GraphvizGetSubgraph", [IsGVGraph, IsObject]);
 
 #! @Arguments graph, name
 #! @Returns a graph with the provided name.
@@ -114,24 +114,24 @@ DeclareOperation("GV_GetSubgraph", [IsGVGraph, IsObject]);
 #! Searches through the tree of subgraphs connected to this subgraph for a graph with the provided name. 
 #! It returns the graph if it exists. 
 #! If no such graph exists then it will return fail.
-DeclareOperation("GV_FindGraph", [IsGVGraph, IsObject]);
+DeclareOperation("GraphvizFindGraph", [IsGVGraph, IsObject]);
 
 #! @Arguments graph
 #! @Returns the edges of the provided graphviz graph.
 #! @Description Gets the edges of the provided graphviz graph.
-DeclareOperation("GV_Edges", [IsGVGraph]);
+DeclareOperation("GraphvizEdges", [IsGVGraph]);
 
 #! @Subsection For only edges.
 
 #! @Arguments edge
 #! @Returns the head of the provided graphviz edge.
 #! @Description Gets the head of the provided graphviz graph.
-DeclareOperation("GV_Head", [IsGVEdge]);
+DeclareOperation("GraphvizHead", [IsGVEdge]);
 
 #! @Arguments edge
 #! @Returns the head of the provided graphviz tail.
 #! @Description Gets the tail of the provided graphviz graph.
-DeclareOperation("GV_Tail", [IsGVEdge]);
+DeclareOperation("GraphvizTail", [IsGVEdge]);
 
 #! @Section Set Operations
 #! This section covers operations for modifying graphviz objects.
@@ -141,47 +141,47 @@ DeclareOperation("GV_Tail", [IsGVEdge]);
 #! @Arguments graph, name
 #! @Returns the modified graph.
 #! @Description Sets the name of a graphviz graph or digraph.
-DeclareOperation("GV_SetName",[IsGVGraph, IsObject]);
+DeclareOperation("GraphvizSetName",[IsGVGraph, IsObject]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
 #! @Description Adds a node to the graph.
 #! If a node with the same name is already present the operation fails.
-DeclareOperation("GV_AddNode", [IsGVGraph, IsObject]);
+DeclareOperation("GraphvizAddNode", [IsGVGraph, IsObject]);
 
 #! @Arguments graph, edge
 #! @Returns the modified graph.
 #! @Description Adds an edge to the graph.
 #! If no nodes with the same name are in the graph then the edge's nodes will be added to the graph.
 #! If different nodes with the same name are in the graph then the operation fails.
-DeclareOperation("GV_AddEdge", [IsGVGraph, IsObject, IsObject]);
+DeclareOperation("GraphvizAddEdge", [IsGVGraph, IsObject, IsObject]);
 
 #! @Arguments graph, filter, name
 #! @Returns the new subgraph.
 #! @Description Adds a subgraph to a graph.
-DeclareOperation("GV_AddSubgraph", [IsGVGraph, IsObject]);
-DeclareOperation("GV_AddSubgraph", [IsGVGraph]);
+DeclareOperation("GraphvizAddSubgraph", [IsGVGraph, IsObject]);
+DeclareOperation("GraphvizAddSubgraph", [IsGVGraph]);
 
 #! @Arguments graph, filter, name
 #! @Returns the new context.
 #! @Description Adds a context to a graph.
-DeclareOperation("GV_AddContext", [IsGVGraph, IsObject]);
-DeclareOperation("GV_AddContext", [IsGVGraph]);
+DeclareOperation("GraphvizAddContext", [IsGVGraph, IsObject]);
+DeclareOperation("GraphvizAddContext", [IsGVGraph]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
 #! @Description Removes the node from the graph.
-DeclareOperation("GV_RemoveNode", [IsGVGraph, IsObject]);
+DeclareOperation("GraphvizRemoveNode", [IsGVGraph, IsObject]);
 
 #! @Arguments graph, predicate
 #! @Returns the modified graph.
 #! @Description Filters the graph's edges using the provided predicate.
-DeclareOperation("GV_FilterEdges", [IsGVGraph, IsFunction]);
+DeclareOperation("GraphvizFilterEdges", [IsGVGraph, IsFunction]);
 
 #! @Arguments graph, head_name, tail_name
 #! @Returns the modified graph.
 #! @Description Filters the graph's edges, removing edges between nodes with the specified names.
-DeclareOperation("GV_FilterEnds", [IsGVGraph, IsObject, IsObject]);
+DeclareOperation("GraphvizFilterEnds", [IsGVGraph, IsObject, IsObject]);
 
 #! @Subsection For modifying object attributes.
 
@@ -191,14 +191,14 @@ DeclareOperation("GV_FilterEnds", [IsGVGraph, IsObject, IsObject]);
 #!    Updates the attribtues of the object.
 #!    All current attributes remain.
 #!    If an attribute already exists and a new value is provided, the old value will be overwritten.
-DeclareOperation("GV_SetAttrs", [IsGVObject, IsRecord]);
-DeclareOperation("GV_SetAttr", [IsGVObject, IsObject, IsObject]);
-DeclareOperation("GV_SetAttr", [IsGVObject, IsObject]);
+DeclareOperation("GraphvizSetAttrs", [IsGVObject, IsRecord]);
+DeclareOperation("GraphvizSetAttr", [IsGVObject, IsObject, IsObject]);
+DeclareOperation("GraphvizSetAttr", [IsGVObject, IsObject]);
 
 #! @Arguments obj, attr
 #! @Returns the modified object.
 #! @Description Removes an attribute from the object provided.
-DeclareOperation("GV_RemoveAttr", [IsGVObject, IsObject]);
+DeclareOperation("GraphvizRemoveAttr", [IsGVObject, IsObject]);
 
 #! @Section Outputting
 #! @Arguments graph

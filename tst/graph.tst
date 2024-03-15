@@ -11,220 +11,220 @@ gap> START_TEST("graphviz package: dot.tst");
 gap> LoadPackage("graphviz", false);;
 
 # Test graph constructor
-gap> GV_Graph();
+gap> GraphvizGraph();
 <graph with 0 nodes and 0 edges>
 
 # Test graph constructor
-gap> GV_Graph("test-name");
+gap> GraphvizGraph("test-name");
 <graph test-name with 0 nodes and 0 edges>
 
 # Test digraph printing
-gap> x := GV_Digraph("test-name");
+gap> x := GraphvizDigraph("test-name");
 <digraph test-name with 0 nodes and 0 edges>
-gap> x := GV_Digraph();
+gap> x := GraphvizDigraph();
 <digraph with 0 nodes and 0 edges>
 
 # Test adding nodes
-gap> g := GV_Graph();;
-gap> n := GV_AddNode(g, "n");
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddNode(g, "n");
 <node n>
 gap> g;
 <graph with 1 node and 0 edges>
-gap> GV_Nodes(g);
+gap> GraphvizNodes(g);
 HashMap([[ "n", <object> ]])
-gap> GV_AddNode(g, "x");
+gap> GraphvizAddNode(g, "x");
 <node x>
 gap> g;
 <graph with 2 nodes and 0 edges>
-gap> GV_Nodes(g);
+gap> GraphvizNodes(g);
 HashMap([[ "n", <object> ], [ "x", <object> ]])
 
 # Test add node (name)
-gap> g := GV_Graph();;
-gap> GV_AddNode(g, "n");
+gap> g := GraphvizGraph();;
+gap> GraphvizAddNode(g, "n");
 <node n>
-gap> GV_Nodes(g);
+gap> GraphvizNodes(g);
 HashMap([[ "n", <object> ]])
-gap> GV_AddNode(g, "x");
+gap> GraphvizAddNode(g, "x");
 <node x>
-gap> GV_Nodes(g);
+gap> GraphvizNodes(g);
 HashMap([[ "n", <object> ], [ "x", <object> ]])
 
 # Test has nodes
-gap> g := GV_Graph();;
-gap> n := GV_AddNode(g, "n");
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddNode(g, "n");
 <node n>
-gap> GV_HasNode(g, "n");
+gap> GraphvizHasNode(g, "n");
 true
-gap> GV_HasNode(g, "x");
+gap> GraphvizHasNode(g, "x");
 false
 
 # Test adding edges
-gap> g := GV_Graph();;
-gap> a := GV_AddNode(g, "a");;
-gap> b := GV_AddNode(g, "b");;
-gap> ab := GV_AddEdge(g, a, b);;
+gap> g := GraphvizGraph();;
+gap> a := GraphvizAddNode(g, "a");;
+gap> b := GraphvizAddNode(g, "b");;
+gap> ab := GraphvizAddEdge(g, a, b);;
 gap> g;
 <graph with 2 nodes and 1 edge>
-gap> GV_Edges(g);
+gap> GraphvizEdges(g);
 [ <edge (a, b)> ]
-gap> c := GV_AddNode(g, "c");;
-gap> d := GV_AddNode(g, "d");;
-gap> cd := GV_AddEdge(g, c, d);;
+gap> c := GraphvizAddNode(g, "c");;
+gap> d := GraphvizAddNode(g, "d");;
+gap> cd := GraphvizAddEdge(g, c, d);;
 gap> g;
 <graph with 4 nodes and 2 edges>
-gap> GV_Edges(g);
+gap> GraphvizEdges(g);
 [ <edge (a, b)>, <edge (c, d)> ]
 
 # Test adding edges (two strings)
-gap> g := GV_Graph();;
-gap> GV_AddEdge(g, "a", "b");
+gap> g := GraphvizGraph();;
+gap> GraphvizAddEdge(g, "a", "b");
 <edge (a, b)>
 gap> g;
 <graph with 2 nodes and 1 edge>
-gap> GV_Edges(g);
+gap> GraphvizEdges(g);
 [ <edge (a, b)> ]
-gap> GV_AddEdge(g, "c", "d");
+gap> GraphvizAddEdge(g, "c", "d");
 <edge (c, d)>
 gap> g;
 <graph with 4 nodes and 2 edges>
-gap> GV_Edges(g);
+gap> GraphvizEdges(g);
 [ <edge (a, b)>, <edge (c, d)> ]
 
 # Test adding edge with different nodes with the same name
-gap> g := GV_Graph();;
-gap> GV_AddEdge(g, "a", "b");;
-gap> GV_AddEdge(g, "a", "c");
+gap> g := GraphvizGraph();;
+gap> GraphvizAddEdge(g, "a", "b");;
+gap> GraphvizAddEdge(g, "a", "c");
 <edge (a, c)>
-gap> GV_Nodes(g);
+gap> GraphvizNodes(g);
 HashMap([[ "c", <object> ], [ "a", <object> ], [ "b", <object> ]])
-gap> GV_AddEdge(g, "c", "a");
+gap> GraphvizAddEdge(g, "c", "a");
 <edge (c, a)>
-gap> GV_AddEdge(g, "b", "d");
+gap> GraphvizAddEdge(g, "b", "d");
 <edge (b, d)>
-gap> GV_AddEdge(g, "d", "b");
+gap> GraphvizAddEdge(g, "d", "b");
 <edge (d, b)>
-gap> GV_AddEdge(g, "a", "b");
+gap> GraphvizAddEdge(g, "a", "b");
 <edge (a, b)>
-gap> GV_AddEdge(g, "b", "a");
+gap> GraphvizAddEdge(g, "b", "a");
 <edge (b, a)>
-gap> GV_AddEdge(g, "c", "d");
+gap> GraphvizAddEdge(g, "c", "d");
 <edge (c, d)>
 gap> g;
 <graph with 4 nodes and 8 edges>
 
 # Test removing node
-gap> g := GV_Graph();;
-gap> a := GV_AddNode(g, "a");;
-gap> b := GV_AddNode(g, "b");;
-gap> c := GV_AddNode(g, "c");;
-gap> d := GV_AddNode(g, "d");;
-gap> GV_AddEdge(g, a, b);;
-gap> GV_AddEdge(g, c, d);;
-gap> GV_RemoveNode(g, a);
+gap> g := GraphvizGraph();;
+gap> a := GraphvizAddNode(g, "a");;
+gap> b := GraphvizAddNode(g, "b");;
+gap> c := GraphvizAddNode(g, "c");;
+gap> d := GraphvizAddNode(g, "d");;
+gap> GraphvizAddEdge(g, a, b);;
+gap> GraphvizAddEdge(g, c, d);;
+gap> GraphvizRemoveNode(g, a);
 <graph with 3 nodes and 1 edge>
-gap> GV_Nodes(g);
+gap> GraphvizNodes(g);
 HashMap([[ "c", <object> ], [ "d", <object> ], [ "b", <object> ]])
-gap> GV_Edges(g);
+gap> GraphvizEdges(g);
 [ <edge (c, d)> ]
-gap> GV_RemoveNode(g, b);
+gap> GraphvizRemoveNode(g, b);
 <graph with 2 nodes and 1 edge>
-gap> GV_Nodes(g);
+gap> GraphvizNodes(g);
 HashMap([[ "c", <object> ], [ "d", <object> ]])
 
 # Test removing node
-gap> g := GV_Graph();;
-gap> GV_AddEdge(g, "a", "b");;
-gap> GV_AddEdge(g, "c", "d");;
-gap> GV_RemoveNode(g, "a");
+gap> g := GraphvizGraph();;
+gap> GraphvizAddEdge(g, "a", "b");;
+gap> GraphvizAddEdge(g, "c", "d");;
+gap> GraphvizRemoveNode(g, "a");
 <graph with 3 nodes and 1 edge>
-gap> GV_Nodes(g);
+gap> GraphvizNodes(g);
 HashMap([[ "c", <object> ], [ "d", <object> ], [ "b", <object> ]])
-gap> GV_Edges(g);
+gap> GraphvizEdges(g);
 [ <edge (c, d)> ]
-gap> GV_RemoveNode(g, "b");
+gap> GraphvizRemoveNode(g, "b");
 <graph with 2 nodes and 1 edge>
-gap> GV_Nodes(g);
+gap> GraphvizNodes(g);
 HashMap([[ "c", <object> ], [ "d", <object> ]])
 
 # Test renaming graph
-gap> g := GV_Graph();;
-gap> GV_SetName(g, "test");
+gap> g := GraphvizGraph();;
+gap> GraphvizSetName(g, "test");
 <graph test with 0 nodes and 0 edges>
 
 # Test global attributes graph
-gap> g := GV_Graph();;
-gap> GV_SetName(g, "test");
+gap> g := GraphvizGraph();;
+gap> GraphvizSetName(g, "test");
 <graph test with 0 nodes and 0 edges>
 
 # Test global attributes graph
-gap> g := GV_Graph();;
-gap> GV_SetAttr(g, "color", "red");;
-gap> GV_Attrs(g);
+gap> g := GraphvizGraph();;
+gap> GraphvizSetAttr(g, "color", "red");;
+gap> GraphvizAttrs(g);
 [ "color=\"red\"" ]
 
 # Test global attributes graph (duplicates)
-gap> g := GV_Graph();;
-gap> GV_SetAttr(g, "color", "red");;
-gap> GV_SetAttr(g, "color", "blue");;
-gap> GV_Attrs(g);
+gap> g := GraphvizGraph();;
+gap> GraphvizSetAttr(g, "color", "red");;
+gap> GraphvizSetAttr(g, "color", "blue");;
+gap> GraphvizAttrs(g);
 [ "color=\"red\"", "color=\"blue\"" ]
 
 # Test stringify attributes graph
-gap> g := GV_Graph();;
-gap> GV_SetAttr(g, "color", "red");;
-gap> GV_SetAttr(g, "color", "blue");;
+gap> g := GraphvizGraph();;
+gap> GraphvizSetAttr(g, "color", "red");;
+gap> GraphvizSetAttr(g, "color", "blue");;
 gap> AsString(g);
 "graph  {\n\tcolor=\"red\" color=\"blue\" \n}\n"
 
 # # Test removing attributes from a graph
-# gap> g := GV_Graph();;
-# gap> GV_SetAttr(g, "color", "red");;
-# gap> GV_SetAttr(g, "shape", "circle");;
-# gap> GV_RemoveAttr(g, "color");;
-# gap> GV_Attrs(g);
+# gap> g := GraphvizGraph();;
+# gap> GraphvizSetAttr(g, "color", "red");;
+# gap> GraphvizSetAttr(g, "shape", "circle");;
+# gap> GraphvizRemoveAttr(g, "color");;
+# gap> GraphvizAttrs(g);
 # [ "color=\"blue\"" ]
-# gap> GV_SetAttr(g, "shape", "square");;
-# gap> GV_RemoveAttr(g, "shape");;
-# gap> GV_Attrs(g);
+# gap> GraphvizSetAttr(g, "shape", "square");;
+# gap> GraphvizRemoveAttr(g, "shape");;
+# gap> GraphvizAttrs(g);
 # [  ]
 
 # Test gettting a node using bracket notation
-gap> g := GV_Graph();;
-gap> n1 := GV_AddNode(g, "test");;
-gap> n2 := GV_AddNode(g, "abc");;
+gap> g := GraphvizGraph();;
+gap> n1 := GraphvizAddNode(g, "test");;
+gap> n2 := GraphvizAddNode(g, "abc");;
 gap> g["test"];
 <node test>
 gap> g["abc"];
 <node abc>
 
 # Test gettting a node with a non-string name using bracket notation
-gap> g := GV_Graph();;
-gap> n1 := GV_AddNode(g, 1);;
-gap> n2 := GV_AddNode(g, ["a"]);;
+gap> g := GraphvizGraph();;
+gap> n1 := GraphvizAddNode(g, 1);;
+gap> n2 := GraphvizAddNode(g, ["a"]);;
 gap> g[1];
 <node 1>
 gap> g[["a"]];
 <node [ "a" ]>
 
 # Test making a graph with a non-string name
-gap> g := GV_Graph(11);
+gap> g := GraphvizGraph(11);
 <graph 11 with 0 nodes and 0 edges>
 
 # Test setting a graph name to a non-string value
-gap> g := GV_Graph(11);
+gap> g := GraphvizGraph(11);
 <graph 11 with 0 nodes and 0 edges>
-gap> GV_SetName(g, ["a"]);
+gap> GraphvizSetName(g, ["a"]);
 <graph [ "a" ] with 0 nodes and 0 edges>
 
 # Test making a digraph with a non-string name
-gap> g := GV_Digraph(11);
+gap> g := GraphvizDigraph(11);
 <digraph 11 with 0 nodes and 0 edges>
 
 # Test setting a digraph name to a non-string value
-gap> g := GV_Digraph(11);
+gap> g := GraphvizDigraph(11);
 <digraph 11 with 0 nodes and 0 edges>
-gap> GV_SetName(g, ["a"]);
+gap> GraphvizSetName(g, ["a"]);
 <digraph [ "a" ] with 0 nodes and 0 edges>
 
 #

@@ -10,8 +10,8 @@
 
 ## TODO (ONCE THIS IS EMPTY THEN DONE!)
  - Fix gaplint whitespace / small formatting complaints
- - Add shortcut functions (GV_SetColor, Set_Label)
- - Add replace Graphviz... instead of GV_... for external things
+ - Add shortcut functions (GraphvizSetColor, Set_Label)
+ - Make internal functions use GRAPHVIZ_ instrad of Graphviz...
  - Fix node name implementation. (AddNode(node) -> node name is <node c>)
  - Make previous existing digraphs to dot functions return string and add ones which return graphviz objects Graphviz...
  - Make splash keep name splash and if the object given is GVObject then splash the string of the object (no intermediate)

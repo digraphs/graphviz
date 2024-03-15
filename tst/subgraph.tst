@@ -11,236 +11,236 @@ gap> START_TEST("graphviz package: dot.tst");
 gap> LoadPackage("graphviz", false);;
 
 # Test creating subgraphs (named)
-gap> g := GV_Graph();;
-gap> GV_AddSubgraph(g, "test-graph");
+gap> g := GraphvizGraph();;
+gap> GraphvizAddSubgraph(g, "test-graph");
 <graph test-graph with 0 nodes and 0 edges>
-gap> g := GV_Digraph();;
-gap> GV_AddSubgraph(g, "test-digraph");
+gap> g := GraphvizDigraph();;
+gap> GraphvizAddSubgraph(g, "test-digraph");
 <digraph test-digraph with 0 nodes and 0 edges>
-gap> g := GV_Graph();;
-gap> GV_AddContext(g, "test-context");
+gap> g := GraphvizGraph();;
+gap> GraphvizAddContext(g, "test-context");
 <context test-context with 0 nodes and 0 edges>
 
 # Test no-name constructors
-gap> g := GV_Graph();;
-gap> GV_AddSubgraph(g);
+gap> g := GraphvizGraph();;
+gap> GraphvizAddSubgraph(g);
 <graph no_name_1 with 0 nodes and 0 edges>
-gap> g := GV_Digraph();;
-gap> GV_AddSubgraph(g);
+gap> g := GraphvizDigraph();;
+gap> GraphvizAddSubgraph(g);
 <digraph no_name_1 with 0 nodes and 0 edges>
-gap> g := GV_Graph();;
-gap> GV_AddContext(g);
+gap> g := GraphvizGraph();;
+gap> GraphvizAddContext(g);
 <context no_name_1 with 0 nodes and 0 edges>
 
 # Test no-name constructor graphs' names increment
-gap> g := GV_Graph();;
-gap> GV_AddSubgraph(g);
+gap> g := GraphvizGraph();;
+gap> GraphvizAddSubgraph(g);
 <graph no_name_1 with 0 nodes and 0 edges>
-gap> GV_AddSubgraph(g);
+gap> GraphvizAddSubgraph(g);
 <graph no_name_2 with 0 nodes and 0 edges>
-gap> GV_AddSubgraph(g);
+gap> GraphvizAddSubgraph(g);
 <graph no_name_3 with 0 nodes and 0 edges>
-gap> GV_AddContext(g);
+gap> GraphvizAddContext(g);
 <context no_name_4 with 0 nodes and 0 edges>
 
 # Test no-name constructor graphs' names increment (contexts)
-gap> g := GV_Graph();;
-gap> GV_AddContext(g);
+gap> g := GraphvizGraph();;
+gap> GraphvizAddContext(g);
 <context no_name_1 with 0 nodes and 0 edges>
-gap> GV_AddContext(g);
+gap> GraphvizAddContext(g);
 <context no_name_2 with 0 nodes and 0 edges>
-gap> GV_AddContext(g);
+gap> GraphvizAddContext(g);
 <context no_name_3 with 0 nodes and 0 edges>
 
 # Test getting subgraphs
-gap> g := GV_Graph();;
-gap> GV_AddSubgraph(g, "a");;
-gap> GV_AddContext(g, "b");;
-gap> GV_Subgraphs(g);
+gap> g := GraphvizGraph();;
+gap> GraphvizAddSubgraph(g, "a");;
+gap> GraphvizAddContext(g, "b");;
+gap> GraphvizSubgraphs(g);
 HashMap([[ "a", <object> ], [ "b", <object> ]])
 
 # Test adding a node to a subgraph (does or does not add to parent???)
 # TODO need to nail down expected behaviour!
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> GV_AddNode(s, "n");;
-gap> GV_Nodes(g);
+gap> g := GraphvizGraph();;
+gap> s := GraphvizAddSubgraph(g, "a");;
+gap> GraphvizAddNode(s, "n");;
+gap> GraphvizNodes(g);
 HashMap([])
-gap> GV_Nodes(s);
+gap> GraphvizNodes(s);
 HashMap([[ "n", <object> ]])
 
 # Test adding a node to a subgraph which is already in parent fails (by name)
-gap> g := GV_Graph("r");;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> GV_AddNode(g, "n");;
-gap> GV_AddNode(s, "n");
+gap> g := GraphvizGraph("r");;
+gap> s := GraphvizAddSubgraph(g, "a");;
+gap> GraphvizAddNode(g, "n");;
+gap> GraphvizAddNode(s, "n");
 Error, Already node with name n in graph r.
 
 # Test adding a node to a graph which is already in child fails (by name)
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> GV_AddNode(s, "n");;
-gap> GV_AddNode(g, "n");
+gap> g := GraphvizGraph();;
+gap> s := GraphvizAddSubgraph(g, "a");;
+gap> GraphvizAddNode(s, "n");;
+gap> GraphvizAddNode(g, "n");
 Error, Already node with name n in graph a.
 
 # Test adding a node to a graph which is already in sibling fails (by name)
-gap> g := GV_Graph();;
-gap> s1 := GV_AddSubgraph(g, "a");;
-gap> s2 := GV_AddSubgraph(g, "b");;
-gap> GV_AddNode(s1, "n");;
-gap> GV_AddNode(s2, "n");
+gap> g := GraphvizGraph();;
+gap> s1 := GraphvizAddSubgraph(g, "a");;
+gap> s2 := GraphvizAddSubgraph(g, "b");;
+gap> GraphvizAddNode(s1, "n");;
+gap> GraphvizAddNode(s2, "n");
 Error, Already node with name n in graph a.
 
 # Test adding edges to subgraphs
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> GV_AddEdge(s, "a", "b");
+gap> g := GraphvizGraph();;
+gap> s := GraphvizAddSubgraph(g, "a");;
+gap> GraphvizAddEdge(s, "a", "b");
 <edge (a, b)>
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> GV_AddEdge(s, "a", "b");
+gap> g := GraphvizGraph();;
+gap> s := GraphvizAddSubgraph(g, "a");;
+gap> GraphvizAddEdge(s, "a", "b");
 <edge (a, b)>
-gap> g := GV_Graph();;
-gap> s := GV_AddContext(g, "a");;
-gap> GV_AddEdge(s, "a", "b");
+gap> g := GraphvizGraph();;
+gap> s := GraphvizAddContext(g, "a");;
+gap> GraphvizAddEdge(s, "a", "b");
 <edge (a, b)>
 
 # Test removing edge from graph does not remove from children, sibling, parent, etc
-gap> parent := GV_Graph();;
-gap> main := GV_AddSubgraph(parent, "main");;
-gap> sibling := GV_AddSubgraph(parent, "sibling");;
-gap> child := GV_AddSubgraph(main, "child");;
-gap> GV_AddEdge(parent, "x", "y");;
-gap> GV_AddEdge(main, "x", "y");;
-gap> GV_AddEdge(sibling, "x", "y");;
-gap> GV_AddEdge(child, "x", "y");;
-gap> GV_FilterEnds(main, "x", "y");;
-gap> GV_Edges(g);
+gap> parent := GraphvizGraph();;
+gap> main := GraphvizAddSubgraph(parent, "main");;
+gap> sibling := GraphvizAddSubgraph(parent, "sibling");;
+gap> child := GraphvizAddSubgraph(main, "child");;
+gap> GraphvizAddEdge(parent, "x", "y");;
+gap> GraphvizAddEdge(main, "x", "y");;
+gap> GraphvizAddEdge(sibling, "x", "y");;
+gap> GraphvizAddEdge(child, "x", "y");;
+gap> GraphvizFilterEnds(main, "x", "y");;
+gap> GraphvizEdges(g);
 [  ]
-gap> GV_Edges(parent);
+gap> GraphvizEdges(parent);
 [ <edge (x, y)> ]
-gap> GV_Edges(sibling);
+gap> GraphvizEdges(sibling);
 [ <edge (x, y)> ]
-gap> GV_Edges(child);
+gap> GraphvizEdges(child);
 [ <edge (x, y)> ]
 
 # Test stringifying subgraph digraph
-gap> g := GV_Digraph();;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> GV_AddEdge(g, "x", "y");;
-gap> GV_SetAttr(s, "color", "red");;
-gap> GV_SetAttr(s, "node [color=red]");;
-gap> GV_SetAttr(s, "edge [color=red]");;
+gap> g := GraphvizDigraph();;
+gap> s := GraphvizAddSubgraph(g, "a");;
+gap> GraphvizAddEdge(g, "x", "y");;
+gap> GraphvizSetAttr(s, "color", "red");;
+gap> GraphvizSetAttr(s, "node [color=red]");;
+gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
 "digraph  {\nsubgraph a {\n\tcolor=\"red\" node [color=red] edge [color=red] \
 \n}\n\t\"x\"\n\t\"y\"\n\t\"x\" -> \"y\"\n}\n"
 
 # Test stringifying subgraph graph
-gap> g := GV_Graph();;
-gap> s := GV_AddSubgraph(g, "a");;
-gap> GV_AddEdge(g, "x", "y");;
-gap> GV_SetAttr(s, "color", "red");;
-gap> GV_SetAttr(s, "node [color=red]");;
-gap> GV_SetAttr(s, "edge [color=red]");;
+gap> g := GraphvizGraph();;
+gap> s := GraphvizAddSubgraph(g, "a");;
+gap> GraphvizAddEdge(g, "x", "y");;
+gap> GraphvizSetAttr(s, "color", "red");;
+gap> GraphvizSetAttr(s, "node [color=red]");;
+gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
 "graph  {\nsubgraph a {\n\tcolor=\"red\" node [color=red] edge [color=red] \n}\
 \n\t\"x\"\n\t\"y\"\n\t\"x\" -- \"y\"\n}\n"
 
 # Test stringifying subgraph context (graph)
-gap> g := GV_Graph();;
-gap> s := GV_AddContext(g, "a");;
-gap> GV_AddEdge(g, "x", "y");;
-gap> GV_SetAttr(s, "color", "red");;
-gap> GV_SetAttr(s, "node [color=red]");;
-gap> GV_SetAttr(s, "edge [color=red]");;
+gap> g := GraphvizGraph();;
+gap> s := GraphvizAddContext(g, "a");;
+gap> GraphvizAddEdge(g, "x", "y");;
+gap> GraphvizSetAttr(s, "color", "red");;
+gap> GraphvizSetAttr(s, "node [color=red]");;
+gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
 "graph  {\n// a context \n\tcolor=\"red\" node [color=red] edge [color=red] \n\
 \n\t\"x\"\n\t\"y\"\n\t\"x\" -- \"y\"\n}\n"
 
 # Test stringifying subgraph context (digraph)
-gap> g := GV_Digraph();;
-gap> s := GV_AddContext(g, "a");;
-gap> GV_AddEdge(g, "x", "y");;
-gap> GV_SetAttr(s, "color", "red");;
-gap> GV_SetAttr(s, "node [color=red]");;
-gap> GV_SetAttr(s, "edge [color=red]");;
+gap> g := GraphvizDigraph();;
+gap> s := GraphvizAddContext(g, "a");;
+gap> GraphvizAddEdge(g, "x", "y");;
+gap> GraphvizSetAttr(s, "color", "red");;
+gap> GraphvizSetAttr(s, "node [color=red]");;
+gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
 "digraph  {\n// a context \n\tcolor=\"red\" node [color=red] edge [color=red] \
 \n\n\t\"x\"\n\t\"y\"\n\t\"x\" -> \"y\"\n}\n"
 
 # Test stringifying subgraph w/o name
-gap> g := GV_Digraph();;
-gap> s := GV_AddSubgraph(g);;
+gap> g := GraphvizDigraph();;
+gap> s := GraphvizAddSubgraph(g);;
 gap> AsString(g);
 "digraph  {\nsubgraph no_name_1 {\n}\n}\n"
 
 # finding a node in a sibling graph
-gap> g := GV_Digraph();;
-gap> s1 := GV_AddSubgraph(g);;
-gap> GV_AddNode(s1, "a");;
-gap> s2 := GV_AddSubgraph(g);;
-gap> GV_FindNode(s2, "a");
+gap> g := GraphvizDigraph();;
+gap> s1 := GraphvizAddSubgraph(g);;
+gap> GraphvizAddNode(s1, "a");;
+gap> s2 := GraphvizAddSubgraph(g);;
+gap> GraphvizFindNode(s2, "a");
 <node a>
-gap> GV_FindNode(s2, "b");
+gap> GraphvizFindNode(s2, "b");
 fail
 
 # finding a node in a child graph
-gap> g := GV_Digraph();;
-gap> s1 := GV_AddSubgraph(g);;
-gap> GV_AddNode(s1, "a");;
-gap> GV_FindNode(g, "a");
+gap> g := GraphvizDigraph();;
+gap> s1 := GraphvizAddSubgraph(g);;
+gap> GraphvizAddNode(s1, "a");;
+gap> GraphvizFindNode(g, "a");
 <node a>
-gap> GV_FindNode(g, "b");
+gap> GraphvizFindNode(g, "b");
 fail
 
 # finding a node in a parent graph
-gap> g := GV_Digraph();;
-gap> s1 := GV_AddSubgraph(g);;
-gap> GV_AddNode(g, "a");;
-gap> GV_FindNode(s1, "a");
+gap> g := GraphvizDigraph();;
+gap> s1 := GraphvizAddSubgraph(g);;
+gap> GraphvizAddNode(g, "a");;
+gap> GraphvizFindNode(s1, "a");
 <node a>
-gap> GV_FindNode(s1, "b");
+gap> GraphvizFindNode(s1, "b");
 fail
 
 # finding a node in a parent's sibling graph
-gap> g := GV_Digraph();;
-gap> s1 := GV_AddSubgraph(g);;
-gap> s2 := GV_AddSubgraph(g);;
-gap> s11 := GV_AddSubgraph(s1);;
-gap> GV_AddNode(s2, "a");;
-gap> GV_FindNode(s11, "a");
+gap> g := GraphvizDigraph();;
+gap> s1 := GraphvizAddSubgraph(g);;
+gap> s2 := GraphvizAddSubgraph(g);;
+gap> s11 := GraphvizAddSubgraph(s1);;
+gap> GraphvizAddNode(s2, "a");;
+gap> GraphvizFindNode(s11, "a");
 <node a>
-gap> GV_FindNode(s11, "b");
+gap> GraphvizFindNode(s11, "b");
 fail
 
 # Test removing a node from a graph
-gap> parent := GV_Digraph();;
-gap> g := GV_AddSubgraph(parent);;
-gap> sibling := GV_AddSubgraph(parent);;
-gap> child := GV_AddSubgraph(g);;
-gap> a := GV_AddNode(parent, "a");;
-gap> GV_AddNode(sibling, "b");;
-gap> GV_AddNode(child, "c");;
-gap> GV_AddNode(g, "d");;
-gap> GV_RemoveNode(g, "d");;
-gap> GV_Nodes(g);
+gap> parent := GraphvizDigraph();;
+gap> g := GraphvizAddSubgraph(parent);;
+gap> sibling := GraphvizAddSubgraph(parent);;
+gap> child := GraphvizAddSubgraph(g);;
+gap> a := GraphvizAddNode(parent, "a");;
+gap> GraphvizAddNode(sibling, "b");;
+gap> GraphvizAddNode(child, "c");;
+gap> GraphvizAddNode(g, "d");;
+gap> GraphvizRemoveNode(g, "d");;
+gap> GraphvizNodes(g);
 HashMap([])
-gap> GV_Nodes(parent);
+gap> GraphvizNodes(parent);
 HashMap([[ "a", <object> ]])
-gap> GV_Nodes(sibling);
+gap> GraphvizNodes(sibling);
 HashMap([[ "b", <object> ]])
-gap> GV_Nodes(child);
+gap> GraphvizNodes(child);
 HashMap([[ "c", <object> ]])
 
 # Test context attribute resetting
-gap> g := GV_Digraph();;
-gap> ctx := GV_AddContext(g);;
-gap> GV_SetAttr(g, "color", "green");;
-gap> GV_SetAttr(g, "edge [label=\"testing123\"]");;
-gap> GV_SetAttr(g, "node[color=\"blue\"]");;
-gap> GV_SetAttr(g, "edge[color=\"blue\"]");;
-gap> GV_SetAttr(ctx, "node[color=\"red\"]");;
-gap> GV_AddNode(ctx, "a");;
+gap> g := GraphvizDigraph();;
+gap> ctx := GraphvizAddContext(g);;
+gap> GraphvizSetAttr(g, "color", "green");;
+gap> GraphvizSetAttr(g, "edge [label=\"testing123\"]");;
+gap> GraphvizSetAttr(g, "node[color=\"blue\"]");;
+gap> GraphvizSetAttr(g, "edge[color=\"blue\"]");;
+gap> GraphvizSetAttr(ctx, "node[color=\"red\"]");;
+gap> GraphvizAddNode(ctx, "a");;
 gap> AsString(g);
 "digraph  {\n\tcolor=\"green\" edge [label=\"testing123\"] node[color=\"blue\"\
 ] edge[color=\"blue\"] \n// no_name_1 context \n\tnode[color=\"red\"] \n\t\"a\
@@ -248,114 +248,114 @@ gap> AsString(g);
 lor=\"blue\"] \n\n}\n"
 
 # Test adding subgraphs with the same name
-gap> g := GV_Digraph();;
-gap> s1 := GV_AddSubgraph(g, "a");;
-gap> s2 := GV_AddSubgraph(g, "a");
+gap> g := GraphvizDigraph();;
+gap> s1 := GraphvizAddSubgraph(g, "a");;
+gap> s2 := GraphvizAddSubgraph(g, "a");
 Error, The graph already contains a subgraph with name a.
 
 # Test getting subgraphs by name
-gap> g := GV_Digraph();;
-gap> s1 := GV_AddSubgraph(g, "a");;
-gap> s2 := GV_AddSubgraph(g, "b");;
-gap> GV_GetSubgraph(g, "a");
+gap> g := GraphvizDigraph();;
+gap> s1 := GraphvizAddSubgraph(g, "a");;
+gap> s2 := GraphvizAddSubgraph(g, "b");;
+gap> GraphvizGetSubgraph(g, "a");
 <digraph a with 0 nodes and 0 edges>
-gap> GV_GetSubgraph(g, "b");
+gap> GraphvizGetSubgraph(g, "b");
 <digraph b with 0 nodes and 0 edges>
-gap> GV_GetSubgraph(g, "d");
+gap> GraphvizGetSubgraph(g, "d");
 fail
 
 # Test getting context (subgraph) by name
-gap> g := GV_Digraph();;
-gap> s1 := GV_AddSubgraph(g, "a");;
-gap> s2 := GV_AddContext(g, "c");;
-gap> GV_GetSubgraph(g, "a");
+gap> g := GraphvizDigraph();;
+gap> s1 := GraphvizAddSubgraph(g, "a");;
+gap> s2 := GraphvizAddContext(g, "c");;
+gap> GraphvizGetSubgraph(g, "a");
 <digraph a with 0 nodes and 0 edges>
-gap> GV_GetSubgraph(g, "c");
+gap> GraphvizGetSubgraph(g, "c");
 <context c with 0 nodes and 0 edges>
 
 # Test adding a nested subgraph
-gap> g := GV_Graph();;
-gap> s1 := GV_AddSubgraph(g, "a");;
-gap> s2 := GV_AddSubgraph(s1, "c");;
-gap> GV_GetSubgraph(g, "a");
+gap> g := GraphvizGraph();;
+gap> s1 := GraphvizAddSubgraph(g, "a");;
+gap> s2 := GraphvizAddSubgraph(s1, "c");;
+gap> GraphvizGetSubgraph(g, "a");
 <graph a with 0 nodes and 0 edges>
-gap> GV_GetSubgraph(g, "c");
+gap> GraphvizGetSubgraph(g, "c");
 fail
-gap> GV_GetSubgraph(s1, "c");
+gap> GraphvizGetSubgraph(s1, "c");
 <graph c with 0 nodes and 0 edges>
 
 # Test displaying a nested subgraph
-gap> g := GV_Graph();;
-gap> s1 := GV_AddSubgraph(g, "a");;
-gap> s2 := GV_AddSubgraph(s1, "c");;
+gap> g := GraphvizGraph();;
+gap> s1 := GraphvizAddSubgraph(g, "a");;
+gap> s2 := GraphvizAddSubgraph(s1, "c");;
 gap> AsString(g);
 "graph  {\nsubgraph a {\nsubgraph c {\n}\n}\n}\n"
 
 # Test subgraphs with non-string names
-gap> g := GV_Graph();;
-gap> GV_AddSubgraph(g, 11);
+gap> g := GraphvizGraph();;
+gap> GraphvizAddSubgraph(g, 11);
 <graph 11 with 0 nodes and 0 edges>
 
 # Test contexts with non-string names
-gap> g := GV_Graph();;
-gap> GV_AddContext(g, 11);
+gap> g := GraphvizGraph();;
+gap> GraphvizAddContext(g, 11);
 <context 11 with 0 nodes and 0 edges>
 
 # Test getting subgraphs with non-string names
-gap> g := GV_Graph();;
-gap> GV_AddContext(g, [ "a" ]);;
-gap> GV_GetSubgraph(g, [ "a" ]);
+gap> g := GraphvizGraph();;
+gap> GraphvizAddContext(g, [ "a" ]);;
+gap> GraphvizGetSubgraph(g, [ "a" ]);
 <context [ "a" ] with 0 nodes and 0 edges>
 
 # Test finding subgraph (parent)
-gap> g := GV_Graph("a");;
-gap> s := GV_AddSubgraph(g, "b");;
-gap> o := GV_FindGraph(s, "a");
+gap> g := GraphvizGraph("a");;
+gap> s := GraphvizAddSubgraph(g, "b");;
+gap> o := GraphvizFindGraph(s, "a");
 <graph a with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, g);
 true
 
 # Test finding subgraph (child)
-gap> g := GV_Graph("a");;
-gap> s := GV_AddSubgraph(g, "b");;
-gap> o := GV_FindGraph(g, "b");
+gap> g := GraphvizGraph("a");;
+gap> s := GraphvizAddSubgraph(g, "b");;
+gap> o := GraphvizFindGraph(g, "b");
 <graph b with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s);
 true
 
 # Test finding subgraph (sibling)
-gap> g := GV_Graph("a");;
-gap> s := GV_AddSubgraph(g, "b");;
-gap> s2 := GV_AddSubgraph(g, "c");;
-gap> o := GV_FindGraph(s, "c");
+gap> g := GraphvizGraph("a");;
+gap> s := GraphvizAddSubgraph(g, "b");;
+gap> s2 := GraphvizAddSubgraph(g, "c");;
+gap> o := GraphvizFindGraph(s, "c");
 <graph c with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s2);
 true
 
 # Test finding subgraph (self)
-gap> g := GV_Graph("a");;
-gap> o := GV_FindGraph(g, "a");
+gap> g := GraphvizGraph("a");;
+gap> o := GraphvizFindGraph(g, "a");
 <graph a with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, g);
 true
 
 # Test finding subgraph (far)
-gap> g := GV_Graph("r");;
-gap> a1 := GV_AddSubgraph(g, "a1");;
-gap> a2 := GV_AddSubgraph(a1, "a2");;
-gap> a3 := GV_AddSubgraph(a2, "a3");;
-gap> b1 := GV_AddSubgraph(g, "b1");;
-gap> b2 := GV_AddSubgraph(b1, "b2");;
-gap> b3 := GV_AddSubgraph(b2, "b3");;
-gap> o := GV_FindGraph(a3, "b3");
+gap> g := GraphvizGraph("r");;
+gap> a1 := GraphvizAddSubgraph(g, "a1");;
+gap> a2 := GraphvizAddSubgraph(a1, "a2");;
+gap> a3 := GraphvizAddSubgraph(a2, "a3");;
+gap> b1 := GraphvizAddSubgraph(g, "b1");;
+gap> b2 := GraphvizAddSubgraph(b1, "b2");;
+gap> b3 := GraphvizAddSubgraph(b2, "b3");;
+gap> o := GraphvizFindGraph(a3, "b3");
 <graph b3 with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, b3);
 true
 
 # Test finding subgraph (non-string name)
-gap> g := GV_Graph("r");;
-gap> s := GV_AddSubgraph(g, 1);;
-gap> o := GV_FindGraph(g, 1);
+gap> g := GraphvizGraph("r");;
+gap> s := GraphvizAddSubgraph(g, 1);;
+gap> o := GraphvizFindGraph(g, 1);
 <graph 1 with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s);
 true

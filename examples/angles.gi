@@ -2,36 +2,36 @@
 # """https://www.graphviz.org/Gallery/gradient/angles.html"""
 
 LoadPackage("graphviz");
-g := GV_Digraph("G");
-GV_SetAttr(g, "bgcolor", "blue");
+g := GraphvizDigraph("G");
+GraphvizSetAttr(g, "bgcolor", "blue");
 
-cluster1 := GV_AddSubgraph(g, "cluster_1");
-GV_SetAttr(cluster1, "fontcolor", "white");
-GV_SetAttr(cluster1, "node[shape=circle, style=filled, fillcolor=\"white:black\", gradientangle=360, label=\"n9:n360\", fontcolor=black]");
-GV_AddNode(cluster1, "n9");
+cluster1 := GraphvizAddSubgraph(g, "cluster_1");
+GraphvizSetAttr(cluster1, "fontcolor", "white");
+GraphvizSetAttr(cluster1, "node[shape=circle, style=filled, fillcolor=\"white:black\", gradientangle=360, label=\"n9:n360\", fontcolor=black]");
+GraphvizAddNode(cluster1, "n9");
 
 
 pairs := ListN([8,7..1], [315,270..0], {x, y} -> [x, y]);
 for pair in pairs do
-    node := GV_AddNode(cluster1, StringFormatted("n{}", pair[1]));
-    GV_SetAttr(node, "gradientangle", StringFormatted("{}", pair[2]));
-    GV_SetAttr(node, "label", StringFormatted("\"n{}:{}\"", pair[1], pair[2]));
+    node := GraphvizAddNode(cluster1, StringFormatted("n{}", pair[1]));
+    GraphvizSetAttr(node, "gradientangle", StringFormatted("{}", pair[2]));
+    GraphvizSetAttr(node, "label", StringFormatted("\"n{}:{}\"", pair[1], pair[2]));
 od;
-GV_SetAttr(cluster1, "label", "\"Linear Angle Variations (white to black gradient)\"");
+GraphvizSetAttr(cluster1, "label", "\"Linear Angle Variations (white to black gradient)\"");
 
 
-cluster2 := GV_AddSubgraph(g, "cluster_2");
-GV_SetAttr(cluster2, "fontcolor", "white");
-GV_SetAttr(cluster2, "node[shape=circle, style=radial, fillcolor=\"white:black\", gradientangle=360, label=\"n9:n360\", fontcolor=black]");
-GV_AddNode(cluster2, "n18");
+cluster2 := GraphvizAddSubgraph(g, "cluster_2");
+GraphvizSetAttr(cluster2, "fontcolor", "white");
+GraphvizSetAttr(cluster2, "node[shape=circle, style=radial, fillcolor=\"white:black\", gradientangle=360, label=\"n9:n360\", fontcolor=black]");
+GraphvizAddNode(cluster2, "n18");
 
 pairs := ListN([17,16..10], [315,270..0], {x, y} -> [x, y]);
 for pair in pairs do
-    node := GV_AddNode(cluster2, StringFormatted("n{}", pair[1]));
-    GV_SetAttr(node, "gradientangle", StringFormatted("{}", pair[2]));
-    GV_SetAttr(node, "label", StringFormatted("\"n{}:{}\"", pair[1], pair[2]));
+    node := GraphvizAddNode(cluster2, StringFormatted("n{}", pair[1]));
+    GraphvizSetAttr(node, "gradientangle", StringFormatted("{}", pair[2]));
+    GraphvizSetAttr(node, "label", StringFormatted("\"n{}:{}\"", pair[1], pair[2]));
 od;
-GV_SetAttr(cluster2, "label", "\"Radial Angle Variations (white to black gradient)\"");
+GraphvizSetAttr(cluster2, "label", "\"Radial Angle Variations (white to black gradient)\"");
 
-GV_AddEdge(g, "n5", "n14");
+GraphvizAddEdge(g, "n5", "n14");
 Print(AsString(g));

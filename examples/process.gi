@@ -1,18 +1,18 @@
 # https://graphviz.readthedocs.io/en/stable/examples.html
 LoadPackage("graphviz");
-graph := GV_Graph("G");
-GV_SetAttr(graph, "engine=\"sfdp\"");
+graph := GraphvizGraph("G");
+GraphvizSetAttr(graph, "engine=\"sfdp\"");
 
-GV_AddEdge(graph, "run", "intr");
-GV_AddEdge(graph, "intr", "runbl");
-GV_AddEdge(graph, "runbl", "run");
-GV_AddEdge(graph, "run", "kernel");
-GV_AddEdge(graph, "kernel", "zombie");
-GV_AddEdge(graph, "kernel", "sleep");
-GV_AddEdge(graph, "kernel", "runmem");
-GV_AddEdge(graph, "sleep", "swap");
-GV_AddEdge(graph, "swap", "runswap");
-GV_AddEdge(graph, "runswap", "new");
-GV_AddEdge(graph, "runswap", "runmem");
-GV_AddEdge(graph, "new", "runmem");
+GraphvizAddEdge(graph, "run", "intr");
+GraphvizAddEdge(graph, "intr", "runbl");
+GraphvizAddEdge(graph, "runbl", "run");
+GraphvizAddEdge(graph, "run", "kernel");
+GraphvizAddEdge(graph, "kernel", "zombie");
+GraphvizAddEdge(graph, "kernel", "sleep");
+GraphvizAddEdge(graph, "kernel", "runmem");
+GraphvizAddEdge(graph, "sleep", "swap");
+GraphvizAddEdge(graph, "swap", "runswap");
+GraphvizAddEdge(graph, "runswap", "new");
+GraphvizAddEdge(graph, "runswap", "runmem");
+GraphvizAddEdge(graph, "new", "runmem");
 Print(AsString(graph));

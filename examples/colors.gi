@@ -2,24 +2,24 @@
 # """https://graphviz.org/docs/attr-types/color"""
 
 LoadPackage("graphviz");
-g := GV_Graph();
+g := GraphvizGraph();
 
-node := GV_AddNode(g, "RGB #40e0d0");
-GV_SetAttr(node, "style", "filled");
-GV_SetAttr(node, "fillcolor", "#40e0d0");
-
-
-node := GV_AddNode(g, "RGBA #ff000042");
-GV_SetAttr(node, "style", "filled");
-GV_SetAttr(node, "fillcolor", "#ff000042");
+node := GraphvizAddNode(g, "RGB #40e0d0");
+GraphvizSetAttr(node, "style", "filled");
+GraphvizSetAttr(node, "fillcolor", "#40e0d0");
 
 
-node := GV_AddNode(g, "HSV 0.051 0.718 0.627");
-GV_SetAttr(node, "style", "filled");
-GV_SetAttr(node, "fillcolor", "0.051 0.718 0.627");
+node := GraphvizAddNode(g, "RGBA #ff000042");
+GraphvizSetAttr(node, "style", "filled");
+GraphvizSetAttr(node, "fillcolor", "#ff000042");
 
-node := GV_AddNode(g, "name deeppink");
-GV_SetAttr(node, "style", "filled");
-GV_SetAttr(node, "fillcolor", "deeppink");
+
+node := GraphvizAddNode(g, "HSV 0.051 0.718 0.627");
+GraphvizSetAttr(node, "style", "filled");
+GraphvizSetAttr(node, "fillcolor", "0.051 0.718 0.627");
+
+node := GraphvizAddNode(g, "name deeppink");
+GraphvizSetAttr(node, "style", "filled");
+GraphvizSetAttr(node, "fillcolor", "deeppink");
 
 Print(AsString(g));
