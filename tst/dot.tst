@@ -34,7 +34,7 @@ gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "test");;
 gap> GraphvizSetAttrs(n, rec(color:="red", label:="lab"));;
 gap> AsString(g);
-"graph  {\n\ttest [color=\"red\", label=lab]\n}\n"
+"graph  {\n\ttest [color=red, label=lab]\n}\n"
 
 # Test stringify with edge (digraphs)
 gap> g := GraphvizDigraph();;
@@ -45,8 +45,7 @@ gap> GraphvizSetAttrs(b, rec(color:="red"));;
 gap> e := GraphvizAddEdge(g, a, b);;
 gap> GraphvizSetAttrs(e, rec(color:="green"));;
 gap> AsString(g);
-"digraph  {\n\ta [color=\"blue\"]\n\tb [color=\"red\"]\n\ta -> b [color=\"gree\
-n\"]\n}\n"
+"digraph  {\n\ta [color=blue]\n\tb [color=red]\n\ta -> b [color=green]\n}\n"
 
 # Test stringify with edge (graph)
 gap> g := GraphvizGraph();;
@@ -57,8 +56,7 @@ gap> GraphvizSetAttrs(b, rec(color:="red"));;
 gap> e := GraphvizAddEdge(g, a, b);;
 gap> GraphvizSetAttrs(e, rec(color:="green"));;
 gap> AsString(g);
-"graph  {\n\ta [color=\"blue\"]\n\tb [color=\"red\"]\n\ta -- b [color=\"green\
-\"]\n}\n"
+"graph  {\n\ta [color=blue]\n\tb [color=red]\n\ta -- b [color=green]\n}\n"
 
 # Test stringify empty
 gap> g := GraphvizGraph();;
