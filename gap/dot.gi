@@ -1004,7 +1004,7 @@ InstallMethod(GV_StringifyNodeEdgeAttrs,
 "for a record",
 [IsGV_Map],
 function(attrs)
-  local result, keys, key, n, i;
+  local result, keys, key, val, n, i;
 
   result := "";
   n      := Length(GV_MapNames(attrs));
@@ -1014,32 +1014,38 @@ function(attrs)
     Append(result, " [");
     for i in [1..n - 1] do
         key := keys[i];
-        if key = "label" then
-          Append(result,
-                StringFormatted("{}={}, ",
-                                key,
-                                attrs[key]));
-        else 
-          Append(result,
-                StringFormatted("{}=\"{}\", ",
-                                key,
-                                attrs[key]));
+        val := attrs[key];
+
+        if ' ' in key then 
+          key := StringFormatted("\"{}\"", key);
         fi;
+        if ' ' in val then 
+          val := StringFormatted("\"{}\"", val);
+        fi;
+
+        Append(result,
+               StringFormatted("{}={}, ",
+                               key,
+                               val));
     od;
 
+    # handle last element
     key := keys[n];
-    if key = "label" then
-      Append(result,
-            StringFormatted("{}={}]",
-                            key,
-                            attrs[key]));
-    else 
-      Append(result,
-            StringFormatted("{}=\"{}\"]",
-                            key,
-                            attrs[key]));
+    val := attrs[key];
+    
+    if ' ' in key then 
+     key := StringFormatted("\"{}\"", key);
     fi;
+    if ' ' in val then
+      val := StringFormatted("\"{}\"", val);
+    fi;
+    
+    Append(result,
+           StringFormatted("{}={}]",
+                           key,
+                           val));
   fi;
+
   return result;
 end);
 
