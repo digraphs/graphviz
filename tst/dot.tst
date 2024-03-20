@@ -75,7 +75,7 @@ gap> GraphvizSetAttr(n, "test", "false");
 # Test unknown attributes (graph)
 gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "test", "false");
-[WARNING] Unkown attribute test
+[WARNING] Unknown attribute test
 <graphviz graph with 0 nodes and 0 edges>
 
 #
