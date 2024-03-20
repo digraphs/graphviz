@@ -69,7 +69,7 @@ gap> AsString(g);
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "n");;
 gap> GraphvizSetAttr(n, "test", "false");
-[WARNING] Unkown attribute test
+[WARNING] Unknown attribute test
 <graphviz node n>
 
 # Test unknown attributes (graph)
