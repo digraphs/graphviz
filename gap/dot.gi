@@ -582,7 +582,7 @@ function(x, name, value)
 
   # display warning if not known attribute
   if not name in GRAPHVIZ_KNOWN_ATTRS then
-    Print(StringFormatted("[WARNING] Unkown attribute {}\n", name));
+    Print(StringFormatted("[WARNING] Unknown attribute {}\n", name));
   fi;
 
   attrs := GraphvizAttrs(x);
