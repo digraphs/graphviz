@@ -54,9 +54,9 @@ rec( n := <object>, x := <object> )
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "n");
 <graphviz node n>
-gap> GRAPHVIZ_HasNode(g, "n");
+gap> GV_HasNode(g, "n");
 true
-gap> GRAPHVIZ_HasNode(g, "x");
+gap> GV_HasNode(g, "x");
 false
 
 # Test adding edges

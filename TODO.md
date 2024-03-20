@@ -10,9 +10,8 @@
 
 ## TODO (ONCE THIS IS EMPTY THEN DONE!)
  - Fix gaplint whitespace / small formatting complaints
- - Make previous existing digraphs to dot functions return string and add ones which return graphviz objects Graphviz...
- - Add validation on quoted input
- - Make only quoted if 100% needed and when quoted minimal quoted (for attributes)
+ - Test / update unit tests for displaying defaults in the digraphs package
+ - Thoroughly test the ':' syntax more (might have broke when the quotes were changed)
 
 ## Other
  - relates to deadnaut github issue https://www.mankier.com/1/nauty-dretodot
