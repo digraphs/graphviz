@@ -132,8 +132,8 @@ gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
-"digraph  {\nsubgraph a {\n\tcolor=\"red\" node [color=red] edge [color=red] \
-\n}\n\t\"x\"\n\t\"y\"\n\t\"x\" -> \"y\"\n}\n"
+"digraph  {\nsubgraph a {\n\tcolor=red node [color=red] edge [color=red] \n}\n\
+\tx\n\ty\n\tx -> y\n}\n"
 
 # Test stringifying subgraph graph
 gap> g := GraphvizGraph();;
@@ -143,8 +143,8 @@ gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
-"graph  {\nsubgraph a {\n\tcolor=\"red\" node [color=red] edge [color=red] \n}\
-\n\t\"x\"\n\t\"y\"\n\t\"x\" -- \"y\"\n}\n"
+"graph  {\nsubgraph a {\n\tcolor=red node [color=red] edge [color=red] \n}\n\t\
+x\n\ty\n\tx -- y\n}\n"
 
 # Test stringifying subgraph context (graph)
 gap> g := GraphvizGraph();;
@@ -154,8 +154,8 @@ gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
-"graph  {\n// a context \n\tcolor=\"red\" node [color=red] edge [color=red] \n\
-\n\t\"x\"\n\t\"y\"\n\t\"x\" -- \"y\"\n}\n"
+"graph  {\n// a context \n\tcolor=red node [color=red] edge [color=red] \n\n\t\
+x\n\ty\n\tx -- y\n}\n"
 
 # Test stringifying subgraph context (digraph)
 gap> g := GraphvizDigraph();;
@@ -165,8 +165,8 @@ gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
-"digraph  {\n// a context \n\tcolor=\"red\" node [color=red] edge [color=red] \
-\n\n\t\"x\"\n\t\"y\"\n\t\"x\" -> \"y\"\n}\n"
+"digraph  {\n// a context \n\tcolor=red node [color=red] edge [color=red] \n\n\
+\tx\n\ty\n\tx -> y\n}\n"
 
 # Test stringifying subgraph w/o name
 gap> g := GraphvizDigraph();;
@@ -179,27 +179,27 @@ gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g);;
 gap> GraphvizAddNode(s1, "a");;
 gap> s2 := GraphvizAddSubgraph(g);;
-gap> GraphvizFindNode(s2, "a");
+gap> GRAPHVIZ_FindNode(s2, "a");
 <graphviz node a>
-gap> GraphvizFindNode(s2, "b");
+gap> GRAPHVIZ_FindNode(s2, "b");
 fail
 
 # finding a node in a child graph
 gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g);;
 gap> GraphvizAddNode(s1, "a");;
-gap> GraphvizFindNode(g, "a");
+gap> GRAPHVIZ_FindNode(g, "a");
 <graphviz node a>
-gap> GraphvizFindNode(g, "b");
+gap> GRAPHVIZ_FindNode(g, "b");
 fail
 
 # finding a node in a parent graph
 gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g);;
 gap> GraphvizAddNode(g, "a");;
-gap> GraphvizFindNode(s1, "a");
+gap> GRAPHVIZ_FindNode(s1, "a");
 <graphviz node a>
-gap> GraphvizFindNode(s1, "b");
+gap> GRAPHVIZ_FindNode(s1, "b");
 fail
 
 # finding a node in a parent's sibling graph
@@ -208,9 +208,9 @@ gap> s1 := GraphvizAddSubgraph(g);;
 gap> s2 := GraphvizAddSubgraph(g);;
 gap> s11 := GraphvizAddSubgraph(s1);;
 gap> GraphvizAddNode(s2, "a");;
-gap> GraphvizFindNode(s11, "a");
+gap> GRAPHVIZ_FindNode(s11, "a");
 <graphviz node a>
-gap> GraphvizFindNode(s11, "b");
+gap> GRAPHVIZ_FindNode(s11, "b");
 fail
 
 # Test removing a node from a graph
@@ -236,16 +236,15 @@ rec( c := <object> )
 gap> g := GraphvizDigraph();;
 gap> ctx := GraphvizAddContext(g);;
 gap> GraphvizSetAttr(g, "color", "green");;
-gap> GraphvizSetAttr(g, "edge [label=\"testing123\"]");;
-gap> GraphvizSetAttr(g, "node[color=\"blue\"]");;
-gap> GraphvizSetAttr(g, "edge[color=\"blue\"]");;
-gap> GraphvizSetAttr(ctx, "node[color=\"red\"]");;
+gap> GraphvizSetAttr(g, "edge [label=testing123]");;
+gap> GraphvizSetAttr(g, "node[color=blue]");;
+gap> GraphvizSetAttr(g, "edge[color=blue]");;
+gap> GraphvizSetAttr(ctx, "node[color=red]");;
 gap> GraphvizAddNode(ctx, "a");;
 gap> AsString(g);
-"digraph  {\n\tcolor=\"green\" edge [label=\"testing123\"] node[color=\"blue\"\
-] edge[color=\"blue\"] \n// no_name_1 context \n\tnode[color=\"red\"] \n\t\"a\
-\"\n\tcolor=\"green\" edge [label=\"testing123\"] node[color=\"blue\"] edge[co\
-lor=\"blue\"] \n\n}\n"
+"digraph  {\n\tcolor=green edge [label=testing123] node[color=blue] edge[color\
+=blue] \n// no_name_1 context \n\tnode[color=red] \n\ta\n\tcolor=green edge [l\
+abel=testing123] node[color=blue] edge[color=blue] \n\n}\n"
 
 # Test adding subgraphs with the same name
 gap> g := GraphvizDigraph();;

@@ -2,22 +2,22 @@
 # Private functionality
 ###############################################################################
 
-DeclareOperation("GraphvizGetCounter", [IsGVGraph]);
-DeclareOperation("GraphvizIncCounter", [IsGVGraph]);
+DeclareOperation("GRAPHVIZ_GetCounter", [IsGVGraph]);
+DeclareOperation("GRAPHVIZ_IncCounter", [IsGVGraph]);
 DeclareCategory("IsGRAPHVIZ_Map", IsObject);
 
-DeclareOperation("GraphvizStringifyGraphHead", [IsGVGraph]);
-DeclareOperation("GraphvizStringifyDigraphHead", [IsGVGraph]);
-DeclareOperation("GraphvizStringifySubgraphHead", [IsGVGraph]);
-DeclareOperation("GraphvizStringifyContextHead", [IsGVGraph]);
-DeclareOperation("GraphvizStringifyGraphEdge", [IsGVEdge]);
-DeclareOperation("GraphvizStringifyDigraphEdge", [IsGVEdge]);
-DeclareOperation("GraphvizStringifyNode", [IsGVNode]);
-DeclareOperation("GraphvizStringifyGraphAttrs", [IsGVGraph]);
-DeclareOperation("GraphvizStringifyNodeEdgeAttrs", [IsGRAPHVIZ_Map]);
-DeclareOperation("GraphvizStringifyGraph", [IsGVGraph, IsBool]);
+DeclareOperation("GRAPHVIZ_StringifyGraphHead", [IsGVGraph]);
+DeclareOperation("GRAPHVIZ_StringifyDigraphHead", [IsGVGraph]);
+DeclareOperation("GRAPHVIZ_StringifySubgraphHead", [IsGVGraph]);
+DeclareOperation("GRAPHVIZ_StringifyContextHead", [IsGVGraph]);
+DeclareOperation("GRAPHVIZ_StringifyGraphEdge", [IsGVEdge]);
+DeclareOperation("GRAPHVIZ_StringifyDigraphEdge", [IsGVEdge]);
+DeclareOperation("GRAPHVIZ_StringifyNode", [IsGVNode]);
+DeclareOperation("GRAPHVIZ_StringifyGraphAttrs", [IsGVGraph]);
+DeclareOperation("GRAPHVIZ_StringifyNodeEdgeAttrs", [IsGRAPHVIZ_Map]);
+DeclareOperation("GRAPHVIZ_StringifyGraph", [IsGVGraph, IsBool]);
 
-DeclareOperation("GraphvizFindNode", [IsGVGraph, IsObject]);
+DeclareOperation("GRAPHVIZ_FindNode", [IsGVGraph, IsObject]);
 
 BindGlobal("GRAPHVIZ_KNOWN_ATTRS",[
   "_background", "area", "arrowhead", "arrowsize", "arrowtail", "bb", "beautify", "bgcolor", "center", "charset", "class", "cluster", "clusterrank", "color", "colorscheme", "comment", "compound", "concentrate", "constraint", "Damping", "decorate", "defaultdist", "dim", "dimen", "dir", "diredgeconstraints", "distortion", "dpi", "edgehref", "edgetarget", "edgetooltip", "edgeURL", "epsilon", "esep", "fillcolor", "fixedsize", "fontcolor", "fontname", "fontnames", "fontpath", "fontsize", "forcelabels", "gradientangle", "group", "head_lp", "headclip", "headhref", "headlabel", "headport", "headtarget", "headtooltip", "headURL", "height", "href", "id", "image", "imagepath", "imagepos", "imagescale", "inputscale", "K", "label", "label_scheme", "labelangle", "labeldistance", "labelfloat", "labelfontcolor", "labelfontname", "labelfontsize", "labelhref", "labeljust", "labelloc", "labeltarget", "labeltooltip", "labelURL", "landscape", "layer", "layerlistsep", "layers", "layerselect", "layersep", "layout", "len", "levels", "levelsgap", "lhead", "lheight", "linelength", "lp", "ltail", "lwidth", "margin", "maxiter", "mclimit", "mindist", "minlen", "mode", "model", "newrank", "nodesep", "nojustify", "normalize", "notranslate", "nslimit", "nslimit1", "oneblock", "ordering", "orientation", "outputorder", "overlap", "overlap_scaling", "overlap_shrink", "pack", "packmode", "pad", "page", "pagedir", "pencolor", "penwidth", "peripheries", "pin", "pos", "quadtree", "quantum", "rank", "rankdir", "ranksep", "ratio", "rects", "regular", "remincross", "repulsiveforce", "resolution", "root", "rotate", "rotation", "samehead", "sametail", "samplepoints", "scale", "searchsize", "sep", "shape", "shapefile", "showboxes", "sides", "size", "skew", "smoothing", "sortv", "splines", "start", "style", "stylesheet", "tail_lp", "tailclip", "tailhref", "taillabel", "tailport", "tailtarget", "tailtooltip", "tailURL", "target", "TBbalance", "tooltip", "truecolor", "URL", "vertices", "viewport", "voro_margin", "weight", "width", "xdotversion", "xlabel", "xlp", "z"
@@ -64,11 +64,11 @@ BindGlobal("GraphvizContextType", NewType(GraphvizObjectFamily,
 ###############################################################################
 # Constuctors etc
 ###############################################################################
-DeclareOperation("GraphvizNode", [IsGVGraph, IsString]);
-DeclareOperation("GraphvizEdge", [IsGVGraph, IsGVNode, IsGVNode]);
-DeclareOperation("GraphvizGraph", [IsGVGraph, IsString]);
-DeclareOperation("GraphvizDigraph", [IsGVDigraph, IsString]);
-DeclareOperation("GraphvizContext", [IsGVGraph, IsString]);
+DeclareOperation("GRAPHVIZ_Node", [IsGVGraph, IsString]);
+DeclareOperation("GRAPHVIZ_Edge", [IsGVGraph, IsGVNode, IsGVNode]);
+DeclareOperation("GRAPHVIZ_Graph", [IsGVGraph, IsString]);
+DeclareOperation("GRAPHVIZ_Digraph", [IsGVDigraph, IsString]);
+DeclareOperation("GRAPHVIZ_Context", [IsGVGraph, IsString]);
 DeclareOperation("GRAPHVIZ_Map", []);
 
 InstallMethod(GRAPHVIZ_Map,
@@ -81,7 +81,7 @@ function()
                     ));
 end);
 
-InstallMethod(GraphvizNode, 
+InstallMethod(GRAPHVIZ_Node, 
 "for a string", 
 [IsGVGraph, IsString],
 function(graph, name)
@@ -93,13 +93,13 @@ function(graph, name)
                   rec(
                     Name  := name,
                     Attrs := GRAPHVIZ_Map(),
-                    Idx   := GraphvizGetCounter(graph)                
+                    Idx   := GRAPHVIZ_GetCounter(graph)                
                   ));
-  GraphvizIncCounter(graph);
+  GRAPHVIZ_IncCounter(graph);
   return out;
 end);
 
-InstallMethod(GraphvizEdge, "for two graphviz nodes", 
+InstallMethod(GRAPHVIZ_Edge, "for two graphviz nodes", 
 [IsGVGraph, IsGVNode, IsGVNode],
 function(graph, head, tail)
   local out;
@@ -109,15 +109,15 @@ function(graph, head, tail)
                   Head  := head,
                   Tail  := tail,
                   Attrs := GRAPHVIZ_Map(),
-                  Idx   := GraphvizGetCounter(graph)                
+                  Idx   := GRAPHVIZ_GetCounter(graph)                
                 ));
-  GraphvizIncCounter(graph);
+  GRAPHVIZ_IncCounter(graph);
   return out;
 end);
 
 # Graph constructors
 
-InstallMethod(GraphvizDigraph, 
+InstallMethod(GRAPHVIZ_Digraph, 
 "for a graphviz digraph and a string", 
 [IsGVDigraph, IsString],
 function(parent, name)
@@ -125,13 +125,13 @@ function(parent, name)
 
   out         := GraphvizDigraph(name);
   out!.Parent := parent;
-  out!.Idx    := GraphvizGetCounter(parent);
+  out!.Idx    := GRAPHVIZ_GetCounter(parent);
   
-  GraphvizIncCounter(parent);
+  GRAPHVIZ_IncCounter(parent);
   return out;
 end);
 
-InstallMethod(GraphvizGraph, 
+InstallMethod(GRAPHVIZ_Graph, 
 "for a graphviz graph and a string", 
 [IsGVGraph, IsString],
 function(parent, name)
@@ -139,13 +139,13 @@ function(parent, name)
 
   out         := GraphvizGraph(name);
   out!.Parent := parent;
-  out!.Idx    := GraphvizGetCounter(parent);
+  out!.Idx    := GRAPHVIZ_GetCounter(parent);
   
-  GraphvizIncCounter(parent);
+  GRAPHVIZ_IncCounter(parent);
   return out;
 end);
 
-InstallMethod(GraphvizContext, 
+InstallMethod(GRAPHVIZ_Context, 
 "for a string and a positive integer", 
 [IsGVGraph, IsString],
 function(parent, name)
@@ -159,11 +159,11 @@ function(parent, name)
                         Edges     := [],
                         Attrs     := [],
                         Parent    := parent,
-                        Idx       := GraphvizGetCounter(parent),               
+                        Idx       := GRAPHVIZ_GetCounter(parent),               
                         Counter   := 1
                       ));
   
-  GraphvizIncCounter(parent);
+  GRAPHVIZ_IncCounter(parent);
   return out;
 end);
 
@@ -354,14 +354,14 @@ InstallMethod(GraphvizGetSubgraph,
 [IsGVGraph, IsObject], 
 {x, o} -> GraphvizSubgraphs(x)[ViewString(o)]);
 
-InstallMethod(GraphvizIncCounter, 
+InstallMethod(GRAPHVIZ_IncCounter, 
 "for a graphviz graph",
 [IsGVGraph], 
 function(x) 
   x!.Counter := x!.Counter + 1;
 end);
 
-InstallMethod(GraphvizGetCounter, 
+InstallMethod(GRAPHVIZ_GetCounter, 
 "for a graphviz graph",
 [IsGVGraph], 
 x -> x!.Counter);
@@ -529,7 +529,7 @@ InstallMethod(GraphvizFindGraph,
 [IsGVGraph, IsObject],
 {g, o} -> GraphvizFindGraph(g, ViewString(o)));
 
-InstallMethod(GraphvizFindNode, 
+InstallMethod(GRAPHVIZ_FindNode, 
 "for a graphviz graph and a string",
 [IsGVGraph, IsString],
 function(g, n) 
@@ -586,12 +586,14 @@ function(x, name, value)
   fi;
 
   attrs := GraphvizAttrs(x);
-  if name = "label" then
-    string := StringFormatted("{}={}", String(name), String(value));
-  else 
-    string := StringFormatted("{}=\"{}\"", String(name), String(value));
+  if ' ' in name then
+    name := StringFormatted("{}", name);
+  fi;
+  if ' ' in value then 
+    value := StringFormatted("{}", value);
   fi;
 
+  string := StringFormatted("{}={}", String(name), String(value));
   Add(attrs, string);
   return x;
 end);
@@ -639,7 +641,7 @@ InstallMethod(GraphvizAddNode, "for a graphviz graph and string",
 [IsGVGraph, IsString], 
 function(x, name)
   local node;
-  node := GraphvizNode(x, name);
+  node := GRAPHVIZ_Node(x, name);
   GRAPHVIZ_AddNode(x, node);
   return node;
 end);
@@ -703,14 +705,14 @@ function(x, head, tail)
   tail_name := GraphvizName(tail);
 
   # add the nodes to the graph if not present
-  if GraphvizFindNode(x, head_name) = fail then
+  if GRAPHVIZ_FindNode(x, head_name) = fail then
     GRAPHVIZ_AddNode(x, head);
   fi;
-  if GraphvizFindNode(x, tail_name) = fail then
+  if GRAPHVIZ_FindNode(x, tail_name) = fail then
     GRAPHVIZ_AddNode(x, tail);
   fi;
 
-  edge := GraphvizEdge(x, head, tail);
+  edge := GRAPHVIZ_Edge(x, head, tail);
   GRAPHVIZ_AddEdge(x, edge);
   return edge;
 end);
@@ -721,14 +723,14 @@ InstallMethod(GraphvizAddEdge,
 function(x, head, tail)
   local head_node, tail_node;
 
-  head_node := GraphvizFindNode(x, head);
+  head_node := GRAPHVIZ_FindNode(x, head);
   if head_node = fail then
-    head_node := GraphvizNode(x, head);
+    head_node := GRAPHVIZ_Node(x, head);
   fi;
 
-  tail_node := GraphvizFindNode(x, tail);
+  tail_node := GRAPHVIZ_FindNode(x, tail);
   if tail_node = fail then
-    tail_node := GraphvizNode(x, tail);
+    tail_node := GRAPHVIZ_Node(x, tail);
   fi;
 
   return GraphvizAddEdge(x, head_node, tail_node);
@@ -760,9 +762,9 @@ function(graph, name)
   fi;
 
   if IsGVDigraph(graph) then
-    subgraph := GraphvizDigraph(graph, name);
+    subgraph := GRAPHVIZ_Digraph(graph, name);
   elif IsGVGraph(graph) then
-    subgraph := GraphvizGraph(graph, name);
+    subgraph := GRAPHVIZ_Graph(graph, name);
   else
     return ErrorNoReturn("Filter must be a filter for a graph category.");
   fi;
@@ -781,7 +783,7 @@ InstallMethod(GraphvizAddSubgraph,
 [IsGVGraph],
 function(graph)
   return GraphvizAddSubgraph(graph, StringFormatted("no_name_{}", 
-                                               String(GraphvizGetCounter(graph))));
+                                               String(GRAPHVIZ_GetCounter(graph))));
 end);
 
 InstallMethod(GraphvizAddContext, 
@@ -796,7 +798,7 @@ function(graph, name)
                                          name));
   fi;
 
-  ctx := GraphvizContext(graph, name);
+  ctx := GRAPHVIZ_Context(graph, name);
   subgraphs[name] := ctx;
   return ctx;
 end);
@@ -805,7 +807,7 @@ InstallMethod(GraphvizAddContext,
 "for a graphviz graph",
 [IsGVGraph],
 g -> GraphvizAddContext(g, StringFormatted("no_name_{}", 
-                                      String(GraphvizGetCounter(g)))));
+                                      String(GRAPHVIZ_GetCounter(g)))));
 
 InstallMethod(GraphvizAddContext, 
 "for a graphviz graph and an object",
@@ -913,49 +915,42 @@ end);
 ###############################################################################
 
 #@ Return DOT graph head line.
-InstallMethod(GraphvizStringifyGraphHead, "for a string", [IsGVGraph],
+InstallMethod(GRAPHVIZ_StringifyGraphHead, "for a string", [IsGVGraph],
 function(graph)
   return StringFormatted("graph {} {{\n", GraphvizName(graph));
 end);
 
 #@ Return DOT digraph head line.
-InstallMethod(GraphvizStringifyDigraphHead, "for a string", [IsGVDigraph],
+InstallMethod(GRAPHVIZ_StringifyDigraphHead, "for a string", [IsGVDigraph],
 function(graph)
   return StringFormatted("digraph {} {{\n", GraphvizName(graph));
 end);
 
 #@ Return DOT subgraph head line.
-InstallMethod(GraphvizStringifySubgraphHead, "for a string", [IsGVGraph],
+InstallMethod(GRAPHVIZ_StringifySubgraphHead, "for a string", [IsGVGraph],
 function(graph)
   return StringFormatted("subgraph {} {{\n", GraphvizName(graph));
 end);
 
 #@ Return DOT subgraph head line.
-InstallMethod(GraphvizStringifyContextHead, "for a string", [IsGVContext],
+InstallMethod(GRAPHVIZ_StringifyContextHead, "for a string", [IsGVContext],
 function(graph)
   return StringFormatted("// {} context \n", GraphvizName(graph));
 end);
 
 #@ Return DOT node statement line.
-InstallMethod(GraphvizStringifyNode, "for string and record",
+InstallMethod(GRAPHVIZ_StringifyNode, "for string and record",
 [IsGVNode],
 function(node)
   local attrs, name, split;
   
   name  := GraphvizName(node);
   attrs := GraphvizAttrs(node);
-  if ':' in name then
-    split := SplitString(name, ":");
-    name  := StringFormatted("\"{}\":{}", split[1], split[2]);
-  else
-    name := StringFormatted("\"{}\"", name);
-  fi;
-
-  return StringFormatted("\t{}{}\n", name, GraphvizStringifyNodeEdgeAttrs(attrs));
+  return StringFormatted("\t{}{}\n", name, GRAPHVIZ_StringifyNodeEdgeAttrs(attrs));
 end);
 
 #@ Return DOT graph edge statement line.
-InstallMethod(GraphvizStringifyGraphEdge, "for a graphviz edge",
+InstallMethod(GRAPHVIZ_StringifyGraphEdge, "for a graphviz edge",
 [IsGVEdge],
 function(edge)
   local head, split, tail, attrs;
@@ -964,27 +959,14 @@ function(edge)
   attrs := GraphvizAttrs(edge);
 
   # handle : syntax
-  if ':' in head then
-    split := SplitString(head, ':');
-    head := StringFormatted("\"{}\":{}", split[1], split[2]);
-  else 
-    head := StringFormatted("\"{}\"", head);
-  fi;
-  if ':' in tail then
-    split := SplitString(tail, ':');
-    tail := StringFormatted("\"{}\":{}", split[1], split[2]);
-  else 
-    tail := StringFormatted("\"{}\"", tail);
-  fi;
-
   return StringFormatted("\t{} -- {}{}\n",
                          head,
                          tail,
-                         GraphvizStringifyNodeEdgeAttrs(attrs));
+                         GRAPHVIZ_StringifyNodeEdgeAttrs(attrs));
 end);
 
 #@ Return DOT digraph edge statement line.
-InstallMethod(GraphvizStringifyDigraphEdge, "for a graphviz edge",
+InstallMethod(GRAPHVIZ_StringifyDigraphEdge, "for a graphviz edge",
 [IsGVEdge],
 function(edge)
   local head, tail, attrs, split;
@@ -993,26 +975,13 @@ function(edge)
   attrs := GraphvizAttrs(edge);
 
   # handle : syntax
-  if ':' in head then
-    split := SplitString(head, ':');
-    head  := StringFormatted("\"{}\":{}", split[1], split[2]);
-  else 
-    head := StringFormatted("\"{}\"", head);
-  fi;
-  if ':' in tail then
-    split := SplitString(tail, ':');
-    tail  := StringFormatted("\"{}\":{}", split[1], split[2]);
-  else 
-    tail := StringFormatted("\"{}\"", tail);
-  fi;
-
   return StringFormatted("\t{} -> {}{}\n",
                          head,
                          tail,
-                         GraphvizStringifyNodeEdgeAttrs(attrs));
+                         GRAPHVIZ_StringifyNodeEdgeAttrs(attrs));
 end);
 
-InstallMethod(GraphvizStringifyGraphAttrs, 
+InstallMethod(GRAPHVIZ_StringifyGraphAttrs, 
 "for a graphviz graph",
 [IsGVGraph],
 function(graph)
@@ -1031,7 +1000,7 @@ function(graph)
   return result;
 end);
 
-InstallMethod(GraphvizStringifyNodeEdgeAttrs, 
+InstallMethod(GRAPHVIZ_StringifyNodeEdgeAttrs, 
 "for a record",
 [IsGRAPHVIZ_Map],
 function(attrs)
@@ -1074,14 +1043,14 @@ function(attrs)
   return result;
 end);
 
-DeclareOperation("GraphvizGetIdx", [IsGVObject]);
-InstallMethod(GraphvizGetIdx,
+DeclareOperation("GRAPHVIZ_GetIdx", [IsGVObject]);
+InstallMethod(GRAPHVIZ_GetIdx,
 "for a graphviz object",
 [IsGVObject],
 x -> x!.Idx);
 
-DeclareOperation("GraphvizConstructHistory", [IsGVGraph]);
-InstallMethod(GraphvizConstructHistory,
+DeclareOperation("GRAPHVIZ_ConstructHistory", [IsGVGraph]);
+InstallMethod(GRAPHVIZ_ConstructHistory,
 "for a graphviz graph",
 [IsGVGraph],
 function(graph)
@@ -1091,9 +1060,9 @@ function(graph)
   edges := GraphvizEdges(graph);
   subs  := GraphvizSubgraphs(graph);
 
-  node_hist := List(GRAPHVIZ_MapNames(nodes), n -> [GraphvizGetIdx(nodes[n]), nodes[n]]);
-  subs_hist := List(GRAPHVIZ_MapNames(subs), s -> [GraphvizGetIdx(subs[s]), subs[s]]);
-  edge_hist := List(edges, e -> [GraphvizGetIdx(e), e]);
+  node_hist := List(GRAPHVIZ_MapNames(nodes), n -> [GRAPHVIZ_GetIdx(nodes[n]), nodes[n]]);
+  subs_hist := List(GRAPHVIZ_MapNames(subs), s -> [GRAPHVIZ_GetIdx(subs[s]), subs[s]]);
+  edge_hist := List(edges, e -> [GRAPHVIZ_GetIdx(e), e]);
 
   hist := Concatenation(node_hist, edge_hist, subs_hist);
   SortBy(hist, v -> v[1]);
@@ -1102,7 +1071,7 @@ function(graph)
   return hist;
 end);
 
-InstallMethod(GraphvizStringifyGraph,
+InstallMethod(GRAPHVIZ_StringifyGraph,
 "for a graphviz graph and a string",
 [IsGVGraph, IsBool],
 function(graph, is_subgraph)
@@ -1112,35 +1081,35 @@ function(graph, is_subgraph)
   # get the correct head to use
   if is_subgraph then
     if IsGVContext(graph) then
-      Append(result, GraphvizStringifyContextHead(graph));
+      Append(result, GRAPHVIZ_StringifyContextHead(graph));
     elif IsGVGraph(graph) or IsGVDigraph(graph) then
-      Append(result, GraphvizStringifySubgraphHead(graph));
+      Append(result, GRAPHVIZ_StringifySubgraphHead(graph));
     else
       return ErrorNoReturn("Invalid subgraph type.");
     fi;
   elif IsGVDigraph(graph) then
-    Append(result, GraphvizStringifyDigraphHead(graph));
+    Append(result, GRAPHVIZ_StringifyDigraphHead(graph));
   elif IsGVGraph(graph) then
-    Append(result, GraphvizStringifyGraphHead(graph));
+    Append(result, GRAPHVIZ_StringifyGraphHead(graph));
   elif IsGVContext(graph) then
-    Append(result, GraphvizStringifyContextHead(graph));
+    Append(result, GRAPHVIZ_StringifyContextHead(graph));
   else
     return ErrorNoReturn("Invalid graph type.");
   fi;
 
-  Append(result, GraphvizStringifyGraphAttrs(graph));
+  Append(result, GRAPHVIZ_StringifyGraphAttrs(graph));
 
   # Add child graphviz objects
-  for obj in GraphvizConstructHistory(graph) do
+  for obj in GRAPHVIZ_ConstructHistory(graph) do
     if IsGVGraph(obj) then
-      Append(result, GraphvizStringifyGraph(obj, true));
+      Append(result, GRAPHVIZ_StringifyGraph(obj, true));
     elif IsGVNode(obj) then
-      Append(result, GraphvizStringifyNode(obj));
+      Append(result, GRAPHVIZ_StringifyNode(obj));
     elif IsGVEdge(obj) then
       if IsGVDigraph(graph) or (IsGVContext(graph) and IsGVDigraph(GRAPHVIZ_GetParent(graph))) then
-        Append(result, GraphvizStringifyDigraphEdge(obj));
+        Append(result, GRAPHVIZ_StringifyDigraphEdge(obj));
       else
-        Append(result, GraphvizStringifyGraphEdge(obj));
+        Append(result, GRAPHVIZ_StringifyGraphEdge(obj));
       fi;
     else
       return ErrorNoReturn("Invalid graphviz object type.");
@@ -1150,7 +1119,7 @@ function(graph, is_subgraph)
   if IsGVContext(graph) then
     # reset attributes following the context
     if GRAPHVIZ_GetParent(graph) <> fail then
-      Append(result, GraphvizStringifyGraphAttrs(GRAPHVIZ_GetParent(graph)));
+      Append(result, GRAPHVIZ_StringifyGraphAttrs(GRAPHVIZ_GetParent(graph)));
     fi;
     Append(result, "\n");
   else
@@ -1162,7 +1131,7 @@ end);
 InstallMethod(AsString, "for a graphviz graph",
 [IsGVGraph],
 function(graph)
-  return GraphvizStringifyGraph(graph, false);
+  return GRAPHVIZ_StringifyGraph(graph, false);
 end);
 
 

@@ -15,7 +15,7 @@ gap> GraphvizAddNode(GraphvizGraph(), "test-node");
 <graphviz node test-node>
 
 # Test renaming nodes fails
-gap> n := GraphvizNode(GraphvizGraph(), "a");;
+gap> n := GraphvizAddNode(GraphvizGraph(), "a");;
 gap> GraphvizName(n, "test");
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `GraphvizName' on 2 arguments
@@ -43,7 +43,7 @@ gap> GraphvizAttrs(n);
 rec( color := "green", label := "test", shape := "round" )
 
 # Test removing attributes
-gap> n := GraphvizNode(GraphvizGraph(), "t");;
+gap> n := GraphvizAddNode(GraphvizGraph(), "t");;
 gap> GraphvizSetAttrs(n, rec( color := "red", shape := "circle" ));;
 gap> GraphvizRemoveAttr(n, "color");;
 gap> GraphvizAttrs(n);
@@ -53,14 +53,14 @@ rec( shape := "circle" )
 gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, "test:colon");;
 gap> AsString(g);
-"graph  {\n\t\"test\":colon\n}\n"
+"graph  {\n\ttest:colon\n}\n"
 
 # Test non-string name containing ':'
 gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, 111);
 <graphviz node 111>
 gap> AsString(g);
-"graph  {\n\t\"111\"\n}\n"
+"graph  {\n\t111\n}\n"
 
 # Test removing a node with a non-string name
 gap> g := GraphvizGraph();;
@@ -71,7 +71,7 @@ rec(  )
 
 # Test setting attributes using the []:= syntax
 gap> g := GraphvizGraph();;
-gap> n := GraphvizNode(g, "a");;
+gap> n := GraphvizAddNode(g, "a");;
 gap> n["color"] := "red";;
 gap> GraphvizAttrs(n);
 rec( color := "red" )
@@ -84,7 +84,7 @@ rec( color := "blue", label := "1" )
 
 # Test getting attributes using the [] syntax
 gap> g := GraphvizGraph();;
-gap> n := GraphvizNode(g, "a");;
+gap> n := GraphvizAddNode(g, "a");;
 gap> n["color"] := "red";;
 gap> n["color"];
 "red"
@@ -102,5 +102,12 @@ gap> n := GraphvizAddNode(g, "n");;
 gap> GraphvizSetColor(n, "red");;
 gap> GraphvizAttrs(n);
 rec( color := "red" )
+
+# Test adding a node object directly fails
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddNode(g, "n");;
+gap> s := GraphvizGraph();;
+gap> GraphvizAddNode(s, n);
+Error, Cannot add node objects directly to graphs. Please use the node's name.
 
 #

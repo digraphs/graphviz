@@ -161,21 +161,21 @@ gap> GraphvizSetName(g, "test");
 gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "color", "red");;
 gap> GraphvizAttrs(g);
-[ "color=\"red\"" ]
+[ "color=red" ]
 
 # Test global attributes graph (duplicates)
 gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "color", "red");;
 gap> GraphvizSetAttr(g, "color", "blue");;
 gap> GraphvizAttrs(g);
-[ "color=\"red\"", "color=\"blue\"" ]
+[ "color=red", "color=blue" ]
 
 # Test stringify attributes graph
 gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "color", "red");;
 gap> GraphvizSetAttr(g, "color", "blue");;
 gap> AsString(g);
-"graph  {\n\tcolor=\"red\" color=\"blue\" \n}\n"
+"graph  {\n\tcolor=red color=blue \n}\n"
 
 # # Test removing attributes from a graph
 # gap> g := GraphvizGraph();;
@@ -237,6 +237,6 @@ gap> GraphvizAttrs(g);
 gap> g := GraphvizGraph();;
 gap> GraphvizSetColor(g, "red");;
 gap> GraphvizAttrs(g);
-[ "color=\"red\"" ]
+[ "color=red" ]
 
 #
