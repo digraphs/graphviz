@@ -40,11 +40,11 @@ if not IsBound(Splash) then  # This function is written by A. Egri-Nagy
     elif IsBound(opt.path) then
       if not "tmp.viz" in DirectoryContents(path) then
         tdir := Directory(Concatenation(path, "/", "tmp.viz"));
-        dir := Filename(tdir, "");
+        dir  := Filename(tdir, "");
       fi;
     else
       tdir := DirectoryTemporary();
-      dir := Filename(tdir, "");
+      dir  := Filename(tdir, "");
     fi;
 
     # file
