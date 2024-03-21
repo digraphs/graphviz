@@ -10,7 +10,6 @@
 
 ## TODO (ONCE THIS IS EMPTY THEN DONE!)
  - Fix gaplint whitespace / small formatting complaints
- - Test / update unit tests for displaying defaults in the digraphs package
  - Thoroughly test the ':' syntax more (might have broke when the quotes were changed)
 
 ## Other
