@@ -9,7 +9,9 @@
  - Improve behaviour arround ':' synatx - mimic python package
 
 ## TODO (ONCE THIS IS EMPTY THEN DONE!)
- - Fix gaplint whitespace / small formatting complaints
+ - Ask about `Pluralize` - think james said to remove for old verisons of gap
+ - Update docs
+ - Add more unit tests
  - Thoroughly test the ':' syntax more (might have broke when the quotes were changed)
 
 ## Other
