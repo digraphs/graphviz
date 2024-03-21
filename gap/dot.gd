@@ -59,7 +59,6 @@ DeclareOperation("GraphvizDigraph", []);
 #! @Description Gets the name of the provided graphviz object.
 DeclareOperation("GraphvizName", [IsGVObject]);
 
-
 #! @Arguments obj
 #! @Returns the attributes of the provided graphviz object
 #! @Description Gets the attributes of the provided graphviz object.
