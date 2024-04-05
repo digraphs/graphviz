@@ -22,29 +22,53 @@ DeclareOperation("GV_FindNode", [IsGVGraph, IsObject]);
 ## COPY OF GAP PLURALIZE TO ALLOW OLD VERSIONS OF GAP TO USE THE PACKAGE
 DeclareOperation("GV_Pluralize", [IsInt, IsString]);
 
-BindGlobal("GV_KNOWN_ATTRS",[
-  "_background", "area", "arrowhead", "arrowsize", "arrowtail", "bb", "beautify", "bgcolor", "center", "charset", "class", "cluster", "clusterrank", "color", "colorscheme", "comment", "compound", "concentrate", "constraint", "Damping", "decorate", "defaultdist", "dim", "dimen", "dir", "diredgeconstraints", "distortion", "dpi", "edgehref", "edgetarget", "edgetooltip", "edgeURL", "epsilon", "esep", "fillcolor", "fixedsize", "fontcolor", "fontname", "fontnames", "fontpath", "fontsize", "forcelabels", "gradientangle", "group", "head_lp", "headclip", "headhref", "headlabel", "headport", "headtarget", "headtooltip", "headURL", "height", "href", "id", "image", "imagepath", "imagepos", "imagescale", "inputscale", "K", "label", "label_scheme", "labelangle", "labeldistance", "labelfloat", "labelfontcolor", "labelfontname", "labelfontsize", "labelhref", "labeljust", "labelloc", "labeltarget", "labeltooltip", "labelURL", "landscape", "layer", "layerlistsep", "layers", "layerselect", "layersep", "layout", "len", "levels", "levelsgap", "lhead", "lheight", "linelength", "lp", "ltail", "lwidth", "margin", "maxiter", "mclimit", "mindist", "minlen", "mode", "model", "newrank", "nodesep", "nojustify", "normalize", "notranslate", "nslimit", "nslimit1", "oneblock", "ordering", "orientation", "outputorder", "overlap", "overlap_scaling", "overlap_shrink", "pack", "packmode", "pad", "page", "pagedir", "pencolor", "penwidth", "peripheries", "pin", "pos", "quadtree", "quantum", "rank", "rankdir", "ranksep", "ratio", "rects", "regular", "remincross", "repulsiveforce", "resolution", "root", "rotate", "rotation", "samehead", "sametail", "samplepoints", "scale", "searchsize", "sep", "shape", "shapefile", "showboxes", "sides", "size", "skew", "smoothing", "sortv", "splines", "start", "style", "stylesheet", "tail_lp", "tailclip", "tailhref", "taillabel", "tailport", "tailtarget", "tailtooltip", "tailURL", "target", "TBbalance", "tooltip", "truecolor", "URL", "vertices", "viewport", "voro_margin", "weight", "width", "xdotversion", "xlabel", "xlp", "z"
+BindGlobal("GV_KNOWN_ATTRS", [
+  "_background", "area", "arrowhead", "arrowsize", "arrowtail", "bb",
+  "beautify", "bgcolor", "center", "charset", "class", "cluster", "clusterrank",
+  "color", "colorscheme", "comment", "compound", "concentrate", "constraint",
+  "Damping", "decorate", "defaultdist", "dim", "dimen", "dir",
+  "diredgeconstraints", "distortion", "dpi", "edgehref", "edgetarget",
+  "edgetooltip", "edgeURL", "epsilon", "esep", "fillcolor", "fixedsize",
+  "fontcolor", "fontname", "fontnames", "fontpath", "fontsize", "forcelabels",
+  "gradientangle", "group", "head_lp", "headclip", "headhref", "headlabel",
+  "headport", "headtarget", "headtooltip", "headURL", "height", "href", "id",
+  "image", "imagepath", "imagepos", "imagescale", "inputscale", "K", "label",
+  "label_scheme", "labelangle", "labeldistance", "labelfloat", "labelfontcolor",
+  "labelfontname", "labelfontsize", "labelhref", "labeljust", "labelloc",
+  "labeltarget", "labeltooltip", "labelURL", "landscape", "layer",
+  "layerlistsep", "layers", "layerselect", "layersep", "layout", "len",
+  "levels", "levelsgap", "lhead", "lheight", "linelength", "lp", "ltail",
+  "lwidth", "margin", "maxiter", "mclimit", "mindist", "minlen", "mode",
+  "model", "newrank", "nodesep", "nojustify", "normalize", "notranslate",
+  "nslimit", "nslimit1", "oneblock", "ordering", "orientation", "outputorder",
+  "overlap", "overlap_scaling", "overlap_shrink", "pack", "packmode", "pad",
+  "page", "pagedir", "pencolor", "penwidth", "peripheries", "pin", "pos",
+  "quadtree", "quantum", "rank", "rankdir", "ranksep", "ratio", "rects",
+  "regular", "remincross", "repulsiveforce", "resolution", "root", "rotate",
+  "rotation", "samehead", "sametail", "samplepoints", "scale", "searchsize",
+  "sep", "shape", "shapefile", "showboxes", "sides", "size", "skew",
+  "smoothing", "sortv", "splines", "start", "style", "stylesheet", "tail_lp",
+  "tailclip", "tailhref", "taillabel", "tailport", "tailtarget", "tailtooltip",
+  "tailURL", "target", "TBbalance", "tooltip", "truecolor", "URL", "vertices",
+  "viewport", "voro_margin", "weight", "width", "xdotversion", "xlabel", "xlp",
+  "z"
 ]);
 
+# code from the GAP standard library
 InstallMethod(GV_Pluralize,
 "for an integer and a string",
 [IsInt, IsString],
 function(args...)
   local nargs, i, count, include_num, str, len, out;
 
-  #Int and one string
-  #Int and two strings
-  #One string
-  #Two strings
-
   nargs := Length(args);
   if nargs >= 1 and IsInt(args[1]) and args[1] >= 0 then
-    i := 2;
-    count := args[1];
+    i           := 2;
+    count       := args[1];
     include_num := true;
   else
-    i := 1;
-    include_num := false; # if not given, assume pluralization is wanted.
+    i           := 1;
+    include_num := false;  # if not given, assume pluralization is wanted.
   fi;
 
   if not (nargs in [i, i + 1] and
@@ -58,21 +82,21 @@ function(args...)
 
   if len = 0 then
     ErrorNoReturn("the argument <str> must be a non-empty string");
-  elif include_num and count = 1 then # no pluralization needed
+  elif include_num and count = 1 then  # no pluralization needed
     return Concatenation("\>1\< ", str);
   elif nargs = i + 1 then  # pluralization given
     out := args[i + 1];
   elif len <= 2 then
     out := Concatenation(str, "s");
 
-  # Guess and return the plural form of <str>.
-  # Inspired by the "Ruby on Rails" inflection rules.
+    # Guess and return the plural form of <str>.
+    # Inspired by the "Ruby on Rails" inflection rules.
 
-  # Uncountable nouns
+    # Uncountable nouns
   elif str in ["equipment", "information"] then
     out := str;
 
-  # Irregular plurals
+    # Irregular plurals
   elif str = "axis" then
     out := "axes";
   elif str = "child" then
@@ -80,7 +104,7 @@ function(args...)
   elif str = "person" then
     out := "people";
 
-  # Peculiar endings
+    # Peculiar endings
   elif EndsWith(str, "ix") or EndsWith(str, "ex") then
     out := Concatenation(str{[1 .. len - 2]}, "ices");
   elif EndsWith(str, "x") then
@@ -100,7 +124,7 @@ function(args...)
   elif EndsWith(str, "s") then
     out := str;
 
-  # Default to appending 's'
+    # Default to appending 's'
   else
     out := Concatenation(str, "s");
   fi;
@@ -1155,7 +1179,7 @@ function(attrs)
     if "label" = key and PositionSublist(val, ">>") <> fail then
       val := StringFormatted("\"{}\"", val);
     fi;
-    
+
     Append(result,
            StringFormatted("{}={}]",
                            key,
