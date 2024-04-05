@@ -4,12 +4,15 @@
 #! key basic concepts relating to them, and how this package interacts with them.
 
 #! @Section A Brief Introduction
-#! DOT is a language for descrbing to a computer how to display a visualization for a graph or digraph.
-#! Graphviz is a graph vizualization software which can consume DOT and produce vizual outputs.
-#! This package is designed to allow users to programmatically construct objects in GAP which can then be converted into DOT.
-#! That DOT can then be inputted into the graphviz software to produce a visual output.
-#! As DOT is central to the design of this package it will likely be helpful to have a basic understanding of the language.
-#! For more information about DOT see <URL>https://graphviz.org/doc/info/lang.html</URL>.
+#! DOT is a language for descrbing to a computer how to display a visualization 
+#! for a graph or digraph. Graphviz is a graph vizualization software which can 
+#! consume DOT and produce vizual outputs. This package is designed to allow
+#! users to programmatically construct objects in GAP which can then be 
+#! converted into DOT. That DOT can then be inputted into the graphviz software
+#! to produce a visual output. As DOT is central to the design of this package 
+#! it will likely be helpful to have a basic understanding of the language.
+#! For more information about DOT see 
+#! <URL>https://graphviz.org/doc/info/lang.html</URL>.
 
 #! @Chapter
 #! @ChapterTitle The Graphviz Package
@@ -18,10 +21,11 @@
 
 #! @BeginGroup Filters
 #! @Description Every object in graphviz belongs to the IsGVObject category. 
-#! The categories following it are for further specificity on the type of objects.
-#! These are graphs, digraphs, nodes and edges respectively.
-#! All are direct subcategories of IsGVObject excluding IsGVDigraph which is a subcategory of is GVGraph. 
-DeclareCategory("IsGVObject", IsObject); 
+#! The categories following it are for further specificity on the type of 
+#! objects. These are graphs, digraphs, nodes and edges respectively.
+#! All are direct subcategories of IsGVObject excluding IsGVDigraph which is a
+#! subcategory of is GVGraph. 
+DeclareCategory("IsGVObject", IsObject);
 DeclareCategory("IsGVGraph", IsGVObject);
 DeclareCategory("IsGVDigraph", IsGVGraph);
 DeclareCategory("IsGVContext", IsGVGraph);
@@ -50,7 +54,8 @@ DeclareOperation("GraphvizDigraph", []);
 #! @EndGroup
 
 #! @Section Get Operations
-#! This section covers the operations for getting information about graphviz objects.
+#! This section covers the operations for getting information about graphviz 
+#! objects.
 
 #! @Subsection For all graphviz objects. 
 
@@ -58,7 +63,6 @@ DeclareOperation("GraphvizDigraph", []);
 #! @Returns the name of the provided graphviz object
 #! @Description Gets the name of the provided graphviz object.
 DeclareOperation("GraphvizName", [IsGVObject]);
-
 
 #! @Arguments obj
 #! @Returns the attributes of the provided graphviz object
@@ -82,7 +86,8 @@ DeclareOperation("GraphvizGetSubgraph", [IsGVGraph, IsObject]);
 #! @Arguments graph, name
 #! @Returns a graph with the provided name.
 #! @Description 
-#! Searches through the tree of subgraphs connected to this subgraph for a graph with the provided name. 
+#! Searches through the tree of subgraphs connected to this subgraph for a graph
+#! with the provided name. 
 #! It returns the graph if it exists. 
 #! If no such graph exists then it will return fail.
 DeclareOperation("GraphvizFindGraph", [IsGVGraph, IsObject]);
@@ -112,7 +117,7 @@ DeclareOperation("GraphvizTail", [IsGVEdge]);
 #! @Arguments graph, name
 #! @Returns the modified graph.
 #! @Description Sets the name of a graphviz graph or digraph.
-DeclareOperation("GraphvizSetName",[IsGVGraph, IsObject]);
+DeclareOperation("GraphvizSetName", [IsGVGraph, IsObject]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
@@ -123,8 +128,9 @@ DeclareOperation("GraphvizAddNode", [IsGVGraph, IsObject]);
 #! @Arguments graph, edge
 #! @Returns the modified graph.
 #! @Description Adds an edge to the graph.
-#! If no nodes with the same name are in the graph then the edge's nodes will be added to the graph.
-#! If different nodes with the same name are in the graph then the operation fails.
+#! If no nodes with the same name are in the graph then the edge's nodes will be
+#! added to the graph. If different nodes with the same name are in the graph
+#! then the operation fails.
 DeclareOperation("GraphvizAddEdge", [IsGVGraph, IsObject, IsObject]);
 
 #! @Arguments graph, filter, name
@@ -151,7 +157,8 @@ DeclareOperation("GraphvizFilterEdges", [IsGVGraph, IsFunction]);
 
 #! @Arguments graph, head_name, tail_name
 #! @Returns the modified graph.
-#! @Description Filters the graph's edges, removing edges between nodes with the specified names.
+#! @Description Filters the graph's edges, removing edges between nodes with 
+#! the specified names.
 DeclareOperation("GraphvizFilterEnds", [IsGVGraph, IsObject, IsObject]);
 
 #! @Subsection For modifying object attributes.
@@ -161,24 +168,26 @@ DeclareOperation("GraphvizFilterEnds", [IsGVGraph, IsObject, IsObject]);
 #! @Description 
 #!    Updates the attribtues of the object.
 #!    All current attributes remain.
-#!    If an attribute already exists and a new value is provided, the old value will be overwritten.
+#!    If an attribute already exists and a new value is provided, the old value
+#!    will be overwritten.
 DeclareOperation("GraphvizSetAttrs", [IsGVObject, IsRecord]);
 DeclareOperation("GraphvizSetAttr", [IsGVObject, IsObject, IsObject]);
 DeclareOperation("GraphvizSetAttr", [IsGVObject, IsObject]);
-
 
 #! @Arguments obj, label
 #! @Returns the modified object.
 #! @Description 
 #!    Updates the label of the object.
-#!    If a label already exists and a new value is provided, the old value will be overwritten.
+#!    If a label already exists and a new value is provided, the old value will 
+#!    be overwritten.
 DeclareOperation("GraphvizSetLabel", [IsGVObject, IsObject]);
 
 #! @Arguments obj, color
 #! @Returns the modified object.
 #! @Description 
 #!    Updates the color of the object.
-#!    If a color already exists and a new value is provided, the old value will be overwritten.
+#!    If a color already exists and a new value is provided, the old value will
+#!    be overwritten.
 DeclareOperation("GraphvizSetColor", [IsGVObject, IsObject]);
 
 #! @Arguments obj, attr
