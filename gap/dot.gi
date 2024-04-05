@@ -20,13 +20,13 @@ DeclareOperation("GV_StringifyGraph", [IsGVGraph, IsBool]);
 DeclareOperation("GV_FindNode", [IsGVGraph, IsObject]);
 
 ## COPY OF GAP PLURALIZE TO ALLOW OLD VERSIONS OF GAP TO USE THE PACKAGE
-DeclareOperation("GRAPHVIZ_Pluralize", [IsInt, IsString]);
+DeclareOperation("GV_Pluralize", [IsInt, IsString]);
 
 BindGlobal("GV_KNOWN_ATTRS",[
   "_background", "area", "arrowhead", "arrowsize", "arrowtail", "bb", "beautify", "bgcolor", "center", "charset", "class", "cluster", "clusterrank", "color", "colorscheme", "comment", "compound", "concentrate", "constraint", "Damping", "decorate", "defaultdist", "dim", "dimen", "dir", "diredgeconstraints", "distortion", "dpi", "edgehref", "edgetarget", "edgetooltip", "edgeURL", "epsilon", "esep", "fillcolor", "fixedsize", "fontcolor", "fontname", "fontnames", "fontpath", "fontsize", "forcelabels", "gradientangle", "group", "head_lp", "headclip", "headhref", "headlabel", "headport", "headtarget", "headtooltip", "headURL", "height", "href", "id", "image", "imagepath", "imagepos", "imagescale", "inputscale", "K", "label", "label_scheme", "labelangle", "labeldistance", "labelfloat", "labelfontcolor", "labelfontname", "labelfontsize", "labelhref", "labeljust", "labelloc", "labeltarget", "labeltooltip", "labelURL", "landscape", "layer", "layerlistsep", "layers", "layerselect", "layersep", "layout", "len", "levels", "levelsgap", "lhead", "lheight", "linelength", "lp", "ltail", "lwidth", "margin", "maxiter", "mclimit", "mindist", "minlen", "mode", "model", "newrank", "nodesep", "nojustify", "normalize", "notranslate", "nslimit", "nslimit1", "oneblock", "ordering", "orientation", "outputorder", "overlap", "overlap_scaling", "overlap_shrink", "pack", "packmode", "pad", "page", "pagedir", "pencolor", "penwidth", "peripheries", "pin", "pos", "quadtree", "quantum", "rank", "rankdir", "ranksep", "ratio", "rects", "regular", "remincross", "repulsiveforce", "resolution", "root", "rotate", "rotation", "samehead", "sametail", "samplepoints", "scale", "searchsize", "sep", "shape", "shapefile", "showboxes", "sides", "size", "skew", "smoothing", "sortv", "splines", "start", "style", "stylesheet", "tail_lp", "tailclip", "tailhref", "taillabel", "tailport", "tailtarget", "tailtooltip", "tailURL", "target", "TBbalance", "tooltip", "truecolor", "URL", "vertices", "viewport", "voro_margin", "weight", "width", "xdotversion", "xlabel", "xlp", "z"
 ]);
 
-InstallMethod(GRAPHVIZ_Pluralize,
+InstallMethod(GV_Pluralize,
 "for an integer and a string",
 [IsInt, IsString],
 function(args...)
@@ -50,7 +50,7 @@ function(args...)
   if not (nargs in [i, i + 1] and
           IsString(args[i]) and
           (nargs = i or IsString(args[i + 1]))) then
-    ErrorNoReturn("Usage: GRAPHVIZ_Pluralize([<count>, ]<string>[, <plural>])");
+    ErrorNoReturn("Usage: GV_Pluralize([<count>, ]<string>[, <plural>])");
   fi;
 
   str := args[i];
@@ -375,8 +375,8 @@ function(g)
     Append(result, StringFormatted("{} ", GraphvizName(g)));
   fi;
 
-  Append(result, StringFormatted("with {} ", GRAPHVIZ_Pluralize(nodes, "node")));
-  Append(result, StringFormatted("and {}>", GRAPHVIZ_Pluralize(edges, "edge")));
+  Append(result, StringFormatted("with {} ", GV_Pluralize(nodes, "node")));
+  Append(result, StringFormatted("and {}>", GV_Pluralize(edges, "edge")));
 
   return result;
 end);
@@ -394,8 +394,8 @@ function(g)
     Append(result, StringFormatted("{} ", GraphvizName(g)));
   fi;
 
-  Append(result, StringFormatted("with {} ", GRAPHVIZ_Pluralize(nodes, "node")));
-  Append(result, StringFormatted("and {}>", GRAPHVIZ_Pluralize(edges, "edge")));
+  Append(result, StringFormatted("with {} ", GV_Pluralize(nodes, "node")));
+  Append(result, StringFormatted("and {}>", GV_Pluralize(edges, "edge")));
 
   return result;
 end);
@@ -413,8 +413,8 @@ function(g)
     Append(result, StringFormatted("{} ", GraphvizName(g)));
   fi;
 
-  Append(result, StringFormatted("with {} ", GRAPHVIZ_Pluralize(nodes, "node")));
-  Append(result, StringFormatted("and {}>", GRAPHVIZ_Pluralize(edges, "edge")));
+  Append(result, StringFormatted("with {} ", GV_Pluralize(nodes, "node")));
+  Append(result, StringFormatted("and {}>", GV_Pluralize(edges, "edge")));
 
   return result;
 end);
@@ -1110,6 +1110,9 @@ function(attrs)
         if ' ' in val then 
           val := StringFormatted("\"{}\"", val);
         fi;
+        if "label" = key and PositionSublist(val, ">>") <> fail then
+          val := StringFormatted("\"{}\"", val);
+        fi;
 
         Append(result,
                StringFormatted("{}={}, ",
@@ -1125,6 +1128,9 @@ function(attrs)
      key := StringFormatted("\"{}\"", key);
     fi;
     if ' ' in val then
+      val := StringFormatted("\"{}\"", val);
+    fi;
+    if "label" = key and PositionSublist(val, ">>") <> fail then
       val := StringFormatted("\"{}\"", val);
     fi;
     

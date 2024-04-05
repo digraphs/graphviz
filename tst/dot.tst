@@ -76,5 +76,29 @@ gap> GraphvizSetAttr(g, "test", "false");
 [WARNING] Unknown attribute test
 <graphviz graph with 0 nodes and 0 edges>
 
+# Test strngifying labels with ">>" inside (node attrs)
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddNode(g, "node");;
+gap> GraphvizSetAttr(n, "label", ">>hello");;
+gap> AsString(g);
+"graph  {\n\tnode [label=\">>hello\"]\n}\n"
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddNode(g, "node");;
+gap> GraphvizSetAttr(n, "label", "before>>hello");;
+gap> AsString(g);
+"graph  {\n\tnode [label=\"before>>hello\"]\n}\n"
+
+# Test strngifying labels with ">>" inside (edge attrs)
+gap> g := GraphvizGraph();;
+gap> e := GraphvizAddEdge(g, "a", "b");;
+gap> GraphvizSetAttr(e, "label", ">>hello");;
+gap> AsString(g);
+"graph  {\n\ta\n\tb\n\ta -- b [label=\">>hello\"]\n}\n"
+gap> g := GraphvizGraph();;
+gap> e := GraphvizAddEdge(g, "a", "b");;
+gap> GraphvizSetAttr(e, "label", "before>>hello");;
+gap> AsString(g);
+"graph  {\n\ta\n\tb\n\ta -- b [label=\"before>>hello\"]\n}\n"
+
 #
 gap> STOP_TEST("Digraphs package: standard/oper.tst", 0);
