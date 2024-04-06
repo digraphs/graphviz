@@ -302,8 +302,8 @@ gap> GraphvizAddContext(g, 11);
 
 # Test getting subgraphs with non-string names
 gap> g := GraphvizGraph();;
-gap> GraphvizAddContext(g, [ "a" ]);;
-gap> GraphvizGetSubgraph(g, [ "a" ]);
+gap> GraphvizAddContext(g, ["a"]);;
+gap> GraphvizGetSubgraph(g, ["a"]);
 <graphviz context [ "a" ] with 0 nodes and 0 edges>
 
 # Test finding subgraph (parent)
@@ -350,6 +350,23 @@ gap> o := GraphvizFindGraph(a3, "b3");
 <graphviz graph b3 with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, b3);
 true
+
+# Test nested contexts have correct edge types (graph)
+gap> g := GraphvizGraph("g");;
+gap> parent := GraphvizAddContext(g, "parent");;
+gap> ctx := GraphvizAddContext(parent, "ctx");;
+gap> GraphvizAddEdge(ctx, "a", "b");;
+gap> AsString(g);
+"graph g {\n// parent context \n// ctx context \n\ta\n\tb\n\ta -- b\n\n\n}\n"
+
+# Test nested contexts have correct edge types (digraph)
+gap> g := GraphvizDigraph("g");;
+gap> parent := GraphvizAddContext(g, "parent");;
+gap> ctx := GraphvizAddContext(parent, "ctx");;
+gap> GraphvizAddEdge(ctx, "a", "b");;
+gap> AsString(g);
+"digraph g {\n// parent context \n// ctx context \n\ta\n\tb\n\ta -> b\n\n\n}\n\
+"
 
 # Test finding subgraph (non-string name)
 gap> g := GraphvizGraph("r");;
