@@ -5,4 +5,5 @@
 # Reading the declaration part of the package.
 #
 
-ReadPackage( "graphviz", "gap/dot.gd");
+ReadPackage("graphviz", "gap/dot.gd");
+ReadPackage("graphviz", "gap/defaults.gd");
