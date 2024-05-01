@@ -1138,7 +1138,7 @@ InstallMethod(GV_StringifyNodeEdgeAttrs,
 "for a record",
 [IsGV_Map],
 function(attrs)
-  local result, keys, key, val, n, i;
+  local result, keys, key, val, n, i, tmp;
 
   result := "";
   n      := Length(GV_MapNames(attrs));
@@ -1256,9 +1256,7 @@ function(graph, is_subgraph)
     elif IsGVNode(obj) then
       Append(result, GV_StringifyNode(obj));
     elif IsGVEdge(obj) then
-      tmp := IsGVDigraph(graph);
-      tmp := tmp or (IsGVContext(graph) and IsGVDigraph(GV_GetRoot(graph)));
-      if tmp then
+      if IsGVDigraph(GV_GetRoot(graph)) then
         Append(result, GV_StringifyDigraphEdge(obj));
       else
         Append(result, GV_StringifyGraphEdge(obj));
