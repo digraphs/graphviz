@@ -323,10 +323,10 @@ gap> IsIdenticalObj(o, s);
 true
 
 # Test finding subgraph (sibling)
-gap> g := GraphvizGraph("a");;
-gap> s := GraphvizAddSubgraph(g, "b");;
+gap> g  := GraphvizGraph("a");;
+gap> s  := GraphvizAddSubgraph(g, "b");;
 gap> s2 := GraphvizAddSubgraph(g, "c");;
-gap> o := GraphvizFindGraph(s, "c");
+gap> o  := GraphvizFindGraph(s, "c");
 <graphviz graph c with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s2);
 true
@@ -339,30 +339,30 @@ gap> IsIdenticalObj(o, g);
 true
 
 # Test finding subgraph (far)
-gap> g := GraphvizGraph("r");;
+gap> g  := GraphvizGraph("r");;
 gap> a1 := GraphvizAddSubgraph(g, "a1");;
 gap> a2 := GraphvizAddSubgraph(a1, "a2");;
 gap> a3 := GraphvizAddSubgraph(a2, "a3");;
 gap> b1 := GraphvizAddSubgraph(g, "b1");;
 gap> b2 := GraphvizAddSubgraph(b1, "b2");;
 gap> b3 := GraphvizAddSubgraph(b2, "b3");;
-gap> o := GraphvizFindGraph(a3, "b3");
+gap> o  := GraphvizFindGraph(a3, "b3");
 <graphviz graph b3 with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, b3);
 true
 
 # Test nested contexts have correct edge types (graph)
-gap> g := GraphvizGraph("g");;
+gap> g      := GraphvizGraph("g");;
 gap> parent := GraphvizAddContext(g, "parent");;
-gap> ctx := GraphvizAddContext(parent, "ctx");;
+gap> ctx    := GraphvizAddContext(parent, "ctx");;
 gap> GraphvizAddEdge(ctx, "a", "b");;
 gap> AsString(g);
 "graph g {\n// parent context \n// ctx context \n\ta\n\tb\n\ta -- b\n\n\n}\n"
 
 # Test nested contexts have correct edge types (digraph)
-gap> g := GraphvizDigraph("g");;
+gap> g      := GraphvizDigraph("g");;
 gap> parent := GraphvizAddContext(g, "parent");;
-gap> ctx := GraphvizAddContext(parent, "ctx");;
+gap> ctx    := GraphvizAddContext(parent, "ctx");;
 gap> GraphvizAddEdge(ctx, "a", "b");;
 gap> AsString(g);
 "digraph g {\n// parent context \n// ctx context \n\ta\n\tb\n\ta -> b\n\n\n}\n\

@@ -1150,14 +1150,16 @@ function(attrs)
         key := keys[i];
         val := attrs[key];
 
-        if ' ' in key then
-          key := StringFormatted("\"{}\"", key);
-        fi;
-        if ' ' in val then
-          val := StringFormatted("\"{}\"", val);
-        fi;
-        if "label" = key and PositionSublist(val, ">>") <> fail then
-          val := StringFormatted("\"{}\"", val);
+        tmp := Chomp(val);
+        if "label" = key and StartsWith(tmp, "<<") and EndsWith(tmp, ">>") then
+          val := StringFormatted("{}", val);
+        else
+            if ' ' in key then
+              key := StringFormatted("\"{}\"", key);
+            fi;
+            if ' ' in val then
+              val := StringFormatted("\"{}\"", val);
+            fi;
         fi;
 
         Append(result,
@@ -1170,14 +1172,16 @@ function(attrs)
     key := keys[n];
     val := attrs[key];
 
-    if ' ' in key then
-      key := StringFormatted("\"{}\"", key);
-    fi;
-    if ' ' in val then
-      val := StringFormatted("\"{}\"", val);
-    fi;
-    if "label" = key and PositionSublist(val, ">>") <> fail then
-      val := StringFormatted("\"{}\"", val);
+    tmp := Chomp(val);
+    if "label" = key and StartsWith(tmp, "<<") and EndsWith(tmp, ">>") then
+      val := StringFormatted("{}", val);
+    else
+        if ' ' in key then
+          key := StringFormatted("\"{}\"", key);
+        fi;
+        if ' ' in val then
+          val := StringFormatted("\"{}\"", val);
+        fi;
     fi;
 
     Append(result,
