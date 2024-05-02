@@ -34,17 +34,17 @@ gap> n := GraphvizAddNode(GraphvizGraph(), "a  a   ");
 
 # Test modifying attributes
 gap> n := GraphvizAddNode(GraphvizGraph(), "t");;
-gap> GraphvizSetAttrs(n, rec( color := "red" ));;
-gap> GraphvizSetAttrs(n, rec( color := "blue", shape := "round" ));;
+gap> GraphvizSetAttrs(n, rec(color := "red"));;
+gap> GraphvizSetAttrs(n, rec(color := "blue", shape := "round"));;
 gap> GraphvizAttrs(n);
 rec( color := "blue", shape := "round" )
-gap> GraphvizSetAttrs(n, rec( color := "green", label := "test" ));;
+gap> GraphvizSetAttrs(n, rec(color := "green", label := "test"));;
 gap> GraphvizAttrs(n);
 rec( color := "green", label := "test", shape := "round" )
 
 # Test removing attributes
 gap> n := GraphvizAddNode(GraphvizGraph(), "t");;
-gap> GraphvizSetAttrs(n, rec( color := "red", shape := "circle" ));;
+gap> GraphvizSetAttrs(n, rec(color := "red", shape := "circle"));;
 gap> GraphvizRemoveAttr(n, "color");;
 gap> GraphvizAttrs(n);
 rec( shape := "circle" )

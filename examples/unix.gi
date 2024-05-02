@@ -3,7 +3,8 @@
 LoadPackage("graphviz");
 
 u := GraphvizDigraph("unix");
-GraphvizSetAttr(u, "node [color=\"lightblue2\", style=\"filled\", size=\"6,6\"]");
+GraphvizSetAttr(
+u, "node [color=\"lightblue2\", style=\"filled\", size=\"6,6\"]");
 
 GraphvizAddEdge(u, "5th Edition", "6th Edition");
 GraphvizAddEdge(u, "5th Edition", "PWB 1.0");

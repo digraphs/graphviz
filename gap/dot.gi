@@ -183,12 +183,8 @@ DeclareOperation("GV_Digraph", [IsGVDigraph, IsString]);
 DeclareOperation("GV_Context", [IsGVGraph, IsString]);
 DeclareOperation("GV_Map", []);
 
-InstallMethod(GV_Map,
-"for a nothing",
-[],
-function()
-  return Objectify(GV_MapType, rec(Data := rec()));
-end);
+InstallMethod(GV_Map, "for no args",
+[], {} -> Objectify(GV_MapType, rec(Data := rec())));
 
 InstallMethod(GV_Node,
 "for a string",
@@ -350,19 +346,14 @@ end);
 InstallOtherMethod(IsBound\[\],
 "for a graphviz map and an object",
 [IsGV_Map, IsObject],
-function(m, key)
-  return IsBound(m!.Data.(key));
-end);
+{m, key} -> IsBound(m!.Data.(key)));
 
 DeclareOperation("GV_MapNames", [IsGV_Map]);
-InstallMethod(GV_MapNames,
-"for a graphviz map",
-[IsGV_Map],
-m -> RecNames(m!.Data));
 
-InstallMethod(ViewString,
-"for a graphviz map",
-[IsGV_Map],
+InstallMethod(GV_MapNames, "for a graphviz map",
+[IsGV_Map], m -> RecNames(m!.Data));
+
+InstallMethod(ViewString, "for a graphviz map", [IsGV_Map],
 m -> String(m!.Data));
 
 # ###########################################################
@@ -495,10 +486,10 @@ x -> x!.Counter);
 # Converting strings
 
 DeclareOperation("GV_EnsureString", [IsObject]);
+# TODO required?
 InstallMethod(GV_EnsureString,
 "for an object",
-[IsObject],
-x -> ViewString(x));
+[IsObject], ViewString);
 
 InstallMethod(GV_EnsureString,
 "for a string",
@@ -562,9 +553,7 @@ end);
 InstallOtherMethod(\[\],
 "for a graphviz graph and string",
 [IsGVGraph, IsString],
-function(graph, node)
-  return GraphvizNodes(graph)[node];
-end);
+{graph, node} -> GraphvizNodes(graph)[node]);
 
 InstallOtherMethod(\[\],
 "for a graphviz graph and string",
@@ -572,20 +561,17 @@ InstallOtherMethod(\[\],
 {g, o} -> g[ViewString(o)]);
 
 DeclareOperation("GV_HasNode", [IsGVGraph, IsObject]);
+
 InstallMethod(GV_HasNode,
 "for a graphviz graph",
 [IsGVGraph, IsString],
-function(g, name)
-  return name in GV_MapNames(GraphvizNodes(g));
-end);
+{g, name} -> name in GV_MapNames(GraphvizNodes(g)));
 
 DeclareOperation("GV_GetParent", [IsGVGraph]);
+
 InstallMethod(GV_GetParent,
 "for a graphviz graph",
-[IsGVGraph],
-function(graph)
-  return graph!.Parent;
-end);
+[IsGVGraph], graph -> graph!.Parent);
 
 DeclareOperation("GV_GraphTreeSearch", [IsGVGraph, IsFunction]);
 InstallMethod(GV_GraphTreeSearch,
@@ -772,9 +758,10 @@ function(x, name)
   return node;
 end);
 
+# TODO required?
 InstallMethod(GraphvizAddNode, "for a graphviz graph and string",
 [IsGVGraph, IsGVNode],
-function(_, __)
+function(_, __)  # gaplint: disable=analyse-lvars
   local error;
   error := "Cannot add node objects directly to graphs. ";
   error := Concatenation(error, "Please use the node's name.");
@@ -784,9 +771,7 @@ end);
 InstallMethod(GraphvizAddNode,
 "for a graphviz graph and string",
 [IsGVGraph, IsObject],
-function(x, name)
-  return GraphvizAddNode(x, ViewString(name));
-end);
+{x, name} -> GraphvizAddNode(x, ViewString(name)));
 
 DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVEdge]);
 InstallMethod(GV_AddEdge,
@@ -949,9 +934,7 @@ InstallMethod(GraphvizAddContext,
 
 InstallMethod(GraphvizRemoveNode, "for a graphviz graph and node",
 [IsGVGraph, IsGVNode],
-function(g, node)
-  return GraphvizRemoveNode(g, GraphvizName(node));
-end);
+{g, node} -> GraphvizRemoveNode(g, GraphvizName(node)));
 
 InstallMethod(GraphvizRemoveNode, "for a graphviz graph and a string",
 [IsGVGraph, IsString],
@@ -1050,27 +1033,19 @@ end);
 
 # @ Return DOT graph head line.
 InstallMethod(GV_StringifyGraphHead, "for a string", [IsGVGraph],
-function(graph)
-  return StringFormatted("graph {} {{\n", GraphvizName(graph));
-end);
+graph -> StringFormatted("graph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT digraph head line.
 InstallMethod(GV_StringifyDigraphHead, "for a string", [IsGVDigraph],
-function(graph)
-  return StringFormatted("digraph {} {{\n", GraphvizName(graph));
-end);
+graph -> StringFormatted("digraph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT subgraph head line.
 InstallMethod(GV_StringifySubgraphHead, "for a string", [IsGVGraph],
-function(graph)
-  return StringFormatted("subgraph {} {{\n", GraphvizName(graph));
-end);
+graph -> StringFormatted("subgraph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT subgraph head line.
 InstallMethod(GV_StringifyContextHead, "for a string", [IsGVContext],
-function(graph)
-  return StringFormatted("// {} context \n", GraphvizName(graph));
-end);
+graph -> StringFormatted("// {} context \n", GraphvizName(graph)));
 
 # @ Return DOT node statement line.
 InstallMethod(GV_StringifyNode, "for string and record",
@@ -1226,7 +1201,7 @@ InstallMethod(GV_StringifyGraph,
 "for a graphviz graph and a string",
 [IsGVGraph, IsBool],
 function(graph, is_subgraph)
-  local result, obj, tmp;
+  local result, obj;
   result := "";
 
   # get the correct head to use
@@ -1281,6 +1256,4 @@ end);
 
 InstallMethod(AsString, "for a graphviz graph",
 [IsGVGraph],
-function(graph)
-  return GV_StringifyGraph(graph, false);
-end);
+graph -> GV_StringifyGraph(graph, false));

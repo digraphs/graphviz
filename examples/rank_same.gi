@@ -1,5 +1,5 @@
 # https://graphviz.readthedocs.io/en/stable/examples.html
-# """https://stackoverflow.com/questions/25734244/how-do-i-place-nodes-on-the-same-level-in-dot"""
+# https://stackoverflow.com/questions/25734244
 
 LoadPackage("graphviz");
 g := GraphvizDigraph();

@@ -13,26 +13,26 @@ gap> LoadPackage("graphviz", false);;
 # Test setting attributes
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "test");;
-gap> GraphvizSetAttrs(n, rec(color:="red", label:="lab"));;
+gap> GraphvizSetAttrs(n, rec(color := "red", label := "lab"));;
 gap> GraphvizAttrs(n);
 rec( color := "red", label := "lab" )
-gap> GraphvizSetAttrs(n, rec(color:="blue"));;
+gap> GraphvizSetAttrs(n, rec(color := "blue"));;
 gap> GraphvizAttrs(n);
 rec( color := "blue", label := "lab" )
 
 # Test globals
 gap> g := GraphvizGraph();;
-gap> GraphvizSetAttrs(g, rec( color := "red", shape := "circle" ));;
+gap> GraphvizSetAttrs(g, rec(color := "red", shape := "circle"));;
 gap> GraphvizAttrs(g);
 [ "color=red", "shape=circle" ]
-gap> GraphvizSetAttrs(g, rec( color := "blue", label := "test" ));;
+gap> GraphvizSetAttrs(g, rec(color := "blue", label := "test"));;
 gap> GraphvizAttrs(g);
 [ "color=red", "shape=circle", "label=test", "color=blue" ]
 
 # Test stringify
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "test");;
-gap> GraphvizSetAttrs(n, rec(color:="red", label:="lab"));;
+gap> GraphvizSetAttrs(n, rec(color := "red", label := "lab"));;
 gap> AsString(g);
 "graph  {\n\ttest [color=red, label=lab]\n}\n"
 
@@ -40,10 +40,10 @@ gap> AsString(g);
 gap> g := GraphvizDigraph();;
 gap> a := GraphvizAddNode(g, "a");;
 gap> b := GraphvizAddNode(g, "b");;
-gap> GraphvizSetAttrs(a, rec(color:="blue"));;
-gap> GraphvizSetAttrs(b, rec(color:="red"));;
+gap> GraphvizSetAttrs(a, rec(color := "blue"));;
+gap> GraphvizSetAttrs(b, rec(color := "red"));;
 gap> e := GraphvizAddEdge(g, a, b);;
-gap> GraphvizSetAttrs(e, rec(color:="green"));;
+gap> GraphvizSetAttrs(e, rec(color := "green"));;
 gap> AsString(g);
 "digraph  {\n\ta [color=blue]\n\tb [color=red]\n\ta -> b [color=green]\n}\n"
 
@@ -51,10 +51,10 @@ gap> AsString(g);
 gap> g := GraphvizGraph();;
 gap> a := GraphvizAddNode(g, "a");;
 gap> b := GraphvizAddNode(g, "b");;
-gap> GraphvizSetAttrs(a, rec(color:="blue"));;
-gap> GraphvizSetAttrs(b, rec(color:="red"));;
+gap> GraphvizSetAttrs(a, rec(color := "blue"));;
+gap> GraphvizSetAttrs(b, rec(color := "red"));;
 gap> e := GraphvizAddEdge(g, a, b);;
-gap> GraphvizSetAttrs(e, rec(color:="green"));;
+gap> GraphvizSetAttrs(e, rec(color := "green"));;
 gap> AsString(g);
 "graph  {\n\ta [color=blue]\n\tb [color=red]\n\ta -- b [color=green]\n}\n"
 

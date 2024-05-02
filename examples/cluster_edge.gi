@@ -12,7 +12,6 @@ GraphvizAddEdge(cluster0, "a", "c");
 GraphvizAddEdge(cluster0, "b", "d");
 GraphvizAddEdge(cluster0, "c", "d");
 
-
 cluster1 := GraphvizAddSubgraph(g, "cluster1");
 GraphvizAddEdge(cluster1, "e", "g");
 GraphvizAddEdge(cluster1, "e", "f");

@@ -13,7 +13,6 @@ for i in [2, 1] do
     GraphvizAddNode(ctx1, StringFormatted("rg{}", i));
 od;
 
-
 ctx2 := GraphvizAddSubgraph(t, "ctx2");
 GraphvizSetAttr(ctx2, "node [shape=\"circle\", fixedsize=true, width=0.9]");
 for i in [2, 1] do
@@ -25,20 +24,31 @@ od;
 
 pair := fail;
 for pair in [[2, 1], [1, 2]] do
-    i := pair[1];
-    j := pair[2];
-    GraphvizAddEdge(t, StringFormatted("gy{}", i), StringFormatted("yellow{}", i));
-    GraphvizAddEdge(t, StringFormatted("rg{}", i), StringFormatted("green{}", i));
-    GraphvizAddEdge(t, StringFormatted("yr{}", i), StringFormatted("safe{}", j));
-    GraphvizAddEdge(t, StringFormatted("yr{}", i), StringFormatted("red{}", i));
-    GraphvizAddEdge(t, StringFormatted("safe{}", i), StringFormatted("rg{}", i));
-    GraphvizAddEdge(t, StringFormatted("green{}", i), StringFormatted("gy{}", i));
-    GraphvizAddEdge(t, StringFormatted("yellow{}", i), StringFormatted("yr{}", i));
-    GraphvizAddEdge(t, StringFormatted("red{}", i), StringFormatted("rg{}", i));
+  i := pair[1];
+  j := pair[2];
+  GraphvizAddEdge(
+    t, StringFormatted("gy{}", i), StringFormatted("yellow{}", i));
+  GraphvizAddEdge(
+    t, StringFormatted("rg{}", i), StringFormatted("green{}", i));
+  GraphvizAddEdge(
+    t, StringFormatted("yr{}", i), StringFormatted("safe{}", j));
+  GraphvizAddEdge(
+    t, StringFormatted("yr{}", i), StringFormatted("red{}", i));
+  GraphvizAddEdge(
+    t, StringFormatted("safe{}", i), StringFormatted("rg{}", i));
+  GraphvizAddEdge(
+    t, StringFormatted("green{}", i), StringFormatted("gy{}", i));
+  GraphvizAddEdge(
+    t, StringFormatted("yellow{}", i), StringFormatted("yr{}", i));
+  GraphvizAddEdge(
+    t, StringFormatted("red{}", i), StringFormatted("rg{}", i));
 od;
 
 GraphvizSetAttr(t, "overlap=\"false\"");
-GraphvizSetAttr(t, "label=\"PetriNet Model TrafficLights\nExtracted from ConceptBase and layed out by Graphviz\"");
+GraphvizSetAttr(t,
+"""label=\"PetriNet Model TrafficLights
+Extracted from ConceptBase and laid out by Graphviz\"
+""");
 GraphvizSetAttr(t, "fontsize=12");
 
 Print(AsString(t));

@@ -5,6 +5,6 @@
 # Reading the implementation part of the package.
 #
 
-ReadPackage( "graphviz", "gap/dot.gi");
-ReadPackage( "graphviz", "gap/splash.gi");
-ReadPackage( "graphviz", "gap/defaults.gi");
+ReadPackage("graphviz", "gap/dot.gi");
+ReadPackage("graphviz", "gap/splash.gi");
+ReadPackage("graphviz", "gap/defaults.gi");
