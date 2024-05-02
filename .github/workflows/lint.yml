@@ -24,4 +24,4 @@ jobs:
       run: pip install gaplint
     - name: "Run gaplint on the graphviz package"
       run: |
-      gaplint gap/*.g* tst/*.tst examples/*.g* PackageInfo.g init.g read.g makedoc.g tst/testall.g
+        gaplint gap/*.g* tst/*.tst examples/*.g* PackageInfo.g init.g read.g makedoc.g tst/testall.g
