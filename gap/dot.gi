@@ -10,8 +10,6 @@ DeclareOperation("GV_StringifyGraphHead", [IsGVGraph]);
 DeclareOperation("GV_StringifyDigraphHead", [IsGVGraph]);
 DeclareOperation("GV_StringifySubgraphHead", [IsGVGraph]);
 DeclareOperation("GV_StringifyContextHead", [IsGVGraph]);
-DeclareOperation("GV_StringifyGraphEdge", [IsGVEdge]);
-DeclareOperation("GV_StringifyDigraphEdge", [IsGVEdge]);
 DeclareOperation("GV_StringifyNode", [IsGVNode]);
 DeclareOperation("GV_StringifyGraphAttrs", [IsGVGraph]);
 DeclareOperation("GV_StringifyNodeEdgeAttrs", [IsGV_Map]);
@@ -375,12 +373,21 @@ end);
 
 InstallMethod(ViewString, "for a graphviz graph", [IsGVGraph],
 function(g)
-  local result, edges, nodes;
+  local result, edges, nodes, kind;
+
   result := "";
   edges  := Length(GraphvizEdges(g));
   nodes  := Length(GV_MapNames(GraphvizNodes(g)));
 
-  Append(result, StringFormatted("<graphviz graph ", GraphvizName(g)));
+  if IsGVDigraph(g) then
+    kind := "digraph";
+  elif IsGVContext(g) then
+    kind := "context";
+  else
+    kind := "graph";
+  fi;
+
+  Append(result, StringFormatted("<graphviz {} ", kind));
 
   if GraphvizName(g) <> "" then
     Append(result, StringFormatted("{} ", GraphvizName(g)));
@@ -392,47 +399,9 @@ function(g)
   return result;
 end);
 
-InstallMethod(ViewString, "for a graphviz digraph", [IsGVDigraph],
-function(g)
-  local result, edges, nodes;
-  result := "";
-  edges  := Length(GraphvizEdges(g));
-  nodes  := Length(GV_MapNames(GraphvizNodes(g)));
-
-  Append(result, StringFormatted("<graphviz digraph ", GraphvizName(g)));
-
-  if GraphvizName(g) <> "" then
-    Append(result, StringFormatted("{} ", GraphvizName(g)));
-  fi;
-
-  Append(result, StringFormatted("with {} ", GV_Pluralize(nodes, "node")));
-  Append(result, StringFormatted("and {}>", GV_Pluralize(edges, "edge")));
-
-  return result;
-end);
-
-InstallMethod(ViewString, "for a graphviz context", [IsGVContext],
-function(g)
-  local result, edges, nodes;
-  result := "";
-  edges  := Length(GraphvizEdges(g));
-  nodes  := Length(GV_MapNames(GraphvizNodes(g)));
-
-  Append(result, StringFormatted("<graphviz context ", GraphvizName(g)));
-
-  if GraphvizName(g) <> "" then
-    Append(result, StringFormatted("{} ", GraphvizName(g)));
-  fi;
-
-  Append(result, StringFormatted("with {} ", GV_Pluralize(nodes, "node")));
-  Append(result, StringFormatted("and {}>", GV_Pluralize(edges, "edge")));
-
-  return result;
-end);
-
-# ###########################################################
+############################################################
 # Getters
-# ###########################################################
+############################################################
 InstallMethod(GraphvizName,
 "for a graphviz object",
 [IsGVObject],
@@ -1059,33 +1028,19 @@ function(node)
 end);
 
 # @ Return DOT graph edge statement line.
-InstallMethod(GV_StringifyGraphEdge, "for a graphviz edge",
-[IsGVEdge],
-function(edge)
+BindGlobal("GV_StringifyEdge",
+function(edge, edge_str)
   local head, tail, attrs;
+  Assert(0, IsGVEdge(edge));
+  Assert(0, IsString(edge_str));
   head  := GraphvizName(GraphvizHead(edge));
   tail  := GraphvizName(GraphvizTail(edge));
   attrs := GraphvizAttrs(edge);
 
   # handle : syntax
-  return StringFormatted("\t{} -- {}{}\n",
+  return StringFormatted("\t{} {} {}{}\n",
                          head,
-                         tail,
-                         GV_StringifyNodeEdgeAttrs(attrs));
-end);
-
-# @ Return DOT digraph edge statement line.
-InstallMethod(GV_StringifyDigraphEdge, "for a graphviz edge",
-[IsGVEdge],
-function(edge)
-  local head, tail, attrs;
-  head  := GraphvizName(GraphvizHead(edge));
-  tail  := GraphvizName(GraphvizTail(edge));
-  attrs := GraphvizAttrs(edge);
-
-  # handle : syntax
-  return StringFormatted("\t{} -> {}{}\n",
-                         head,
+                         edge_str,
                          tail,
                          GV_StringifyNodeEdgeAttrs(attrs));
 end);
@@ -1233,9 +1188,9 @@ function(graph, is_subgraph)
       Append(result, GV_StringifyNode(obj));
     elif IsGVEdge(obj) then
       if IsGVDigraph(GV_GetRoot(graph)) then
-        Append(result, GV_StringifyDigraphEdge(obj));
+        Append(result, GV_StringifyEdge(obj, "->"));
       else
-        Append(result, GV_StringifyGraphEdge(obj));
+        Append(result, GV_StringifyEdge(obj, "--"));
       fi;
     else
       return ErrorNoReturn("Invalid graphviz object type.");
