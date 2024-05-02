@@ -20,23 +20,30 @@ GraphvizAddNode(context1, "grade");
 GraphvizAddNode(context1, "number");
 
 context2 := GraphvizAddContext(e, "context2");
-GraphvizSetAttr(context2, "node [shape=\"diamond\", style=\"filled\", color=\"lightgrey\"]");
+GraphvizSetAttr(context2,
+"node [shape=\"diamond\", style=\"filled\", color=\"lightgrey\"]");
 GraphvizAddNode(context2, "C-I");
 GraphvizAddNode(context2, "S-C");
 GraphvizAddNode(context2, "S-I");
 
 GraphvizAddEdge(e, "name0", "course");
 GraphvizAddEdge(e, "code", "course");
-GraphvizSetAttrs(GraphvizAddEdge(e, "C-I", "course"), rec(label:="n", len:="1.00"));
-GraphvizSetAttrs(GraphvizAddEdge(e, "institute", "C-I"), rec(label:="1", len:="1.00"));
+GraphvizSetAttrs(GraphvizAddEdge(e, "C-I", "course"),
+rec(label := "n", len := "1.00"));
+GraphvizSetAttrs(GraphvizAddEdge(e, "institute", "C-I"),
+rec(label := "1", len := "1.00"));
 GraphvizAddEdge(e, "name1", "institute");
-GraphvizSetAttrs(GraphvizAddEdge(e, "S-I", "institute"), rec( label:="1", len:="1.00"));
-GraphvizSetAttrs(GraphvizAddEdge(e, "student", "S-I"), rec( label:="n", len:="1.00"));
+GraphvizSetAttrs(GraphvizAddEdge(e, "S-I", "institute"),
+rec(label := "1", len := "1.00"));
+GraphvizSetAttrs(GraphvizAddEdge(e, "student", "S-I"),
+rec(label := "n", len := "1.00"));
 GraphvizAddEdge(e, "grade", "student");
 GraphvizAddEdge(e, "name2", "student");
 GraphvizAddEdge(e, "number", "student");
-GraphvizSetAttrs(GraphvizAddEdge(e, "S-C", "student"), rec(label:="m", len:="1.00"));
-GraphvizSetAttrs(GraphvizAddEdge(e, "course", "S-C"), rec(label:="n", len:="1.00"));
+GraphvizSetAttrs(GraphvizAddEdge(e, "S-C", "student"),
+rec(label := "m", len := "1.00"));
+GraphvizSetAttrs(GraphvizAddEdge(e, "course", "S-C"),
+rec(label := "n", len := "1.00"));
 
 GraphvizSetAttr(e, "label=\"Entity Relation Diagram\ndrawn by NEATO\"");
 GraphvizSetAttr(e, "fontsize=\"20\"");

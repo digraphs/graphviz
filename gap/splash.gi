@@ -5,7 +5,7 @@ if not IsBound(Splash) then  # This function is written by A. Egri-Nagy
 
   BindGlobal("Splash",
   function(arg)
-    local str, opt, path, dir, tdir, file, viewer, type, inn, filetype, out,
+    local str, opt, path, dir, tdir, file, viewer, inn, filetype, out,
           engine;
 
     if not IsString(arg[1]) and not IsGVGraph(arg[1]) then
