@@ -1179,7 +1179,8 @@ function(attrs)
         if ' ' in key then
           key := StringFormatted("\"{}\"", key);
         fi;
-        if ' ' in val then
+        if ' ' in val or '>' in val then
+          # TODO what are the allowed things in the value?
           val := StringFormatted("\"{}\"", val);
         fi;
     fi;

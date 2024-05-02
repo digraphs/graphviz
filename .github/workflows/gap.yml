@@ -1,0 +1,36 @@
+name: "GAP"
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - stable-*.*
+
+jobs:
+  test-unix:
+    name: "${{ matrix.os }}${{ matrix.ABI }} / GAP ${{ matrix.gap-branch }}"
+    runs-on: "${{ matrix.os }}-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu
+        gap-branch:
+          - master
+          - stable-4.11
+          - stable-4.12
+          - stable-4.13
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Install GAP and clone/compile necessary packages"
+        uses: gap-actions/setup-gap@v2
+        with:
+          GAPBRANCH: ${{ matrix.gap-branch }}
+      - name: "Run DigraphsTestInstall"
+        uses: gap-actions/run-pkg-tests@v2
+        with:
+          GAP_TESTFILE: "tst/testall.g"
+      - uses: gap-actions/process-coverage@v2
+      - uses: codecov/codecov-action@v3
