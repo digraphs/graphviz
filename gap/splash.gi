@@ -73,26 +73,11 @@ if not IsBound(Splash) then  # This function is written by A. Egri-Nagy
       fi;
     fi;
 
-    # type
-    if IsBound(opt.type) and (opt.type = "latex" or opt.type = "dot") then
-      type := opt.type;
-    elif Length(str) >= 6 and str{[1 .. 6]} = "%latex" then
-      type := "latex";
-    elif Length(str) >= 5 and str{[1 .. 5]} = "//dot" then
-      type := "dot";
-    else
-      ErrorNoReturn("the component \"type\" of the 2nd argument <a record> ",
-                    " must be \"dot\" or \"latex\",");
-    fi;
-    if type = "latex" then
-      inn := Concatenation(dir, file, ".tex");
-    else  # type = "dot"
-      inn := Concatenation(dir, file, ".dot");
-    fi;
+    inn := Concatenation(dir, file, ".dot");
 
     # output type and name
     filetype := "pdf";  # default
-    if IsBound(opt.filetype) and IsString(opt.filetype) and type <> "latex" then
+    if IsBound(opt.filetype) and IsString(opt.filetype) then
       filetype := opt.filetype;
     fi;
     out := Concatenation(dir, file, ".", filetype);
@@ -112,16 +97,9 @@ if not IsBound(Splash) then  # This function is written by A. Egri-Nagy
 
     # Write and compile the file
     FileString(inn, str);
-    if type = "latex" then
-      # Requires GAP >= 4.11:
-      # Exec(StringFormatted("cd {}; pdflatex {} 2>/dev/null 1>/dev/null", dir);
-      Exec(Concatenation("cd ", dir, ";",
-                         "pdflatex ", file, " 2>/dev/null 1>/dev/null"));
-    else  # type = "dot"
       # Requires GAP >= 4.11:
       # Exec(StringFormatted("{} -T {} {} -o {}", engine, filetype, inn, out));
-      Exec(Concatenation(engine, " -T", filetype, " ", inn, " -o ", out));
-    fi;
+    Exec(Concatenation(engine, " -T", filetype, " ", inn, " -o ", out));
     Exec(Concatenation(viewer, " ", out, " 2>/dev/null 1>/dev/null &"));
   end);
 fi;
