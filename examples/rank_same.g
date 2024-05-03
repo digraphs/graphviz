@@ -1,3 +1,13 @@
+#############################################################################
+##
+##  rank_same.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 # https://graphviz.readthedocs.io/en/stable/examples.html
 # https://stackoverflow.com/questions/25734244
 
@@ -23,3 +33,5 @@ GraphvizAddEdge(g, "C", "D");
 GraphvizAddEdge(g, "X", "Y");
 
 Print(AsString(g));
+Splash(g);
+QUIT;

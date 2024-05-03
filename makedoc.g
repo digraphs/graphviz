@@ -1,9 +1,15 @@
-#
-# graphviz: This package facilitates the creation of graph descriptions in the
-# DOT language of the Graphviz graph drawing software from GAP
-#
-# This file is a script which compiles the package manual.
-#
+#############################################################################
+##
+##  makedoc.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+## This file is a script which compiles the package manual.
+
 if fail = LoadPackage("AutoDoc", "2022.10.20") then
     Error("AutoDoc version 2022.10.20 or newer is required.");
 fi;

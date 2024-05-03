@@ -1,5 +1,15 @@
+#############################################################################
+##
+##  cluster_edge.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 # https://graphviz.readthedocs.io/en/stable/examples.html
-# """https://www.graphviz.org/pdf/dotguide.pdf, Figure 20"""
+# https://www.graphviz.org/pdf/dotguide.pdf, Figure 20
 
 LoadPackage("graphviz");
 
@@ -28,4 +38,5 @@ GraphvizSetAttr(e, "ltail", "cluster0");
 
 GraphvizAddEdge(g, "d", "h");
 
-Print(AsString(g));
+Splash(g);
+QUIT;

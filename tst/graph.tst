@@ -1,13 +1,15 @@
 #############################################################################
 ##
-##  standard/dot.tst
-##  Copyright (C) 2022                                   James D. Mitchell
+##  graph.tst
+##  Copyright (C) 2024                                      Matthew Pancer
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("graphviz package: dot.tst");
+
+#@local a, ab, b, c, cd, d, g, n, n1, n2, x
+gap> START_TEST("graphviz package: graph.tst");
 gap> LoadPackage("graphviz", false);;
 
 # Test graph constructor
@@ -175,9 +177,9 @@ gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "color", "red");;
 gap> GraphvizSetAttr(g, "color", "blue");;
 gap> AsString(g);
-"graph  {\n\tcolor=red color=blue \n}\n"
+"//dot\ngraph  {\n\tcolor=red color=blue \n}\n"
 
-# # Test removing attributes from a graph
+# # Test removing attributes from a graph TODO uncomment or delete
 # gap> g := GraphvizGraph();;
 # gap> GraphvizSetAttr(g, "color", "red");;
 # gap> GraphvizSetAttr(g, "shape", "circle");;
@@ -240,3 +242,4 @@ gap> GraphvizAttrs(g);
 [ "color=red" ]
 
 #
+gap> STOP_TEST("graphviz package: graph.tst", 0);

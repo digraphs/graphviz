@@ -1,13 +1,16 @@
 #############################################################################
 ##
-##  standard/dot.tst
-##  Copyright (C) 2022                                   James D. Mitchell
+##  subgraph.tst
+##  Copyright (C) 2024                                      Matthew Pancer
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("graphviz package: dot.tst");
+
+#@local a, a1, a2, a3, b, b1, b2, b3, c, child, ctx, g, main, n, o, parent, s
+#@local s1, s11, s2, sibling
+gap> START_TEST("graphviz package: subgraph.tst");
 gap> LoadPackage("graphviz", false);;
 
 # Test creating subgraphs (named)
@@ -132,8 +135,8 @@ gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
-"digraph  {\nsubgraph a {\n\tcolor=red node [color=red] edge [color=red] \n}\n\
-\tx\n\ty\n\tx -> y\n}\n"
+"//dot\ndigraph  {\nsubgraph a {\n\tcolor=red node [color=red] edge [color=red\
+] \n}\n\tx\n\ty\n\tx -> y\n}\n"
 
 # Test stringifying subgraph graph
 gap> g := GraphvizGraph();;
@@ -143,8 +146,8 @@ gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
-"graph  {\nsubgraph a {\n\tcolor=red node [color=red] edge [color=red] \n}\n\t\
-x\n\ty\n\tx -- y\n}\n"
+"//dot\ngraph  {\nsubgraph a {\n\tcolor=red node [color=red] edge [color=red] \
+\n}\n\tx\n\ty\n\tx -- y\n}\n"
 
 # Test stringifying subgraph context (graph)
 gap> g := GraphvizGraph();;
@@ -154,8 +157,8 @@ gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
-"graph  {\n// a context \n\tcolor=red node [color=red] edge [color=red] \n\n\t\
-x\n\ty\n\tx -- y\n}\n"
+"//dot\ngraph  {\n// a context \n\tcolor=red node [color=red] edge [color=red]\
+ \n\n\tx\n\ty\n\tx -- y\n}\n"
 
 # Test stringifying subgraph context (digraph)
 gap> g := GraphvizDigraph();;
@@ -165,14 +168,14 @@ gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
 gap> AsString(g);
-"digraph  {\n// a context \n\tcolor=red node [color=red] edge [color=red] \n\n\
-\tx\n\ty\n\tx -> y\n}\n"
+"//dot\ndigraph  {\n// a context \n\tcolor=red node [color=red] edge [color=re\
+d] \n\n\tx\n\ty\n\tx -> y\n}\n"
 
 # Test stringifying subgraph w/o name
 gap> g := GraphvizDigraph();;
 gap> s := GraphvizAddSubgraph(g);;
 gap> AsString(g);
-"digraph  {\nsubgraph no_name_1 {\n}\n}\n"
+"//dot\ndigraph  {\nsubgraph no_name_1 {\n}\n}\n"
 
 # finding a node in a sibling graph
 gap> g := GraphvizDigraph();;
@@ -242,9 +245,9 @@ gap> GraphvizSetAttr(g, "edge[color=blue]");;
 gap> GraphvizSetAttr(ctx, "node[color=red]");;
 gap> GraphvizAddNode(ctx, "a");;
 gap> AsString(g);
-"digraph  {\n\tcolor=green edge [label=testing123] node[color=blue] edge[color\
-=blue] \n// no_name_1 context \n\tnode[color=red] \n\ta\n\tcolor=green edge [l\
-abel=testing123] node[color=blue] edge[color=blue] \n\n}\n"
+"//dot\ndigraph  {\n\tcolor=green edge [label=testing123] node[color=blue] edg\
+e[color=blue] \n// no_name_1 context \n\tnode[color=red] \n\ta\n\tcolor=green \
+edge [label=testing123] node[color=blue] edge[color=blue] \n\n}\n"
 
 # Test adding subgraphs with the same name
 gap> g := GraphvizDigraph();;
@@ -288,7 +291,7 @@ gap> g := GraphvizGraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddSubgraph(s1, "c");;
 gap> AsString(g);
-"graph  {\nsubgraph a {\nsubgraph c {\n}\n}\n}\n"
+"//dot\ngraph  {\nsubgraph a {\nsubgraph c {\n}\n}\n}\n"
 
 # Test subgraphs with non-string names
 gap> g := GraphvizGraph();;
@@ -357,7 +360,8 @@ gap> parent := GraphvizAddContext(g, "parent");;
 gap> ctx    := GraphvizAddContext(parent, "ctx");;
 gap> GraphvizAddEdge(ctx, "a", "b");;
 gap> AsString(g);
-"graph g {\n// parent context \n// ctx context \n\ta\n\tb\n\ta -- b\n\n\n}\n"
+"//dot\ngraph g {\n// parent context \n// ctx context \n\ta\n\tb\n\ta -- b\n\n\
+\n}\n"
 
 # Test nested contexts have correct edge types (digraph)
 gap> g      := GraphvizDigraph("g");;
@@ -365,8 +369,8 @@ gap> parent := GraphvizAddContext(g, "parent");;
 gap> ctx    := GraphvizAddContext(parent, "ctx");;
 gap> GraphvizAddEdge(ctx, "a", "b");;
 gap> AsString(g);
-"digraph g {\n// parent context \n// ctx context \n\ta\n\tb\n\ta -> b\n\n\n}\n\
-"
+"//dot\ndigraph g {\n// parent context \n// ctx context \n\ta\n\tb\n\ta -> b\n\
+\n\n}\n"
 
 # Test finding subgraph (non-string name)
 gap> g := GraphvizGraph("r");;
@@ -377,3 +381,4 @@ gap> IsIdenticalObj(o, s);
 true
 
 #
+gap> STOP_TEST("graphviz package: subgraph.tst", 0);

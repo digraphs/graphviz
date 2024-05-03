@@ -1,5 +1,15 @@
+#############################################################################
+##
+##  unix.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 # https://graphviz.readthedocs.io/en/stable/examples.html
-# """https://graphviz.org/Gallery/directed/unix.html"""
+# https://graphviz.org/Gallery/directed/unix.html
 LoadPackage("graphviz");
 
 u := GraphvizDigraph("unix");
@@ -57,3 +67,5 @@ GraphvizAddEdge(u, "System V.0", "System V.2");
 GraphvizAddEdge(u, "System V.2", "System V.3");
 
 Print(AsString(u));
+Splash(u);
+QUIT;

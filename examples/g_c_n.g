@@ -1,5 +1,15 @@
+#############################################################################
+##
+##  g_c_n.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 # https://graphviz.readthedocs.io/en/stable/examples.html
-# """https://www.graphviz.org/Gallery/gradient/g_c_n.html"""
+# https://www.graphviz.org/Gallery/gradient/g_c_n.html
 
 LoadPackage("graphviz");
 
@@ -16,3 +26,5 @@ GraphvizSetAttr(cluster1, Concatenation(
 GraphvizAddNode(cluster1, "anode");
 
 Print(AsString(g));
+Splash(g);
+QUIT;

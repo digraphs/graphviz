@@ -1,5 +1,15 @@
+#############################################################################
+##
+##  er.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 # https://graphviz.readthedocs.io/en/stable/examples.html
-# """https://graphviz.org/Gallery/undirected/ER.html"""
+# https://graphviz.org/Gallery/undirected/ER.html
 LoadPackage("graphviz");
 e := GraphvizGraph("ER");
 GraphvizSetAttr(e, "engine=\"neato\"");
@@ -49,3 +59,5 @@ GraphvizSetAttr(e, "label=\"Entity Relation Diagram\ndrawn by NEATO\"");
 GraphvizSetAttr(e, "fontsize=\"20\"");
 
 Print(AsString(e));
+Splash(e);
+QUIT;
