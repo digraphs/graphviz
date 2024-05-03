@@ -1,5 +1,15 @@
+#############################################################################
+##
+##  fsm.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 # https://graphviz.readthedocs.io/en/stable/examples.html
-# """https://graphviz.org/Gallery/directed/fsm.html"""
+# https://graphviz.org/Gallery/directed/fsm.html
 LoadPackage("graphviz");
 
 f := GraphvizDigraph("finite_state_machine");
@@ -31,3 +41,5 @@ GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_8", "LR_6"), "label", "\"S(b)\"");
 GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_8", "LR_5"), "label", "\"S(a)\"");
 
 Print(AsString(f));
+Splash(f);
+QUIT;

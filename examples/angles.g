@@ -1,3 +1,13 @@
+#############################################################################
+##
+##  angles.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 # https://graphviz.readthedocs.io/en/stable/examples.html
 # https://www.graphviz.org/Gallery/gradient/angles.html
 
@@ -21,7 +31,7 @@ for pair in pairs do
 od;
 GraphvizSetAttr(cluster1,
                 "label",
-                "\"Linear Angle Variations (white to black gradient)\"");
+                "Linear Angle Variations (white to black gradient)");
 
 cluster2 := GraphvizAddSubgraph(g, "cluster_2");
 GraphvizSetAttr(cluster2, "fontcolor", "white");
@@ -38,7 +48,9 @@ for pair in pairs do
                     pair[1], pair[2]));
 od;
 GraphvizSetAttr(cluster2, "label",
-                "\"Radial Angle Variations (white to black gradient)\"");
+                "Radial Angle Variations (white to black gradient)");
 
 GraphvizAddEdge(g, "n5", "n14");
-Print(AsString(g), "\n");
+Print(AsString(g));
+Splash(g);
+QUIT;

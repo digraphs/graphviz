@@ -1,3 +1,13 @@
+#############################################################################
+##
+##  cluster.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 # https://graphviz.readthedocs.io/en/stable/examples.html
 LoadPackage("graphviz");
 graph := GraphvizDigraph("G");
@@ -31,3 +41,5 @@ GraphvizSetAttr(graph["start"], "shape", "Mdiamond");
 GraphvizSetAttr(graph["end"], "shape", "Msquare");
 
 Print(AsString(graph));
+Splash(graph);
+QUIT;

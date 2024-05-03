@@ -1,5 +1,15 @@
+#############################################################################
+##
+##  traffic_lights.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 # https://graphviz.readthedocs.io/en/stable/examples.html
-# """https://graphviz.org/Gallery/directed/unix.html"""
+# https://graphviz.org/Gallery/directed/unix.html
 LoadPackage("graphviz");
 
 t := GraphvizDigraph("TrafficLights");
@@ -46,9 +56,11 @@ od;
 
 GraphvizSetAttr(t, "overlap=\"false\"");
 GraphvizSetAttr(t,
-"""label=\"PetriNet Model TrafficLights
-Extracted from ConceptBase and laid out by Graphviz\"
+"""label="PetriNet Model TrafficLights
+Extracted from ConceptBase and laid out by Graphviz"
 """);
 GraphvizSetAttr(t, "fontsize=12");
 
 Print(AsString(t));
+Splash(t);
+QUIT;

@@ -1,13 +1,15 @@
 #############################################################################
 ##
-##  standard/dot.tst
-##  Copyright (C) 2022                                   James D. Mitchell
+##  node.tst
+##  Copyright (C) 2024                                      Matthew Pancer
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("graphviz package: dot.tst");
+
+#@local color, g, label, n, s, shape
+gap> START_TEST("graphviz package: node.tst");
 gap> LoadPackage("graphviz", false);;
 
 # Test node constructor
@@ -26,7 +28,7 @@ gap> n := GraphvizAddNode(GraphvizGraph(), "  ");
 
 # Test making a node with empty name fails
 gap> n := GraphvizAddNode(GraphvizGraph(), "");
-Error, Node name cannot be empty.
+Error, the 2nd argument (string/node name) cannot be empty
 
 # Test whitespace in node names
 gap> n := GraphvizAddNode(GraphvizGraph(), "a  a   ");
@@ -53,14 +55,14 @@ rec( shape := "circle" )
 gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, "test:colon");;
 gap> AsString(g);
-"graph  {\n\ttest:colon\n}\n"
+"//dot\ngraph  {\n\ttest:colon\n}\n"
 
 # Test non-string name containing ':'
 gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, 111);
 <graphviz node 111>
 gap> AsString(g);
-"graph  {\n\t111\n}\n"
+"//dot\ngraph  {\n\t111\n}\n"
 
 # Test removing a node with a non-string name
 gap> g := GraphvizGraph();;
@@ -111,3 +113,4 @@ gap> GraphvizAddNode(s, n);
 Error, Cannot add node objects directly to graphs. Please use the node's name.
 
 #
+gap> STOP_TEST("graphviz package: node.tst", 0);

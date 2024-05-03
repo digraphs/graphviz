@@ -1,12 +1,13 @@
-#
-# graphviz: This package facilitates the creation of graph descriptions in the
-# DOT language of the Graphviz graph drawing software from GAP
-#
-# This file contains package meta data. For additional information on
-# the meaning and correct usage of these fields, please consult the
-# manual of the "Example" package as well as the comments in its
-# PackageInfo.g file.
-#
+#############################################################################
+##
+##  PackageInfo.g
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 SetPackageInfo(rec(
 
 PackageName := "graphviz",
@@ -26,12 +27,24 @@ Persons := [
     PostalAddress := Concatenation("Mathematical Institute, North Haugh,",
                      " St Andrews, Fife, KY16 9SS, Scotland"),
     Place       := "St Andrews",
+    Institution := "University of St Andrews"),
+  rec(
+    FirstNames    := "Matthew",
+    LastName      := "Pancer",
+    Email         := "mp322@st-andrews.ac.uk",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    PostalAddress := Concatenation("Mathematical Institute, North Haugh,",
+                     " St Andrews, Fife, KY16 9SS, Scotland"),
+                     # TODO correct? Or should be cs?
+    Place       := "St Andrews",
     Institution := "University of St Andrews")],
 
 SourceRepository := rec(Type := "git",
                         URL  := "https://github.com/digraphs/graphviz"),
 IssueTrackerURL := "https://github.com/digraphs/graphviz/issues",
-PackageWWWHome  := "TODO",
+PackageWWWHome  := Concatenation("https://digraphs.github.io/",
+                                 ~.PackageName),
 
 PackageInfoURL := Concatenation(~.PackageWWWHome, "PackageInfo.g"),
 README_URL     := Concatenation(~.PackageWWWHome, "README.md"),

@@ -1,13 +1,15 @@
 #############################################################################
 ##
-##  standard/dot.tst
-##  Copyright (C) 2022                                   James D. Mitchell
+##  dot.tst
+##  Copyright (C) 2024                                      Matthew Pancer
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("graphviz package: dot.tst");
+
+#@local a, a1, a2, ab, b, c, cd, color, d, e, e1, e2, g, g1, label, n
+gap> START_TEST("graphviz package: edge.tst");
 gap> LoadPackage("graphviz", false);;
 
 # Test edge constructor
@@ -81,7 +83,7 @@ gap> a2 := GraphvizAddNode(g1, "a");;
 gap> c := GraphvizAddNode(g1, "c");;
 gap> e1 := GraphvizAddEdge(g, d, a1);;
 gap> e2 := GraphvizAddEdge(g, a2, c);;
-Error, Different node in graph  with name a.
+Error, Different node in graph  with name a
 gap> GraphvizEdges(g);
 [ <graphviz edge (d, a)> ]
 
@@ -153,3 +155,4 @@ gap> GraphvizAttrs(n);
 rec( color := "red" )
 
 #
+gap> STOP_TEST("graphviz package: edge.tst", 0);

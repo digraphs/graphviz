@@ -1,10 +1,59 @@
-# ##############################################################################
+#############################################################################
+##
+##  dot.gi
+##  Copyright (C) 2024                                      Matthew Pancer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+#############################################################################
 # Private functionality
-# ##############################################################################
+#############################################################################
+
+BindGlobal("NumberOfSubstrings",
+function(string, substring)
+  local pos, count;
+
+  pos := 0;
+  count := 0;
+  while pos <= Length(string) and pos <> fail do
+    pos := PositionSublist(string, substring, pos);
+    if pos <> fail then
+      count := count + 1;
+    fi;
+  od;
+  return count;
+end);
+
+InstallGlobalFunction(ErrorFormatted,
+function(arg...)
+  local pos, fmt, n, msg;
+
+  pos := PositionProperty(arg, x -> not IsString(x));
+  if pos = fail then
+    pos := Length(arg) + 1;
+  fi;
+  fmt := Concatenation(arg{[1 .. pos - 1]});
+  n := NumberOfSubstrings(fmt, "{}");
+  arg := Concatenation([Concatenation(arg{[1 .. Length(arg) - n]})],
+                       arg{[Length(arg) - n + 1 .. Length(arg)]});
+  msg := CallFuncList(StringFormatted, arg);
+  # RemoveCharacters(msg, "\\\n");
+  ErrorInner(
+      rec(context := ParentLVars(GetCurrentLVars()),
+          mayReturnVoid := false,
+          mayReturnObj := false,
+          lateMessage := "type 'quit;' to quit to outer loop",
+          printThisStatement := false),
+      [msg]);
+end);
 
 DeclareOperation("GV_GetCounter", [IsGVGraph]);
 DeclareOperation("GV_IncCounter", [IsGVGraph]);
 DeclareCategory("IsGV_Map", IsObject);
+DeclareAttribute("Size", IsGV_Map);
 
 DeclareOperation("GV_StringifyGraphHead", [IsGVGraph]);
 DeclareOperation("GV_StringifyDigraphHead", [IsGVGraph]);
@@ -51,6 +100,122 @@ BindGlobal("GV_KNOWN_ATTRS", [
   "viewport", "voro_margin", "weight", "width", "xdotversion", "xlabel", "xlp",
   "z"
 ]);
+
+BindGlobal("GV_ValidColorNames",
+  ["aliceblue", "antiquewhite", "antiquewhite1", "antiquewhite2",
+  "antiquewhite3", "antiquewhite4", "aquamarine", "aquamarine1", "aquamarine2",
+  "aquamarine3", "aquamarine4", "azure", "azure1", "azure2", "azure3",
+  "azure4", "beige", "bisque", "bisque1", "bisque2", "bisque3", "bisque4",
+  "black", "blanchedalmond", "blue", "blue1", "blue2", "blue3", "blue4",
+  "blueviolet", "brown", "brown1", "brown2", "brown3", "brown4", "burlywood",
+  "burlywood1", "burlywood2", "burlywood3", "burlywood4", "cadetblue",
+  "cadetblue1", "cadetblue2", "cadetblue3", "cadetblue4", "chartreuse",
+  "chartreuse1", "chartreuse2", "chartreuse3", "chartreuse4", "chocolate",
+  "chocolate1", "chocolate2", "chocolate3", "chocolate4", "coral", "coral1",
+  "coral2", "coral3", "coral4", "cornflowerblue", "cornsilk", "cornsilk1",
+  "cornsilk2", "cornsilk3", "cornsilk4", "crimson", "cyan", "cyan1", "cyan2",
+  "cyan3", "cyan4", "darkgoldenrod", "darkgoldenrod1", "darkgoldenrod2",
+  "darkgoldenrod3", "darkgoldenrod4", "darkgreen", "darkkhaki",
+  "darkolivegreen", "darkolivegreen1", "darkolivegreen2", "darkolivegreen3",
+  "darkolivegreen4", "darkorange", "darkorange1", "darkorange2", "darkorange3",
+  "darkorange4", "darkorchid", "darkorchid1", "darkorchid2", "darkorchid3",
+  "darkorchid4", "darksalmon", "darkseagreen", "darkseagreen1",
+  "darkseagreen2", "darkseagreen3", "darkseagreen4", "darkslateblue",
+  "darkslategray", "darkslategray1", "darkslategray2", "darkslategray3",
+  "darkslategray4", "darkslategrey", "darkturquoise", "darkviolet", "deeppink",
+  "deeppink1", "deeppink2", "deeppink3", "deeppink4", "deepskyblue",
+  "deepskyblue1", "deepskyblue2", "deepskyblue3", "deepskyblue4", "dimgray",
+  "dimgrey", "dodgerblue", "dodgerblue1", "dodgerblue2", "dodgerblue3",
+  "dodgerblue4", "firebrick", "firebrick1", "firebrick2", "firebrick3",
+  "firebrick4", "floralwhite", "forestgreen", "gainsboro", "ghostwhite",
+  "gold", "gold1", "gold2", "gold3", "gold4", "goldenrod", "goldenrod1",
+  "goldenrod2", "goldenrod3", "goldenrod4", "gray", "gray0", "gray1", "gray10",
+  "gray100", "gray11", "gray12", "gray13", "gray14", "gray15", "gray16",
+  "gray17", "gray18", "gray19", "gray2", "gray20", "gray21", "gray22",
+  "gray23", "gray24", "gray25", "gray26", "gray27", "gray28", "gray29",
+  "gray3", "gray30", "gray31", "gray32", "gray33", "gray34", "gray35",
+  "gray36", "gray37", "gray38", "gray39", "gray4", "gray40", "gray41",
+  "gray42", "gray43", "gray44", "gray45", "gray46", "gray47", "gray48",
+  "gray49", "gray5", "gray50", "gray51", "gray52", "gray53", "gray54",
+  "gray55", "gray56", "gray57", "gray58", "gray59", "gray6", "gray60",
+  "gray61", "gray62", "gray63", "gray64", "gray65", "gray66", "gray67",
+  "gray68", "gray69", "gray7", "gray70", "gray71", "gray72", "gray73",
+  "gray74", "gray75", "gray76", "gray77", "gray78", "gray79", "gray8",
+  "gray80", "gray81", "gray82", "gray83", "gray84", "gray85", "gray86",
+  "gray87", "gray88", "gray89", "gray9", "gray90", "gray91", "gray92",
+  "gray93", "gray94", "gray95", "gray96", "gray97", "gray98", "gray99",
+  "green", "green1", "green2", "green3", "green4", "greenyellow", "grey",
+  "grey0", "grey1", "grey10", "grey100", "grey11", "grey12", "grey13",
+  "grey14", "grey15", "grey16", "grey17", "grey18", "grey19", "grey2",
+  "grey20", "grey21", "grey22", "grey23", "grey24", "grey25", "grey26",
+  "grey27", "grey28", "grey29", "grey3", "grey30", "grey31", "grey32",
+  "grey33", "grey34", "grey35", "grey36", "grey37", "grey38", "grey39",
+  "grey4", "grey40", "grey41", "grey42", "grey43", "grey44", "grey45",
+  "grey46", "grey47", "grey48", "grey49", "grey5", "grey50", "grey51",
+  "grey52", "grey53", "grey54", "grey55", "grey56", "grey57", "grey58",
+  "grey59", "grey6", "grey60", "grey61", "grey62", "grey63", "grey64",
+  "grey65", "grey66", "grey67", "grey68", "grey69", "grey7", "grey70",
+  "grey71", "grey72", "grey73", "grey74", "grey75", "grey76", "grey77",
+  "grey78", "grey79", "grey8", "grey80", "grey81", "grey82", "grey83",
+  "grey84", "grey85", "grey86", "grey87", "grey88", "grey89", "grey9",
+  "grey90", "grey91", "grey92", "grey93", "grey94", "grey95", "grey96",
+  "grey97", "grey98", "grey99", "honeydew", "honeydew1", "honeydew2",
+  "honeydew3", "honeydew4", "hotpink", "hotpink1", "hotpink2", "hotpink3",
+  "hotpink4", "indianred", "indianred1", "indianred2", "indianred3",
+  "indianred4", "indigo", "invis", "ivory", "ivory1", "ivory2", "ivory3",
+  "ivory4", "khaki", "khaki1", "khaki2", "khaki3", "khaki4", "lavender",
+  "lavenderblush", "lavenderblush1", "lavenderblush2", "lavenderblush3",
+  "lavenderblush4", "lawngreen", "lemonchiffon", "lemonchiffon1",
+  "lemonchiffon2", "lemonchiffon3", "lemonchiffon4", "lightblue", "lightblue1",
+  "lightblue2", "lightblue3", "lightblue4", "lightcoral", "lightcyan",
+  "lightcyan1", "lightcyan2", "lightcyan3", "lightcyan4", "lightgoldenrod",
+  "lightgoldenrod1", "lightgoldenrod2", "lightgoldenrod3", "lightgoldenrod4",
+  "lightgoldenrodyellow", "lightgray", "lightgrey", "lightpink", "lightpink1",
+  "lightpink2", "lightpink3", "lightpink4", "lightsalmon", "lightsalmon1",
+  "lightsalmon2", "lightsalmon3", "lightsalmon4", "lightseagreen",
+  "lightskyblue", "lightskyblue1", "lightskyblue2", "lightskyblue3",
+  "lightskyblue4", "lightslateblue", "lightslategray", "lightslategrey",
+  "lightsteelblue", "lightsteelblue1", "lightsteelblue2", "lightsteelblue3",
+  "lightsteelblue4", "lightyellow", "lightyellow1", "lightyellow2",
+  "lightyellow3", "lightyellow4", "limegreen", "linen", "magenta", "magenta1",
+  "magenta2", "magenta3", "magenta4", "maroon", "maroon1", "maroon2",
+  "maroon3", "maroon4", "mediumaquamarine", "mediumblue", "mediumorchid",
+  "mediumorchid1", "mediumorchid2", "mediumorchid3", "mediumorchid4",
+  "mediumpurple", "mediumpurple1", "mediumpurple2", "mediumpurple3",
+  "mediumpurple4", "mediumseagreen", "mediumslateblue", "mediumspringgreen",
+  "mediumturquoise", "mediumvioletred", "midnightblue", "mintcream",
+  "mistyrose", "mistyrose1", "mistyrose2", "mistyrose3", "mistyrose4",
+  "moccasin", "navajowhite", "navajowhite1", "navajowhite2", "navajowhite3",
+  "navajowhite4", "navy", "navyblue", "none", "oldlace", "olivedrab",
+  "olivedrab1", "olivedrab2", "olivedrab3", "olivedrab4", "orange", "orange1",
+  "orange2", "orange3", "orange4", "orangered", "orangered1", "orangered2",
+  "orangered3", "orangered4", "orchid", "orchid1", "orchid2", "orchid3",
+  "orchid4", "palegoldenrod", "palegreen", "palegreen1", "palegreen2",
+  "palegreen3", "palegreen4", "paleturquoise", "paleturquoise1",
+  "paleturquoise2", "paleturquoise3", "paleturquoise4", "palevioletred",
+  "palevioletred1", "palevioletred2", "palevioletred3", "palevioletred4",
+  "papayawhip", "peachpuff", "peachpuff1", "peachpuff2", "peachpuff3",
+  "peachpuff4", "peru", "pink", "pink1", "pink2", "pink3", "pink4", "plum",
+  "plum1", "plum2", "plum3", "plum4", "powderblue", "purple", "purple1",
+  "purple2", "purple3", "purple4", "red", "red1", "red2", "red3", "red4",
+  "rosybrown", "rosybrown1", "rosybrown2", "rosybrown3", "rosybrown4",
+  "royalblue", "royalblue1", "royalblue2", "royalblue3", "royalblue4",
+  "saddlebrown", "salmon", "salmon1", "salmon2", "salmon3", "salmon4",
+  "sandybrown", "seagreen", "seagreen1", "seagreen2", "seagreen3", "seagreen4",
+  "seashell", "seashell1", "seashell2", "seashell3", "seashell4", "sienna",
+  "sienna1", "sienna2", "sienna3", "sienna4", "skyblue", "skyblue1",
+  "skyblue2", "skyblue3", "skyblue4", "slateblue", "slateblue1", "slateblue2",
+  "slateblue3", "slateblue4", "slategray", "slategray1", "slategray2",
+  "slategray3", "slategray4", "slategrey", "snow", "snow1", "snow2", "snow3",
+  "snow4", "springgreen", "springgreen1", "springgreen2", "springgreen3",
+  "springgreen4", "steelblue", "steelblue1", "steelblue2", "steelblue3",
+  "steelblue4", "tan", "tan1", "tan2", "tan3", "tan4", "thistle", "thistle1",
+  "thistle2", "thistle3", "thistle4", "tomato", "tomato1", "tomato2",
+  "tomato3", "tomato4", "transparent", "turquoise", "turquoise1", "turquoise2",
+  "turquoise3", "turquoise4", "violet", "violetred", "violetred1",
+  "violetred2", "violetred3", "violetred4", "wheat", "wheat1", "wheat2",
+  "wheat3", "wheat4", "white", "whitesmoke", "yellow", "yellow1", "yellow2",
+  "yellow3", "yellow4", "yellowgreen"]);
 
 # code from the GAP standard library
 InstallMethod(GV_Pluralize,
@@ -135,7 +300,7 @@ end);
 
 ###############################################################################
 # Family + type
-# ##############################################################################
+###############################################################################
 
 BindGlobal("GV_ObjectFamily",
            NewFamily("GV_ObjectFamily",
@@ -171,9 +336,14 @@ BindGlobal("GV_ContextType", NewType(GV_ObjectFamily,
                                     IsComponentObjectRep and
                                     IsAttributeStoringRep));
 
-# ##############################################################################
+InstallMethod(\=, "for IsGVNode and IsGVNode",
+[IsGVNode, IsGVNode],
+{n1, n2} -> GraphvizName(n1) = GraphvizName(n2));
+
+###############################################################################
 # Constuctors etc
-# ##############################################################################
+###############################################################################
+
 DeclareOperation("GV_Node", [IsGVGraph, IsString]);
 DeclareOperation("GV_Edge", [IsGVGraph, IsGVNode, IsGVNode]);
 DeclareOperation("GV_Graph", [IsGVGraph, IsString]);
@@ -184,13 +354,12 @@ DeclareOperation("GV_Map", []);
 InstallMethod(GV_Map, "for no args",
 [], {} -> Objectify(GV_MapType, rec(Data := rec())));
 
-InstallMethod(GV_Node,
-"for a string",
+InstallMethod(GV_Node, "for a string",
 [IsGVGraph, IsString],
 function(graph, name)
   local out;
   if Length(name) = 0 then
-    return ErrorNoReturn("Node name cannot be empty.");
+    ErrorNoReturn("the 2nd argument (string/node name) cannot be empty");
   fi;
   out := Objectify(GV_NodeType,
                   rec(
@@ -317,6 +486,7 @@ InstallMethod(GraphvizDigraph, "for no args", [], {} -> GraphvizDigraph(""));
 # ###########################################################
 # Graphviz Map Functions
 # ###########################################################
+
 InstallOtherMethod(\[\],
 "for a graphviz map and an object",
 [IsGV_Map, IsObject],
@@ -354,12 +524,14 @@ InstallMethod(GV_MapNames, "for a graphviz map",
 InstallMethod(ViewString, "for a graphviz map", [IsGV_Map],
 m -> String(m!.Data));
 
-# ###########################################################
+InstallMethod(Size, "for a graphviz map",
+[IsGV_Map], m -> Length(GV_MapNames(m)));
+
+############################################################
 # Stringify
-# ###########################################################
-InstallMethod(ViewString,
-"for a graphviz node",
-[IsGVNode],
+############################################################
+
+InstallMethod(ViewString, "for a graphviz node", [IsGVNode],
 n -> StringFormatted("<graphviz node {}>", GraphvizName(n)));
 
 InstallMethod(ViewString, "for a graphviz edge", [IsGVEdge],
@@ -368,7 +540,8 @@ function(e)
   head := GraphvizHead(e);
   tail := GraphvizTail(e);
   return StringFormatted("<graphviz edge ({}, {})>",
-                         GraphvizName(head), GraphvizName(tail));
+                         GraphvizName(head),
+                         GraphvizName(tail));
 end);
 
 InstallMethod(ViewString, "for a graphviz graph", [IsGVGraph],
@@ -377,7 +550,8 @@ function(g)
 
   result := "";
   edges  := Length(GraphvizEdges(g));
-  nodes  := Length(GV_MapNames(GraphvizNodes(g)));
+  nodes  :=
+            Length(GV_MapNames(GraphvizNodes(g)));
 
   if IsGVDigraph(g) then
     kind := "digraph";
@@ -402,32 +576,42 @@ end);
 ############################################################
 # Getters
 ############################################################
-InstallMethod(GraphvizName,
-"for a graphviz object",
-[IsGVObject],
-x -> x!.Name);
 
-InstallMethod(GraphvizAttrs,
-"for a graphviz object",
-[IsGVObject],
+InstallMethod(GraphvizName, "for a graphviz object", [IsGVObject], x -> x!.Name);
+
+InstallMethod(GraphvizAttrs, "for a graphviz object", [IsGVObject],
 x -> x!.Attrs);
 
-InstallMethod(GraphvizNodes,
-"for a graphviz graph",
-[IsGVGraph],
+# TODO remove, the returned value is mutable, looks like a record but isn't
+# one. Mutability is a problem, since if we do GraphvizNodes(gv)[1] := 2; then
+# the object is corrupt.
+InstallMethod(GraphvizNodes, "for a graphviz graph", [IsGVGraph],
 x -> x!.Nodes);
 
-InstallMethod(GraphvizEdges,
-"for a graphviz graph",
-[IsGVGraph],
-x -> x!.Edges);
+InstallMethod(GraphvizNode, "for a graphviz graph and object",
+[IsGVGraph, IsObject], {gv, obj} -> gv!.Nodes[String(obj)]);
 
-InstallMethod(GraphvizSubgraphs,
-"for a graphviz graph",
-[IsGVGraph],
+# TODO remove for the same reason as GraphvizNodes, unless we can make the list
+# immutable or return a copy.
+InstallMethod(GraphvizEdges, "for a graphviz graph",
+[IsGVGraph], x -> x!.Edges);
+
+InstallMethod(GraphvizEdges,
+"for a graphviz graph, object, and object",
+[IsGVGraph, IsObject, IsObject],
+function(gv, head, tail)
+    head := GraphvizNode(gv, head);
+    tail := GraphvizNode(gv, tail);
+    # TODO if head = fail then...
+    return Filtered(GraphvizEdges(gv), x -> GraphvizHead(x) = head and
+    GraphvizTail(x) = tail);
+end);
+
+InstallMethod(GraphvizSubgraphs, "for a graphviz graph", [IsGVGraph],
 x -> x!.Subgraphs);
 
 InstallMethod(GraphvizTail, "for a graphviz edge", [IsGVEdge], x -> x!.Tail);
+
 InstallMethod(GraphvizHead, "for a graphviz edge", [IsGVEdge], x -> x!.Head);
 
 InstallMethod(GraphvizGetSubgraph,
@@ -447,15 +631,13 @@ function(x)
   x!.Counter := x!.Counter + 1;
 end);
 
-InstallMethod(GV_GetCounter,
-"for a graphviz graph",
-[IsGVGraph],
+InstallMethod(GV_GetCounter, "for a graphviz graph", [IsGVGraph],
 x -> x!.Counter);
 
 # Converting strings
 
 DeclareOperation("GV_EnsureString", [IsObject]);
-# TODO required?
+# TODO required? Replace with AsString
 InstallMethod(GV_EnsureString,
 "for an object",
 [IsObject], ViewString);
@@ -543,6 +725,7 @@ InstallMethod(GV_GetParent,
 [IsGVGraph], graph -> graph!.Parent);
 
 DeclareOperation("GV_GraphTreeSearch", [IsGVGraph, IsFunction]);
+
 InstallMethod(GV_GraphTreeSearch,
 "for a graphviz graph and a predicate",
 [IsGVGraph, IsFunction],
@@ -621,9 +804,10 @@ function(g, n)
   return graph[n];
 end);
 
-# ###########################################################
+############################################################
 # Setters
-# ###########################################################
+############################################################
+
 InstallMethod(GraphvizSetName, "for a graphviz object and string",
 [IsGVGraph, IsString],
 function(x, name)
@@ -648,8 +832,14 @@ end);
 InstallMethod(GraphvizSetAttr, "for a graphviz object, object and object",
 [IsGVObject, IsObject, IsObject],
 function(x, name, value)
+  local msg;
+
   if not name in GV_KNOWN_ATTRS then
-    Print(StringFormatted("[WARNING] Unknown attribute {}\n", name));
+    msg := Concatenation(
+           StringFormatted("unknown attribute \"{}\", the", name),
+           " graphviz object may no longer be valid, it can",
+           " be removed using GraphvizRemoveAttr");
+    Info(InfoWarning, 1, msg);
   fi;
   GraphvizAttrs(x)[String(name)] := String(value);
   return x;
@@ -658,22 +848,27 @@ end);
 InstallMethod(GraphvizSetAttr, "for a graphviz graph, object and object",
 [IsGVGraph, IsObject, IsObject],
 function(x, name, value)
-  local attrs, string;
+  local attrs, string, msg;
 
-  # display warning if not known attribute
   if not name in GV_KNOWN_ATTRS then
-    Print(StringFormatted("[WARNING] Unknown attribute {}\n", name));
+    msg := Concatenation(
+           StringFormatted("unknown attribute \"{}\", the", name),
+           " graphviz object may no longer be valid, it can",
+           " be removed using GraphvizRemoveAttr");
+    Info(InfoWarning, 1, msg);
   fi;
 
   attrs := GraphvizAttrs(x);
+  name := String(name);
+  value := String(value);
   if ' ' in name then
-    name := StringFormatted("{}", name);
+    name := StringFormatted("\"{}\"", name);
   fi;
   if ' ' in value then
-    value := StringFormatted("{}", value);
+    value := StringFormatted("\"{}\"", value);
   fi;
 
-  string := StringFormatted("{}={}", String(name), String(value));
+  string := StringFormatted("{}={}", name, value);
   Add(attrs, string);
   return x;
 end);
@@ -711,7 +906,7 @@ function(x, node)
   found := GV_FindGraphWithNode(x, name);
   if found <> fail then
     error := "Already node with name {} in graph {}.";
-    return ErrorNoReturn(StringFormatted(error, name, GraphvizName(found)));
+    ErrorNoReturn(StringFormatted(error, name, GraphvizName(found)));
   fi;
 
   nodes[name] := node;
@@ -766,14 +961,15 @@ function(x, edge)
 
   # make sure the nodes exist / are the same as existing ones
   if hg <> fail and not IsIdenticalObj(head, hg[head_name]) then
-    error := "Different node in graph {} with name {}.";
-    return ErrorNoReturn(StringFormatted(error,
-                                        GraphvizName(hg),
-                                        head_name));
+    # TODO improve
+    ErrorFormatted("Different node in graph {} with name {}",
+                   GraphvizName(hg),
+                   head_name);
   fi;
   if tg <> fail and not IsIdenticalObj(tail, tg[tail_name]) then
+    # TODO improve
     error := "Different node in graph {} with name {}.";
-    return ErrorNoReturn(StringFormatted(error,
+    ErrorNoReturn(StringFormatted(error,
                                          GraphvizName(tg),
                                          tail_name));
   fi;
@@ -845,7 +1041,7 @@ function(graph, name)
   subgraphs := GraphvizSubgraphs(graph);
   if IsBound(subgraphs[name]) then
     error := "The graph already contains a subgraph with name {}.";
-    return ErrorNoReturn(StringFormatted(error, name));
+    ErrorNoReturn(StringFormatted(error, name));
   fi;
 
   if IsGVDigraph(graph) then
@@ -853,7 +1049,7 @@ function(graph, name)
   elif IsGVGraph(graph) then
     subgraph := GV_Graph(graph, name);
   else
-    return ErrorNoReturn("Filter must be a filter for a graph category.");
+    ErrorNoReturn("Filter must be a filter for a graph category.");
   fi;
 
   subgraphs[name] := subgraph;
@@ -882,7 +1078,7 @@ function(graph, name)
   subgraphs := GraphvizSubgraphs(graph);
   if IsBound(subgraphs[name]) then
     error := "The graph already contains a subgraph with name {}.";
-    return ErrorNoReturn(StringFormatted(error, name));
+    ErrorNoReturn(StringFormatted(error, name));
   fi;
 
   ctx             := GV_Context(graph, name);
@@ -905,10 +1101,13 @@ InstallMethod(GraphvizRemoveNode, "for a graphviz graph and node",
 [IsGVGraph, IsGVNode],
 {g, node} -> GraphvizRemoveNode(g, GraphvizName(node)));
 
+# TODO GraphvizRemoveEdges(gv, n1, n2)
+
 InstallMethod(GraphvizRemoveNode, "for a graphviz graph and a string",
 [IsGVGraph, IsString],
 function(g, name)
   local nodes;
+  # TODO error if there's no such node
   nodes := GraphvizNodes(g);
   Unbind(nodes[name]);
 
@@ -1016,13 +1215,34 @@ graph -> StringFormatted("subgraph {} {{\n", GraphvizName(graph)));
 InstallMethod(GV_StringifyContextHead, "for a string", [IsGVContext],
 graph -> StringFormatted("// {} context \n", GraphvizName(graph)));
 
+BindGlobal("GV_StringifyNodeName",
+function(node)
+  local name, old;
+
+  Assert(0, IsGVNode(node));
+  name  := GraphvizName(node);
+  if (ForAny("- .+", x -> x in name)
+      or (IsDigitChar(First(name)) and IsAlphaChar(Last(name))))
+      and not StartsWith(name, "\"") then
+    old  := name;
+    name := StringFormatted("\"{}\"", name);
+    Info(InfoWarning,
+         1,
+         "invalid node name ",
+         old,
+         " using ",
+         name,
+         " instead");
+  fi;
+  return name;
+end);
+
 # @ Return DOT node statement line.
 InstallMethod(GV_StringifyNode, "for string and record",
 [IsGVNode],
 function(node)
-  local attrs, name;
-
-  name  := GraphvizName(node);
+  local name, attrs;
+  name  := GV_StringifyNodeName(node);
   attrs := GraphvizAttrs(node);
   return StringFormatted("\t{}{}\n", name, GV_StringifyNodeEdgeAttrs(attrs));
 end);
@@ -1033,8 +1253,8 @@ function(edge, edge_str)
   local head, tail, attrs;
   Assert(0, IsGVEdge(edge));
   Assert(0, IsString(edge_str));
-  head  := GraphvizName(GraphvizHead(edge));
-  tail  := GraphvizName(GraphvizTail(edge));
+  head  := GV_StringifyNodeName(GraphvizHead(edge));
+  tail  := GV_StringifyNodeName(GraphvizTail(edge));
   attrs := GraphvizAttrs(edge);
 
   # handle : syntax
@@ -1065,7 +1285,7 @@ function(graph)
 end);
 
 InstallMethod(GV_StringifyNodeEdgeAttrs,
-"for a record",
+"for a GV_Map",
 [IsGV_Map],
 function(attrs)
   local result, keys, key, val, n, i, tmp;
@@ -1084,12 +1304,13 @@ function(attrs)
         if "label" = key and StartsWith(tmp, "<<") and EndsWith(tmp, ">>") then
           val := StringFormatted("{}", val);
         else
-            if ' ' in key then
-              key := StringFormatted("\"{}\"", key);
-            fi;
-            if ' ' in val then
-              val := StringFormatted("\"{}\"", val);
-            fi;
+          if ' ' in key then
+            key := StringFormatted("\"{}\"", key);
+          fi;
+          if ' ' in val or '>' in val or '^' in val or '#' in val then
+              # TODO avoid code duplication here, and below
+            val := StringFormatted("\"{}\"", val);
+          fi;
         fi;
 
         Append(result,
@@ -1109,7 +1330,7 @@ function(attrs)
         if ' ' in key then
           key := StringFormatted("\"{}\"", key);
         fi;
-        if ' ' in val or '>' in val then
+        if ' ' in val or '>' in val or '^' in val or '#' in val then
           # TODO what are the allowed things in the value?
           val := StringFormatted("\"{}\"", val);
         fi;
@@ -1166,16 +1387,19 @@ function(graph, is_subgraph)
     elif IsGVGraph(graph) or IsGVDigraph(graph) then
       Append(result, GV_StringifySubgraphHead(graph));
     else
-      return ErrorNoReturn("Invalid subgraph type.");
+      ErrorNoReturn("Invalid subgraph type.");
     fi;
   elif IsGVDigraph(graph) then
+    Append(result, "//dot\n");
     Append(result, GV_StringifyDigraphHead(graph));
   elif IsGVGraph(graph) then
+    Append(result, "//dot\n");
     Append(result, GV_StringifyGraphHead(graph));
   elif IsGVContext(graph) then
+    Append(result, "//dot\n");
     Append(result, GV_StringifyContextHead(graph));
   else
-    return ErrorNoReturn("Invalid graph type.");
+    ErrorNoReturn("Invalid graph type.");
   fi;
 
   Append(result, GV_StringifyGraphAttrs(graph));
@@ -1193,7 +1417,7 @@ function(graph, is_subgraph)
         Append(result, GV_StringifyEdge(obj, "--"));
       fi;
     else
-      return ErrorNoReturn("Invalid graphviz object type.");
+      ErrorNoReturn("Invalid graphviz object type.");
     fi;
   od;
 
@@ -1212,3 +1436,82 @@ end);
 InstallMethod(AsString, "for a graphviz graph",
 [IsGVGraph],
 graph -> GV_StringifyGraph(graph, false));
+
+BindGlobal("GV_IsValidRGBColor",
+function(str)
+  local valid, i;
+
+  valid := "0123456789ABCDEFabcdef";
+
+  if Length(str) <> 7 or str[1] <> '#' then
+    return false;
+  fi;
+
+  for i in [2 .. 7] do
+    if not str[i] in valid then
+      return false;
+    fi;
+  od;
+  return true;
+end);
+
+BindGlobal("GV_IsValidColor",
+c -> IsString(c) and (GV_IsValidRGBColor(c) or c in GV_ValidColorNames));
+
+BindGlobal("GV_ErrorIfNotValidColor",
+function(c)
+  if not GV_IsValidColor(c) then
+    if IsString(c) then
+      c := StringFormatted("\"{}\"", c);
+    fi;
+    ErrorFormatted("invalid color {} ({}), ",
+        "valid colors are RGB values or names from ",
+        "the GraphViz 2.44.1 X11 Color Scheme",
+        " http://graphviz.org/doc/info/colors.html",
+        c,
+        TNAM_OBJ(c));
+  fi;
+end);
+
+BindGlobal("GV_ErrorIfNotNodeColoring",
+function(gv, colors)
+  local N;
+  N := Size(GraphvizNodes(gv));
+  if Length(colors) <> N then
+    ErrorFormatted(
+        "the number of node colors must be the same as the number",
+        " of nodes, expected {} but found {}", N, Length(colors));
+  fi;
+  Perform(colors, GV_ErrorIfNotValidColor);
+end);
+
+InstallMethod(GraphvizSetNodeLabels,
+"for a graphviz graph and list of colors",
+[IsGVGraph, IsList],
+function(gv, labels)
+  local nodes, i;
+  # TODO error if labels and nodes aren't same size
+  # TODO GV_ErrorIfNotValidLabel
+  nodes := GraphvizNodes(gv);
+  for i in [1 .. Size(nodes)] do
+    GraphvizSetAttr(nodes[i], "label", labels[i]);
+  od;
+  return gv;
+end);
+
+InstallMethod(GraphvizSetNodeColors,
+"for a graphviz graph and list of colors",
+[IsGVGraph, IsList],
+function(gv, colors)
+  local nodes, i;
+
+  GV_ErrorIfNotNodeColoring(gv, colors);
+
+  nodes := GraphvizNodes(gv);
+
+  for i in [1 .. Size(nodes)] do
+    GraphvizSetAttr(nodes[i], "color", colors[i]);
+    GraphvizSetAttr(nodes[i], "style", "filled");
+  od;
+  return gv;
+end);
