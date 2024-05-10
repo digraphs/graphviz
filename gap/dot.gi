@@ -1218,6 +1218,9 @@ graph -> StringFormatted("// {} context \n", GraphvizName(graph)));
 BindGlobal("GV_StringifyNodeName",
 function(node)
   local name, old;
+  if not IsBoundGlobal("Last") then
+    Last := x -> x[Length(x)];
+  fi;
 
   Assert(0, IsGVNode(node));
   name  := GraphvizName(node);
