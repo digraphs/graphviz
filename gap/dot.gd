@@ -212,3 +212,5 @@ DeclareOperation("Graphviz", [IsObject]);
 
 DeclareOperation("GraphvizSetNodeColors", [IsGVGraphOrDigraph, IsList]);
 DeclareOperation("GraphvizSetNodeLabels", [IsGVGraphOrDigraph, IsList]);
+
+DeclareGlobalFunction("ErrorIfNotValidColor");
