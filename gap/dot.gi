@@ -28,9 +28,6 @@ end);
 
 InstallMethod(GraphvizGraph, "for no args", [], {} -> GraphvizGraph(""));
 
-InstallMethod(GraphvizGraph, "for an object", [IsObject],
-o -> GraphvizGraph(ViewString(o)));
-
 InstallMethod(GraphvizDigraph, "for a string", [IsString],
 function(name)
   return Objectify(GV_DigraphType,
@@ -46,9 +43,6 @@ function(name)
 end);
 
 InstallMethod(GraphvizDigraph, "for no args", [], {} -> GraphvizDigraph(""));
-
-InstallMethod(GraphvizDigraph, "for an object", [IsObject],
-o -> GraphvizDigraph(ViewString(o)));
 
 ############################################################
 # Stringify
@@ -119,10 +113,17 @@ InstallMethod(GraphvizEdges,
 [IsGVGraphOrDigraph, IsObject, IsObject],
 function(gv, head, tail)
     head := GraphvizNode(gv, head);
+    if head = fail then
+      ErrorNoReturn("the 2nd argument (head of an edge) is not a node ",
+                    "of the 1st argument (a graphviz graph or digraph)");
+    fi;
     tail := GraphvizNode(gv, tail);
-    # TODO if head = fail then...
-    return Filtered(GraphvizEdges(gv), x -> GraphvizHead(x) = head and
-    GraphvizTail(x) = tail);
+    if tail = fail then
+      ErrorNoReturn("the 2nd argument (head of an edge) is not a node ",
+                    "of the 1st argument (a graphviz graph or digraph)");
+    fi;
+    return Filtered(GraphvizEdges(gv),
+                    x -> GraphvizHead(x) = head and GraphvizTail(x) = tail);
 end);
 
 InstallMethod(GraphvizSubgraphs, "for a graphviz graph", [IsGVGraphOrDigraph],
