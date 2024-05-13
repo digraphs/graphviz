@@ -37,9 +37,9 @@ gap> GraphvizAddNode(g, "C");
 
 #
 gap> s2 := GraphvizAddSubgraph(g);
-<graphviz digraph no_name_3 with 0 nodes and 0 edges>
+<graphviz digraph no_name_3 with 3 nodes and 0 edges>
 gap> GraphvizSetAttr(s2, "rank=same");
-<graphviz digraph no_name_3 with 0 nodes and 0 edges>
+<graphviz digraph no_name_3 with 3 nodes and 0 edges>
 gap> GraphvizAddNode(s2, "B");
 <graphviz node B>
 gap> GraphvizAddNode(s2, "D");

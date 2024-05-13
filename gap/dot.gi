@@ -550,8 +550,12 @@ function(g)
 
   result := "";
   edges  := Length(GraphvizEdges(g));
-  nodes  :=
-            Length(GV_MapNames(GraphvizNodes(g)));
+  nodes  := 0;
+
+  GV_GraphTreeSearch(g, function(s)
+    nodes := nodes + Length(GV_MapNames(GraphvizNodes(s)));
+    return false;
+  end);
 
   if IsGVDigraph(g) then
     kind := "digraph";

@@ -37,11 +37,11 @@ gap> GraphvizSetAttr(cluster0, "label=\"process #1\"");
 
 #
 gap> cluster1 := GraphvizAddSubgraph(graph, "cluster_1");
-<graphviz digraph cluster_1 with 0 nodes and 0 edges>
+<graphviz digraph cluster_1 with 4 nodes and 0 edges>
 gap> GraphvizSetAttr(cluster1, "color=\"blue\"");
-<graphviz digraph cluster_1 with 0 nodes and 0 edges>
+<graphviz digraph cluster_1 with 4 nodes and 0 edges>
 gap> GraphvizSetAttr(cluster1, "node [style=\"filled\"]");
-<graphviz digraph cluster_1 with 0 nodes and 0 edges>
+<graphviz digraph cluster_1 with 4 nodes and 0 edges>
 gap> GraphvizAddEdge(cluster1, "b0", "b1");
 <graphviz edge (b0, b1)>
 gap> GraphvizAddEdge(cluster1, "b1", "b2");
@@ -49,7 +49,7 @@ gap> GraphvizAddEdge(cluster1, "b1", "b2");
 gap> GraphvizAddEdge(cluster1, "b2", "b3");
 <graphviz edge (b2, b3)>
 gap> GraphvizSetAttr(cluster1, "label=\"process #2\"");
-<graphviz digraph cluster_1 with 4 nodes and 3 edges>
+<graphviz digraph cluster_1 with 8 nodes and 3 edges>
 
 #
 gap> GraphvizAddEdge(graph, "start", "a0");

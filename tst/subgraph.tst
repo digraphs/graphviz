@@ -380,5 +380,17 @@ gap> o := GraphvizFindGraph(g, 1);
 gap> IsIdenticalObj(o, s);
 true
 
+# Test node numbers when subgraphs are present
+gap> g := GraphvizGraph("main");;
+gap> a := GraphvizAddSubgraph(g, 1);;
+gap> b := GraphvizAddSubgraph(g, 2);;
+gap> c := GraphvizAddSubgraph(a, 3);; # nested subgraph
+gap> GraphvizAddNode(g, 1);;
+gap> Perform([0..1], x -> GraphvizAddNode(a, 2 + x));;
+gap> Perform([0..2], x -> GraphvizAddNode(a, 4 + x));;
+gap> Perform([0..3], x -> GraphvizAddNode(a, 7 + x));;
+gap> g;
+<graphviz graph main with 10 nodes and 0 edges>
+
 #
 gap> STOP_TEST("graphviz package: subgraph.tst", 0);
