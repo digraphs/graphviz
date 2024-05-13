@@ -8,4 +8,5 @@
 #############################################################################
 ##
 
+ReadPackage("graphviz", "gap/error.gd");
 ReadPackage("graphviz", "gap/dot.gd");
