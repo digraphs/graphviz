@@ -70,7 +70,7 @@ gap> g := GraphvizGraph();;
 gap> GraphvizAddSubgraph(g, "a");;
 gap> GraphvizAddContext(g, "b");;
 gap> GraphvizSubgraphs(g);
-rec( a := <graphviz graph "a" with 0 nodes and 0 edges>, 
+rec( a := <graphviz graph "a" with 0 nodes and 0 edges>,
   b := <graphviz context "b" with 0 nodes and 0 edges> )
 
 # Test adding a node to a subgraph (does or does not add to parent???)
@@ -421,12 +421,12 @@ gap> GraphvizAddSubgraph(legend, "legend");
 gap> Print(AsString(gv));
 //dot
 graph context+subgraph {
-	node [shape="box"] 
-// legend context 
-	node [shape=plaintext] 
+	node [shape="box"]
+// legend context
+	node [shape=plaintext]
 subgraph legend {
 }
-	node [shape="box"] 
+	node [shape="box"]
 
 }
 
@@ -440,6 +440,18 @@ gap> GraphvizSetAttr(legend, "node [shape=plaintext]");
 <graphviz context "legend" with 0 nodes and 0 edges>
 gap> GraphvizAddSubgraph(legend, "legend");
 <graphviz digraph "legend" with 0 nodes and 0 edges>
+
+# Test node numbers when subgraphs are present
+gap> g := GraphvizGraph("main");;
+gap> a := GraphvizAddSubgraph(g, 1);;
+gap> b := GraphvizAddSubgraph(g, 2);;
+gap> c := GraphvizAddSubgraph(a, 3);;  # nested subgraph
+gap> GraphvizAddNode(g, 1);;
+gap> Perform([0 .. 1], x -> GraphvizAddNode(a, 2 + x));;
+gap> Perform([0 .. 2], x -> GraphvizAddNode(a, 4 + x));;
+gap> Perform([0 .. 3], x -> GraphvizAddNode(a, 7 + x));;
+gap> g;
+<graphviz graph main with 10 nodes and 0 edges>
 
 #
 gap> STOP_TEST("graphviz package: subgraph.tst", 0);
