@@ -231,13 +231,13 @@ gap> GraphvizSetName(g, ["a"]);
 
 # Test set label (graph)
 gap> g := GraphvizGraph();;
-gap> GraphvizSetLabel(g, "test");;
+gap> GraphvizSetAttr(g, "label", "test");;
 gap> GraphvizAttrs(g);
 [ "label=test" ]
 
 # Test set color (graph)
 gap> g := GraphvizGraph();;
-gap> GraphvizSetColor(g, "red");;
+gap> GraphvizSetAttr(g, "color", "red");;
 gap> GraphvizAttrs(g);
 [ "color=red" ]
 

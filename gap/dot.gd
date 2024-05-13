@@ -191,24 +191,6 @@ DeclareOperation("GraphvizSetAttrs", [IsGVObject, IsRecord]);
 DeclareOperation("GraphvizSetAttr", [IsGVObject, IsObject, IsObject]);
 DeclareOperation("GraphvizSetAttr", [IsGVObject, IsObject]);
 
-#! @Arguments obj, label
-#! @Returns the modified object.
-#! @Description
-#!    Updates the label of the object.
-#!    If a label already exists and a new value is provided, the old value will
-#!    be overwritten.
-# TODO remove
-DeclareOperation("GraphvizSetLabel", [IsGVObject, IsObject]);
-
-#! @Arguments obj, color
-#! @Returns the modified object.
-#! @Description
-#!    Updates the color of the object.
-#!    If a color already exists and a new value is provided, the old value will
-#!    be overwritten.
-# TODO remove
-DeclareOperation("GraphvizSetColor", [IsGVObject, IsObject]);
-
 #! @Arguments obj, attr
 #! @Returns the modified object.
 #! @Description Removes an attribute from the object provided.
