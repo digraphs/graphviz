@@ -10,4 +10,5 @@
 
 ReadPackage("graphviz", "gap/dot.gi");
 ReadPackage("graphviz", "gap/error.gi");
+ReadPackage("graphviz", "gap/gv.gi");
 ReadPackage("graphviz", "gap/splash.gi");
