@@ -50,21 +50,21 @@ function(arg...)
       [msg]);
 end);
 
-DeclareOperation("GV_GetCounter", [IsGVGraph]);
-DeclareOperation("GV_IncCounter", [IsGVGraph]);
-DeclareCategory("IsGV_Map", IsObject);
-DeclareAttribute("Size", IsGV_Map);
+DeclareOperation("GV_GetCounter", [IsGVGraphOrDigraph]);
+DeclareOperation("GV_IncCounter", [IsGVGraphOrDigraph]);
+DeclareCategory("GV_IsMap", IsObject);
+DeclareAttribute("Size", GV_IsMap);
 
-DeclareOperation("GV_StringifyGraphHead", [IsGVGraph]);
-DeclareOperation("GV_StringifyDigraphHead", [IsGVGraph]);
-DeclareOperation("GV_StringifySubgraphHead", [IsGVGraph]);
-DeclareOperation("GV_StringifyContextHead", [IsGVGraph]);
+DeclareOperation("GV_StringifyGraphHead", [IsGVGraphOrDigraph]);
+DeclareOperation("GV_StringifyDigraphHead", [IsGVGraphOrDigraph]);
+DeclareOperation("GV_StringifySubgraphHead", [IsGVGraphOrDigraph]);
+DeclareOperation("GV_StringifyContextHead", [IsGVGraphOrDigraph]);
 DeclareOperation("GV_StringifyNode", [IsGVNode]);
-DeclareOperation("GV_StringifyGraphAttrs", [IsGVGraph]);
-DeclareOperation("GV_StringifyNodeEdgeAttrs", [IsGV_Map]);
-DeclareOperation("GV_StringifyGraph", [IsGVGraph, IsBool]);
+DeclareOperation("GV_StringifyGraphAttrs", [IsGVGraphOrDigraph]);
+DeclareOperation("GV_StringifyNodeEdgeAttrs", [GV_IsMap]);
+DeclareOperation("GV_StringifyGraph", [IsGVGraphOrDigraph, IsBool]);
 
-DeclareOperation("GV_FindNode", [IsGVGraph, IsObject]);
+DeclareOperation("GV_FindNode", [IsGVGraphOrDigraph, IsObject]);
 
 ## COPY OF GAP PLURALIZE TO ALLOW OLD VERSIONS OF GAP TO USE THE PACKAGE
 DeclareOperation("GV_Pluralize", [IsInt, IsString]);
@@ -307,7 +307,7 @@ BindGlobal("GV_ObjectFamily",
                      IsGVObject));
 
 BindGlobal("GV_MapType", NewType(GV_ObjectFamily,
-                                 IsGV_Map and
+                                 GV_IsMap and
                                  IsComponentObjectRep and
                                  IsAttributeStoringRep));
 
@@ -344,18 +344,18 @@ InstallMethod(\=, "for IsGVNode and IsGVNode",
 # Constructors etc
 ###############################################################################
 
-DeclareOperation("GV_Node", [IsGVGraph, IsString]);
-DeclareOperation("GV_Edge", [IsGVGraph, IsGVNode, IsGVNode]);
-DeclareOperation("GV_Graph", [IsGVGraph, IsString]);
+DeclareOperation("GV_Node", [IsGVGraphOrDigraph, IsString]);
+DeclareOperation("GV_Edge", [IsGVGraphOrDigraph, IsGVNode, IsGVNode]);
+DeclareOperation("GV_Graph", [IsGVGraphOrDigraph, IsString]);
 DeclareOperation("GV_Digraph", [IsGVDigraph, IsString]);
-DeclareOperation("GV_Context", [IsGVGraph, IsString]);
+DeclareOperation("GV_Context", [IsGVGraphOrDigraph, IsString]);
 DeclareOperation("GV_Map", []);
 
 InstallMethod(GV_Map, "for no args",
 [], {} -> Objectify(GV_MapType, rec(Data := rec())));
 
 InstallMethod(GV_Node, "for a string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 function(graph, name)
   local out;
   if Length(name) = 0 then
@@ -371,7 +371,7 @@ function(graph, name)
 end);
 
 InstallMethod(GV_Edge, "for two graphviz nodes",
-[IsGVGraph, IsGVNode, IsGVNode],
+[IsGVGraphOrDigraph, IsGVNode, IsGVNode],
 function(graph, head, tail)
   local out;
   out := Objectify(GV_EdgeType,
@@ -403,7 +403,7 @@ end);
 
 InstallMethod(GV_Graph,
 "for a graphviz graph and a string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 function(parent, name)
   local out;
 
@@ -417,7 +417,7 @@ end);
 
 InstallMethod(GV_Context,
 "for a string and a positive integer",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 function(parent, name)
   local out;
 
@@ -489,7 +489,7 @@ InstallMethod(GraphvizDigraph, "for no args", [], {} -> GraphvizDigraph(""));
 
 InstallOtherMethod(\[\],
 "for a graphviz map and an object",
-[IsGV_Map, IsObject],
+[GV_IsMap, IsObject],
 function(m, o)
   if IsBound(m[o]) then
     return m!.Data.(o);
@@ -499,33 +499,33 @@ end);
 
 InstallOtherMethod(\[\]\:\=,
 "for a graphviz map and two objects",
-[IsGV_Map, IsObject, IsObject],
+[GV_IsMap, IsObject, IsObject],
 function(m, key, val)
   m!.Data.(key) := val;
 end);
 
 InstallOtherMethod(Unbind\[\],
 "for a graphviz map and an object",
-[IsGV_Map, IsObject],
+[GV_IsMap, IsObject],
 function(m, key)
   Unbind(m!.Data.(key));
 end);
 
 InstallOtherMethod(IsBound\[\],
 "for a graphviz map and an object",
-[IsGV_Map, IsObject],
+[GV_IsMap, IsObject],
 {m, key} -> IsBound(m!.Data.(key)));
 
-DeclareOperation("GV_MapNames", [IsGV_Map]);
+DeclareOperation("GV_MapNames", [GV_IsMap]);
 
 InstallMethod(GV_MapNames, "for a graphviz map",
-[IsGV_Map], m -> RecNames(m!.Data));
+[GV_IsMap], m -> RecNames(m!.Data));
 
-InstallMethod(ViewString, "for a graphviz map", [IsGV_Map],
+InstallMethod(ViewString, "for a graphviz map", [GV_IsMap],
 m -> String(m!.Data));
 
 InstallMethod(Size, "for a graphviz map",
-[IsGV_Map], m -> Length(GV_MapNames(m)));
+[GV_IsMap], m -> Length(GV_MapNames(m)));
 
 ############################################################
 # Stringify
@@ -544,7 +544,7 @@ function(e)
                          GraphvizName(tail));
 end);
 
-InstallMethod(ViewString, "for a graphviz graph", [IsGVGraph],
+InstallMethod(ViewString, "for a graphviz graph", [IsGVGraphOrDigraph],
 function(g)
   local result, edges, nodes, kind;
 
@@ -585,20 +585,20 @@ x -> x!.Attrs);
 # TODO remove, the returned value is mutable, looks like a record but isn't
 # one. Mutability is a problem, since if we do GraphvizNodes(gv)[1] := 2; then
 # the object is corrupt.
-InstallMethod(GraphvizNodes, "for a graphviz graph", [IsGVGraph],
+InstallMethod(GraphvizNodes, "for a graphviz graph", [IsGVGraphOrDigraph],
 x -> x!.Nodes);
 
 InstallMethod(GraphvizNode, "for a graphviz graph and object",
-[IsGVGraph, IsObject], {gv, obj} -> gv!.Nodes[String(obj)]);
+[IsGVGraphOrDigraph, IsObject], {gv, obj} -> gv!.Nodes[String(obj)]);
 
 # TODO remove for the same reason as GraphvizNodes, unless we can make the list
 # immutable or return a copy.
 InstallMethod(GraphvizEdges, "for a graphviz graph",
-[IsGVGraph], x -> x!.Edges);
+[IsGVGraphOrDigraph], x -> x!.Edges);
 
 InstallMethod(GraphvizEdges,
 "for a graphviz graph, object, and object",
-[IsGVGraph, IsObject, IsObject],
+[IsGVGraphOrDigraph, IsObject, IsObject],
 function(gv, head, tail)
     head := GraphvizNode(gv, head);
     tail := GraphvizNode(gv, tail);
@@ -607,7 +607,7 @@ function(gv, head, tail)
     GraphvizTail(x) = tail);
 end);
 
-InstallMethod(GraphvizSubgraphs, "for a graphviz graph", [IsGVGraph],
+InstallMethod(GraphvizSubgraphs, "for a graphviz graph", [IsGVGraphOrDigraph],
 x -> x!.Subgraphs);
 
 InstallMethod(GraphvizTail, "for a graphviz edge", [IsGVEdge], x -> x!.Tail);
@@ -616,22 +616,22 @@ InstallMethod(GraphvizHead, "for a graphviz edge", [IsGVEdge], x -> x!.Head);
 
 InstallMethod(GraphvizGetSubgraph,
 "for a graphviz graph and string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 {x, name} -> GraphvizSubgraphs(x)[name]);
 
 InstallMethod(GraphvizGetSubgraph,
 "for a graphviz graph and an object",
-[IsGVGraph, IsObject],
+[IsGVGraphOrDigraph, IsObject],
 {x, o} -> GraphvizSubgraphs(x)[ViewString(o)]);
 
 InstallMethod(GV_IncCounter,
 "for a graphviz graph",
-[IsGVGraph],
+[IsGVGraphOrDigraph],
 function(x)
   x!.Counter := x!.Counter + 1;
 end);
 
-InstallMethod(GV_GetCounter, "for a graphviz graph", [IsGVGraph],
+InstallMethod(GV_GetCounter, "for a graphviz graph", [IsGVGraphOrDigraph],
 x -> x!.Counter);
 
 # Converting strings
@@ -703,32 +703,32 @@ end);
 
 InstallOtherMethod(\[\],
 "for a graphviz graph and string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 {graph, node} -> GraphvizNodes(graph)[node]);
 
 InstallOtherMethod(\[\],
 "for a graphviz graph and string",
-[IsGVGraph, IsObject],
+[IsGVGraphOrDigraph, IsObject],
 {g, o} -> g[ViewString(o)]);
 
-DeclareOperation("GV_HasNode", [IsGVGraph, IsObject]);
+DeclareOperation("GV_HasNode", [IsGVGraphOrDigraph, IsObject]);
 
 InstallMethod(GV_HasNode,
 "for a graphviz graph",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 {g, name} -> name in GV_MapNames(GraphvizNodes(g)));
 
-DeclareOperation("GV_GetParent", [IsGVGraph]);
+DeclareOperation("GV_GetParent", [IsGVGraphOrDigraph]);
 
 InstallMethod(GV_GetParent,
 "for a graphviz graph",
-[IsGVGraph], graph -> graph!.Parent);
+[IsGVGraphOrDigraph], graph -> graph!.Parent);
 
-DeclareOperation("GV_GraphTreeSearch", [IsGVGraph, IsFunction]);
+DeclareOperation("GV_GraphTreeSearch", [IsGVGraphOrDigraph, IsFunction]);
 
 InstallMethod(GV_GraphTreeSearch,
 "for a graphviz graph and a predicate",
-[IsGVGraph, IsFunction],
+[IsGVGraphOrDigraph, IsFunction],
 function(graph, pred)
   local seen, to_visit, g, key, subgraph, parent;
   seen     := [graph];
@@ -753,7 +753,7 @@ function(graph, pred)
 
     # add parent if not visited
     parent := GV_GetParent(g);
-    if not IsGVGraph(parent) then
+    if not IsGVGraphOrDigraph(parent) then
       continue;
     fi;
     if not ForAny(seen, s -> IsIdenticalObj(s, parent)) then
@@ -765,16 +765,16 @@ function(graph, pred)
   return fail;
 end);
 
-DeclareOperation("GV_FindGraphWithNode", [IsGVGraph, IsString]);
+DeclareOperation("GV_FindGraphWithNode", [IsGVGraphOrDigraph, IsString]);
 InstallMethod(GV_FindGraphWithNode,
 "for a graphviz graph and a node",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 {g, n} -> GV_GraphTreeSearch(g, v -> v[n] <> fail));
 
-DeclareOperation("GV_GetRoot", [IsGVGraph]);
+DeclareOperation("GV_GetRoot", [IsGVGraphOrDigraph]);
 InstallMethod(GV_GetRoot,
 "for a graphviz graph",
-[IsGVGraph],
+[IsGVGraphOrDigraph],
 function(graph)
   while GV_GetParent(graph) <> fail do
     graph := GV_GetParent(graph);
@@ -784,17 +784,17 @@ end);
 
 InstallMethod(GraphvizFindGraph,
 "for a graphviz graph and a string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 {g, s} -> GV_GraphTreeSearch(g, v -> GraphvizName(v) = s));
 
 InstallMethod(GraphvizFindGraph,
 "for a graphviz graph and a string",
-[IsGVGraph, IsObject],
+[IsGVGraphOrDigraph, IsObject],
 {g, o} -> GraphvizFindGraph(g, ViewString(o)));
 
 InstallMethod(GV_FindNode,
 "for a graphviz graph and a string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 function(g, n)
   local graph;
   graph := GV_FindGraphWithNode(g, n);
@@ -809,14 +809,14 @@ end);
 ############################################################
 
 InstallMethod(GraphvizSetName, "for a graphviz object and string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 function(x, name)
   x!.Name := name;
   return x;
 end);
 
 InstallMethod(GraphvizSetName, "for a graphviz object and string",
-[IsGVGraph, IsObject],
+[IsGVGraphOrDigraph, IsObject],
 {g, o} -> GraphvizSetName(g, ViewString(o)));
 
 InstallMethod(GraphvizSetAttrs, "for a graphviz object and record",
@@ -846,7 +846,7 @@ function(x, name, value)
 end);
 
 InstallMethod(GraphvizSetAttr, "for a graphviz graph, object and object",
-[IsGVGraph, IsObject, IsObject],
+[IsGVGraphOrDigraph, IsObject, IsObject],
 function(x, name, value)
   local attrs, string, msg;
 
@@ -874,7 +874,7 @@ function(x, name, value)
 end);
 
 InstallMethod(GraphvizSetAttr, "for a graphviz object, object and object",
-[IsGVGraph, IsObject],
+[IsGVGraphOrDigraph, IsObject],
 function(x, value)
   local attrs;
   attrs := GraphvizAttrs(x);
@@ -893,10 +893,10 @@ InstallMethod(GraphvizSetColor,
 [IsGVObject, IsObject],
 {x, color} -> GraphvizSetAttr(x, "color", color));
 
-DeclareOperation("GV_AddNode", [IsGVGraph, IsGVNode]);
+DeclareOperation("GV_AddNode", [IsGVGraphOrDigraph, IsGVNode]);
 InstallMethod(GV_AddNode,
 "for a graphviz graph and node",
-[IsGVGraph, IsGVNode],
+[IsGVGraphOrDigraph, IsGVNode],
 function(x, node)
   local found, error, name, nodes;
   name  := GraphvizName(node);
@@ -914,7 +914,7 @@ function(x, node)
 end);
 
 InstallMethod(GraphvizAddNode, "for a graphviz graph and string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 function(x, name)
   local node;
   node := GV_Node(x, name);
@@ -924,7 +924,7 @@ end);
 
 # TODO required?
 InstallMethod(GraphvizAddNode, "for a graphviz graph and string",
-[IsGVGraph, IsGVNode],
+[IsGVGraphOrDigraph, IsGVNode],
 function(_, __)  # gaplint: disable=analyse-lvars
   local error;
   error := "Cannot add node objects directly to graphs. ";
@@ -934,13 +934,13 @@ end);
 
 InstallMethod(GraphvizAddNode,
 "for a graphviz graph and string",
-[IsGVGraph, IsObject],
+[IsGVGraphOrDigraph, IsObject],
 {x, name} -> GraphvizAddNode(x, ViewString(name)));
 
-DeclareOperation("GV_AddEdge", [IsGVGraph, IsGVEdge]);
+DeclareOperation("GV_AddEdge", [IsGVGraphOrDigraph, IsGVEdge]);
 InstallMethod(GV_AddEdge,
 "for a graphviz graph and edge",
-[IsGVGraph, IsGVEdge],
+[IsGVGraphOrDigraph, IsGVEdge],
 function(x, edge)
   local head, head_name, tail_name, tail, hg, error, tg;
 
@@ -980,7 +980,7 @@ end);
 
 InstallMethod(GraphvizAddEdge,
 "for a graphviz graph and two graphviz nodes",
-[IsGVGraph, IsGVNode, IsGVNode],
+[IsGVGraphOrDigraph, IsGVNode, IsGVNode],
 function(x, head, tail)
   local edge, head_name, tail_name;
 
@@ -1002,7 +1002,7 @@ end);
 
 InstallMethod(GraphvizAddEdge,
 "for a graphviz graph and two strings",
-[IsGVGraph, IsString, IsString],
+[IsGVGraphOrDigraph, IsString, IsString],
 function(x, head, tail)
   local head_node, tail_node;
 
@@ -1021,7 +1021,7 @@ end);
 
 InstallMethod(GraphvizAddEdge,
 "for a graphviz graph and two objects",
-[IsGVGraph, IsObject, IsObject],
+[IsGVGraphOrDigraph, IsObject, IsObject],
 function(x, o1, o2)
   if not IsString(o1) then
     o1 := ViewString(o1);
@@ -1034,7 +1034,7 @@ end);
 
 InstallMethod(GraphvizAddSubgraph,
 "for a graphviz graph and string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 function(graph, name)
   local error, subgraphs, subgraph;
 
@@ -1046,7 +1046,7 @@ function(graph, name)
 
   if IsGVDigraph(graph) then
     subgraph := GV_Digraph(graph, name);
-  elif IsGVGraph(graph) then
+  elif IsGVGraph(graph) or IsGVContext(graph) then
     subgraph := GV_Graph(graph, name);
   else
     ErrorNoReturn("Filter must be a filter for a graph category.");
@@ -1058,12 +1058,12 @@ end);
 
 InstallMethod(GraphvizAddSubgraph,
 "for a graphviz graph and an object",
-[IsGVGraph, IsObject],
+[IsGVGraphOrDigraph, IsObject],
 {g, o} -> GraphvizAddSubgraph(g, ViewString(o)));
 
 InstallMethod(GraphvizAddSubgraph,
 "for a grpahviz graph",
-[IsGVGraph],
+[IsGVGraphOrDigraph],
 function(graph)
   return GraphvizAddSubgraph(graph, StringFormatted("no_name_{}",
                                                String(GV_GetCounter(graph))));
@@ -1071,7 +1071,7 @@ end);
 
 InstallMethod(GraphvizAddContext,
 "for a graphviz graph and a string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 function(graph, name)
   local ctx, error, subgraphs;
 
@@ -1088,23 +1088,23 @@ end);
 
 InstallMethod(GraphvizAddContext,
 "for a graphviz graph",
-[IsGVGraph],
+[IsGVGraphOrDigraph],
 g -> GraphvizAddContext(g, StringFormatted("no_name_{}",
                                       String(GV_GetCounter(g)))));
 
 InstallMethod(GraphvizAddContext,
 "for a graphviz graph and an object",
-[IsGVGraph, IsObject],
+[IsGVGraphOrDigraph, IsObject],
 {g, o} -> GraphvizAddContext(g, ViewString(o)));
 
 InstallMethod(GraphvizRemoveNode, "for a graphviz graph and node",
-[IsGVGraph, IsGVNode],
+[IsGVGraphOrDigraph, IsGVNode],
 {g, node} -> GraphvizRemoveNode(g, GraphvizName(node)));
 
 # TODO GraphvizRemoveEdges(gv, n1, n2)
 
 InstallMethod(GraphvizRemoveNode, "for a graphviz graph and a string",
-[IsGVGraph, IsString],
+[IsGVGraphOrDigraph, IsString],
 function(g, name)
   local nodes;
   # TODO error if there's no such node
@@ -1124,11 +1124,11 @@ function(g, name)
 end);
 
 InstallMethod(GraphvizRemoveNode, "for a graphviz graph and a string",
-[IsGVGraph, IsObject],
+[IsGVGraphOrDigraph, IsObject],
 {g, o} -> GraphvizRemoveNode(g, ViewString(o)));
 
 InstallMethod(GraphvizFilterEdges, "for a graphviz graph and edge filter",
-[IsGVGraph, IsFunction],
+[IsGVGraphOrDigraph, IsFunction],
 function(g, filter)
   local edge, idx, edges;
 
@@ -1146,7 +1146,7 @@ function(g, filter)
 end);
 
 InstallMethod(GraphvizFilterEnds, "for a graphviz graph and two strings",
-[IsGVGraph, IsString, IsString],
+[IsGVGraphOrDigraph, IsString, IsString],
 function(g, hn, tn)
   GraphvizFilterEdges(g,
     function(e)
@@ -1165,7 +1165,7 @@ function(g, hn, tn)
 end);
 
 InstallMethod(GraphvizFilterEnds, "for a graphviz graph and two strings",
-[IsGVGraph, IsObject, IsObject],
+[IsGVGraphOrDigraph, IsObject, IsObject],
 function(g, o1, o2)
   if not IsString(o1) then
     o1 := ViewString(o1);
@@ -1187,7 +1187,7 @@ function(obj, attr)
 end);
 
 InstallMethod(GraphvizRemoveAttr, "for a graphviz graph and an object",
-[IsGVGraph, IsObject],
+[IsGVGraphOrDigraph, IsObject],
 function(obj, attr)
   local attrs;
   attrs      := GraphvizAttrs(obj);
@@ -1200,7 +1200,7 @@ end);
 # ##############################################################################
 
 # @ Return DOT graph head line.
-InstallMethod(GV_StringifyGraphHead, "for a string", [IsGVGraph],
+InstallMethod(GV_StringifyGraphHead, "for a string", [IsGVGraphOrDigraph],
 graph -> StringFormatted("graph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT digraph head line.
@@ -1208,7 +1208,7 @@ InstallMethod(GV_StringifyDigraphHead, "for a string", [IsGVDigraph],
 graph -> StringFormatted("digraph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT subgraph head line.
-InstallMethod(GV_StringifySubgraphHead, "for a string", [IsGVGraph],
+InstallMethod(GV_StringifySubgraphHead, "for a string", [IsGVGraphOrDigraph],
 graph -> StringFormatted("subgraph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT subgraph head line.
@@ -1267,7 +1267,7 @@ end);
 
 InstallMethod(GV_StringifyGraphAttrs,
 "for a graphviz graph",
-[IsGVGraph],
+[IsGVGraphOrDigraph],
 function(graph)
   local result, attrs, kv;
   attrs  := GraphvizAttrs(graph);
@@ -1286,7 +1286,7 @@ end);
 
 InstallMethod(GV_StringifyNodeEdgeAttrs,
 "for a GV_Map",
-[IsGV_Map],
+[GV_IsMap],
 function(attrs)
   local result, keys, key, val, n, i, tmp;
 
@@ -1351,10 +1351,10 @@ InstallMethod(GV_GetIdx,
 [IsGVObject],
 x -> x!.Idx);
 
-DeclareOperation("GV_ConstructHistory", [IsGVGraph]);
+DeclareOperation("GV_ConstructHistory", [IsGVGraphOrDigraph]);
 InstallMethod(GV_ConstructHistory,
 "for a graphviz graph",
-[IsGVGraph],
+[IsGVGraphOrDigraph],
 function(graph)
   local nodes, edges, subs, node_hist, edge_hist, subs_hist, hist;
 
@@ -1375,7 +1375,7 @@ end);
 
 InstallMethod(GV_StringifyGraph,
 "for a graphviz graph and a string",
-[IsGVGraph, IsBool],
+[IsGVGraphOrDigraph, IsBool],
 function(graph, is_subgraph)
   local result, obj;
   result := "";
@@ -1406,7 +1406,7 @@ function(graph, is_subgraph)
 
   # Add child graphviz objects
   for obj in GV_ConstructHistory(graph) do
-    if IsGVGraph(obj) then
+    if IsGVGraphOrDigraph(obj) then
       Append(result, GV_StringifyGraph(obj, true));
     elif IsGVNode(obj) then
       Append(result, GV_StringifyNode(obj));
@@ -1434,7 +1434,7 @@ function(graph, is_subgraph)
 end);
 
 InstallMethod(AsString, "for a graphviz graph",
-[IsGVGraph],
+[IsGVGraphOrDigraph],
 graph -> GV_StringifyGraph(graph, false));
 
 BindGlobal("GV_IsValidRGBColor",
@@ -1487,7 +1487,7 @@ end);
 
 InstallMethod(GraphvizSetNodeLabels,
 "for a graphviz graph and list of colors",
-[IsGVGraph, IsList],
+[IsGVGraphOrDigraph, IsList],
 function(gv, labels)
   local nodes, i;
   # TODO error if labels and nodes aren't same size
@@ -1501,7 +1501,7 @@ end);
 
 InstallMethod(GraphvizSetNodeColors,
 "for a graphviz graph and list of colors",
-[IsGVGraph, IsList],
+[IsGVGraphOrDigraph, IsList],
 function(gv, colors)
   local nodes, i;
 

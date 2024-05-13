@@ -12,10 +12,10 @@ if not IsBound(Splash) then
 
     if IsEmpty(arg) then
       ErrorNoReturn("the must be at least 1 argument, found none");
-    elif not IsString(arg[1]) and not IsGVGraph(arg[1]) then
+    elif not IsString(arg[1]) and not IsGVGraphOrDigraph(arg[1]) then
       ErrorFormatted("the 1st argument must be a string or ",
                      "graphviz graph, found {}", TNAM_OBJ(arg[1]));
-    elif IsGVGraph(arg[1]) then
+    elif IsGVGraphOrDigraph(arg[1]) then
       arg[1] := AsString(arg[1]);
     fi;
     str := arg[1];
