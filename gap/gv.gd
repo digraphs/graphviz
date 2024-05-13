@@ -11,59 +11,59 @@
 ## This file contains declarations of the internal/private functions for the
 ## graphviz package.
 
-DeclareOperation("GV_GetCounter", [IsGVGraphOrDigraph]);
-DeclareOperation("GV_IncCounter", [IsGVGraphOrDigraph]);
+DeclareOperation("GV_GetCounter", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_IncCounter", [IsGraphvizGraphOrDigraph]);
 DeclareCategory("GV_IsMap", IsObject);
 DeclareAttribute("Size", GV_IsMap);
 
-DeclareOperation("GV_StringifyGraphHead", [IsGVGraphOrDigraph]);
-DeclareOperation("GV_StringifyDigraphHead", [IsGVGraphOrDigraph]);
-DeclareOperation("GV_StringifySubgraphHead", [IsGVGraphOrDigraph]);
-DeclareOperation("GV_StringifyContextHead", [IsGVGraphOrDigraph]);
-DeclareOperation("GV_StringifyNode", [IsGVNode]);
-DeclareOperation("GV_StringifyGraphAttrs", [IsGVGraphOrDigraph]);
+DeclareOperation("GV_StringifyGraphHead", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_StringifyDigraphHead", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_StringifySubgraphHead", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_StringifyContextHead", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_StringifyNode", [IsGraphvizNode]);
+DeclareOperation("GV_StringifyGraphAttrs", [IsGraphvizGraphOrDigraph]);
 DeclareOperation("GV_StringifyNodeEdgeAttrs", [GV_IsMap]);
-DeclareOperation("GV_StringifyGraph", [IsGVGraphOrDigraph, IsBool]);
+DeclareOperation("GV_StringifyGraph", [IsGraphvizGraphOrDigraph, IsBool]);
 
-DeclareOperation("GV_FindNode", [IsGVGraphOrDigraph, IsObject]);
+DeclareOperation("GV_FindNode", [IsGraphvizGraphOrDigraph, IsObject]);
 
 DeclareOperation("GV_Pluralize", [IsInt, IsString]);
 
-DeclareOperation("GV_Node", [IsGVGraphOrDigraph, IsString]);
-DeclareOperation("GV_Edge", [IsGVGraphOrDigraph, IsGVNode, IsGVNode]);
-DeclareOperation("GV_Graph", [IsGVGraphOrDigraph, IsString]);
-DeclareOperation("GV_Digraph", [IsGVDigraph, IsString]);
-DeclareOperation("GV_Context", [IsGVGraphOrDigraph, IsString]);
+DeclareOperation("GV_Node", [IsGraphvizGraphOrDigraph, IsString]);
+DeclareOperation("GV_Edge", [IsGraphvizGraphOrDigraph, IsGraphvizNode, IsGraphvizNode]);
+DeclareOperation("GV_Graph", [IsGraphvizGraphOrDigraph, IsString]);
+DeclareOperation("GV_Digraph", [IsGraphvizDigraph, IsString]);
+DeclareOperation("GV_Context", [IsGraphvizGraphOrDigraph, IsString]);
 DeclareOperation("GV_Map", []);
 DeclareOperation("GV_MapNames", [GV_IsMap]);
 
 # TODO required? Replace with AsString or just String?
 DeclareOperation("GV_EnsureString", [IsObject]);
 
-DeclareOperation("GV_HasNode", [IsGVGraphOrDigraph, IsObject]);
+DeclareOperation("GV_HasNode", [IsGraphvizGraphOrDigraph, IsObject]);
 
-DeclareOperation("GV_GetParent", [IsGVGraphOrDigraph]);
-DeclareOperation("GV_GraphTreeSearch", [IsGVGraphOrDigraph, IsFunction]);
-DeclareOperation("GV_FindGraphWithNode", [IsGVGraphOrDigraph, IsString]);
-DeclareOperation("GV_GetRoot", [IsGVGraphOrDigraph]);
-DeclareOperation("GV_AddNode", [IsGVGraphOrDigraph, IsGVNode]);
-DeclareOperation("GV_AddEdge", [IsGVGraphOrDigraph, IsGVEdge]);
-DeclareOperation("GV_GetIdx", [IsGVObject]);
-DeclareOperation("GV_ConstructHistory", [IsGVGraphOrDigraph]);
+DeclareOperation("GV_GetParent", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_GraphTreeSearch", [IsGraphvizGraphOrDigraph, IsFunction]);
+DeclareOperation("GV_FindGraphWithNode", [IsGraphvizGraphOrDigraph, IsString]);
+DeclareOperation("GV_GetRoot", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_AddNode", [IsGraphvizGraphOrDigraph, IsGraphvizNode]);
+DeclareOperation("GV_AddEdge", [IsGraphvizGraphOrDigraph, IsGraphvizEdge]);
+DeclareOperation("GV_GetIdx", [IsGraphvizObject]);
+DeclareOperation("GV_ConstructHistory", [IsGraphvizGraphOrDigraph]);
 
 DeclareGlobalFunction("GV_IsValidColor");
 DeclareGlobalFunction("GV_ErrorIfNotNodeColoring");
 
 BindGlobal("GV_ObjectFamily",
-           NewFamily("GV_ObjectFamily", IsGVObject));
+           NewFamily("GV_ObjectFamily", IsGraphvizObject));
 
 BindGlobal("GV_DigraphType", NewType(GV_ObjectFamily,
-                                    IsGVDigraph and
+                                    IsGraphvizDigraph and
                                     IsComponentObjectRep and
                                     IsAttributeStoringRep));
 
 BindGlobal("GV_GraphType", NewType(GV_ObjectFamily,
-                                    IsGVGraph and
+                                    IsGraphvizGraph and
                                     IsComponentObjectRep and
                                     IsAttributeStoringRep));
 
