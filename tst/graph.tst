@@ -191,7 +191,7 @@ gap> AsString(g);
 # gap> GraphvizAttrs(g);
 # [  ]
 
-# Test gettting a node using bracket notation
+# Test getting a node using bracket notation
 gap> g := GraphvizGraph();;
 gap> n1 := GraphvizAddNode(g, "test");;
 gap> n2 := GraphvizAddNode(g, "abc");;
@@ -200,7 +200,7 @@ gap> g["test"];
 gap> g["abc"];
 <graphviz node abc>
 
-# Test gettting a node with a non-string name using bracket notation
+# Test getting a node with a non-string name using bracket notation
 gap> g := GraphvizGraph();;
 gap> n1 := GraphvizAddNode(g, 1);;
 gap> n2 := GraphvizAddNode(g, ["a"]);;

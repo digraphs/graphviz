@@ -15,8 +15,8 @@
 
 #! @Section A Brief Introduction
 #! DOT is a language for descrbing to a computer how to display a visualization
-#! for a graph or digraph. Graphviz is a graph vizualization software which can
-#! consume DOT and produce vizual outputs. This package is designed to allow
+#! for a graph or digraph. Graphviz is a graph visualization software which can
+#! consume DOT and produce visual outputs. This package is designed to allow
 #! users to programmatically construct objects in GAP which can then be
 #! converted into DOT. That DOT can then be inputted into the graphviz software
 #! to produce a visual output. As DOT is central to the design of this package
@@ -180,7 +180,7 @@ DeclareOperation("GraphvizFilterEnds", [IsGVGraph, IsObject, IsObject]);
 #! @Arguments obj, attrs
 #! @Returns the modified object.
 #! @Description
-#!    Updates the attribtues of the object.
+#!    Updates the attributes of the object.
 #!    All current attributes remain.
 #!    If an attribute already exists and a new value is provided, the old value
 #!    will be overwritten.

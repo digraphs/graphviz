@@ -87,7 +87,7 @@ Error, Different node in graph  with name a
 gap> GraphvizEdges(g);
 [ <graphviz edge (d, a)> ]
 
-# Test adding an edge resuses a node automatically
+# Test adding an edge reuses a node automatically
 gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, "a");;
 gap> GraphvizAddEdge(g, "a", "a");

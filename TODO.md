@@ -6,10 +6,10 @@
  - Make custom resolution of edges for FDP (see fdp example from the python package)
  - implement the fdp example from the python package
  - make it so when duplicates are added to global graph attrs the old values are automatically replaced
- - Improve behaviour arround ':' synatx - mimic python package
+ - Improve behaviour around ':' syntax - mimic python package
 
 ## TODO (ONCE THIS IS EMPTY THEN DONE!)
- - Ask about `Pluralize` - think james said to remove for old verisons of gap
+ - Ask about `Pluralize` - think james said to remove for old versions of gap
  - Update docs
  - Add more unit tests
  - Thoroughly test the ':' syntax more (might have broke when the quotes were changed)
