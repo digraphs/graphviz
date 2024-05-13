@@ -846,16 +846,6 @@ function(x, value)
   return x;
 end);
 
-InstallMethod(GraphvizSetLabel,
-"for a graphviz object and an object",
-[IsGVObject, IsObject],
-{x, label} -> GraphvizSetAttr(x, "label", label));
-
-InstallMethod(GraphvizSetColor,
-"for a graphviz object and an object",
-[IsGVObject, IsObject],
-{x, color} -> GraphvizSetAttr(x, "color", color));
-
 DeclareOperation("GV_AddNode", [IsGVGraphOrDigraph, IsGVNode]);
 InstallMethod(GV_AddNode,
 "for a graphviz graph and node",
