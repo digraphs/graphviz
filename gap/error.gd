@@ -1,13 +1,11 @@
 #############################################################################
 ##
-##  read.g
-##  Copyright (C) 2024                                      Matthew Pancer
+##  error.gd
+##  Copyright (C) 2024                                      James Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-ReadPackage("graphviz", "gap/dot.gi");
-ReadPackage("graphviz", "gap/error.gi");
-ReadPackage("graphviz", "gap/splash.gi");
+DeclareGlobalFunction("ErrorFormatted");
