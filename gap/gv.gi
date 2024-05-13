@@ -264,14 +264,9 @@ x -> x!.Counter);
 
 # Converting strings
 
-InstallMethod(GV_EnsureString,
-"for an object",
-[IsObject], ViewString);
+InstallMethod(GV_EnsureString, "for an object", [IsObject], String);
 
-InstallMethod(GV_EnsureString,
-"for a string",
-[IsString],
-x -> x);
+InstallMethod(GV_EnsureString, "for a string", [IsString], IdFunc);
 
 # Nodes
 

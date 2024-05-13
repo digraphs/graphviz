@@ -110,7 +110,8 @@ gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "n");;
 gap> s := GraphvizGraph();;
 gap> GraphvizAddNode(s, n);
-Error, Cannot add node objects directly to graphs. Please use the node's name.
+Error, it is not currently possible to add Graphviz node objects directly to G\
+raphviz graphs or digraphs, use the node's name instead
 
 #
 gap> STOP_TEST("graphviz package: node.tst", 0);

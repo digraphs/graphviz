@@ -211,3 +211,16 @@ DeclareOperation("GraphvizSetNodeColors", [IsGraphvizGraphOrDigraph, IsList]);
 DeclareOperation("GraphvizSetNodeLabels", [IsGraphvizGraphOrDigraph, IsList]);
 
 DeclareGlobalFunction("ErrorIfNotValidColor");
+
+# TODO doc
+DeclareOperation("\[\]", [IsGraphvizNode, IsObject]);
+# TODO doc
+DeclareOperation("\[\]\:\=", [IsGraphvizNode, IsObject, IsObject]);
+
+# TODO doc
+DeclareOperation("\[\]", [IsGraphvizEdge, IsObject]);
+# TODO doc
+DeclareOperation("\[\]\:\=", [IsGraphvizEdge, IsObject, IsObject]);
+
+# TODO doc
+DeclareOperation("\[\]", [IsGraphvizGraphOrDigraph, IsObject]);
