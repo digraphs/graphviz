@@ -341,7 +341,7 @@ InstallMethod(\=, "for IsGVNode and IsGVNode",
 {n1, n2} -> GraphvizName(n1) = GraphvizName(n2));
 
 ###############################################################################
-# Constuctors etc
+# Constructors etc
 ###############################################################################
 
 DeclareOperation("GV_Node", [IsGVGraph, IsString]);
