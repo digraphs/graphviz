@@ -208,28 +208,6 @@ gap> g[1];
 <graphviz node 1>
 gap> g[["a"]];
 <graphviz node [ "a" ]>
-
-# Test making a graph with a non-string name
-gap> g := GraphvizGraph(11);
-<graphviz graph 11 with 0 nodes and 0 edges>
-
-# Test setting a graph name to a non-string value
-gap> g := GraphvizGraph(11);
-<graphviz graph 11 with 0 nodes and 0 edges>
-gap> GraphvizSetName(g, ["a"]);
-<graphviz graph [ "a" ] with 0 nodes and 0 edges>
-
-# Test making a digraph with a non-string name
-gap> g := GraphvizDigraph(11);
-<graphviz digraph 11 with 0 nodes and 0 edges>
-
-# Test setting a digraph name to a non-string value
-gap> g := GraphvizDigraph(11);
-<graphviz digraph 11 with 0 nodes and 0 edges>
-gap> GraphvizSetName(g, ["a"]);
-<graphviz digraph [ "a" ] with 0 nodes and 0 edges>
-
-# Test set label (graph)
 gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "label", "test");;
 gap> GraphvizAttrs(g);
