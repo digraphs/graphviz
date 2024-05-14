@@ -96,7 +96,7 @@ DeclareOperation("GraphvizAttrs", [IsGraphvizObject]);
 # a numeral [-]?(.[0-9]⁺ | [0-9]⁺(.[0-9]*)? );
 # any double-quoted string ("...") possibly containing escaped quotes (\")¹;
 # an HTML string (<...>).
-# TODO specify
+# TODO specify
 DeclareOperation("GraphvizNodes", [IsGraphvizObjectWithSubobjects]);
 
 #! @Arguments graph
@@ -161,24 +161,28 @@ DeclareOperation("GraphvizAddEdge",
 #! @Arguments graph, filter, name
 #! @Returns the new subgraph.
 #! @Description Adds a subgraph to a graph.
-DeclareOperation("GraphvizAddSubgraph", [IsGraphvizObjectWithSubobjects, IsObject]);
+DeclareOperation("GraphvizAddSubgraph",
+[IsGraphvizObjectWithSubobjects, IsObject]);
 DeclareOperation("GraphvizAddSubgraph", [IsGraphvizObjectWithSubobjects]);
 
 #! @Arguments graph, filter, name
 #! @Returns the new context.
 #! @Description Adds a context to a graph.
-DeclareOperation("GraphvizAddContext", [IsGraphvizObjectWithSubobjects, IsObject]);
+DeclareOperation("GraphvizAddContext",
+[IsGraphvizObjectWithSubobjects, IsObject]);
 DeclareOperation("GraphvizAddContext", [IsGraphvizObjectWithSubobjects]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
 #! @Description Removes the node from the graph.
-DeclareOperation("GraphvizRemoveNode", [IsGraphvizObjectWithSubobjects, IsObject]);
+DeclareOperation("GraphvizRemoveNode",
+[IsGraphvizObjectWithSubobjects, IsObject]);
 
 #! @Arguments graph, predicate
 #! @Returns the modified graph.
 #! @Description Filters the graph's edges using the provided predicate.
-DeclareOperation("GraphvizFilterEdges", [IsGraphvizObjectWithSubobjects, IsFunction]);
+DeclareOperation("GraphvizFilterEdges",
+[IsGraphvizObjectWithSubobjects, IsFunction]);
 
 #! @Arguments graph, head_name, tail_name
 #! @Returns the modified graph.
@@ -217,8 +221,10 @@ DeclareOperation("GraphvizRemoveAttr", [IsGraphvizObject, IsObject]);
 #!  Should output the graphviz package representation of the object.
 DeclareOperation("Graphviz", [IsObject]);
 
-DeclareOperation("GraphvizSetNodeColors", [IsGraphvizObjectWithSubobjects, IsList]);
-DeclareOperation("GraphvizSetNodeLabels", [IsGraphvizObjectWithSubobjects, IsList]);
+DeclareOperation("GraphvizSetNodeColors",
+[IsGraphvizObjectWithSubobjects, IsList]);
+DeclareOperation("GraphvizSetNodeLabels",
+[IsGraphvizObjectWithSubobjects, IsList]);
 
 DeclareGlobalFunction("ErrorIfNotValidColor");
 

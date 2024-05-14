@@ -44,8 +44,10 @@ DeclareOperation("GV_EnsureString", [IsObject]);
 DeclareOperation("GV_HasNode", [IsGraphvizObjectWithSubobjects, IsObject]);
 
 DeclareOperation("GV_GetParent", [IsGraphvizObjectWithSubobjects]);
-DeclareOperation("GV_GraphTreeSearch", [IsGraphvizObjectWithSubobjects, IsFunction]);
-DeclareOperation("GV_FindGraphWithNode", [IsGraphvizObjectWithSubobjects, IsString]);
+DeclareOperation("GV_GraphTreeSearch",
+[IsGraphvizObjectWithSubobjects, IsFunction]);
+DeclareOperation("GV_FindGraphWithNode",
+[IsGraphvizObjectWithSubobjects, IsString]);
 DeclareOperation("GV_GetRoot", [IsGraphvizObjectWithSubobjects]);
 DeclareOperation("GV_EnclosingNonContext", [IsGraphvizObjectWithSubobjects]);
 DeclareOperation("GV_AddNode", [IsGraphvizObjectWithSubobjects, IsGraphvizNode]);

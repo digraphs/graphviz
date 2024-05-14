@@ -264,7 +264,8 @@ function(x)
   x!.Counter := x!.Counter + 1;
 end);
 
-InstallMethod(GV_GetCounter, "for a graphviz graph", [IsGraphvizObjectWithSubobjects],
+InstallMethod(GV_GetCounter, "for a graphviz graph",
+[IsGraphvizObjectWithSubobjects],
 x -> x!.Counter);
 
 # Converting strings
@@ -426,7 +427,8 @@ end);
 ###############################################################################
 
 # @ Return DOT graph head line.
-InstallMethod(GV_StringifyGraphHead, "for a string", [IsGraphvizObjectWithSubobjects],
+InstallMethod(GV_StringifyGraphHead, "for a string",
+[IsGraphvizObjectWithSubobjects],
 graph -> StringFormatted("graph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT digraph head line.
