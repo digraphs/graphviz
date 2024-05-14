@@ -40,9 +40,9 @@ gap> GraphvizAddNode(terminals, "LR_8");
 
 #
 gap> nodes := GraphvizAddContext(f, "nodes");
-<graphviz context nodes with 4 nodes and 0 edges>
+<graphviz context nodes with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(nodes, "node [shape=circle]");
-<graphviz context nodes with 4 nodes and 0 edges>
+<graphviz context nodes with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_0", "LR_2"), "label", "\"SS(B)\"");
 <graphviz edge (LR_0, LR_2)>
 gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_0", "LR_1"), "label", "\"SS(S)\"");

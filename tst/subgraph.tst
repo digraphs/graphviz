@@ -380,17 +380,41 @@ gap> o := GraphvizFindGraph(g, 1);
 gap> IsIdenticalObj(o, s);
 true
 
-# Test node numbers when subgraphs are present
+# Test edge and node numbers when subgraphs are present
 gap> g := GraphvizGraph("main");;
 gap> a := GraphvizAddSubgraph(g, 1);;
 gap> b := GraphvizAddSubgraph(g, 2);;
-gap> c := GraphvizAddSubgraph(a, 3);; # nested subgraph
+gap> c := GraphvizAddSubgraph(a, 3);;  # nested subgraph
 gap> GraphvizAddNode(g, 1);;
-gap> Perform([0..1], x -> GraphvizAddNode(a, 2 + x));;
-gap> Perform([0..2], x -> GraphvizAddNode(a, 4 + x));;
-gap> Perform([0..3], x -> GraphvizAddNode(a, 7 + x));;
+gap> GraphvizAddNode(a, 2);;
+gap> GraphvizAddNode(a, 3);;
+gap> GraphvizAddNode(b, 4);;
+gap> GraphvizAddNode(b, 5);;
+gap> GraphvizAddNode(b, 6);;
+gap> GraphvizAddNode(c, 7);;
+gap> GraphvizAddNode(c, 8);;
+gap> GraphvizAddNode(c, 9);;
+gap> GraphvizAddNode(c, 10);;
 gap> g;
 <graphviz graph main with 10 nodes and 0 edges>
+gap> GraphvizAddEdge(g, 1, 2);;
+gap> GraphvizAddEdge(a, 2, 3);;
+gap> GraphvizAddEdge(a, 3, 4);;
+gap> GraphvizAddEdge(b, 4, 5);;
+gap> GraphvizAddEdge(b, 5, 6);;
+gap> GraphvizAddEdge(b, 6, 7);;
+gap> GraphvizAddEdge(c, 7, 8);;
+gap> GraphvizAddEdge(c, 8, 9);;
+gap> GraphvizAddEdge(c, 9, 10);;
+gap> GraphvizAddEdge(c, 10, 1);;
+gap> g;
+<graphviz graph main with 10 nodes and 10 edges>
+gap> a;
+<graphviz graph 1 with 6 nodes and 6 edges>
+gap> b;
+<graphviz graph 2 with 3 nodes and 3 edges>
+gap> c;
+<graphviz graph 3 with 4 nodes and 4 edges>
 
 #
 gap> STOP_TEST("graphviz package: subgraph.tst", 0);

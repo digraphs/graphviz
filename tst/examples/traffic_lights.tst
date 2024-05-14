@@ -33,9 +33,9 @@ gap> for i in [2, 1] do
 
 #
 gap> ctx2 := GraphvizAddSubgraph(t, "ctx2");
-<graphviz digraph ctx2 with 6 nodes and 0 edges>
+<graphviz digraph ctx2 with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(ctx2, "node [shape=\"circle\", fixedsize=true, width=0.9]");
-<graphviz digraph ctx2 with 6 nodes and 0 edges>
+<graphviz digraph ctx2 with 0 nodes and 0 edges>
 gap> for i in [2, 1] do
 >     GraphvizAddNode(ctx2, StringFormatted("green{}", i));
 >     GraphvizAddNode(ctx2, StringFormatted("yellow{}", i));

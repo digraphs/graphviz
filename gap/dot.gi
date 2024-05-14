@@ -50,6 +50,8 @@ function(arg...)
       [msg]);
 end);
 
+DeclareOperation("GV_GraphSearchChildren", [IsGVGraph, IsFunction]);
+DeclareOperation("GV_GraphTreeSearch", [IsGVGraph, IsFunction]);
 DeclareOperation("GV_GetCounter", [IsGVGraph]);
 DeclareOperation("GV_IncCounter", [IsGVGraph]);
 DeclareCategory("IsGV_Map", IsObject);
@@ -549,11 +551,12 @@ function(g)
   local result, edges, nodes, kind;
 
   result := "";
-  edges  := Length(GraphvizEdges(g));
+  edges  := 0;
   nodes  := 0;
 
-  GV_GraphTreeSearch(g, function(s)
+  GV_GraphSearchChildren(g, function(s)
     nodes := nodes + Length(GV_MapNames(GraphvizNodes(s)));
+    edges := edges + Length(GraphvizEdges(s));
     return false;
   end);
 
@@ -728,7 +731,36 @@ InstallMethod(GV_GetParent,
 "for a graphviz graph",
 [IsGVGraph], graph -> graph!.Parent);
 
-DeclareOperation("GV_GraphTreeSearch", [IsGVGraph, IsFunction]);
+# tree search only on the children of the graph
+InstallMethod(GV_GraphSearchChildren,
+"for a graphviz graph and a predicate",
+[IsGVGraph, IsFunction],
+function(graph, pred)
+  local _, curr, queue, count, subs, key;
+
+  queue := [graph];
+  while Length(queue) > 0 do
+    count := Length(queue);
+
+    for _ in [1 .. count] do
+      # TODO: make sure this is using a linked list rather than an array list
+      curr := Remove(queue, 1);
+
+      # Check this graph (visit)
+      if pred(curr) then
+        return curr;
+      fi;
+
+      # Add children
+      subs := GraphvizSubgraphs(curr);
+      for key in GV_MapNames(subs) do
+        Add(queue, subs[key]);
+      od;
+    od;
+  od;
+
+  return fail;
+end);
 
 InstallMethod(GV_GraphTreeSearch,
 "for a graphviz graph and a predicate",
