@@ -361,7 +361,7 @@ InstallMethod(GraphvizAddEdge,
 InstallMethod(GraphvizAddSubgraph, "for a graphviz (di)graph and string",
 [IsGraphvizObjectWithSubobjects, IsString],
 function(gv, name)
-  local subgraphs, subgraph;
+  local subgraphs, root, subgraph;
 
   subgraphs := GraphvizSubgraphs(gv);
   if IsBound(subgraphs[name]) then
@@ -369,18 +369,16 @@ function(gv, name)
                    " a subgraph with name \"{}\"", name);
   fi;
 
-  # TODO why are the graph and context cases conflated here?
-  # Shouldn't this be something like
-  # if IsGraphvizContext(gv) then
-  # root := GraphvizRoot(gv);
-  # else
-  # root := gv;
-  # fi;
-  # Then use root instead of gv below?
-  if IsGraphvizDigraph(gv) then
-    subgraph := GV_Digraph(gv, name);
-  elif IsGraphvizGraph(gv) or IsGraphvizContext(gv) then
-    subgraph := GV_Graph(gv, name);
+  if IsGraphvizContext(gv) then
+    root := GV_EnclosingNonContext(gv);
+  else
+    root := gv;
+  fi;
+
+  if IsGraphvizDigraph(root) then
+    subgraph := GV_Digraph(root, name);
+  elif IsGraphvizGraph(root) then
+    subgraph := GV_Graph(root, name);
   fi;
 
   subgraphs[name] := subgraph;
