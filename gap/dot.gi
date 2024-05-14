@@ -527,8 +527,7 @@ end);
 # Stringify
 #############################################################################
 
-# TODO AsString -> String
-InstallMethod(AsString, "for a graphviz (di)graph",
+InstallMethod(String, "for a graphviz (di)graph",
 [IsGraphvizGraphOrDigraph], graph -> GV_StringifyGraph(graph, false));
 
 InstallMethod(GraphvizSetNodeLabels,

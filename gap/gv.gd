@@ -38,7 +38,7 @@ DeclareOperation("GV_Context", [IsGraphvizGraphOrDigraph, IsString]);
 DeclareOperation("GV_Map", []);
 DeclareOperation("GV_MapNames", [GV_IsMap]);
 
-# TODO required? Replace with AsString or just String?
+# TODO required? Replace with String or just String?
 DeclareOperation("GV_EnsureString", [IsObject]);
 
 DeclareOperation("GV_HasNode", [IsGraphvizGraphOrDigraph, IsObject]);

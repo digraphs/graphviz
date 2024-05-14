@@ -16,7 +16,7 @@ if not IsBound(Splash) then
       ErrorFormatted("the 1st argument must be a string or ",
                      "graphviz graph, found {}", TNAM_OBJ(arg[1]));
     elif IsGraphvizGraphOrDigraph(arg[1]) then
-      arg[1] := AsString(arg[1]);
+      arg[1] := String(arg[1]);
     fi;
     str := arg[1];
 

@@ -104,7 +104,7 @@ gap> GraphvizSetAttr(e, "fontsize=\"20\"");
 <graphviz graph ER with 0 nodes and 12 edges>
 
 #
-gap> AsString(e);
+gap> String(e);
 #I  invalid node name C-I using "C-I" instead
 #I  invalid node name S-C using "S-C" instead
 #I  invalid node name S-I using "S-I" instead

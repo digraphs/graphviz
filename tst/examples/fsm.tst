@@ -73,7 +73,7 @@ gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_8", "LR_5"), "label", "\"S(a)\""
 <graphviz edge (LR_8, LR_5)>
 
 #
-gap> AsString(f);
+gap> String(f);
 "//dot\ndigraph finite_state_machine {\n\trankdir=LR size=\"8,5\" \n// termina\
 ls context \n\tnode [shape=doublecircle] \n\tLR_0\n\tLR_3\n\tLR_4\n\tLR_8\n\tr\
 ankdir=LR size=\"8,5\" \n\n// nodes context \n\tnode [shape=circle] \n\tLR_2\n\

@@ -55,7 +55,7 @@ gap> GraphvizAddEdge(s, "node4:f2", "node6:f1");
 <graphviz edge (node4:f2, node6:f1)>
 gap> GraphvizAddEdge(s, "node4:f0", "node5:f1");
 <graphviz edge (node4:f0, node5:f1)>
-gap> AsString(s) =
+gap> String(s) =
 > "//dot\ndigraph g {\n\tnode [shape=record, height=.1] \n\tnode0 [label=\"<f0> \
 > |<f1> G|<f2>\"]\n\tnode1 [label=\"<f0> |<f1> E|<f2>\"]\n\tnode2 [label=\"<f0> \
 > |<f1> B|<f2>\"]\n\tnode3 [label=\"<f0> |<f1> F|<f2>\"]\n\tnode4 [label=\"<f0> \
