@@ -212,13 +212,18 @@ end);
 
 InstallOtherMethod(\[\],
 "for a graphviz map and an object",
-[GV_IsMap, IsObject],
+[GV_IsMap, IsString],
 function(m, o)
   if IsBound(m[o]) then
     return m!.Data.(o);
   fi;
   return fail;
 end);
+
+InstallOtherMethod(\[\],
+"for a graphviz map and an object",
+[GV_IsMap, IsObject],
+{m, o} -> m[String(o)]);
 
 InstallOtherMethod(\[\]\:\=,
 "for a graphviz map and two objects",

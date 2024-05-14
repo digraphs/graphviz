@@ -93,7 +93,6 @@ DeclareOperation("GraphvizNodes", [IsGraphvizGraphOrDigraph]);
 #! @Returns the subgraphs of the provided graphviz graph.
 #! @Description gets the subgraphs of a provided graphviz graph.
 DeclareOperation("GraphvizSubgraphs", [IsGraphvizGraphOrDigraph]);
-DeclareOperation("GraphvizGetSubgraph", [IsGraphvizGraphOrDigraph, IsObject]);
 
 #! @Arguments graph, name
 #! @Returns a graph with the provided name.
@@ -101,8 +100,9 @@ DeclareOperation("GraphvizGetSubgraph", [IsGraphvizGraphOrDigraph, IsObject]);
 #! Searches through the tree of subgraphs connected to this subgraph for a graph
 #! with the provided name.
 #! It returns the graph if it exists.
-#! If no such graph exists then it will return fail.
-DeclareOperation("GraphvizFindGraph", [IsGraphvizGraphOrDigraph, IsObject]);
+#! If no such graph exists then it will return <K>fail<K>.
+DeclareOperation("GraphvizFindSubgraphRecursive",
+[IsGraphvizGraphOrDigraph, IsObject]);
 
 #! @Arguments graph
 #! @Returns the edges of the provided graphviz graph.

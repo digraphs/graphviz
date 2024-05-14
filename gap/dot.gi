@@ -133,16 +133,6 @@ x -> x!.Tail);
 InstallMethod(GraphvizHead, "for a graphviz edge", [IsGraphvizEdge],
 x -> x!.Head);
 
-# TODO remove the next two?
-
-InstallMethod(GraphvizGetSubgraph, "for a graphviz (di)graph and string",
-[IsGraphvizGraphOrDigraph, IsString],
-{x, name} -> GraphvizSubgraphs(x)[name]);
-
-InstallMethod(GraphvizGetSubgraph, "for a graphviz (di)graph and an object",
-[IsGraphvizGraphOrDigraph, IsObject],
-{x, o} -> GraphvizSubgraphs(x)[String(o)]);
-
 # Accessing node attributes
 
 InstallMethod(\[\], "for a graphviz node and a string",
@@ -191,7 +181,6 @@ end);
 
 # Accessor for graphs and digraphs
 
-# TODO remove either this or GraphvizNode(gv, name);
 InstallMethod(\[\], "for a graphviz (di)graph and string",
 [IsGraphvizGraphOrDigraph, IsString],
 {graph, node} -> GraphvizNodes(graph)[node]);
@@ -200,17 +189,15 @@ InstallMethod(\[\], "for a graphviz (di)graph and object",
 [IsGraphvizGraphOrDigraph, IsObject],
 {g, o} -> g[String(o)]);
 
-# TODO is this named appropriately? Should it be FindSubgraph?
-
-InstallMethod(GraphvizFindGraph,
+InstallMethod(GraphvizFindSubgraphRecursive,
 "for a graphviz (di)graph and a string",
 [IsGraphvizGraphOrDigraph, IsString],
 {g, s} -> GV_GraphTreeSearch(g, v -> GraphvizName(v) = s));
 
-InstallMethod(GraphvizFindGraph,
+InstallMethod(GraphvizFindSubgraphRecursive,
 "for a graphviz (di)graph and a string",
 [IsGraphvizGraphOrDigraph, IsObject],
-{g, o} -> GraphvizFindGraph(g, String(o)));
+{g, o} -> GraphvizFindSubgraphRecursive(g, String(o)));
 
 #############################################################################
 # GraphvizSetName

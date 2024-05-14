@@ -260,31 +260,31 @@ me "a"
 gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddSubgraph(g, "b");;
-gap> GraphvizGetSubgraph(g, "a");
+gap> GraphvizSubgraphs(g)["a"];
 <graphviz digraph a with 0 nodes and 0 edges>
-gap> GraphvizGetSubgraph(g, "b");
+gap> GraphvizSubgraphs(g)["b"];
 <graphviz digraph b with 0 nodes and 0 edges>
-gap> GraphvizGetSubgraph(g, "d");
+gap> GraphvizSubgraphs(g)["d"];
 fail
 
 # Test getting context (subgraph) by name
 gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddContext(g, "c");;
-gap> GraphvizGetSubgraph(g, "a");
+gap> GraphvizSubgraphs(g)["a"];
 <graphviz digraph a with 0 nodes and 0 edges>
-gap> GraphvizGetSubgraph(g, "c");
+gap> GraphvizSubgraphs(g)["c"];
 <graphviz context c with 0 nodes and 0 edges>
 
 # Test adding a nested subgraph
 gap> g := GraphvizGraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddSubgraph(s1, "c");;
-gap> GraphvizGetSubgraph(g, "a");
+gap> GraphvizSubgraphs(g)["a"];
 <graphviz graph a with 0 nodes and 0 edges>
-gap> GraphvizGetSubgraph(g, "c");
+gap> GraphvizSubgraphs(g)["c"];
 fail
-gap> GraphvizGetSubgraph(s1, "c");
+gap> GraphvizSubgraphs(s1)["c"];
 <graphviz graph c with 0 nodes and 0 edges>
 
 # Test displaying a nested subgraph
@@ -307,13 +307,13 @@ gap> GraphvizAddContext(g, 11);
 # Test getting subgraphs with non-string names
 gap> g := GraphvizGraph();;
 gap> GraphvizAddContext(g, ["a"]);;
-gap> GraphvizGetSubgraph(g, ["a"]);
+gap> GraphvizSubgraphs(g)[["a"]];
 <graphviz context [ "a" ] with 0 nodes and 0 edges>
 
 # Test finding subgraph (parent)
 gap> g := GraphvizGraph("a");;
 gap> s := GraphvizAddSubgraph(g, "b");;
-gap> o := GraphvizFindGraph(s, "a");
+gap> o := GraphvizFindSubgraphRecursive(s, "a");
 <graphviz graph a with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, g);
 true
@@ -321,7 +321,7 @@ true
 # Test finding subgraph (child)
 gap> g := GraphvizGraph("a");;
 gap> s := GraphvizAddSubgraph(g, "b");;
-gap> o := GraphvizFindGraph(g, "b");
+gap> o := GraphvizFindSubgraphRecursive(g, "b");
 <graphviz graph b with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s);
 true
@@ -330,14 +330,14 @@ true
 gap> g  := GraphvizGraph("a");;
 gap> s  := GraphvizAddSubgraph(g, "b");;
 gap> s2 := GraphvizAddSubgraph(g, "c");;
-gap> o  := GraphvizFindGraph(s, "c");
+gap> o  := GraphvizFindSubgraphRecursive(s, "c");
 <graphviz graph c with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s2);
 true
 
 # Test finding subgraph (self)
 gap> g := GraphvizGraph("a");;
-gap> o := GraphvizFindGraph(g, "a");
+gap> o := GraphvizFindSubgraphRecursive(g, "a");
 <graphviz graph a with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, g);
 true
@@ -350,7 +350,7 @@ gap> a3 := GraphvizAddSubgraph(a2, "a3");;
 gap> b1 := GraphvizAddSubgraph(g, "b1");;
 gap> b2 := GraphvizAddSubgraph(b1, "b2");;
 gap> b3 := GraphvizAddSubgraph(b2, "b3");;
-gap> o  := GraphvizFindGraph(a3, "b3");
+gap> o  := GraphvizFindSubgraphRecursive(a3, "b3");
 <graphviz graph b3 with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, b3);
 true
@@ -376,7 +376,7 @@ gap> AsString(g);
 # Test finding subgraph (non-string name)
 gap> g := GraphvizGraph("r");;
 gap> s := GraphvizAddSubgraph(g, 1);;
-gap> o := GraphvizFindGraph(g, 1);
+gap> o := GraphvizFindSubgraphRecursive(g, 1);
 <graphviz graph 1 with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s);
 true
