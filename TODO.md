@@ -8,11 +8,11 @@
  - make it so when duplicates are added to global graph attrs the old values are automatically replaced
  - Improve behaviour around ':' syntax - mimic python package
 
-## TODO (ONCE THIS IS EMPTY THEN DONE!)
- - Ask about `Pluralize` - think james said to remove for old versions of gap
+## TODO
  - Update docs
  - Add more unit tests
  - Thoroughly test the ':' syntax more (might have broke when the quotes were changed)
+ - PrintObj method is missing for nodes (and probably edges)
 
 ## Other
  - relates to deadnaut github issue https://www.mankier.com/1/nauty-dretodot

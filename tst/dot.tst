@@ -37,6 +37,9 @@ gap> n := GraphvizAddNode(g, "test");;
 gap> GraphvizSetAttrs(n, rec(color := "red", label := "lab"));;
 gap> AsString(g);
 "//dot\ngraph  {\n\ttest [color=red, label=lab]\n}\n"
+gap> GraphvizRemoveNode(g, "banana");
+Error, the 2nd argument (node name string) "banana" is not a node of the 1st a\
+rgument (a graphviz (di)graph)
 
 # Test stringify with edge (digraphs)
 gap> g := GraphvizDigraph();;
