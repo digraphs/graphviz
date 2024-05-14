@@ -121,7 +121,6 @@ InstallMethod(\=, "for IsGraphvizNode and IsGraphvizNode",
 # Constructors etc
 ###############################################################################
 
-
 InstallMethod(GV_Map, "for no args",
 [], {} -> Objectify(GV_MapType, rec(Data := rec())));
 
@@ -239,7 +238,6 @@ InstallOtherMethod(IsBound\[\],
 "for a graphviz map and an object",
 [GV_IsMap, IsObject],
 {m, key} -> IsBound(m!.Data.(key)));
-
 
 InstallMethod(GV_MapNames, "for a graphviz map",
 [GV_IsMap], m -> RecNames(m!.Data));
@@ -417,7 +415,8 @@ InstallMethod(GV_StringifyDigraphHead, "for a string", [IsGraphvizDigraph],
 graph -> StringFormatted("digraph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT subgraph head line.
-InstallMethod(GV_StringifySubgraphHead, "for a string", [IsGraphvizGraphOrDigraph],
+InstallMethod(GV_StringifySubgraphHead, "for a string",
+[IsGraphvizGraphOrDigraph],
 graph -> StringFormatted("subgraph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT subgraph head line.

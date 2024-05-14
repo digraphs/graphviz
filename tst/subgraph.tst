@@ -253,7 +253,8 @@ edge [label=testing123] node[color=blue] edge[color=blue] \n\n}\n"
 gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddSubgraph(g, "a");
-Error, The graph already contains a subgraph with name a.
+Error, the 1st argument (a graphviz (di)graph) already has  a subgraph with na\
+me "a"
 
 # Test getting subgraphs by name
 gap> g := GraphvizDigraph();;
