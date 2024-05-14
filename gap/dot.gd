@@ -200,8 +200,6 @@ DeclareOperation("GraphvizRemoveAttr", [IsGraphvizObject, IsObject]);
 #! @Returns the dot representation of the graphviz object.
 # TODO document "String"
 
-# TODO PrintObj
-
 #! @Arguments obj
 #! @Returns the graphviz representation of the object.
 #! @Description

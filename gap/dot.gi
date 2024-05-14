@@ -530,6 +530,12 @@ end);
 InstallMethod(String, "for a graphviz (di)graph",
 [IsGraphvizGraphOrDigraph], graph -> GV_StringifyGraph(graph, false));
 
+InstallMethod(PrintObj, "for a graphviz (di)graph",
+[IsGraphvizGraphOrDigraph],
+function(gv)
+  Print(String(gv));
+end);
+
 InstallMethod(GraphvizSetNodeLabels,
 "for a graphviz (di)graph and list of colors",
 [IsGraphvizGraphOrDigraph, IsList],
