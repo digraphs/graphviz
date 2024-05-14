@@ -32,7 +32,7 @@ gap> GraphvizAddEdge(cluster0, "b", "d");
 gap> GraphvizAddEdge(cluster0, "c", "d");
 <graphviz edge (c, d)>
 gap> cluster1 := GraphvizAddSubgraph(g, "cluster1");
-<graphviz digraph cluster1 with 4 nodes and 0 edges>
+<graphviz digraph "cluster1" with 0 nodes and 0 edges>
 gap> GraphvizAddEdge(cluster1, "e", "g");
 <graphviz edge (e, g)>
 gap> GraphvizAddEdge(cluster1, "e", "f");

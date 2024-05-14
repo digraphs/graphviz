@@ -12,6 +12,8 @@
 # Constructors
 #############################################################################
 
+DeclareOperation("GV_GraphSearchChildren", [IsGraphvizGraphDigraphOrContext, IsFunction]);
+
 InstallMethod(GraphvizGraph, "for a string", [IsString],
 function(name)
   return Objectify(GV_GraphType,
@@ -68,11 +70,12 @@ function(g)
   local result, edges, nodes, kind;
 
   result := "";
-  edges  := Length(GraphvizEdges(g));
+  edges  := 0;
   nodes  := 0;
 
-  GV_GraphTreeSearch(g, function(s)
+  GV_GraphSearchChildren(g, function(s)
     nodes := nodes + Length(GV_MapNames(GraphvizNodes(s)));
+    edges := edges + Length(GraphvizEdges(s));
     return false;
   end);
 
@@ -207,6 +210,37 @@ InstallMethod(\[\], "for a graphviz (di)graph or context and string",
 InstallMethod(\[\], "for a graphviz (di)graph or context and object",
 [IsGraphvizGraphDigraphOrContext, IsObject],
 {g, o} -> g[String(o)]);
+
+# tree search only on the children of the graph
+InstallMethod(GV_GraphSearchChildren,
+"for a graphviz graph and a predicate",
+[IsGraphvizGraphDigraphOrContext, IsFunction],
+function(graph, pred)
+  local _, curr, queue, count, subs, key;
+
+  queue := [graph];
+  while Length(queue) > 0 do
+    count := Length(queue);
+
+    for _ in [1 .. count] do
+      # TODO: make sure this is using a linked list rather than an array list
+      curr := Remove(queue, 1);
+
+      # Check this graph (visit)
+      if pred(curr) then
+        return curr;
+      fi;
+
+      # Add children
+      subs := GraphvizSubgraphs(curr);
+      for key in GV_MapNames(subs) do
+        Add(queue, subs[key]);
+      od;
+    od;
+  od;
+
+  return fail;
+end);
 
 InstallMethod(GraphvizFindSubgraphRecursive,
 "for a graphviz (di)graph or context and a string",

@@ -36,9 +36,9 @@ gap> GraphvizAddNode(start, "student");
 
 #
 gap> context1 := GraphvizAddContext(e, "context1");
-<graphviz context context1 with 3 nodes and 0 edges>
+<graphviz context "context1" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(context1, "node [shape=\"ellipse\"]");
-<graphviz context context1 with 3 nodes and 0 edges>
+<graphviz context "context1" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(GraphvizAddNode(context1, "name0"), "label", "name");
 <graphviz node "name0">
 gap> GraphvizSetAttr(GraphvizAddNode(context1, "name1"), "label", "name");
@@ -54,10 +54,10 @@ gap> GraphvizAddNode(context1, "number");
 
 #
 gap> context2 := GraphvizAddContext(e, "context2");
-<graphviz context context2 with 9 nodes and 0 edges>
+<graphviz context "context2" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(context2,
 > "node [shape=\"diamond\", style=\"filled\", color=\"lightgrey\"]");
-<graphviz context context2 with 9 nodes and 0 edges>
+<graphviz context "context2" with 0 nodes and 0 edges>
 gap> GraphvizAddNode(context2, "C-I");
 <graphviz node "C-I">
 gap> GraphvizAddNode(context2, "S-C");
@@ -99,9 +99,9 @@ gap> GraphvizSetAttrs(GraphvizAddEdge(e, "course", "S-C"),
 
 #
 gap> GraphvizSetAttr(e, "label=\"Entity Relation Diagram\ndrawn by NEATO\"");
-<graphviz graph ER with 12 nodes and 12 edges>
+<graphviz graph "ER" with 12 nodes and 12 edges>
 gap> GraphvizSetAttr(e, "fontsize=\"20\"");
-<graphviz graph ER with 12 nodes and 12 edges>
+<graphviz graph "ER" with 12 nodes and 12 edges>
 
 #
 gap> AsString(e);
