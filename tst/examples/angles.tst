@@ -68,7 +68,7 @@ gap> GraphvizAddEdge(g, "n5", "n14");
 <graphviz edge (n5, n14)>
 
 #@if CompareVersionNumbers(GAPInfo.Version, "4.12.0")
-gap> Print(AsString(g));
+gap> Print(String(g));
 //dot
 digraph G {
 	bgcolor=blue 
@@ -103,7 +103,7 @@ ientangle=360,label="n9:n360", fontcolor=black] label="Radial Angle Variations\
 	n5 -> n14
 }
 #@else
-gap> Print(AsString(g));
+gap> Print(String(g));
 //dot
 digraph G {
 	bgcolor=blue 

@@ -35,7 +35,7 @@ gap> GraphvizAttrs(g);
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "test");;
 gap> GraphvizSetAttrs(n, rec(color := "red", label := "lab"));;
-gap> AsString(g);
+gap> String(g);
 "//dot\ngraph  {\n\ttest [color=red, label=lab]\n}\n"
 gap> GraphvizRemoveNode(g, "banana");
 Error, the 2nd argument (node name string) "banana" is not a node of the 1st a\
@@ -49,7 +49,7 @@ gap> GraphvizSetAttrs(a, rec(color := "blue"));;
 gap> GraphvizSetAttrs(b, rec(color := "red"));;
 gap> e := GraphvizAddEdge(g, a, b);;
 gap> GraphvizSetAttrs(e, rec(color := "green"));;
-gap> AsString(g);
+gap> String(g);
 "//dot\ndigraph  {\n\ta [color=blue]\n\tb [color=red]\n\ta -> b [color=green]\
 \n}\n"
 
@@ -61,13 +61,13 @@ gap> GraphvizSetAttrs(a, rec(color := "blue"));;
 gap> GraphvizSetAttrs(b, rec(color := "red"));;
 gap> e := GraphvizAddEdge(g, a, b);;
 gap> GraphvizSetAttrs(e, rec(color := "green"));;
-gap> AsString(g);
+gap> String(g);
 "//dot\ngraph  {\n\ta [color=blue]\n\tb [color=red]\n\ta -- b [color=green]\n}\
 \n"
 
 # Test stringify empty
 gap> g := GraphvizGraph();;
-gap> AsString(g);
+gap> String(g);
 "//dot\ngraph  {\n}\n"
 
 # Test unknown attributes (node)
@@ -87,24 +87,24 @@ gap> GraphvizSetAttr(g, "test", "false");
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "node");;
 gap> GraphvizSetAttr(n, "label", ">>hello");;
-gap> AsString(g);
+gap> String(g);
 "//dot\ngraph  {\n\tnode [label=\">>hello\"]\n}\n"
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "node");;
 gap> GraphvizSetAttr(n, "label", "before>>hello");;
-gap> AsString(g);
+gap> String(g);
 "//dot\ngraph  {\n\tnode [label=\"before>>hello\"]\n}\n"
 
 # Test strngifying labels with ">>" inside (edge attrs)
 gap> g := GraphvizGraph();;
 gap> e := GraphvizAddEdge(g, "a", "b");;
 gap> GraphvizSetAttr(e, "label", ">>hello");;
-gap> AsString(g);
+gap> String(g);
 "//dot\ngraph  {\n\ta\n\tb\n\ta -- b [label=\">>hello\"]\n}\n"
 gap> g := GraphvizGraph();;
 gap> e := GraphvizAddEdge(g, "a", "b");;
 gap> GraphvizSetAttr(e, "label", "before>>hello");;
-gap> AsString(g);
+gap> String(g);
 "//dot\ngraph  {\n\ta\n\tb\n\ta -- b [label=\"before>>hello\"]\n}\n"
 
 #

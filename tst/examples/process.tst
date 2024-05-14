@@ -47,7 +47,7 @@ gap> GraphvizAddEdge(graph, "runswap", "runmem");
 <graphviz edge (runswap, runmem)>
 gap> GraphvizAddEdge(graph, "new", "runmem");
 <graphviz edge (new, runmem)>
-gap> AsString(graph);
+gap> String(graph);
 "//dot\ngraph G {\n\tengine=\"sfdp\" \n\trun\n\tintr\n\trun -- intr\n\trunbl\n\
 \tintr -- runbl\n\trunbl -- run\n\tkernel\n\trun -- kernel\n\tzombie\n\tkernel\
  -- zombie\n\tsleep\n\tkernel -- sleep\n\trunmem\n\tkernel -- runmem\n\tswap\n\
