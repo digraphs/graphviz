@@ -40,7 +40,7 @@ DeclareCategory("IsGraphvizObject", IsObject);
 DeclareCategory("IsGraphvizGraphOrDigraph", IsGraphvizObject);
 DeclareCategory("IsGraphvizGraph", IsGraphvizGraphOrDigraph);
 DeclareCategory("IsGraphvizDigraph", IsGraphvizGraphOrDigraph);
-DeclareCategory("IsGraphvizContext", IsGraphvizGraphOrDigraph);
+DeclareCategory("IsGraphvizContext", IsGraphvizObject);
 DeclareCategory("IsGraphvizNode", IsGraphvizObject);
 DeclareCategory("IsGraphvizEdge", IsGraphvizObject);
 #! @EndGroup
