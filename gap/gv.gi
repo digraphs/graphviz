@@ -247,8 +247,10 @@ InstallOtherMethod(IsBound\[\],
 InstallMethod(GV_MapNames, "for a graphviz map",
 [GV_IsMap], m -> RecNames(m!.Data));
 
-InstallMethod(ViewString, "for a graphviz map", [GV_IsMap],
-m -> String(m!.Data));
+InstallMethod(ViewObj, "for a graphviz map", [GV_IsMap],
+function(m)
+  ViewObj(m!.Data);
+end);
 
 InstallMethod(Size, "for a graphviz map",
 [GV_IsMap], m -> Length(GV_MapNames(m)));
