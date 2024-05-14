@@ -61,7 +61,7 @@ function(e)
                          GraphvizName(tail));
 end);
 
-InstallMethod(ViewString, "for a graphviz (di)graph", [IsGraphvizGraphOrDigraph],
+InstallMethod(ViewString, "for a graphviz (di)graph", [IsGraphvizObjectWithSubobjects],
 function(g)
   local result, edges, nodes, kind;
 
@@ -101,14 +101,14 @@ InstallMethod(GraphvizAttrs, "for a graphviz object", [IsGraphvizObject],
 x -> x!.Attrs);
 
 InstallMethod(GraphvizNodes, "for a graphviz (di)graph",
-[IsGraphvizGraphOrDigraph], x -> x!.Nodes);
+[IsGraphvizObjectWithSubobjects], x -> x!.Nodes);
 
 InstallMethod(GraphvizEdges, "for a graphviz (di)graph",
-[IsGraphvizGraphOrDigraph], x -> x!.Edges);
+[IsGraphvizObjectWithSubobjects], x -> x!.Edges);
 
 InstallMethod(GraphvizEdges,
 "for a graphviz (di)graph, object, and object",
-[IsGraphvizGraphOrDigraph, IsObject, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject, IsObject],
 function(gv, head, tail)
     head := GraphvizNodes(gv)[head];
     if head = fail then
@@ -125,7 +125,7 @@ function(gv, head, tail)
 end);
 
 InstallMethod(GraphvizSubgraphs, "for a graphviz (di)graph",
-[IsGraphvizGraphOrDigraph], x -> x!.Subgraphs);
+[IsGraphvizObjectWithSubobjects], x -> x!.Subgraphs);
 
 InstallMethod(GraphvizTail, "for a graphviz edge", [IsGraphvizEdge],
 x -> x!.Tail);
@@ -182,21 +182,21 @@ end);
 # Accessor for graphs and digraphs
 
 InstallMethod(\[\], "for a graphviz (di)graph and string",
-[IsGraphvizGraphOrDigraph, IsString],
+[IsGraphvizObjectWithSubobjects, IsString],
 {graph, node} -> GraphvizNodes(graph)[node]);
 
 InstallMethod(\[\], "for a graphviz (di)graph and object",
-[IsGraphvizGraphOrDigraph, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject],
 {g, o} -> g[String(o)]);
 
 InstallMethod(GraphvizFindSubgraphRecursive,
 "for a graphviz (di)graph and a string",
-[IsGraphvizGraphOrDigraph, IsString],
+[IsGraphvizObjectWithSubobjects, IsString],
 {g, s} -> GV_GraphTreeSearch(g, v -> GraphvizName(v) = s));
 
 InstallMethod(GraphvizFindSubgraphRecursive,
 "for a graphviz (di)graph and a string",
-[IsGraphvizGraphOrDigraph, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject],
 {g, o} -> GraphvizFindSubgraphRecursive(g, String(o)));
 
 #############################################################################
@@ -204,14 +204,14 @@ InstallMethod(GraphvizFindSubgraphRecursive,
 #############################################################################
 
 InstallMethod(GraphvizSetName, "for a graphviz (di)graph and string",
-[IsGraphvizGraphOrDigraph, IsString],
+[IsGraphvizObjectWithSubobjects, IsString],
 function(x, name)
   x!.Name := name;
   return x;
 end);
 
 InstallMethod(GraphvizSetName, "for a graphviz (di)graph and string",
-[IsGraphvizGraphOrDigraph, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject],
 {g, o} -> GraphvizSetName(g, String(o)));
 
 #############################################################################
@@ -228,12 +228,8 @@ function(x, attrs)
   return x;
 end);
 
-# TODO not sure why these two methods are required? I.e. why is setting
-# attributes for graphs and digraphs different? Be good to have a comment
-# explaining why.
-
-InstallMethod(GraphvizSetAttr, "for a graphviz object, object, and object",
-[IsGraphvizObject, IsObject, IsObject],
+InstallMethod(GraphvizSetAttr, "for a graphviz node or edge, object, and object",
+[IsGraphvizNodeOrEdge, IsObject, IsObject],
 function(x, name, value)
 
   if not name in GV_KNOWN_ATTRS then
@@ -246,8 +242,9 @@ function(x, name, value)
   return x;
 end);
 
-InstallMethod(GraphvizSetAttr, "for a graphviz (di)graph, object, and object",
-[IsGraphvizGraphOrDigraph, IsObject, IsObject],
+InstallMethod(GraphvizSetAttr,
+"for a graphviz object with subobjects, object, and object",
+[IsGraphvizObjectWithSubobjects, IsObject, IsObject],
 function(x, name, value)
   local attrs, string;
 
@@ -272,7 +269,7 @@ function(x, name, value)
 end);
 
 InstallMethod(GraphvizSetAttr, "for a graphviz (di)graph and object",
-[IsGraphvizGraphOrDigraph, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject],
 function(x, value)
   local attrs;
   attrs := GraphvizAttrs(x);
@@ -286,7 +283,7 @@ end);
 #############################################################################
 
 InstallMethod(GraphvizAddNode, "for a graphviz (di)graph and string",
-[IsGraphvizGraphOrDigraph, IsString],
+[IsGraphvizObjectWithSubobjects, IsString],
 function(x, name)
   local node;
   node := GV_Node(x, name);
@@ -295,7 +292,7 @@ function(x, name)
 end);
 
 InstallMethod(GraphvizAddNode, "for a graphviz (di)graph and string",
-[IsGraphvizGraphOrDigraph, IsGraphvizNode],
+[IsGraphvizObjectWithSubobjects, IsGraphvizNode],
 function(gv, name)  # gaplint: disable=analyse-lvars
   ErrorNoReturn("it is not currently possible to add Graphviz node ",
                 "objects directly to Graphviz graphs or digraphs, use ",
@@ -304,7 +301,7 @@ end);
 
 InstallMethod(GraphvizAddNode,
 "for a graphviz (di)graph and string",
-[IsGraphvizGraphOrDigraph, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject],
 {x, name} -> GraphvizAddNode(x, String(name)));
 
 #############################################################################
@@ -313,7 +310,7 @@ InstallMethod(GraphvizAddNode,
 
 InstallMethod(GraphvizAddEdge,
 "for a graphviz (di)graph and two graphviz nodes",
-[IsGraphvizGraphOrDigraph, IsGraphvizNode, IsGraphvizNode],
+[IsGraphvizObjectWithSubobjects, IsGraphvizNode, IsGraphvizNode],
 function(x, head, tail)
   local edge, head_name, tail_name;
 
@@ -335,7 +332,7 @@ end);
 
 InstallMethod(GraphvizAddEdge,
 "for a graphviz (di)graph and two strings",
-[IsGraphvizGraphOrDigraph, IsString, IsString],
+[IsGraphvizObjectWithSubobjects, IsString, IsString],
 function(x, head, tail)
   local head_node, tail_node;
 
@@ -354,7 +351,7 @@ end);
 
 InstallMethod(GraphvizAddEdge,
 "for a graphviz (di)graph and two objects",
-[IsGraphvizGraphOrDigraph, IsObject, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject, IsObject],
 {gv, o1, o2} -> GraphvizAddEdge(gv, String(o1), String(o2)));
 
 #############################################################################
@@ -362,7 +359,7 @@ InstallMethod(GraphvizAddEdge,
 #############################################################################
 
 InstallMethod(GraphvizAddSubgraph, "for a graphviz (di)graph and string",
-[IsGraphvizGraphOrDigraph, IsString],
+[IsGraphvizObjectWithSubobjects, IsString],
 function(gv, name)
   local subgraphs, subgraph;
 
@@ -391,18 +388,18 @@ function(gv, name)
 end);
 
 InstallMethod(GraphvizAddSubgraph, "for a graphviz (di)graph and an object",
-[IsGraphvizGraphOrDigraph, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject],
 {g, o} -> GraphvizAddSubgraph(g, String(o)));
 
 InstallMethod(GraphvizAddSubgraph, "for a graphviz (di)graph",
-[IsGraphvizGraphOrDigraph],
+[IsGraphvizObjectWithSubobjects],
 graph -> GraphvizAddSubgraph(graph,
                              StringFormatted("no_name_{}",
                                              GV_GetCounter(graph))));
 
 InstallMethod(GraphvizAddContext,
 "for a graphviz (di)graph and a string",
-[IsGraphvizGraphOrDigraph, IsString],
+[IsGraphvizObjectWithSubobjects, IsString],
 function(graph, name)
   local subgraphs, ctx;
 
@@ -423,20 +420,20 @@ end);
 
 InstallMethod(GraphvizAddContext,
 "for a graphviz (di)graph",
-[IsGraphvizGraphOrDigraph],
+[IsGraphvizObjectWithSubobjects],
 g -> GraphvizAddContext(g, StringFormatted("no_name_{}", GV_GetCounter(g))));
 
 InstallMethod(GraphvizAddContext,
 "for a graphviz (di)graph and an object",
-[IsGraphvizGraphOrDigraph, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject],
 {g, o} -> GraphvizAddContext(g, String(o)));
 
 InstallMethod(GraphvizRemoveNode, "for a graphviz (di)graph and node",
-[IsGraphvizGraphOrDigraph, IsGraphvizNode],
+[IsGraphvizObjectWithSubobjects, IsGraphvizNode],
 {g, node} -> GraphvizRemoveNode(g, GraphvizName(node)));
 
 InstallMethod(GraphvizRemoveNode, "for a graphviz (di)graph and a string",
-[IsGraphvizGraphOrDigraph, IsString],
+[IsGraphvizObjectWithSubobjects, IsString],
 function(g, name)
   local nodes;
   nodes := GraphvizNodes(g);
@@ -462,11 +459,11 @@ function(g, name)
 end);
 
 InstallMethod(GraphvizRemoveNode, "for a graphviz (di)graph and a string",
-[IsGraphvizGraphOrDigraph, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject],
 {g, o} -> GraphvizRemoveNode(g, String(o)));
 
 InstallMethod(GraphvizFilterEdges, "for a graphviz (di)graph and edge filter",
-[IsGraphvizGraphOrDigraph, IsFunction],
+[IsGraphvizObjectWithSubobjects, IsFunction],
 function(g, filter)
   local edge, idx, edges;
 
@@ -484,7 +481,7 @@ function(g, filter)
 end);
 
 InstallMethod(GraphvizRemoveEdges, "for a graphviz (di)graph and two strings",
-[IsGraphvizGraphOrDigraph, IsString, IsString],
+[IsGraphvizObjectWithSubobjects, IsString, IsString],
 function(g, hn, tn)
   GraphvizFilterEdges(g,
     function(e)
@@ -503,7 +500,7 @@ function(g, hn, tn)
 end);
 
 InstallMethod(GraphvizRemoveEdges, "for a graphviz (di)graph and two objects",
-[IsGraphvizGraphOrDigraph, IsObject, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject, IsObject],
 {gv, o1, o2} -> GraphvizRemoveEdges(gv, String(o1), String(o2)));
 
 InstallMethod(GraphvizRemoveAttr, "for a graphviz object and an object",
@@ -517,7 +514,7 @@ function(obj, attr)
 end);
 
 InstallMethod(GraphvizRemoveAttr, "for a graphviz (di)graph and an object",
-[IsGraphvizGraphOrDigraph, IsObject],
+[IsGraphvizObjectWithSubobjects, IsObject],
 function(obj, attr)
   local attrs;
   attrs      := GraphvizAttrs(obj);
@@ -530,17 +527,17 @@ end);
 #############################################################################
 
 InstallMethod(String, "for a graphviz (di)graph",
-[IsGraphvizGraphOrDigraph], graph -> GV_StringifyGraph(graph, false));
+[IsGraphvizObjectWithSubobjects], graph -> GV_StringifyGraph(graph, false));
 
 InstallMethod(PrintObj, "for a graphviz (di)graph",
-[IsGraphvizGraphOrDigraph],
+[IsGraphvizObjectWithSubobjects],
 function(gv)
   Print(String(gv));
 end);
 
 InstallMethod(GraphvizSetNodeLabels,
 "for a graphviz (di)graph and list of colors",
-[IsGraphvizGraphOrDigraph, IsList],
+[IsGraphvizObjectWithSubobjects, IsList],
 function(gv, labels)
   local nodes, i;
   if Size(GraphvizNodes(gv)) <> Size(labels) then
@@ -558,7 +555,7 @@ end);
 
 InstallMethod(GraphvizSetNodeColors,
 "for a graphviz (di)graph and list of colors",
-[IsGraphvizGraphOrDigraph, IsList],
+[IsGraphvizObjectWithSubobjects, IsList],
 function(gv, colors)
   local nodes, i;
 

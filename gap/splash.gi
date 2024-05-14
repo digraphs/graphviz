@@ -22,10 +22,10 @@ function(arg...)
 
   if IsEmpty(arg) then
     ErrorNoReturn("the must be at least 1 argument, found none");
-  elif not IsString(arg[1]) and not IsGraphvizGraphOrDigraph(arg[1]) then
+  elif not IsString(arg[1]) and not IsGraphvizObjectWithSubobjects(arg[1]) then
     ErrorFormatted("the 1st argument must be a string or ",
                    "graphviz graph, found {}", TNAM_OBJ(arg[1]));
-  elif IsGraphvizGraphOrDigraph(arg[1]) then
+  elif IsGraphvizObjectWithSubobjects(arg[1]) then
     file := GraphvizName(arg[1]);
     for i in [1 .. Length(file)] do
       if not IsAlphaChar(file[i]) and not IsDigitChar(file[i]) then
