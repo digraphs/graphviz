@@ -259,9 +259,6 @@ function(x, name, value)
   attrs := GraphvizAttrs(x);
   name := String(name);
   value := String(value);
-  if ' ' in name then
-    name := StringFormatted("\"{}\"", name);
-  fi;
   if ' ' in value then
     # Replace with call to GV_QuoteName or whatever TODO
     value := StringFormatted("\"{}\"", value);
@@ -410,6 +407,7 @@ function(graph, name)
   subgraphs := GraphvizSubgraphs(graph);
   # TODO is GraphvizSubgraphs appropriately named? It seems to contain both
   # contexts and subgraphs, rather than just subgraphs as the name suggests
+  # See https://github.com/digraphs/graphviz/issues/19
   if IsBound(subgraphs[name]) then
     # TODO why are we talking about subgraphs in the error?
     ErrorFormatted("the 1st argument (a graphviz (di)graph) already has ",
@@ -441,9 +439,15 @@ InstallMethod(GraphvizRemoveNode, "for a graphviz (di)graph and a string",
 [IsGraphvizGraphOrDigraph, IsString],
 function(g, name)
   local nodes;
-  # TODO error if there's no such node?
   nodes := GraphvizNodes(g);
-  Unbind(nodes[name]);
+  if nodes[name] <> fail then
+    Unbind(nodes[name]);
+  else
+    # Don't just silently do nothing
+    ErrorFormatted("the 2nd argument (node name string) \"{}\"",
+                   " is not a node of the 1st argument (a graphviz (di)graph)",
+                   name);
+  fi;
 
   # remove incident edges
   GraphvizFilterEdges(g,
