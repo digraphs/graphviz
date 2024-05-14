@@ -228,7 +228,10 @@ function(x, attrs)
   return x;
 end);
 
-# TODO combine this and the next method
+# TODO not sure why these two methods are required? I.e. why is setting
+# attributes for graphs and digraphs different? Be good to have a comment
+# explaining why.
+
 InstallMethod(GraphvizSetAttr, "for a graphviz object, object, and object",
 [IsGraphvizObject, IsObject, IsObject],
 function(x, name, value)
@@ -243,17 +246,16 @@ function(x, name, value)
   return x;
 end);
 
-InstallMethod(GraphvizSetAttr, "for a graphviz (di)graph, object and object",
+InstallMethod(GraphvizSetAttr, "for a graphviz (di)graph, object, and object",
 [IsGraphvizGraphOrDigraph, IsObject, IsObject],
 function(x, name, value)
-  local attrs, string, msg;
+  local attrs, string;
 
   if not name in GV_KNOWN_ATTRS then
-    msg := Concatenation(
-           StringFormatted("unknown attribute \"{}\", the", name),
-           " graphviz object may no longer be valid, it can",
-           " be removed using GraphvizRemoveAttr");
-    Info(InfoWarning, 1, msg);
+    Info(InfoWarning, 1,
+         StringFormatted("unknown attribute \"{}\", the", name),
+         " graphviz object may no longer be valid, it can",
+         " be removed using GraphvizRemoveAttr");
   fi;
 
   attrs := GraphvizAttrs(x);
