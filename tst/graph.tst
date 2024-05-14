@@ -33,24 +33,24 @@ gap> n := GraphvizAddNode(g, "n");
 gap> g;
 <graphviz graph with 1 node and 0 edges>
 gap> GraphvizNodes(g);
-rec( n := <object> )
+rec( n := <graphviz node n> )
 gap> GraphvizAddNode(g, "x");
 <graphviz node x>
 gap> g;
 <graphviz graph with 2 nodes and 0 edges>
 gap> GraphvizNodes(g);
-rec( n := <object>, x := <object> )
+rec( n := <graphviz node n>, x := <graphviz node x> )
 
 # Test add node (name)
 gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, "n");
 <graphviz node n>
 gap> GraphvizNodes(g);
-rec( n := <object> )
+rec( n := <graphviz node n> )
 gap> GraphvizAddNode(g, "x");
 <graphviz node x>
 gap> GraphvizNodes(g);
-rec( n := <object>, x := <object> )
+rec( n := <graphviz node n>, x := <graphviz node x> )
 
 # Test has nodes
 gap> g := GraphvizGraph();;
@@ -99,7 +99,7 @@ gap> GraphvizAddEdge(g, "a", "b");;
 gap> GraphvizAddEdge(g, "a", "c");
 <graphviz edge (a, c)>
 gap> GraphvizNodes(g);
-rec( a := <object>, b := <object>, c := <object> )
+rec( a := <graphviz node a>, b := <graphviz node b>, c := <graphviz node c> )
 gap> GraphvizAddEdge(g, "c", "a");
 <graphviz edge (c, a)>
 gap> GraphvizAddEdge(g, "b", "d");
@@ -126,13 +126,13 @@ gap> GraphvizAddEdge(g, c, d);;
 gap> GraphvizRemoveNode(g, a);
 <graphviz graph with 3 nodes and 1 edge>
 gap> GraphvizNodes(g);
-rec( b := <object>, c := <object>, d := <object> )
+rec( b := <graphviz node b>, c := <graphviz node c>, d := <graphviz node d> )
 gap> GraphvizEdges(g);
 [ <graphviz edge (c, d)> ]
 gap> GraphvizRemoveNode(g, b);
 <graphviz graph with 2 nodes and 1 edge>
 gap> GraphvizNodes(g);
-rec( c := <object>, d := <object> )
+rec( c := <graphviz node c>, d := <graphviz node d> )
 
 # Test removing node
 gap> g := GraphvizGraph();;
@@ -141,13 +141,13 @@ gap> GraphvizAddEdge(g, "c", "d");;
 gap> GraphvizRemoveNode(g, "a");
 <graphviz graph with 3 nodes and 1 edge>
 gap> GraphvizNodes(g);
-rec( b := <object>, c := <object>, d := <object> )
+rec( b := <graphviz node b>, c := <graphviz node c>, d := <graphviz node d> )
 gap> GraphvizEdges(g);
 [ <graphviz edge (c, d)> ]
 gap> GraphvizRemoveNode(g, "b");
 <graphviz graph with 2 nodes and 1 edge>
 gap> GraphvizNodes(g);
-rec( c := <object>, d := <object> )
+rec( c := <graphviz node c>, d := <graphviz node d> )
 
 # Test renaming graph
 gap> g := GraphvizGraph();;

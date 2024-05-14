@@ -48,10 +48,10 @@ InstallMethod(GraphvizDigraph, "for no args", [], {} -> GraphvizDigraph(""));
 # ViewString
 #############################################################################
 
-InstallMethod(ViewString, "for a graphviz node", [IsGraphvizNode],
+InstallMethod(PrintString, "for a graphviz node", [IsGraphvizNode],
 n -> StringFormatted("<graphviz node {}>", GraphvizName(n)));
 
-InstallMethod(ViewString, "for a graphviz edge", [IsGraphvizEdge],
+InstallMethod(PrintString, "for a graphviz edge", [IsGraphvizEdge],
 function(e)
   local head, tail;
   head := GraphvizHead(e);
@@ -61,7 +61,8 @@ function(e)
                          GraphvizName(tail));
 end);
 
-InstallMethod(ViewString, "for a graphviz (di)graph", [IsGraphvizObjectWithSubobjects],
+InstallMethod(PrintString, "for a graphviz object with subobjects",
+[IsGraphvizObjectWithSubobjects],
 function(g)
   local result, edges, nodes, kind;
 
@@ -406,9 +407,8 @@ function(graph, name)
   # contexts and subgraphs, rather than just subgraphs as the name suggests
   # See https://github.com/digraphs/graphviz/issues/19
   if IsBound(subgraphs[name]) then
-    # TODO why are we talking about subgraphs in the error?
     ErrorFormatted("the 1st argument (a graphviz (di)graph) already has ",
-                   " a subgraph with name \"{}\"", name);
+                   " a context or subgraph with name \"{}\"", name);
   fi;
 
   ctx             := GV_Context(graph, name);
@@ -527,11 +527,14 @@ end);
 InstallMethod(String, "for a graphviz (di)graph",
 [IsGraphvizObjectWithSubobjects], graph -> GV_StringifyGraph(graph, false));
 
-InstallMethod(PrintObj, "for a graphviz (di)graph",
-[IsGraphvizObjectWithSubobjects],
-function(gv)
-  Print(String(gv));
-end);
+# Can't do the following because it conflicts with the PrintString above, we
+# leave this here as a reminder.
+
+# InstallMethod(PrintObj, "for a graphviz object with subobjects",
+# [IsGraphvizObjectWithSubobjects],
+# function(gv)
+#   Print(String(gv));
+# end);
 
 InstallMethod(GraphvizSetNodeLabels,
 "for a graphviz (di)graph and list of colors",
@@ -574,11 +577,10 @@ function(c)
     if IsString(c) then
       c := StringFormatted("\"{}\"", c);
     fi;
-    ErrorFormatted("invalid color {} ({}), ",
-        "valid colors are RGB values or names from ",
-        "the GraphViz 2.44.1 X11 Color Scheme",
-        " http://graphviz.org/doc/info/colors.html",
-        c,
-        TNAM_OBJ(c));
+    ErrorFormatted("invalid color {} ({}), valid colors are RGB values ",
+                   "or names from the GraphViz 2.44.1 X11 Color Scheme",
+                   " http://graphviz.org/doc/info/colors.html",
+                   c,
+                   TNAM_OBJ(c));
   fi;
 end);
