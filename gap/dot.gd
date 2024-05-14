@@ -86,7 +86,14 @@ DeclareOperation("GraphvizAttrs", [IsGraphvizObject]);
 #! @Arguments graph
 #! @Returns the nodes of the provided graphviz graph.
 #! @Description Gets the nodes of the provided graphviz graph.
-#! Node names can only be [a-zA-Z0-9_£] TODO check exact docs.
+# From https://graphviz.org/doc/info/lang.html
+# An ID is one of the following:
+# Any string of alphabetic ([a-zA-Z\200-\377]) characters, underscores ('_') or
+# digits([0-9]), not beginning with a digit;
+# a numeral [-]?(.[0-9]⁺ | [0-9]⁺(.[0-9]*)? );
+# any double-quoted string ("...") possibly containing escaped quotes (\")¹;
+# an HTML string (<...>).
+# TODO specify
 DeclareOperation("GraphvizNodes", [IsGraphvizGraphOrDigraph]);
 
 #! @Arguments graph
