@@ -11,46 +11,46 @@
 ## This file contains declarations of the internal/private functions for the
 ## graphviz package.
 
-DeclareOperation("GV_GetCounter", [IsGraphvizGraphOrDigraph]);
-DeclareOperation("GV_IncCounter", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_GetCounter", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_IncCounter", [IsGraphvizObjectWithSubobjects]);
 DeclareCategory("GV_IsMap", IsObject);
 DeclareAttribute("Size", GV_IsMap);
 
-DeclareOperation("GV_StringifyGraphHead", [IsGraphvizGraphOrDigraph]);
-DeclareOperation("GV_StringifyDigraphHead", [IsGraphvizGraphOrDigraph]);
-DeclareOperation("GV_StringifySubgraphHead", [IsGraphvizGraphOrDigraph]);
-DeclareOperation("GV_StringifyContextHead", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_StringifyGraphHead", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_StringifyDigraphHead", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_StringifySubgraphHead", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_StringifyContextHead", [IsGraphvizObjectWithSubobjects]);
 DeclareOperation("GV_StringifyNode", [IsGraphvizNode]);
-DeclareOperation("GV_StringifyGraphAttrs", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_StringifyGraphAttrs", [IsGraphvizObjectWithSubobjects]);
 DeclareOperation("GV_StringifyNodeEdgeAttrs", [GV_IsMap]);
-DeclareOperation("GV_StringifyGraph", [IsGraphvizGraphOrDigraph, IsBool]);
+DeclareOperation("GV_StringifyGraph", [IsGraphvizObjectWithSubobjects, IsBool]);
 
-DeclareOperation("GV_FindNode", [IsGraphvizGraphOrDigraph, IsObject]);
+DeclareOperation("GV_FindNode", [IsGraphvizObjectWithSubobjects, IsObject]);
 
 DeclareOperation("GV_Pluralize", [IsInt, IsString]);
 
-DeclareOperation("GV_Node", [IsGraphvizGraphOrDigraph, IsString]);
+DeclareOperation("GV_Node", [IsGraphvizObjectWithSubobjects, IsString]);
 DeclareOperation("GV_Edge",
-[IsGraphvizGraphOrDigraph, IsGraphvizNode, IsGraphvizNode]);
-DeclareOperation("GV_Graph", [IsGraphvizGraphOrDigraph, IsString]);
+[IsGraphvizObjectWithSubobjects, IsGraphvizNode, IsGraphvizNode]);
+DeclareOperation("GV_Graph", [IsGraphvizObjectWithSubobjects, IsString]);
 DeclareOperation("GV_Digraph", [IsGraphvizDigraph, IsString]);
-DeclareOperation("GV_Context", [IsGraphvizGraphOrDigraph, IsString]);
+DeclareOperation("GV_Context", [IsGraphvizObjectWithSubobjects, IsString]);
 DeclareOperation("GV_Map", []);
 DeclareOperation("GV_MapNames", [GV_IsMap]);
 
 # TODO required? Replace with String or just String?
 DeclareOperation("GV_EnsureString", [IsObject]);
 
-DeclareOperation("GV_HasNode", [IsGraphvizGraphOrDigraph, IsObject]);
+DeclareOperation("GV_HasNode", [IsGraphvizObjectWithSubobjects, IsObject]);
 
-DeclareOperation("GV_GetParent", [IsGraphvizGraphOrDigraph]);
-DeclareOperation("GV_GraphTreeSearch", [IsGraphvizGraphOrDigraph, IsFunction]);
-DeclareOperation("GV_FindGraphWithNode", [IsGraphvizGraphOrDigraph, IsString]);
-DeclareOperation("GV_GetRoot", [IsGraphvizGraphOrDigraph]);
-DeclareOperation("GV_AddNode", [IsGraphvizGraphOrDigraph, IsGraphvizNode]);
-DeclareOperation("GV_AddEdge", [IsGraphvizGraphOrDigraph, IsGraphvizEdge]);
+DeclareOperation("GV_GetParent", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_GraphTreeSearch", [IsGraphvizObjectWithSubobjects, IsFunction]);
+DeclareOperation("GV_FindGraphWithNode", [IsGraphvizObjectWithSubobjects, IsString]);
+DeclareOperation("GV_GetRoot", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_AddNode", [IsGraphvizObjectWithSubobjects, IsGraphvizNode]);
+DeclareOperation("GV_AddEdge", [IsGraphvizObjectWithSubobjects, IsGraphvizEdge]);
 DeclareOperation("GV_GetIdx", [IsGraphvizObject]);
-DeclareOperation("GV_ConstructHistory", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GV_ConstructHistory", [IsGraphvizObjectWithSubobjects]);
 
 DeclareGlobalFunction("GV_IsValidColor");
 DeclareGlobalFunction("GV_ErrorIfNotNodeColoring");

@@ -37,12 +37,15 @@
 #! which is a subcategory of is IsGraphvizGraph.
 
 DeclareCategory("IsGraphvizObject", IsObject);
-DeclareCategory("IsGraphvizGraphOrDigraph", IsGraphvizObject);
-DeclareCategory("IsGraphvizGraph", IsGraphvizGraphOrDigraph);
-DeclareCategory("IsGraphvizDigraph", IsGraphvizGraphOrDigraph);
-DeclareCategory("IsGraphvizContext", IsGraphvizObject);
-DeclareCategory("IsGraphvizNode", IsGraphvizObject);
-DeclareCategory("IsGraphvizEdge", IsGraphvizObject);
+
+DeclareCategory("IsGraphvizObjectWithSubobjects", IsGraphvizObject);
+DeclareCategory("IsGraphvizGraph", IsGraphvizObjectWithSubobjects);
+DeclareCategory("IsGraphvizDigraph", IsGraphvizObjectWithSubobjects);
+DeclareCategory("IsGraphvizContext", IsGraphvizObjectWithSubobjects);
+
+DeclareCategory("IsGraphvizNodeOrEdge", IsGraphvizObject);
+DeclareCategory("IsGraphvizNode", IsGraphvizNodeOrEdge);
+DeclareCategory("IsGraphvizEdge", IsGraphvizNodeOrEdge);
 #! @EndGroup
 
 #! @Section Constructors
@@ -94,12 +97,12 @@ DeclareOperation("GraphvizAttrs", [IsGraphvizObject]);
 # any double-quoted string ("...") possibly containing escaped quotes (\")¹;
 # an HTML string (<...>).
 # TODO specify
-DeclareOperation("GraphvizNodes", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GraphvizNodes", [IsGraphvizObjectWithSubobjects]);
 
 #! @Arguments graph
 #! @Returns the subgraphs of the provided graphviz graph.
 #! @Description gets the subgraphs of a provided graphviz graph.
-DeclareOperation("GraphvizSubgraphs", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GraphvizSubgraphs", [IsGraphvizObjectWithSubobjects]);
 
 #! @Arguments graph, name
 #! @Returns a graph with the provided name.
@@ -109,14 +112,14 @@ DeclareOperation("GraphvizSubgraphs", [IsGraphvizGraphOrDigraph]);
 #! It returns the graph if it exists.
 #! If no such graph exists then it will return <K>fail<K>.
 DeclareOperation("GraphvizFindSubgraphRecursive",
-[IsGraphvizGraphOrDigraph, IsObject]);
+[IsGraphvizObjectWithSubobjects, IsObject]);
 
 #! @Arguments graph
 #! @Returns the edges of the provided graphviz graph.
 #! @Description Gets the edges of the provided graphviz graph.
-DeclareOperation("GraphvizEdges", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GraphvizEdges", [IsGraphvizObjectWithSubobjects]);
 DeclareOperation("GraphvizEdges",
-[IsGraphvizGraphOrDigraph, IsObject, IsObject]);
+[IsGraphvizObjectWithSubobjects, IsObject, IsObject]);
 
 #! @Subsection For only edges.
 
@@ -138,13 +141,13 @@ DeclareOperation("GraphvizTail", [IsGraphvizEdge]);
 #! @Arguments graph, name
 #! @Returns the modified graph.
 #! @Description Sets the name of a graphviz graph or digraph.
-DeclareOperation("GraphvizSetName", [IsGraphvizGraphOrDigraph, IsObject]);
+DeclareOperation("GraphvizSetName", [IsGraphvizObjectWithSubobjects, IsObject]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
 #! @Description Adds a node to the graph.
 #! If a node with the same name is already present the operation fails.
-DeclareOperation("GraphvizAddNode", [IsGraphvizGraphOrDigraph, IsObject]);
+DeclareOperation("GraphvizAddNode", [IsGraphvizObjectWithSubobjects, IsObject]);
 
 #! @Arguments graph, edge
 #! @Returns the modified graph.
@@ -153,36 +156,36 @@ DeclareOperation("GraphvizAddNode", [IsGraphvizGraphOrDigraph, IsObject]);
 #! added to the graph. If different nodes with the same name are in the graph
 #! then the operation fails.
 DeclareOperation("GraphvizAddEdge",
-[IsGraphvizGraphOrDigraph, IsObject, IsObject]);
+[IsGraphvizObjectWithSubobjects, IsObject, IsObject]);
 
 #! @Arguments graph, filter, name
 #! @Returns the new subgraph.
 #! @Description Adds a subgraph to a graph.
-DeclareOperation("GraphvizAddSubgraph", [IsGraphvizGraphOrDigraph, IsObject]);
-DeclareOperation("GraphvizAddSubgraph", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GraphvizAddSubgraph", [IsGraphvizObjectWithSubobjects, IsObject]);
+DeclareOperation("GraphvizAddSubgraph", [IsGraphvizObjectWithSubobjects]);
 
 #! @Arguments graph, filter, name
 #! @Returns the new context.
 #! @Description Adds a context to a graph.
-DeclareOperation("GraphvizAddContext", [IsGraphvizGraphOrDigraph, IsObject]);
-DeclareOperation("GraphvizAddContext", [IsGraphvizGraphOrDigraph]);
+DeclareOperation("GraphvizAddContext", [IsGraphvizObjectWithSubobjects, IsObject]);
+DeclareOperation("GraphvizAddContext", [IsGraphvizObjectWithSubobjects]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
 #! @Description Removes the node from the graph.
-DeclareOperation("GraphvizRemoveNode", [IsGraphvizGraphOrDigraph, IsObject]);
+DeclareOperation("GraphvizRemoveNode", [IsGraphvizObjectWithSubobjects, IsObject]);
 
 #! @Arguments graph, predicate
 #! @Returns the modified graph.
 #! @Description Filters the graph's edges using the provided predicate.
-DeclareOperation("GraphvizFilterEdges", [IsGraphvizGraphOrDigraph, IsFunction]);
+DeclareOperation("GraphvizFilterEdges", [IsGraphvizObjectWithSubobjects, IsFunction]);
 
 #! @Arguments graph, head_name, tail_name
 #! @Returns the modified graph.
 #! @Description Filters the graph's edges, removing edges between nodes with
 #! the specified names.
 DeclareOperation("GraphvizRemoveEdges",
-[IsGraphvizGraphOrDigraph, IsObject, IsObject]);
+[IsGraphvizObjectWithSubobjects, IsObject, IsObject]);
 
 #! @Subsection For modifying object attributes.
 
@@ -214,8 +217,8 @@ DeclareOperation("GraphvizRemoveAttr", [IsGraphvizObject, IsObject]);
 #!  Should output the graphviz package representation of the object.
 DeclareOperation("Graphviz", [IsObject]);
 
-DeclareOperation("GraphvizSetNodeColors", [IsGraphvizGraphOrDigraph, IsList]);
-DeclareOperation("GraphvizSetNodeLabels", [IsGraphvizGraphOrDigraph, IsList]);
+DeclareOperation("GraphvizSetNodeColors", [IsGraphvizObjectWithSubobjects, IsList]);
+DeclareOperation("GraphvizSetNodeLabels", [IsGraphvizObjectWithSubobjects, IsList]);
 
 DeclareGlobalFunction("ErrorIfNotValidColor");
 
@@ -230,4 +233,4 @@ DeclareOperation("\[\]", [IsGraphvizEdge, IsObject]);
 DeclareOperation("\[\]\:\=", [IsGraphvizEdge, IsObject, IsObject]);
 
 # TODO doc
-DeclareOperation("\[\]", [IsGraphvizGraphOrDigraph, IsObject]);
+DeclareOperation("\[\]", [IsGraphvizObjectWithSubobjects, IsObject]);
