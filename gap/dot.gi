@@ -433,8 +433,6 @@ InstallMethod(GraphvizRemoveNode, "for a graphviz (di)graph and node",
 [IsGraphvizGraphOrDigraph, IsGraphvizNode],
 {g, node} -> GraphvizRemoveNode(g, GraphvizName(node)));
 
-# TODO GraphvizRemoveEdges(gv, n1, n2)
-
 InstallMethod(GraphvizRemoveNode, "for a graphviz (di)graph and a string",
 [IsGraphvizGraphOrDigraph, IsString],
 function(g, name)
@@ -483,9 +481,7 @@ function(g, filter)
   return g;
 end);
 
-# TODO remove?
-
-InstallMethod(GraphvizFilterEnds, "for a graphviz (di)graph and two strings",
+InstallMethod(GraphvizRemoveEdges, "for a graphviz (di)graph and two strings",
 [IsGraphvizGraphOrDigraph, IsString, IsString],
 function(g, hn, tn)
   GraphvizFilterEdges(g,
@@ -504,17 +500,16 @@ function(g, hn, tn)
   return g;
 end);
 
-# TODO remove?
-
-InstallMethod(GraphvizFilterEnds, "for a graphviz (di)graph and two objects",
+InstallMethod(GraphvizRemoveEdges, "for a graphviz (di)graph and two objects",
 [IsGraphvizGraphOrDigraph, IsObject, IsObject],
-{gv, o1, o2} -> GraphvizFilterEnds(gv, String(o1), String(o2)));
+{gv, o1, o2} -> GraphvizRemoveEdges(gv, String(o1), String(o2)));
 
 InstallMethod(GraphvizRemoveAttr, "for a graphviz object and an object",
 [IsGraphvizObject, IsObject],
 function(obj, attr)
   local attrs;
   attrs := GraphvizAttrs(obj);
+  # TODO error if no such attr?
   Unbind(attrs[String(attr)]);
   return obj;
 end);
@@ -541,7 +536,11 @@ InstallMethod(GraphvizSetNodeLabels,
 [IsGraphvizGraphOrDigraph, IsList],
 function(gv, labels)
   local nodes, i;
-  # TODO error if labels and nodes aren't same size
+  if Size(GraphvizNodes(gv)) <> Size(labels) then
+    ErrorFormatted("the 2nd argument (list of node labels) ",
+                   "has incorrect length, expected {}, but ",
+                   "found {}", Size(GraphvizNodes(gv)), Size(labels));
+  fi;
   # TODO GV_ErrorIfNotValidLabel
   nodes := GraphvizNodes(gv);
   for i in [1 .. Size(nodes)] do

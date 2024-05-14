@@ -174,7 +174,7 @@ DeclareOperation("GraphvizFilterEdges", [IsGraphvizGraphOrDigraph, IsFunction]);
 #! @Returns the modified graph.
 #! @Description Filters the graph's edges, removing edges between nodes with
 #! the specified names.
-DeclareOperation("GraphvizFilterEnds",
+DeclareOperation("GraphvizRemoveEdges",
 [IsGraphvizGraphOrDigraph, IsObject, IsObject]);
 
 #! @Subsection For modifying object attributes.

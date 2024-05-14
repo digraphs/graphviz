@@ -117,7 +117,7 @@ gap> GraphvizAddEdge(parent, "x", "y");;
 gap> GraphvizAddEdge(main, "x", "y");;
 gap> GraphvizAddEdge(sibling, "x", "y");;
 gap> GraphvizAddEdge(child, "x", "y");;
-gap> GraphvizFilterEnds(main, "x", "y");;
+gap> GraphvizRemoveEdges(main, "x", "y");;
 gap> GraphvizEdges(g);
 [  ]
 gap> GraphvizEdges(parent);

@@ -36,19 +36,19 @@ gap> c := GraphvizAddNode(g, "c");;
 gap> d := GraphvizAddNode(g, "d");;
 gap> ab := GraphvizAddEdge(g, a, b);;
 gap> cd := GraphvizAddEdge(g, c, d);;
-gap> GraphvizFilterEnds(g, "a", "c");
+gap> GraphvizRemoveEdges(g, "a", "c");
 <graphviz digraph with 4 nodes and 2 edges>
-gap> GraphvizFilterEnds(g, "b", "d");
+gap> GraphvizRemoveEdges(g, "b", "d");
 <graphviz digraph with 4 nodes and 2 edges>
-gap> GraphvizFilterEnds(g, "a", "b");
+gap> GraphvizRemoveEdges(g, "a", "b");
 <graphviz digraph with 4 nodes and 1 edge>
 gap> GraphvizEdges(g);
 [ <graphviz edge (c, d)> ]
-gap> GraphvizFilterEnds(g, "c", "d");
+gap> GraphvizRemoveEdges(g, "c", "d");
 <graphviz digraph with 4 nodes and 0 edges>
 gap> GraphvizEdges(g);
 [  ]
-gap> GraphvizFilterEnds(g, "c", "d");
+gap> GraphvizRemoveEdges(g, "c", "d");
 <graphviz digraph with 4 nodes and 0 edges>
 
 # Test filtering edges by names (graph)
@@ -59,19 +59,19 @@ gap> c := GraphvizAddNode(g, "c");;
 gap> d := GraphvizAddNode(g, "d");;
 gap> ab := GraphvizAddEdge(g, a, b);;
 gap> cd := GraphvizAddEdge(g, c, d);;
-gap> GraphvizFilterEnds(g, "a", "c");
+gap> GraphvizRemoveEdges(g, "a", "c");
 <graphviz graph with 4 nodes and 2 edges>
-gap> GraphvizFilterEnds(g, "b", "d");
+gap> GraphvizRemoveEdges(g, "b", "d");
 <graphviz graph with 4 nodes and 2 edges>
-gap> GraphvizFilterEnds(g, "b", "a");
+gap> GraphvizRemoveEdges(g, "b", "a");
 <graphviz graph with 4 nodes and 1 edge>
 gap> GraphvizEdges(g);
 [ <graphviz edge (c, d)> ]
-gap> GraphvizFilterEnds(g, "d", "c");
+gap> GraphvizRemoveEdges(g, "d", "c");
 <graphviz graph with 4 nodes and 0 edges>
 gap> GraphvizEdges(g);
 [  ]
-gap> GraphvizFilterEnds(g, "c", "d");
+gap> GraphvizRemoveEdges(g, "c", "d");
 <graphviz graph with 4 nodes and 0 edges>
 
 # Test adding edge between nodes which are not in the graph, but there exists nodes in the graph which share their names.
@@ -110,13 +110,13 @@ gap> GraphvizAddEdge(g, 1, "a");
 <graphviz edge (1, a)>
 gap> GraphvizAddEdge(g, 1, 1);
 <graphviz edge (1, 1)>
-gap> GraphvizFilterEnds(g, "a", 1);;
+gap> GraphvizRemoveEdges(g, "a", 1);;
 gap> GraphvizEdges(g);
 [ <graphviz edge (1, a)>, <graphviz edge (1, 1)> ]
-gap> GraphvizFilterEnds(g, 1, "a");;
+gap> GraphvizRemoveEdges(g, 1, "a");;
 gap> GraphvizEdges(g);
 [ <graphviz edge (1, 1)> ]
-gap> GraphvizFilterEnds(g, 1, 1);;
+gap> GraphvizRemoveEdges(g, 1, 1);;
 gap> GraphvizEdges(g);
 [  ]
 
