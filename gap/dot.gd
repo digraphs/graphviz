@@ -88,7 +88,6 @@ DeclareOperation("GraphvizAttrs", [IsGraphvizObject]);
 #! @Description Gets the nodes of the provided graphviz graph.
 #! Node names can only be [a-zA-Z0-9_£] TODO check exact docs.
 DeclareOperation("GraphvizNodes", [IsGraphvizGraphOrDigraph]);
-DeclareOperation("GraphvizNode", [IsGraphvizGraphOrDigraph, IsObject]);
 
 #! @Arguments graph
 #! @Returns the subgraphs of the provided graphviz graph.
@@ -109,7 +108,8 @@ DeclareOperation("GraphvizFindGraph", [IsGraphvizGraphOrDigraph, IsObject]);
 #! @Returns the edges of the provided graphviz graph.
 #! @Description Gets the edges of the provided graphviz graph.
 DeclareOperation("GraphvizEdges", [IsGraphvizGraphOrDigraph]);
-DeclareOperation("GraphvizEdges", [IsGraphvizGraphOrDigraph, IsObject, IsObject]);
+DeclareOperation("GraphvizEdges",
+[IsGraphvizGraphOrDigraph, IsObject, IsObject]);
 
 #! @Subsection For only edges.
 
@@ -145,7 +145,8 @@ DeclareOperation("GraphvizAddNode", [IsGraphvizGraphOrDigraph, IsObject]);
 #! If no nodes with the same name are in the graph then the edge's nodes will be
 #! added to the graph. If different nodes with the same name are in the graph
 #! then the operation fails.
-DeclareOperation("GraphvizAddEdge", [IsGraphvizGraphOrDigraph, IsObject, IsObject]);
+DeclareOperation("GraphvizAddEdge",
+[IsGraphvizGraphOrDigraph, IsObject, IsObject]);
 
 #! @Arguments graph, filter, name
 #! @Returns the new subgraph.
@@ -173,7 +174,8 @@ DeclareOperation("GraphvizFilterEdges", [IsGraphvizGraphOrDigraph, IsFunction]);
 #! @Returns the modified graph.
 #! @Description Filters the graph's edges, removing edges between nodes with
 #! the specified names.
-DeclareOperation("GraphvizFilterEnds", [IsGraphvizGraphOrDigraph, IsObject, IsObject]);
+DeclareOperation("GraphvizFilterEnds",
+[IsGraphvizGraphOrDigraph, IsObject, IsObject]);
 
 #! @Subsection For modifying object attributes.
 

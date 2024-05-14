@@ -30,7 +30,8 @@ DeclareOperation("GV_FindNode", [IsGraphvizGraphOrDigraph, IsObject]);
 DeclareOperation("GV_Pluralize", [IsInt, IsString]);
 
 DeclareOperation("GV_Node", [IsGraphvizGraphOrDigraph, IsString]);
-DeclareOperation("GV_Edge", [IsGraphvizGraphOrDigraph, IsGraphvizNode, IsGraphvizNode]);
+DeclareOperation("GV_Edge",
+[IsGraphvizGraphOrDigraph, IsGraphvizNode, IsGraphvizNode]);
 DeclareOperation("GV_Graph", [IsGraphvizGraphOrDigraph, IsString]);
 DeclareOperation("GV_Digraph", [IsGraphvizDigraph, IsString]);
 DeclareOperation("GV_Context", [IsGraphvizGraphOrDigraph, IsString]);
