@@ -241,7 +241,7 @@ gap> GraphvizSetColor(g, "red");;
 gap> GraphvizAttrs(g);
 [ "color=red" ]
 
-# testing removing attributes from graphs
+# testing removing attributes from graphs by value
 gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "label", "test");;
 gap> GraphvizAttrs(g);
@@ -255,6 +255,27 @@ gap> GraphvizRemoveAttr(g, "1=2");
 <graphviz graph with 0 nodes and 0 edges>
 gap> GraphvizAttrs(g);
 [ "label=test" ]
+
+# testing removing attributes from graphs by key
+gap> g := GraphvizGraph();;
+gap> GraphvizSetAttr(g, "label", "test");;
+gap> GraphvizAttrs(g);
+[ "label=test" ]
+gap> GraphvizSetAttr(g, 1, 2);;
+#I  unknown attribute "1", the graphviz object may no longer be valid, it can be removed using GraphvizRemoveAttr
+gap> GraphvizAttrs(g);
+[ "label=test", "1=2" ]
+gap> GraphvizRemoveAttr(g, 1);;
+gap> GraphvizAttrs(g);
+[ "label=test" ]
+gap> GraphvizRemoveAttr(g, "label");;
+gap> GraphvizAttrs(g);
+[  ]
+gap> GraphvizSetAttr(g, 1, 2);;
+#I  unknown attribute "1", the graphviz object may no longer be valid, it can be removed using GraphvizRemoveAttr
+gap> GraphvizRemoveAttr(g, "label");;
+gap> GraphvizAttrs(g);
+[ "1=2" ]
 
 #
 gap> STOP_TEST("graphviz package: graph.tst", 0);

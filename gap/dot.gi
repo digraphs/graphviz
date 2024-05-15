@@ -1225,9 +1225,38 @@ end);
 InstallMethod(GraphvizRemoveAttr, "for a graphviz graph and an object",
 [IsGVGraph, IsObject],
 function(obj, attr)
-  local attrs;
-  attrs      := GraphvizAttrs(obj);
-  obj!.Attrs := Filtered(attrs, item -> item <> attr);
+  local attrs, i, k, str, match;
+
+  attrs := GraphvizAttrs(obj);
+  attr  := String(attr);
+
+  # remove by value
+  if '=' in attr then
+    obj!.Attrs := Filtered(attrs, item -> item <> attr);
+  else
+
+    for k in [1 .. Length(attrs)] do
+      str := attrs[k];
+
+      # check if the string is of the form '`attr`=...'
+      match := true;
+      for i in [1 .. Length(attr)] do
+        if i > Length(str) or attr[i] <> str[i] then
+          match := false;
+          break;
+        fi;
+      od;
+      match := match and i + 1 <= Length(str) and str[i + 1] = '=';
+
+      # if so remove it
+      if match then
+        RemoveElmList(attrs, k);
+      else
+        k := k + 1;
+      fi;
+    od;
+
+  fi;
   return obj;
 end);
 
