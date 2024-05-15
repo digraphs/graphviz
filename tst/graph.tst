@@ -192,7 +192,7 @@ gap> GraphvizAttrs(g);
 gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "color", "red");;
 gap> GraphvizSetAttr(g, "color", "blue");;
-gap> String(g);
+gap> AsString(g);
 "//dot\ngraph  {\n\tcolor=red color=blue \n}\n"
 
 # # Test removing attributes from a graph TODO uncomment or delete

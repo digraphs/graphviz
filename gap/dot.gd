@@ -212,7 +212,7 @@ DeclareOperation("GraphvizRemoveAttr", [IsGraphvizObject, IsObject]);
 #! @Section Outputting
 #! @Arguments graph
 #! @Returns the dot representation of the graphviz object.
-# TODO document "String"
+DeclareOperation("AsString", [IsGraphvizGraphDigraphOrContext]);
 
 #! @Arguments obj
 #! @Returns the graphviz representation of the object.

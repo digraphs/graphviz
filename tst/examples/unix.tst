@@ -124,7 +124,7 @@ gap> GraphvizAddEdge(u, "System V.2", "System V.3");
 <graphviz edge (System V.2, System V.3)>
 
 #
-gap> String(u) =
+gap> AsString(u) =
 > "//dot\ndigraph unix {\n\tnode [color=\"lightblue2\", style=\"filled\", size=\
 > \"6,6\"] \n\t\"5th Edition\"\n\t\"6th Edition\"\n\t\"5th Edition\" -> \"6th Ed\
 > ition\"\n\t\"PWB 1.0\"\n\t\"5th Edition\" -> \"PWB 1.0\"\n\tLSX\n\t\"6th Editi\
