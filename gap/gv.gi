@@ -8,86 +8,93 @@
 #############################################################################
 ##
 
-# code from the GAP standard library
-InstallMethod(GV_Pluralize,
-"for an integer and a string",
-[IsInt, IsString],
-function(args...)
-  local nargs, i, count, include_num, str, len, out;
+# Code from the GAP standard library, repeated here so that the package works
+# with GAP 4.11 since Pluralize was introduced to the GAP library in 4.12
+if CompareVersionNumbers(GAPInfo.Version, "4.12") then
+    InstallMethod(GV_Pluralize,
+    "for an integer and a string",
+    [IsInt, IsString], Pluralize);
+else
+  InstallMethod(GV_Pluralize,
+  "for an integer and a string",
+  [IsInt, IsString],
+  function(args...)
+    local nargs, i, count, include_num, str, len, out;
 
-  nargs := Length(args);
-  if nargs >= 1 and IsInt(args[1]) and args[1] >= 0 then
-    i           := 2;
-    count       := args[1];
-    include_num := true;
-  else
-    i           := 1;
-    include_num := false;  # if not given, assume pluralization is wanted.
-  fi;
+    nargs := Length(args);
+    if nargs >= 1 and IsInt(args[1]) and args[1] >= 0 then
+      i           := 2;
+      count       := args[1];
+      include_num := true;
+    else
+      i           := 1;
+      include_num := false;  # if not given, assume pluralization is wanted.
+    fi;
 
-  if not (nargs in [i, i + 1] and
-          IsString(args[i]) and
-          (nargs = i or IsString(args[i + 1]))) then
-    ErrorNoReturn("Usage: GV_Pluralize([<count>, ]<string>[, <plural>])");
-  fi;
+    if not (nargs in [i, i + 1] and
+            IsString(args[i]) and
+            (nargs = i or IsString(args[i + 1]))) then
+      ErrorNoReturn("Usage: GV_Pluralize([<count>, ]<string>[, <plural>])");
+    fi;
 
-  str := args[i];
-  len := Length(str);
+    str := args[i];
+    len := Length(str);
 
-  if len = 0 then
-    ErrorNoReturn("the argument <str> must be a non-empty string");
-  elif include_num and count = 1 then  # no pluralization needed
-    return Concatenation("\>1\< ", str);
-  elif nargs = i + 1 then  # pluralization given
-    out := args[i + 1];
-  elif len <= 2 then
-    out := Concatenation(str, "s");
+    if len = 0 then
+      ErrorNoReturn("the argument <str> must be a non-empty string");
+    elif include_num and count = 1 then  # no pluralization needed
+      return Concatenation("\>1\< ", str);
+    elif nargs = i + 1 then  # pluralization given
+      out := args[i + 1];
+    elif len <= 2 then
+      out := Concatenation(str, "s");
 
-    # Guess and return the plural form of <str>.
-    # Inspired by the "Ruby on Rails" inflection rules.
+      # Guess and return the plural form of <str>.
+      # Inspired by the "Ruby on Rails" inflection rules.
 
-    # Uncountable nouns
-  elif str in ["equipment", "information"] then
-    out := str;
+      # Uncountable nouns
+    elif str in ["equipment", "information"] then
+      out := str;
 
-    # Irregular plurals
-  elif str = "axis" then
-    out := "axes";
-  elif str = "child" then
-    out := "children";
-  elif str = "person" then
-    out := "people";
+      # Irregular plurals
+    elif str = "axis" then
+      out := "axes";
+    elif str = "child" then
+      out := "children";
+    elif str = "person" then
+      out := "people";
 
-    # Peculiar endings
-  elif EndsWith(str, "ix") or EndsWith(str, "ex") then
-    out := Concatenation(str{[1 .. len - 2]}, "ices");
-  elif EndsWith(str, "x") then
-    out := Concatenation(str, "es");
-  elif EndsWith(str, "tum") or EndsWith(str, "ium") then
-    out := Concatenation(str{[1 .. len - 2]}, "a");
-  elif EndsWith(str, "sis") then
-    out := Concatenation(str{[1 .. len - 3]}, "ses");
-  elif EndsWith(str, "fe") and not EndsWith(str, "ffe") then
-    out := Concatenation(str{[1 .. len - 2]}, "ves");
-  elif EndsWith(str, "lf") or EndsWith(str, "rf") or EndsWith(str, "loaf") then
-    out := Concatenation(str{[1 .. len - 1]}, "ves");
-  elif EndsWith(str, "y") and not str[len - 1] in "aeiouy" then
-    out := Concatenation(str{[1 .. len - 1]}, "ies");
-  elif str{[len - 1, len]} in ["ch", "ss", "sh"] then
-    out := Concatenation(str, "es");
-  elif EndsWith(str, "s") then
-    out := str;
+      # Peculiar endings
+    elif EndsWith(str, "ix") or EndsWith(str, "ex") then
+      out := Concatenation(str{[1 .. len - 2]}, "ices");
+    elif EndsWith(str, "x") then
+      out := Concatenation(str, "es");
+    elif EndsWith(str, "tum") or EndsWith(str, "ium") then
+      out := Concatenation(str{[1 .. len - 2]}, "a");
+    elif EndsWith(str, "sis") then
+      out := Concatenation(str{[1 .. len - 3]}, "ses");
+    elif EndsWith(str, "fe") and not EndsWith(str, "ffe") then
+      out := Concatenation(str{[1 .. len - 2]}, "ves");
+    elif EndsWith(str, "lf") or EndsWith(str, "rf") or EndsWith(str, "loaf") then
+      out := Concatenation(str{[1 .. len - 1]}, "ves");
+    elif EndsWith(str, "y") and not str[len - 1] in "aeiouy" then
+      out := Concatenation(str{[1 .. len - 1]}, "ies");
+    elif str{[len - 1, len]} in ["ch", "ss", "sh"] then
+      out := Concatenation(str, "es");
+    elif EndsWith(str, "s") then
+      out := str;
 
-    # Default to appending 's'
-  else
-    out := Concatenation(str, "s");
-  fi;
+      # Default to appending 's'
+    else
+      out := Concatenation(str, "s");
+    fi;
 
-  if include_num then
-    return Concatenation("\>", String(args[1]), "\< ", out);
-  fi;
-  return out;
-end);
+    if include_num then
+      return Concatenation("\>", String(args[1]), "\< ", out);
+    fi;
+    return out;
+  end);
+fi;
 
 ###############################################################################
 # Family + type
