@@ -15,6 +15,10 @@ DeclareOperation("GV_GetCounter", [IsGraphvizGraphDigraphOrContext]);
 DeclareOperation("GV_IncCounter", [IsGraphvizGraphDigraphOrContext]);
 DeclareCategory("GV_IsMap", IsObject);
 DeclareAttribute("Size", GV_IsMap);
+DeclareOperation("\[\]", [GV_IsMap, IsObject]);
+DeclareOperation("\[\]:=", [GV_IsMap, IsObject, IsObject]);
+DeclareOperation("Unbind\[\]", [GV_IsMap, IsObject]);
+DeclareOperation("IsBound\[\]", [GV_IsMap, IsObject]);
 
 DeclareOperation("GV_StringifyGraphHead", [IsGraphvizGraphDigraphOrContext]);
 DeclareOperation("GV_StringifyDigraphHead", [IsGraphvizGraphDigraphOrContext]);
