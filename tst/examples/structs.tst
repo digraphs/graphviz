@@ -16,9 +16,9 @@ gap> START_TEST("graphviz package: examples/structs.tst");
 gap> LoadPackage("graphviz");
 true
 gap> s := GraphvizDigraph("structs");
-<graphviz digraph structs with 0 nodes and 0 edges>
+<graphviz digraph "structs" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(s, "node [shape=\"plaintext\"]");
-<graphviz digraph structs with 0 nodes and 0 edges>
+<graphviz digraph "structs" with 0 nodes and 0 edges>
 
 #
 gap> GraphvizSetAttr(GraphvizAddNode(s, "struct1"), "label",
@@ -28,7 +28,7 @@ gap> GraphvizSetAttr(GraphvizAddNode(s, "struct1"), "label",
 > <TD PORT="f1">middle</TD><TD PORT="f2">right</TD>
 > </TR>
 > </TABLE>>""");
-<graphviz node struct1>
+<graphviz node "struct1">
 gap> GraphvizSetAttr(GraphvizAddNode(s, "struct2"), "label",
 > """<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
 > <TR>
@@ -36,7 +36,7 @@ gap> GraphvizSetAttr(GraphvizAddNode(s, "struct2"), "label",
 > <TD>two</TD>
 > </TR>
 > </TABLE>>""");
-<graphviz node struct2>
+<graphviz node "struct2">
 gap> GraphvizSetAttr(GraphvizAddNode(s, "struct3"), "label",
 > """<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
 > <TR>
@@ -54,7 +54,7 @@ gap> GraphvizSetAttr(GraphvizAddNode(s, "struct3"), "label",
 > <TD COLSPAN="3">f</TD>
 > </TR>
 > </TABLE>>""");
-<graphviz node struct3>
+<graphviz node "struct3">
 
 #
 gap> GraphvizAddEdge(s, "struct1:f1", "struct2:f0");

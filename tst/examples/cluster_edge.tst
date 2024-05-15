@@ -18,11 +18,11 @@ true
 
 #
 gap> g := GraphvizDigraph("G");
-<graphviz digraph G with 0 nodes and 0 edges>
+<graphviz digraph "G" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(g, "compound=true");
-<graphviz digraph G with 0 nodes and 0 edges>
+<graphviz digraph "G" with 0 nodes and 0 edges>
 gap> cluster0 := GraphvizAddSubgraph(g, "cluster0");
-<graphviz digraph cluster0 with 0 nodes and 0 edges>
+<graphviz digraph "cluster0" with 0 nodes and 0 edges>
 gap> GraphvizAddEdge(cluster0, "a", "b");
 <graphviz edge (a, b)>
 gap> GraphvizAddEdge(cluster0, "a", "c");
@@ -32,7 +32,7 @@ gap> GraphvizAddEdge(cluster0, "b", "d");
 gap> GraphvizAddEdge(cluster0, "c", "d");
 <graphviz edge (c, d)>
 gap> cluster1 := GraphvizAddSubgraph(g, "cluster1");
-<graphviz digraph cluster1 with 0 nodes and 0 edges>
+<graphviz digraph "cluster1" with 0 nodes and 0 edges>
 gap> GraphvizAddEdge(cluster1, "e", "g");
 <graphviz edge (e, g)>
 gap> GraphvizAddEdge(cluster1, "e", "f");

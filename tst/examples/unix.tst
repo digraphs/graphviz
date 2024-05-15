@@ -18,10 +18,10 @@ true
 
 #
 gap> u := GraphvizDigraph("unix");
-<graphviz digraph unix with 0 nodes and 0 edges>
+<graphviz digraph "unix" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(
 > u, "node [color=\"lightblue2\", style=\"filled\", size=\"6,6\"]");
-<graphviz digraph unix with 0 nodes and 0 edges>
+<graphviz digraph "unix" with 0 nodes and 0 edges>
 
 #
 gap> GraphvizAddEdge(u, "5th Edition", "6th Edition");

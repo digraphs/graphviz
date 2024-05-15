@@ -49,13 +49,14 @@ InstallMethod(GraphvizDigraph, "for no args", [], {} -> GraphvizDigraph(""));
 #############################################################################
 
 InstallMethod(PrintString, "for a graphviz node", [IsGraphvizNode],
-n -> StringFormatted("<graphviz node {}>", GraphvizName(n)));
+n -> StringFormatted("<graphviz node \"{}\">", GraphvizName(n)));
 
 InstallMethod(PrintString, "for a graphviz edge", [IsGraphvizEdge],
 function(e)
   local head, tail;
   head := GraphvizHead(e);
   tail := GraphvizTail(e);
+
   return StringFormatted("<graphviz edge ({}, {})>",
                          GraphvizName(head),
                          GraphvizName(tail));
@@ -82,11 +83,12 @@ function(g)
   Append(result, StringFormatted("<graphviz {} ", kind));
 
   if GraphvizName(g) <> "" then
-    Append(result, StringFormatted("{} ", GraphvizName(g)));
+    Append(result, StringFormatted("\"{}\" ", GraphvizName(g)));
   fi;
 
   Append(result, StringFormatted("with {} ", GV_Pluralize(nodes, "node")));
   Append(result, StringFormatted("and {}>", GV_Pluralize(edges, "edge")));
+  # TODO add more info like that about number of subgraphs + contexts
 
   return result;
 end);

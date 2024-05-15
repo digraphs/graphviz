@@ -18,44 +18,44 @@ gap> GraphvizGraph();
 
 # Test graph constructor
 gap> GraphvizGraph("test-name");
-<graphviz graph test-name with 0 nodes and 0 edges>
+<graphviz graph "test-name" with 0 nodes and 0 edges>
 
 # Test digraph printing
 gap> x := GraphvizDigraph("test-name");
-<graphviz digraph test-name with 0 nodes and 0 edges>
+<graphviz digraph "test-name" with 0 nodes and 0 edges>
 gap> x := GraphvizDigraph();
 <graphviz digraph with 0 nodes and 0 edges>
 
 # Test adding nodes
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "n");
-<graphviz node n>
+<graphviz node "n">
 gap> g;
 <graphviz graph with 1 node and 0 edges>
 gap> GraphvizNodes(g);
-rec( n := <graphviz node n> )
+rec( n := <graphviz node "n"> )
 gap> GraphvizAddNode(g, "x");
-<graphviz node x>
+<graphviz node "x">
 gap> g;
 <graphviz graph with 2 nodes and 0 edges>
 gap> GraphvizNodes(g);
-rec( n := <graphviz node n>, x := <graphviz node x> )
+rec( n := <graphviz node "n">, x := <graphviz node "x"> )
 
 # Test add node (name)
 gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, "n");
-<graphviz node n>
+<graphviz node "n">
 gap> GraphvizNodes(g);
-rec( n := <graphviz node n> )
+rec( n := <graphviz node "n"> )
 gap> GraphvizAddNode(g, "x");
-<graphviz node x>
+<graphviz node "x">
 gap> GraphvizNodes(g);
-rec( n := <graphviz node n>, x := <graphviz node x> )
+rec( n := <graphviz node "n">, x := <graphviz node "x"> )
 
 # Test has nodes
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "n");
-<graphviz node n>
+<graphviz node "n">
 gap> GV_HasNode(g, "n");
 true
 gap> GV_HasNode(g, "x");
@@ -124,7 +124,8 @@ gap> GraphvizAddEdge(g, "a", "b");;
 gap> GraphvizAddEdge(g, "a", "c");
 <graphviz edge (a, c)>
 gap> GraphvizNodes(g);
-rec( a := <graphviz node a>, b := <graphviz node b>, c := <graphviz node c> )
+rec( a := <graphviz node "a">, b := <graphviz node "b">, 
+  c := <graphviz node "c"> )
 gap> GraphvizAddEdge(g, "c", "a");
 <graphviz edge (c, a)>
 gap> GraphvizAddEdge(g, "b", "d");
@@ -151,13 +152,14 @@ gap> GraphvizAddEdge(g, c, d);;
 gap> GraphvizRemoveNode(g, a);
 <graphviz graph with 3 nodes and 1 edge>
 gap> GraphvizNodes(g);
-rec( b := <graphviz node b>, c := <graphviz node c>, d := <graphviz node d> )
+rec( b := <graphviz node "b">, c := <graphviz node "c">, 
+  d := <graphviz node "d"> )
 gap> GraphvizEdges(g);
 [ <graphviz edge (c, d)> ]
 gap> GraphvizRemoveNode(g, b);
 <graphviz graph with 2 nodes and 1 edge>
 gap> GraphvizNodes(g);
-rec( c := <graphviz node c>, d := <graphviz node d> )
+rec( c := <graphviz node "c">, d := <graphviz node "d"> )
 
 # Test removing node
 gap> g := GraphvizGraph();;
@@ -166,25 +168,26 @@ gap> GraphvizAddEdge(g, "c", "d");;
 gap> GraphvizRemoveNode(g, "a");
 <graphviz graph with 3 nodes and 1 edge>
 gap> GraphvizNodes(g);
-rec( b := <graphviz node b>, c := <graphviz node c>, d := <graphviz node d> )
+rec( b := <graphviz node "b">, c := <graphviz node "c">, 
+  d := <graphviz node "d"> )
 gap> GraphvizEdges(g);
 [ <graphviz edge (c, d)> ]
 gap> GraphvizRemoveNode(g, "b");
 <graphviz graph with 2 nodes and 1 edge>
 gap> GraphvizNodes(g);
-rec( c := <graphviz node c>, d := <graphviz node d> )
+rec( c := <graphviz node "c">, d := <graphviz node "d"> )
 
 # Test renaming graph
 gap> g := GraphvizGraph();;
 gap> GraphvizSetName(g, "test");
-<graphviz graph test with 0 nodes and 0 edges>
+<graphviz graph "test" with 0 nodes and 0 edges>
 gap> GraphvizSetName(g, 1);
-<graphviz graph 1 with 0 nodes and 0 edges>
+<graphviz graph "1" with 0 nodes and 0 edges>
 
 # Test global attributes graph
 gap> g := GraphvizGraph();;
 gap> GraphvizSetName(g, "test");
-<graphviz graph test with 0 nodes and 0 edges>
+<graphviz graph "test" with 0 nodes and 0 edges>
 
 # Test global attributes graph
 gap> g := GraphvizGraph();;
@@ -223,18 +226,18 @@ gap> g := GraphvizGraph();;
 gap> n1 := GraphvizAddNode(g, "test");;
 gap> n2 := GraphvizAddNode(g, "abc");;
 gap> g["test"];
-<graphviz node test>
+<graphviz node "test">
 gap> g["abc"];
-<graphviz node abc>
+<graphviz node "abc">
 
 # Test getting a node with a non-string name using bracket notation
 gap> g := GraphvizGraph();;
 gap> n1 := GraphvizAddNode(g, 1);;
 gap> n2 := GraphvizAddNode(g, ["a"]);;
 gap> g[1];
-<graphviz node 1>
+<graphviz node "1">
 gap> g[["a"]];
-<graphviz node [ "a" ]>
+<graphviz node "[ "a" ]">
 gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "label", "test");;
 gap> GraphvizAttrs(g);

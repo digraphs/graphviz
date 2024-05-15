@@ -18,27 +18,27 @@ true
 
 #
 gap> s := GraphvizDigraph("g");
-<graphviz digraph g with 0 nodes and 0 edges>
+<graphviz digraph "g" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(s, "node [shape=record, height=.1]");
-<graphviz digraph g with 0 nodes and 0 edges>
+<graphviz digraph "g" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(GraphvizAddNode(s, "node0"), "label", "<f0> |<f1> G|<f2>");
-<graphviz node node0>
+<graphviz node "node0">
 gap> GraphvizSetAttr(GraphvizAddNode(s, "node1"), "label", "<f0> |<f1> E|<f2>");
-<graphviz node node1>
+<graphviz node "node1">
 gap> GraphvizSetAttr(GraphvizAddNode(s, "node2"), "label", "<f0> |<f1> B|<f2>");
-<graphviz node node2>
+<graphviz node "node2">
 gap> GraphvizSetAttr(GraphvizAddNode(s, "node3"), "label", "<f0> |<f1> F|<f2>");
-<graphviz node node3>
+<graphviz node "node3">
 gap> GraphvizSetAttr(GraphvizAddNode(s, "node4"), "label", "<f0> |<f1> R|<f2>");
-<graphviz node node4>
+<graphviz node "node4">
 gap> GraphvizSetAttr(GraphvizAddNode(s, "node5"), "label", "<f0> |<f1> H|<f2>");
-<graphviz node node5>
+<graphviz node "node5">
 gap> GraphvizSetAttr(GraphvizAddNode(s, "node6"), "label", "<f0> |<f1> Y|<f2>");
-<graphviz node node6>
+<graphviz node "node6">
 gap> GraphvizSetAttr(GraphvizAddNode(s, "node7"), "label", "<f0> |<f1> A|<f2>");
-<graphviz node node7>
+<graphviz node "node7">
 gap> GraphvizSetAttr(GraphvizAddNode(s, "node8"), "label", "<f0> |<f1> C|<f2>");
-<graphviz node node8>
+<graphviz node "node8">
 gap> GraphvizAddEdge(s, "node0:f2", "node4:f1");
 <graphviz edge (node0:f2, node4:f1)>
 gap> GraphvizAddEdge(s, "node0:f0", "node1:f1");
