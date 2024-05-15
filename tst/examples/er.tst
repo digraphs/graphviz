@@ -131,4 +131,4 @@ t\n\t\"S-C\" -- student [label=m, len=1.00]\n\tcourse -- \"S-C\" [label=n, len\
 =1.00]\n}\n"
 
 #
-gap> STOP_TEST("graphviz package: er.tst");
+gap> STOP_TEST("graphviz package: examples/er.tst");

@@ -86,4 +86,4 @@ LR_5\n\tLR_2 -> LR_5 [label=\"SS(a)\"]\n\tLR_2 -> LR_4 [label=\"S(A)\"]\n\tLR_\
 \tLR_8 -> LR_5 [label=\"S(a)\"]\n\trankdir=LR size=\"8,5\" \n\n}\n"
 
 #
-gap> STOP_TEST("graphviz package: fsm.tst");
+gap> STOP_TEST("graphviz package: examples/fsm.tst");

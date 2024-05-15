@@ -84,4 +84,4 @@ t -> a0\n\tstart -> b0\n\ta1 -> b3\n\tb2 -> a3\n\ta3 -> a0\n\tend [shape=Msqua\
 re]\n\ta3 -> end\n\tb3 -> end\n}\n"
 
 #
-gap> STOP_TEST("graphviz package: cluster.tst");
+gap> STOP_TEST("graphviz package: examples/cluster.tst");

@@ -91,4 +91,4 @@ ze=true, width=0.9] \n\tgreen2\n\tyellow2\n\tred2\n\tsafe2\n\tgreen1\n\tyellow\
 g1\n\tgreen1 -> gy1\n\tyellow1 -> yr1\n\tred1 -> rg1\n}\n"
 
 #
-gap> STOP_TEST("graphviz package: traffic_lights.tst");
+gap> STOP_TEST("graphviz package: examples/traffic_lights.tst");

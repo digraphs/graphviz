@@ -55,4 +55,4 @@ gap> AsString(graph);
 wap -- runmem\n\tnew -- runmem\n}\n"
 
 #
-gap> STOP_TEST("graphviz package: process.tst");
+gap> STOP_TEST("graphviz package: examples/process.tst");

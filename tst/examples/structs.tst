@@ -77,4 +77,4 @@ re\">d</TD>\n<TD>e</TD>\n</TR>\n<TR>\n<TD COLSPAN=\"3\">f</TD>\n</TR>\n</TABLE\
 truct3:here\n\tstruct1:f2 -> struct3:here\n}\n"
 
 #
-gap> STOP_TEST("graphviz package: structs.tst");
+gap> STOP_TEST("graphviz package: examples/structs.tst");
