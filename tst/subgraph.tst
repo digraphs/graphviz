@@ -34,9 +34,16 @@ gap> GraphvizAddSubgraph(g);
 gap> g := GraphvizGraph();;
 gap> GraphvizAddContext(g);
 <graphviz context no_name_1 with 0 nodes and 0 edges>
+#@if CompareVersionNumbers(GAPInfo.Version, "4.12")
 gap> GraphvizAddContext(g, "no_name_1");
 Error, the 1st argument (a graphviz (di)graph/context) already has a context o\
 r subgraph with name "no_name_1"
+#@else
+gap> GraphvizAddContext(g, "no_name_1");
+Error, the 1st argument (a graphviz (di)graph/context) already has a context o\
+r subgr\
+aph with name "no_name_1"
+#@fi
 
 # Test no-name constructor graphs' names increment
 gap> g := GraphvizGraph();;
@@ -256,9 +263,16 @@ edge [label=testing123] node[color=blue] edge[color=blue] \n\n}\n"
 # Test adding subgraphs with the same name
 gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
+#@if CompareVersionNumbers(GAPInfo.Version, "4.12")
 gap> s2 := GraphvizAddSubgraph(g, "a");
 Error, the 1st argument (a graphviz (di)graph/context) already has a subgraph \
 with name "a"
+#@else
+gap> s2 := GraphvizAddSubgraph(g, "a");
+Error, the 1st argument (a graphviz (di)graph/context) already has a subgraph \
+with na\
+me "a"
+#@fi
 
 # Test getting subgraphs by name
 gap> g := GraphvizDigraph();;

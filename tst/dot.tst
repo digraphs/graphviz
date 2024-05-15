@@ -150,10 +150,17 @@ gap> GraphvizAddNode(gv, 2);
 <graphviz node 2>
 gap> GraphvizAddNode(gv, 3);
 <graphviz node 3>
+#@if CompareVersionNumbers(GAPInfo.Version, "4.12")
 gap> GraphvizSetNodeColors(gv, ["i", "ii", "iii"]);
 Error, invalid color "i" (list (string)), valid colors are RGB values or names\
  from the GraphViz 2.44.1 X11 Color Scheme http://graphviz.org/doc/info/colors\
 .html
+#@else
+gap> GraphvizSetNodeColors(gv, ["i", "ii", "iii"]);
+Error, invalid color "i" (list (string)), valid colors are RGB values or names\
+ from the GraphViz 2.44.1 X11 Color Sch\
+eme http://graphviz.org/doc/info/colors.html
+#@fi
 gap> GraphvizSetNodeColors(gv, ["red", "green", "blue"]);
 <graphviz graph xxx with 3 nodes and 0 edges>
 gap> Print(AsString(gv));
@@ -181,10 +188,17 @@ graph xxx {
 	2 [color="#00FF00", style=filled]
 	3 [color="#0000FF", style=filled]
 }
+#@if CompareVersionNumbers(GAPInfo.Version, "4.12")
 gap> GraphvizSetNodeColors(gv, ["#FF0000", "#00FF00", "#0000FG"]);
 Error, invalid color "#0000FG" (list (string)), valid colors are RGB values or\
  names from the GraphViz 2.44.1 X11 Color Scheme http://graphviz.org/doc/info/\
 colors.html
+#@else
+gap> GraphvizSetNodeColors(gv, ["#FF0000", "#00FF00", "#0000FG"]);
+Error, invalid color "#0000FG" (list (string)), valid colors are RGB values or\
+ names from the GraphViz 2.44.1 X11 Color Sch\
+eme http://graphviz.org/doc/info/colors.html
+#@fi
 gap> GraphvizSetNodeColors(gv, ["#FF0000", "#00FF00"]);
 Error, the number of node colors must be the same as the number of nodes, expe\
 cted 3 but found 2

@@ -100,12 +100,23 @@ gap> GraphvizAddEdge(g, "a", "b");
 <graphviz edge (a, b)>
 gap> GraphvizEdges(g, "a", "b");
 [ <graphviz edge (a, b)>, <graphviz edge (a, b)> ]
+#@if CompareVersionNumbers(GAPInfo.Version, "4.12")
 gap> GraphvizEdges(g, "x", "b");
 Error, the 2nd argument "x" (head of an edge) is not a node of the 1st argumen\
 t (a graphviz graph or digraph)
 gap> GraphvizEdges(g, "a", "y");
 Error, the 3rd argument "y" (tail of an edge) is not a node of the 1st argumen\
 t (a graphviz graph or digraph)
+#@else
+gap> GraphvizEdges(g, "x", "b");
+Error, the 2nd argument "x" (head of an edge) is not a node of the 1st argumen\
+t (a graphviz graph or dig\
+raph)
+gap> GraphvizEdges(g, "a", "y");
+Error, the 3rd argument "y" (tail of an edge) is not a node of the 1st argumen\
+t (a graphviz graph or dig\
+raph)
+#@fi
 
 # Test adding edge with different nodes with the same name
 gap> g := GraphvizGraph();;
