@@ -181,7 +181,7 @@ end);
 InstallMethod(\[\]\:\=, "for a graphviz edge and an object",
 [IsGraphvizEdge, IsObject, IsObject],
 function(edge, key, val)
-  edge[GV_EnsureString(key)] := GV_EnsureString(val);
+  edge[String(key)] := String(val);
 end);
 
 # Accessor for graphs and digraphs

@@ -268,12 +268,6 @@ InstallMethod(GV_GetCounter, "for a graphviz graph",
 [IsGraphvizGraphDigraphOrContext],
 x -> x!.Counter);
 
-# Converting strings
-
-InstallMethod(GV_EnsureString, "for an object", [IsObject], String);
-
-InstallMethod(GV_EnsureString, "for a string", [IsString], IdFunc);
-
 # Nodes
 
 InstallMethod(GV_HasNode,
