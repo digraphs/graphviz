@@ -18,31 +18,31 @@ true
 
 #
 gap> f := GraphvizDigraph("finite_state_machine");
-<graphviz digraph finite_state_machine with 0 nodes and 0 edges>
+<graphviz digraph "finite_state_machine" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(f, "rankdir=LR");
-<graphviz digraph finite_state_machine with 0 nodes and 0 edges>
+<graphviz digraph "finite_state_machine" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(f, "size=\"8,5\"");
-<graphviz digraph finite_state_machine with 0 nodes and 0 edges>
+<graphviz digraph "finite_state_machine" with 0 nodes and 0 edges>
 
 #
 gap> terminals := GraphvizAddContext(f, "terminals");
-<graphviz context terminals with 0 nodes and 0 edges>
+<graphviz context "terminals" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(terminals, "node [shape=doublecircle]");
-<graphviz context terminals with 0 nodes and 0 edges>
+<graphviz context "terminals" with 0 nodes and 0 edges>
 gap> GraphvizAddNode(terminals, "LR_0");
-<graphviz node LR_0>
+<graphviz node "LR_0">
 gap> GraphvizAddNode(terminals, "LR_3");
-<graphviz node LR_3>
+<graphviz node "LR_3">
 gap> GraphvizAddNode(terminals, "LR_4");
-<graphviz node LR_4>
+<graphviz node "LR_4">
 gap> GraphvizAddNode(terminals, "LR_8");
-<graphviz node LR_8>
+<graphviz node "LR_8">
 
 #
 gap> nodes := GraphvizAddContext(f, "nodes");
-<graphviz context nodes with 0 nodes and 0 edges>
+<graphviz context "nodes" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(nodes, "node [shape=circle]");
-<graphviz context nodes with 0 nodes and 0 edges>
+<graphviz context "nodes" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_0", "LR_2"), "label", "\"SS(B)\"");
 <graphviz edge (LR_0, LR_2)>
 gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_0", "LR_1"), "label", "\"SS(S)\"");

@@ -18,9 +18,9 @@ true
 
 #
 gap> graph := GraphvizGraph("G");
-<graphviz graph G with 0 nodes and 0 edges>
+<graphviz graph "G" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(graph, "engine=\"sfdp\"");
-<graphviz graph G with 0 nodes and 0 edges>
+<graphviz graph "G" with 0 nodes and 0 edges>
 
 #
 gap> GraphvizAddEdge(graph, "run", "intr");

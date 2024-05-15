@@ -23,35 +23,35 @@ gap> g := GraphvizGraph();
 
 #
 gap> node := GraphvizAddNode(g, "RGB: #40e0d0");
-<graphviz node RGB: #40e0d0>
+<graphviz node "RGB: #40e0d0">
 gap> GraphvizSetAttr(node, "style", "filled");
-<graphviz node RGB: #40e0d0>
+<graphviz node "RGB: #40e0d0">
 gap> GraphvizSetAttr(node, "fillcolor", "\"#40e0d0\"");
-<graphviz node RGB: #40e0d0>
+<graphviz node "RGB: #40e0d0">
 
 #
 gap> node := GraphvizAddNode(g, "RGBA: #ff000042");
-<graphviz node RGBA: #ff000042>
+<graphviz node "RGBA: #ff000042">
 gap> GraphvizSetAttr(node, "style", "filled");
-<graphviz node RGBA: #ff000042>
+<graphviz node "RGBA: #ff000042">
 gap> GraphvizSetAttr(node, "fillcolor", "\"#ff000042\"");
-<graphviz node RGBA: #ff000042>
+<graphviz node "RGBA: #ff000042">
 
 #
 gap> node := GraphvizAddNode(g, "HSV: 0.051 0.718 0.627");
-<graphviz node HSV: 0.051 0.718 0.627>
+<graphviz node "HSV: 0.051 0.718 0.627">
 gap> GraphvizSetAttr(node, "style", "filled");
-<graphviz node HSV: 0.051 0.718 0.627>
+<graphviz node "HSV: 0.051 0.718 0.627">
 gap> GraphvizSetAttr(node, "fillcolor", "0.051 0.718 0.627");
-<graphviz node HSV: 0.051 0.718 0.627>
+<graphviz node "HSV: 0.051 0.718 0.627">
 
 #
 gap> node := GraphvizAddNode(g, "name: deeppink");
-<graphviz node name: deeppink>
+<graphviz node "name: deeppink">
 gap> GraphvizSetAttr(node, "style", "filled");
-<graphviz node name: deeppink>
+<graphviz node "name: deeppink">
 gap> GraphvizSetAttr(node, "fillcolor", "deeppink");
-<graphviz node name: deeppink>
+<graphviz node "name: deeppink">
 
 #
 gap> AsString(g);

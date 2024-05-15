@@ -18,22 +18,22 @@ true
 
 #
 gap> g := GraphvizGraph("G");
-<graphviz graph G with 0 nodes and 0 edges>
+<graphviz graph "G" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(g,
 > "bgcolor=\"purple:pink\" label=\"agraph\" fontcolor=\"white\"");
-<graphviz graph G with 0 nodes and 0 edges>
+<graphviz graph "G" with 0 nodes and 0 edges>
 gap> cluster1 := GraphvizAddSubgraph(g, "cluster1");
-<graphviz graph cluster1 with 0 nodes and 0 edges>
+<graphviz graph "cluster1" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(cluster1, Concatenation(
 > "fillcolor=\"blue:cyan\" label=\"acluster\" fontcolor=\"white\"",
 > "style=\"filled\" gradientangle=270\n"));
-<graphviz graph cluster1 with 0 nodes and 0 edges>
+<graphviz graph "cluster1" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(cluster1, Concatenation(
 > "node [shape=box, fillcolor=\"red:yellow\",",
 > " style=\"filled\", gradientangle=90]"));
-<graphviz graph cluster1 with 0 nodes and 0 edges>
+<graphviz graph "cluster1" with 0 nodes and 0 edges>
 gap> GraphvizAddNode(cluster1, "anode");
-<graphviz node anode>
+<graphviz node "anode">
 
 #@if CompareVersionNumbers(GAPInfo.Version, "4.12.0")
 gap> Print(AsString(g));

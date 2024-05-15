@@ -16,15 +16,15 @@ gap> START_TEST("graphviz package: examples/traffic_lights.tst");
 gap> LoadPackage("graphviz");
 true
 gap> t := GraphvizDigraph("TrafficLights");
-<graphviz digraph TrafficLights with 0 nodes and 0 edges>
+<graphviz digraph "TrafficLights" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(t, "engine=neato");
-<graphviz digraph TrafficLights with 0 nodes and 0 edges>
+<graphviz digraph "TrafficLights" with 0 nodes and 0 edges>
 
 #
 gap> ctx1 := GraphvizAddSubgraph(t, "ctx1");
-<graphviz digraph ctx1 with 0 nodes and 0 edges>
+<graphviz digraph "ctx1" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(ctx1, "node [shape=\"box\"]");
-<graphviz digraph ctx1 with 0 nodes and 0 edges>
+<graphviz digraph "ctx1" with 0 nodes and 0 edges>
 gap> for i in [2, 1] do
 >     GraphvizAddNode(ctx1, StringFormatted("gy{}", i));
 >     GraphvizAddNode(ctx1, StringFormatted("yr{}", i));
@@ -33,9 +33,9 @@ gap> for i in [2, 1] do
 
 #
 gap> ctx2 := GraphvizAddSubgraph(t, "ctx2");
-<graphviz digraph ctx2 with 0 nodes and 0 edges>
+<graphviz digraph "ctx2" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(ctx2, "node [shape=\"circle\", fixedsize=true, width=0.9]");
-<graphviz digraph ctx2 with 0 nodes and 0 edges>
+<graphviz digraph "ctx2" with 0 nodes and 0 edges>
 gap> for i in [2, 1] do
 >     GraphvizAddNode(ctx2, StringFormatted("green{}", i));
 >     GraphvizAddNode(ctx2, StringFormatted("yellow{}", i));
@@ -69,14 +69,14 @@ gap> for pair in [[2, 1], [1, 2]] do
 
 #
 gap> GraphvizSetAttr(t, "overlap=\"false\"");
-<graphviz digraph TrafficLights with 0 nodes and 16 edges>
+<graphviz digraph "TrafficLights" with 0 nodes and 16 edges>
 gap> GraphvizSetAttr(t,
 > """label="PetriNet Model TrafficLights
 > Extracted from ConceptBase and laid out by Graphviz"
 > """);
-<graphviz digraph TrafficLights with 0 nodes and 16 edges>
+<graphviz digraph "TrafficLights" with 0 nodes and 16 edges>
 gap> GraphvizSetAttr(t, "fontsize=12");
-<graphviz digraph TrafficLights with 0 nodes and 16 edges>
+<graphviz digraph "TrafficLights" with 0 nodes and 16 edges>
 
 #
 gap> AsString(t);

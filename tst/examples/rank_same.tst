@@ -23,29 +23,29 @@ gap> g := GraphvizDigraph();
 
 #
 gap> s1 := GraphvizAddSubgraph(g);
-<graphviz digraph no_name_1 with 0 nodes and 0 edges>
+<graphviz digraph "no_name_1" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(s1, "rank=same");
-<graphviz digraph no_name_1 with 0 nodes and 0 edges>
+<graphviz digraph "no_name_1" with 0 nodes and 0 edges>
 gap> GraphvizAddNode(s1, "A");
-<graphviz node A>
+<graphviz node "A">
 gap> GraphvizAddNode(s1, "X");
-<graphviz node X>
+<graphviz node "X">
 
 #
 gap> GraphvizAddNode(g, "C");
-<graphviz node C>
+<graphviz node "C">
 
 #
 gap> s2 := GraphvizAddSubgraph(g);
-<graphviz digraph no_name_3 with 0 nodes and 0 edges>
+<graphviz digraph "no_name_3" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(s2, "rank=same");
-<graphviz digraph no_name_3 with 0 nodes and 0 edges>
+<graphviz digraph "no_name_3" with 0 nodes and 0 edges>
 gap> GraphvizAddNode(s2, "B");
-<graphviz node B>
+<graphviz node "B">
 gap> GraphvizAddNode(s2, "D");
-<graphviz node D>
+<graphviz node "D">
 gap> GraphvizAddNode(s2, "Y");
-<graphviz node Y>
+<graphviz node "Y">
 
 #
 gap> GraphvizAddEdge(g, "A", "B");

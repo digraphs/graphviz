@@ -24,9 +24,9 @@ gap> g := GraphvizGraph();;
 gap> e := GraphvizAddEdge(g, "a", "b");
 <graphviz edge (a, b)>
 gap> GraphvizHead(e);
-<graphviz node a>
+<graphviz node "a">
 gap> GraphvizTail(e);
-<graphviz node b>
+<graphviz node "b">
 
 # Test filtering edges by names (digraph)
 gap> g := GraphvizDigraph();;

@@ -16,19 +16,19 @@ gap> START_TEST("graphviz package: examples/angles.tst");
 gap> LoadPackage("graphviz");
 true
 gap> g := GraphvizDigraph("G");
-<graphviz digraph G with 0 nodes and 0 edges>
+<graphviz digraph "G" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(g, "bgcolor", "blue");
-<graphviz digraph G with 0 nodes and 0 edges>
+<graphviz digraph "G" with 0 nodes and 0 edges>
 gap> cluster1 := GraphvizAddSubgraph(g, "cluster_1");
-<graphviz digraph cluster_1 with 0 nodes and 0 edges>
+<graphviz digraph "cluster_1" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(cluster1, "fontcolor", "white");
-<graphviz digraph cluster_1 with 0 nodes and 0 edges>
+<graphviz digraph "cluster_1" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(cluster1, Concatenation("node[shape=circle, style=filled,",
 > "fillcolor=\"white:black\", gradientangle=360, label=\"n9:n360\",",
 > "fontcolor=black]"));
-<graphviz digraph cluster_1 with 0 nodes and 0 edges>
+<graphviz digraph "cluster_1" with 0 nodes and 0 edges>
 gap> GraphvizAddNode(cluster1, "n9");
-<graphviz node n9>
+<graphviz node "n9">
 gap> pairs := ListN([8, 7 .. 1], [315, 270 .. 0], {x, y} -> [x, y]);
 [ [ 8, 315 ], [ 7, 270 ], [ 6, 225 ], [ 5, 180 ], [ 4, 135 ], [ 3, 90 ], 
   [ 2, 45 ], [ 1, 0 ] ]
@@ -41,17 +41,17 @@ gap> for pair in pairs do
 gap> GraphvizSetAttr(cluster1,
 >                 "label",
 >                 "Linear Angle Variations (white to black gradient)");
-<graphviz digraph cluster_1 with 9 nodes and 0 edges>
+<graphviz digraph "cluster_1" with 9 nodes and 0 edges>
 gap> cluster2 := GraphvizAddSubgraph(g, "cluster_2");
-<graphviz digraph cluster_2 with 0 nodes and 0 edges>
+<graphviz digraph "cluster_2" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(cluster2, "fontcolor", "white");
-<graphviz digraph cluster_2 with 0 nodes and 0 edges>
+<graphviz digraph "cluster_2" with 0 nodes and 0 edges>
 gap> GraphvizSetAttr(cluster2, Concatenation("node[shape=circle, style=radial,",
 >                 "fillcolor=\"white:black\", gradientangle=360,",
 >                 "label=\"n9:n360\", fontcolor=black]"));
-<graphviz digraph cluster_2 with 0 nodes and 0 edges>
+<graphviz digraph "cluster_2" with 0 nodes and 0 edges>
 gap> GraphvizAddNode(cluster2, "n18");
-<graphviz node n18>
+<graphviz node "n18">
 gap> pairs := ListN([17, 16 .. 10], [315, 270 .. 0], {x, y} -> [x, y]);
 [ [ 17, 315 ], [ 16, 270 ], [ 15, 225 ], [ 14, 180 ], [ 13, 135 ], 
   [ 12, 90 ], [ 11, 45 ], [ 10, 0 ] ]
@@ -63,7 +63,7 @@ gap> for pair in pairs do
 > od;
 gap> GraphvizSetAttr(cluster2, "label",
 >                 "Radial Angle Variations (white to black gradient)");
-<graphviz digraph cluster_2 with 9 nodes and 0 edges>
+<graphviz digraph "cluster_2" with 9 nodes and 0 edges>
 gap> GraphvizAddEdge(g, "n5", "n14");
 <graphviz edge (n5, n14)>
 
