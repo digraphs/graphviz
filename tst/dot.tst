@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-#@local a, b, color, e, g, label, n, shape
+#@local a, b, color, e, g, gv, label, n, shape
 gap> START_TEST("graphviz package: dot.tst");
 gap> LoadPackage("graphviz", false);;
 
@@ -39,7 +39,7 @@ gap> String(g);
 "//dot\ngraph  {\n\ttest [color=red, label=lab]\n}\n"
 gap> GraphvizRemoveNode(g, "banana");
 Error, the 2nd argument (node name string) "banana" is not a node of the 1st a\
-rgument (a graphviz (di)graph)
+rgument (a graphviz (di)graph/context)
 
 # Test stringify with edge (digraphs)
 gap> g := GraphvizDigraph();;
@@ -106,6 +106,111 @@ gap> e := GraphvizAddEdge(g, "a", "b");;
 gap> GraphvizSetAttr(e, "label", "before>>hello");;
 gap> String(g);
 "//dot\ngraph  {\n\ta\n\tb\n\ta -- b [label=\"before>>hello\"]\n}\n"
+
+# Test GraphvizSetNodeLabels
+gap> gv := GraphvizGraph("xxx");
+<graphviz graph xxx with 0 nodes and 0 edges>
+gap> GraphvizAddNode(gv, 1);
+<graphviz node 1>
+gap> GraphvizAddNode(gv, 2);
+<graphviz node 2>
+gap> GraphvizAddNode(gv, 3);
+<graphviz node 3>
+gap> GraphvizSetNodeLabels(gv, ["i", "ii", "iii"]);
+<graphviz graph xxx with 3 nodes and 0 edges>
+gap> Print(String(gv));
+//dot
+graph xxx {
+	1 [label=i]
+	2 [label=ii]
+	3 [label=iii]
+}
+gap> GraphvizSetNodeLabels(gv, ["a", "b", "c"]);
+<graphviz graph xxx with 3 nodes and 0 edges>
+gap> Print(String(gv));
+//dot
+graph xxx {
+	1 [label=i]
+	2 [label=ii]
+	3 [label=iii]
+}
+gap> GraphvizSetNodeLabels(gv, ["i", "ii"]);
+Error, the 2nd argument (list of node labels) has incorrect length, expected 3\
+, but found 2
+gap> GraphvizSetNodeLabels(gv, ["i", "ii", "iii", "iv"]);
+Error, the 2nd argument (list of node labels) has incorrect length, expected 3\
+, but found 4
+
+# Test GraphvizSetNodeColors
+gap> gv := GraphvizGraph("xxx");
+<graphviz graph xxx with 0 nodes and 0 edges>
+gap> GraphvizAddNode(gv, 1);
+<graphviz node 1>
+gap> GraphvizAddNode(gv, 2);
+<graphviz node 2>
+gap> GraphvizAddNode(gv, 3);
+<graphviz node 3>
+gap> GraphvizSetNodeColors(gv, ["i", "ii", "iii"]);
+Error, invalid color "i" (list (string)), valid colors are RGB values or names\
+ from the GraphViz 2.44.1 X11 Color Scheme http://graphviz.org/doc/info/colors\
+.html
+gap> GraphvizSetNodeColors(gv, ["red", "green", "blue"]);
+<graphviz graph xxx with 3 nodes and 0 edges>
+gap> Print(String(gv));
+//dot
+graph xxx {
+	1 [color=red, style=filled]
+	2 [color=green, style=filled]
+	3 [color=blue, style=filled]
+}
+gap> GraphvizSetNodeColors(gv, ["red", "#00FF00", "blue"]);
+<graphviz graph xxx with 3 nodes and 0 edges>
+gap> Print(String(gv));
+//dot
+graph xxx {
+	1 [color=red, style=filled]
+	2 [color=green, style=filled]
+	3 [color=blue, style=filled]
+}
+gap> GraphvizSetNodeColors(gv, ["#FF0000", "#00FF00", "#0000FF"]);
+<graphviz graph xxx with 3 nodes and 0 edges>
+gap> Print(String(gv));
+//dot
+graph xxx {
+	1 [color=red, style=filled]
+	2 [color=green, style=filled]
+	3 [color=blue, style=filled]
+}
+gap> GraphvizSetNodeColors(gv, ["#FF0000", "#00FF00", "#0000FG"]);
+Error, invalid color "#0000FG" (list (string)), valid colors are RGB values or\
+ names from the GraphViz 2.44.1 X11 Color Scheme http://graphviz.org/doc/info/\
+colors.html
+gap> GraphvizAddEdge(gv, "a", "b");
+<graphviz edge (a, b)>
+gap> GraphvizNodes(gv);
+rec( 1 := <graphviz node 1>, 2 := <graphviz node 2>, 3 := <graphviz node 3>,
+  a := <graphviz node a>, b := <graphviz node b> )
+
+# Test attribute names with spaces (TODO are there any valid such??)
+gap> gv := GraphvizGraph("xxx");
+<graphviz graph xxx with 0 nodes and 0 edges>
+gap> n := GraphvizAddNode(gv, 1);
+<graphviz node 1>
+gap> n := GraphvizSetAttr(n, "probably not ok", 1);
+#I  unknown attribute "probably not ok", the graphviz object may no longer be valid, it can be removed using GraphvizRemoveAttr
+<graphviz node 1>
+gap> Print(String(gv));
+//dot
+graph xxx {
+	1 ["probably not ok"=1]
+}
+gap> GraphvizSetAttr(n, "label", "<<>>");
+<graphviz node 1>
+gap> Print(String(gv));
+//dot
+graph xxx {
+	1 ["probably not ok"=1]
+}
 
 #
 gap> STOP_TEST("graphviz package: dot.tst", 0);

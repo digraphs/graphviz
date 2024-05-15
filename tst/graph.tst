@@ -92,6 +92,20 @@ gap> g;
 <graphviz graph with 4 nodes and 2 edges>
 gap> GraphvizEdges(g);
 [ <graphviz edge (a, b)>, <graphviz edge (c, d)> ]
+gap> GraphvizEdges(g, "a", "c");
+[  ]
+gap> GraphvizEdges(g, "a", "b");
+[ <graphviz edge (a, b)> ]
+gap> GraphvizAddEdge(g, "a", "b");
+<graphviz edge (a, b)>
+gap> GraphvizEdges(g, "a", "b");
+[ <graphviz edge (a, b)>, <graphviz edge (a, b)> ]
+gap> GraphvizEdges(g, "x", "b");
+Error, the 2nd argument "x" (head of an edge) is not a node of the 1st argumen\
+t (a graphviz graph or digraph)
+gap> GraphvizEdges(g, "a", "y");
+Error, the 3rd argument "y" (tail of an edge) is not a node of the 1st argumen\
+t (a graphviz graph or digraph)
 
 # Test adding edge with different nodes with the same name
 gap> g := GraphvizGraph();;
@@ -153,6 +167,8 @@ rec( c := <graphviz node c>, d := <graphviz node d> )
 gap> g := GraphvizGraph();;
 gap> GraphvizSetName(g, "test");
 <graphviz graph test with 0 nodes and 0 edges>
+gap> GraphvizSetName(g, 1);
+<graphviz graph 1 with 0 nodes and 0 edges>
 
 # Test global attributes graph
 gap> g := GraphvizGraph();;
@@ -212,6 +228,19 @@ gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "label", "test");;
 gap> GraphvizAttrs(g);
 [ "label=test" ]
+gap> GraphvizSetAttr(g, 1, 2);
+#I  unknown attribute "1", the graphviz object may no longer be valid, it can be removed using GraphvizRemoveAttr
+<graphviz graph with 0 nodes and 0 edges>
+gap> GraphvizAttrs(g);
+[ "label=test", "1=2" ]
+gap> GraphvizRemoveAttr(g, "1=2");
+<graphviz graph with 0 nodes and 0 edges>
+gap> GraphvizAttrs(g);
+[ "label=test", "1=2" ]
+gap> GraphvizRemoveAttr(g, "1");
+<graphviz graph with 0 nodes and 0 edges>
+gap> GraphvizAttrs(g);
+[ "label=test", "1=2" ]
 
 # Test set color (graph)
 gap> g := GraphvizGraph();;

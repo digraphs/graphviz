@@ -59,10 +59,20 @@ gap> String(g);
 
 # Test non-string name containing ':'
 gap> g := GraphvizGraph();;
-gap> GraphvizAddNode(g, 111);
+gap> n := GraphvizAddNode(g, 111);
 <graphviz node 111>
 gap> String(g);
 "//dot\ngraph  {\n\t111\n}\n"
+gap> n[1];
+fail
+gap> n[1] := 2;
+2
+gap> n[1];
+"2"
+gap> GraphvizRemoveAttr(n, 1);
+<graphviz node 111>
+gap> n[1];
+fail
 
 # Test removing a node with a non-string name
 gap> g := GraphvizGraph();;

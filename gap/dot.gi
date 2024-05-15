@@ -111,18 +111,22 @@ InstallMethod(GraphvizEdges,
 "for a graphviz (di)graph or context, object, and object",
 [IsGraphvizGraphDigraphOrContext, IsObject, IsObject],
 function(gv, head, tail)
-    head := GraphvizNodes(gv)[head];
-    if head = fail then
-      ErrorNoReturn("the 2nd argument (head of an edge) is not a node ",
-                    "of the 1st argument (a graphviz graph or digraph)");
+  local nhead, ntail;
+
+    nhead := GraphvizNodes(gv)[head];
+    if nhead = fail then
+      ErrorFormatted("the 2nd argument \"{}\" (head of an edge) is not a ",
+                     "node of the 1st argument (a graphviz graph or digraph)",
+                     head);
     fi;
-    tail := GraphvizNodes(gv)[tail];
-    if tail = fail then
-      ErrorNoReturn("the 2nd argument (head of an edge) is not a node ",
-                    "of the 1st argument (a graphviz graph or digraph)");
+    ntail := GraphvizNodes(gv)[tail];
+    if ntail = fail then
+      ErrorFormatted("the 3rd argument \"{}\" (tail of an edge) is not a ",
+                     "node of the 1st argument (a graphviz graph or digraph)",
+                     tail);
     fi;
     return Filtered(GraphvizEdges(gv),
-                    x -> GraphvizHead(x) = head and GraphvizTail(x) = tail);
+                    x -> GraphvizHead(x) = nhead and GraphvizTail(x) = ntail);
 end);
 
 InstallMethod(GraphvizSubgraphs, "for a graphviz (di)graph or context",
@@ -367,8 +371,8 @@ function(gv, name)
 
   subgraphs := GraphvizSubgraphs(gv);
   if IsBound(subgraphs[name]) then
-    ErrorFormatted("the 1st argument (a graphviz (di)graph) already has ",
-                   " a subgraph with name \"{}\"", name);
+    ErrorFormatted("the 1st argument (a graphviz (di)graph/context) ",
+                   "already has a subgraph with name \"{}\"", name);
   fi;
 
   if IsGraphvizContext(gv) then
@@ -409,8 +413,9 @@ function(graph, name)
   # contexts and subgraphs, rather than just subgraphs as the name suggests
   # See https://github.com/digraphs/graphviz/issues/19
   if IsBound(subgraphs[name]) then
-    ErrorFormatted("the 1st argument (a graphviz (di)graph) already has ",
-                   " a context or subgraph with name \"{}\"", name);
+    ErrorFormatted("the 1st argument (a graphviz (di)graph/context) ",
+                   "already has a context or subgraph with name \"{}\"",
+                   name);
   fi;
 
   ctx             := GV_Context(graph, name);
@@ -443,7 +448,8 @@ function(g, name)
   else
     # Don't just silently do nothing
     ErrorFormatted("the 2nd argument (node name string) \"{}\"",
-                   " is not a node of the 1st argument (a graphviz (di)graph)",
+                   " is not a node of the 1st argument (a graphviz",
+                   " (di)graph/context)",
                    name);
   fi;
 
@@ -518,6 +524,8 @@ function(obj, attr)
   return obj;
 end);
 
+# TODO this doesn't currently work as intended, see:
+# https://github.com/digraphs/graphviz/issues/23
 InstallMethod(GraphvizRemoveAttr,
 "for a graphviz (di)graph or context and an object",
 [IsGraphvizGraphDigraphOrContext, IsObject],
