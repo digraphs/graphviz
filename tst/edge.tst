@@ -84,11 +84,15 @@ gap> a2 := GraphvizAddNode(g1, "a");;
 gap> c := GraphvizAddNode(g1, "c");;
 gap> e1 := GraphvizAddEdge(g, d, a1);;
 gap> e2 := GraphvizAddEdge(g, a2, c);;
-Error, Different node in graph  with name a
+Error, The 2nd argument (edge) has head node named "a" but there is already a \
+node with this name in the 1st argument (a graphviz (di)graph / context) named\
+ ""
 gap> GraphvizEdges(g);
 [ <graphviz edge (d, a)> ]
 gap> e2 := GraphvizAddEdge(g, c, a2);;
-Error, Different node in graph  with name a.
+Error, The 2nd argument (edge) has tail node named "c" but there is already a \
+node with this name in the 1st argument (a graphviz (di)graph / context) named\
+ ""
 
 # Test adding an edge reuses a node automatically
 gap> g := GraphvizGraph();;

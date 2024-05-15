@@ -88,14 +88,16 @@ gap> g := GraphvizGraph("r");;
 gap> s := GraphvizAddSubgraph(g, "a");;
 gap> GraphvizAddNode(g, "n");;
 gap> GraphvizAddNode(s, "n");
-Error, Already node with name n in graph r.
+Error, the 2nd argument (node) has name "n" but there is already a node with t\
+his name in the 1st argument (a graphviz (di)graph / context) named "a"
 
 # Test adding a node to a graph which is already in child fails (by name)
 gap> g := GraphvizGraph();;
 gap> s := GraphvizAddSubgraph(g, "a");;
 gap> GraphvizAddNode(s, "n");;
 gap> GraphvizAddNode(g, "n");
-Error, Already node with name n in graph a.
+Error, the 2nd argument (node) has name "n" but there is already a node with t\
+his name in the 1st argument (a graphviz (di)graph / context) named ""
 
 # Test adding a node to a graph which is already in sibling fails (by name)
 gap> g := GraphvizGraph();;
@@ -103,7 +105,8 @@ gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddSubgraph(g, "b");;
 gap> GraphvizAddNode(s1, "n");;
 gap> GraphvizAddNode(s2, "n");
-Error, Already node with name n in graph a.
+Error, the 2nd argument (node) has name "n" but there is already a node with t\
+his name in the 1st argument (a graphviz (di)graph / context) named "b"
 
 # Test adding edges to subgraphs
 gap> g := GraphvizGraph();;

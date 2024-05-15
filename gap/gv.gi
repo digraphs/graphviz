@@ -364,15 +364,20 @@ InstallMethod(GV_AddNode,
 "for a graphviz graph and node",
 [IsGraphvizGraphDigraphOrContext, IsGraphvizNode],
 function(x, node)
-  local found, error, name, nodes;
+  local name, nodes, found;
+
   name  := GraphvizName(node);
   nodes := GraphvizNodes(x);
 
   # dont add if already node with the same name
   found := GV_FindGraphWithNode(x, name);
   if found <> fail then
-    error := "Already node with name {} in graph {}.";
-    ErrorNoReturn(StringFormatted(error, name, GraphvizName(found)));
+    ErrorFormatted("the 2nd argument (node) has name \"{}\"",
+                   " but there is already a node with this name in ",
+                   "the 1st argument (a graphviz (di)graph / context)",
+                   " named \"{}\"",
+                   name,
+                   GraphvizName(x));
   fi;
 
   nodes[name] := node;
@@ -383,7 +388,7 @@ InstallMethod(GV_AddEdge,
 "for a graphviz graph and edge",
 [IsGraphvizGraphDigraphOrContext, IsGraphvizEdge],
 function(x, edge)
-  local head, head_name, tail_name, tail, hg, error, tg;
+  local head, tail, head_name, tail_name, hg, tg;
 
   head      := GraphvizHead(edge);
   tail      := GraphvizTail(edge);
@@ -393,18 +398,21 @@ function(x, edge)
   tg        := GV_FindGraphWithNode(x, tail_name);
 
   # make sure the nodes exist / are the same as existing ones
-  if hg <> fail and not IsIdenticalObj(head, hg[head_name]) then
-    # TODO improve
-    ErrorFormatted("Different node in graph {} with name {}",
-                   GraphvizName(hg),
-                   head_name);
+  if hg <> fail and head <> hg[head_name] then
+    ErrorFormatted("The 2nd argument (edge) has head node named \"{}\"",
+                   " but there is already a node with this name in ",
+                   "the 1st argument (a graphviz (di)graph / context)",
+                   " named \"{}\"",
+                   head_name,
+                   GraphvizName(x));
   fi;
-  if tg <> fail and not IsIdenticalObj(tail, tg[tail_name]) then
-    # TODO improve
-    error := "Different node in graph {} with name {}.";
-    ErrorNoReturn(StringFormatted(error,
-                                         GraphvizName(tg),
-                                         tail_name));
+  if tg <> fail and tail <> tg[tail_name] then
+    ErrorFormatted("The 2nd argument (edge) has tail node named \"{}\"",
+                   " but there is already a node with this name in ",
+                   "the 1st argument (a graphviz (di)graph / context)",
+                   " named \"{}\"",
+                   head_name,
+                   GraphvizName(x));
   fi;
 
   Add(x!.Edges, edge);
