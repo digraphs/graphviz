@@ -65,4 +65,4 @@ gap> AsString(g);
  deeppink\" [fillcolor=deeppink, style=filled]\n}\n"
 
 #
-gap> STOP_TEST("graphviz package: colors.tst");
+gap> STOP_TEST("graphviz package: examples/colors.tst");

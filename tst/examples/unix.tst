@@ -283,4 +283,4 @@ gap> AsString(u) =
 true
 
 #
-gap> STOP_TEST("graphviz package: unix.tst");
+gap> STOP_TEST("graphviz package: examples/unix.tst");

@@ -24,4 +24,4 @@ gap> AsString(graph);
 "//dot\ndigraph G {\n\thello\n\tworld\n\thello -> world\n}\n"
 
 #
-gap> STOP_TEST("graphviz package: hello.tst");
+gap> STOP_TEST("graphviz package: examples/hello.tst");

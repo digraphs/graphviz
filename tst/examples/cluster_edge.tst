@@ -60,4 +60,4 @@ e -> g\n\tf\n\te -> f\n}\n\tb -> f [lhead=cluster1]\n\td -> e\n\tc -> g [lhead\
 =cluster1, ltail=cluster0]\n\tc -> e [ltail=cluster0]\n\th\n\td -> h\n}\n"
 
 #
-gap> STOP_TEST("graphviz package: cluster_edge.tst");
+gap> STOP_TEST("graphviz package: examples/cluster_edge.tst");

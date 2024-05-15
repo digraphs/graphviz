@@ -64,4 +64,4 @@ raph no_name_3 {\n\trank=same \n\tB\n\tD\n\tY\n}\n\tA -> B\n\tA -> C\n\tC -> D\
 \n\tX -> Y\n}\n"
 
 #
-gap> STOP_TEST("graphviz package: rank_same.tst");
+gap> STOP_TEST("graphviz package: examples/rank_same.tst");

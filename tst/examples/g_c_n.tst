@@ -63,4 +63,4 @@ tangle=270
 #@fi
 
 #
-gap> STOP_TEST("graphviz package: g_c_n.tst");
+gap> STOP_TEST("graphviz package: examples/g_c_n.tst");
