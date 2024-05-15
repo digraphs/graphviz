@@ -185,6 +185,9 @@ gap> GraphvizSetNodeColors(gv, ["#FF0000", "#00FF00", "#0000FG"]);
 Error, invalid color "#0000FG" (list (string)), valid colors are RGB values or\
  names from the GraphViz 2.44.1 X11 Color Scheme http://graphviz.org/doc/info/\
 colors.html
+gap> GraphvizSetNodeColors(gv, ["#FF0000", "#00FF00"]);
+Error, the number of node colors must be the same as the number of nodes, expe\
+cted 3 but found 2
 gap> GraphvizAddEdge(gv, "a", "b");
 <graphviz edge (a, b)>
 gap> GraphvizNodes(gv);

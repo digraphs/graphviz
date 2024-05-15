@@ -525,9 +525,13 @@ function(attrs)
         if "label" = key and StartsWith(tmp, "<<") and EndsWith(tmp, ">>") then
           val := StringFormatted("{}", val);
         else
-          if ' ' in key then
-            key := StringFormatted("\"{}\"", key);
-          fi;
+          # TODO it doesn't seem to be possible to enter the if-statement
+          # below, even with examples where the key contains spaces (probably
+          # the quotes are added somewhere else). Either uncomment or delete
+          # this code.
+          # if ' ' in key then
+          #   key := StringFormatted("\"{}\"", key);
+          # fi;
           if ' ' in val or '>' in val or '^' in val or '#' in val then
               # TODO avoid code duplication here, and below
             val := StringFormatted("\"{}\"", val);
@@ -603,10 +607,8 @@ function(graph, is_subgraph)
   if is_subgraph then
     if IsGraphvizContext(graph) then
       Append(result, GV_StringifyContextHead(graph));
-    elif IsGraphvizGraph(graph) or IsGraphvizDigraph(graph) then
-      Append(result, GV_StringifySubgraphHead(graph));
     else
-      ErrorNoReturn("Invalid subgraph type.");
+      Append(result, GV_StringifySubgraphHead(graph));
     fi;
   elif IsGraphvizDigraph(graph) then
     Append(result, "//dot\n");
@@ -614,11 +616,11 @@ function(graph, is_subgraph)
   elif IsGraphvizGraph(graph) then
     Append(result, "//dot\n");
     Append(result, GV_StringifyGraphHead(graph));
-  elif IsGraphvizContext(graph) then
-    Append(result, "//dot\n");
-    Append(result, GV_StringifyContextHead(graph));
-  else
-    ErrorNoReturn("Invalid graph type.");
+    # TODO doesn't seem to be possible to reach the case below either, uncomment
+    # or delete
+    # else
+    #  Append(result, "//dot\n");
+    #  Append(result, GV_StringifyContextHead(graph));
   fi;
 
   Append(result, GV_StringifyGraphAttrs(graph));
@@ -635,8 +637,6 @@ function(graph, is_subgraph)
       else
         Append(result, GV_StringifyEdge(obj, "--"));
       fi;
-    else
-      ErrorNoReturn("Invalid graphviz object type.");
     fi;
   od;
 
