@@ -138,6 +138,11 @@ x -> x!.Tail);
 InstallMethod(GraphvizHead, "for a graphviz edge", [IsGraphvizEdge],
 x -> x!.Head);
 
+# Operators for nodes
+
+InstallMethod(\=, "for graphviz nodes",
+[IsGraphvizNode, IsGraphvizNode], IsIdenticalObj);
+
 # Accessing node attributes
 
 InstallMethod(\[\], "for a graphviz node and a string",
@@ -183,6 +188,9 @@ InstallMethod(\[\]\:\=, "for a graphviz edge and an object",
 function(edge, key, val)
   edge[String(key)] := String(val);
 end);
+
+InstallMethod(\=, "for graphviz edges",
+[IsGraphvizEdge, IsGraphvizEdge], IsIdenticalObj);
 
 # Accessor for graphs and digraphs
 

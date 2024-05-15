@@ -120,10 +120,6 @@ BindGlobal("GV_ContextType", NewType(GV_ObjectFamily,
                                     IsComponentObjectRep and
                                     IsAttributeStoringRep));
 
-InstallMethod(\=, "for IsGraphvizNode and IsGraphvizNode",
-[IsGraphvizNode, IsGraphvizNode],
-{n1, n2} -> GraphvizName(n1) = GraphvizName(n2));
-
 ###############################################################################
 # Constructors etc
 ###############################################################################
