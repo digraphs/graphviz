@@ -103,5 +103,5 @@ if _ARGS.open:
 else:
     filename = _DIR + "/index.html"
 print(f"{_INFO_PREFIX}\nSUCCESS!\033[0m")
-print(f"{_INFO_PREFIX} See {filename}")
+print(f"{_INFO_PREFIX}See {filename}")
 sys.exit(0)
