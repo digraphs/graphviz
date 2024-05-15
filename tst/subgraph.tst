@@ -8,8 +8,8 @@
 #############################################################################
 ##
 
-#@local a, a1, a2, a3, b, b1, b2, b3, c, child, ctx, g, main, n, o, parent, s
-#@local s1, s11, s2, sibling
+#@local a, a1, a2, a3, b, b1, b2, b3, c, child, ctx, g, gv, legend, main, n, o
+#@local parent, s, s1, s11, s2, sibling
 gap> START_TEST("graphviz package: subgraph.tst");
 gap> LoadPackage("graphviz", false);;
 
@@ -34,6 +34,9 @@ gap> GraphvizAddSubgraph(g);
 gap> g := GraphvizGraph();;
 gap> GraphvizAddContext(g);
 <graphviz context no_name_1 with 0 nodes and 0 edges>
+gap> GraphvizAddContext(g, "no_name_1");
+Error, the 1st argument (a graphviz (di)graph/context) already has a context o\
+r subgraph with name "no_name_1"
 
 # Test no-name constructor graphs' names increment
 gap> g := GraphvizGraph();;
@@ -254,8 +257,8 @@ edge [label=testing123] node[color=blue] edge[color=blue] \n\n}\n"
 gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddSubgraph(g, "a");
-Error, the 1st argument (a graphviz (di)graph) already has  a subgraph with na\
-me "a"
+Error, the 1st argument (a graphviz (di)graph/context) already has a subgraph \
+with name "a"
 
 # Test getting subgraphs by name
 gap> g := GraphvizDigraph();;
@@ -381,6 +384,28 @@ gap> o := GraphvizFindSubgraphRecursive(g, 1);
 <graphviz graph 1 with 0 nodes and 0 edges>
 gap> IsIdenticalObj(o, s);
 true
+
+# Test a context containing a subgraph
+gap> gv := GraphvizGraph("context+subgraph");;
+gap> GraphvizSetAttr(gv, "node [shape=\"box\"]");
+<graphviz graph context+subgraph with 0 nodes and 0 edges>
+gap> legend := GraphvizAddContext(gv, "legend");
+<graphviz context legend with 0 nodes and 0 edges>
+gap> GraphvizSetAttr(legend, "node [shape=plaintext]");
+<graphviz context legend with 0 nodes and 0 edges>
+gap> GraphvizAddSubgraph(legend, "legend");
+<graphviz graph legend with 0 nodes and 0 edges>
+
+# Test a context containing a subdigraph
+gap> gv := GraphvizDigraph("context+subgraph");;
+gap> GraphvizSetAttr(gv, "node [shape=\"box\"]");
+<graphviz digraph context+subgraph with 0 nodes and 0 edges>
+gap> legend := GraphvizAddContext(gv, "legend");
+<graphviz context legend with 0 nodes and 0 edges>
+gap> GraphvizSetAttr(legend, "node [shape=plaintext]");
+<graphviz context legend with 0 nodes and 0 edges>
+gap> GraphvizAddSubgraph(legend, "legend");
+<graphviz digraph legend with 0 nodes and 0 edges>
 
 #
 gap> STOP_TEST("graphviz package: subgraph.tst", 0);

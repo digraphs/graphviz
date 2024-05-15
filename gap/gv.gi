@@ -395,14 +395,6 @@ function(x, edge)
   hg        := GV_FindGraphWithNode(x, head_name);
   tg        := GV_FindGraphWithNode(x, tail_name);
 
-  # if not already existing, add the nodes to the graph
-  if hg = fail then
-    GV_AddNode(x, head);
-  fi;
-  if tg = fail then
-    GV_AddNode(x, tail);
-  fi;
-
   # make sure the nodes exist / are the same as existing ones
   if hg <> fail and not IsIdenticalObj(head, hg[head_name]) then
     # TODO improve

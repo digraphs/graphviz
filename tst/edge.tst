@@ -74,7 +74,8 @@ gap> GraphvizEdges(g);
 gap> GraphvizRemoveEdges(g, "c", "d");
 <graphviz graph with 4 nodes and 0 edges>
 
-# Test adding edge between nodes which are not in the graph, but there exists nodes in the graph which share their names.
+# Test adding edge between nodes which are not in the graph, but there exists
+# nodes in the graph which share their names.
 gap> g := GraphvizGraph();;
 gap> g1 := GraphvizGraph();;
 gap> a1 := GraphvizAddNode(g, "a");;
@@ -86,6 +87,8 @@ gap> e2 := GraphvizAddEdge(g, a2, c);;
 Error, Different node in graph  with name a
 gap> GraphvizEdges(g);
 [ <graphviz edge (d, a)> ]
+gap> e2 := GraphvizAddEdge(g, c, a2);;
+Error, Different node in graph  with name a.
 
 # Test adding an edge reuses a node automatically
 gap> g := GraphvizGraph();;
@@ -132,6 +135,8 @@ rec( color := "red", label := "1" )
 gap> n["color"] := "blue";;
 gap> GraphvizAttrs(n);
 rec( color := "blue", label := "1" )
+gap> n[1];
+fail
 
 # Test getting attributes using the [] syntax
 gap> g := GraphvizGraph();;

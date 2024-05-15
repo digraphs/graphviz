@@ -1,0 +1,8 @@
+name: tst-local-vars
+
+channels:
+  - conda-forge
+
+dependencies:
+  - pyyaml
+  - bs4
