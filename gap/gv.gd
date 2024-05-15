@@ -11,49 +11,51 @@
 ## This file contains declarations of the internal/private functions for the
 ## graphviz package.
 
-DeclareOperation("GV_GetCounter", [IsGraphvizObjectWithSubobjects]);
-DeclareOperation("GV_IncCounter", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_GetCounter", [IsGraphvizGraphDigraphOrContext]);
+DeclareOperation("GV_IncCounter", [IsGraphvizGraphDigraphOrContext]);
 DeclareCategory("GV_IsMap", IsObject);
 DeclareAttribute("Size", GV_IsMap);
 
-DeclareOperation("GV_StringifyGraphHead", [IsGraphvizObjectWithSubobjects]);
-DeclareOperation("GV_StringifyDigraphHead", [IsGraphvizObjectWithSubobjects]);
-DeclareOperation("GV_StringifySubgraphHead", [IsGraphvizObjectWithSubobjects]);
-DeclareOperation("GV_StringifyContextHead", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_StringifyGraphHead", [IsGraphvizGraphDigraphOrContext]);
+DeclareOperation("GV_StringifyDigraphHead", [IsGraphvizGraphDigraphOrContext]);
+DeclareOperation("GV_StringifySubgraphHead", [IsGraphvizGraphDigraphOrContext]);
+DeclareOperation("GV_StringifyContextHead", [IsGraphvizGraphDigraphOrContext]);
 DeclareOperation("GV_StringifyNode", [IsGraphvizNode]);
-DeclareOperation("GV_StringifyGraphAttrs", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_StringifyGraphAttrs", [IsGraphvizGraphDigraphOrContext]);
 DeclareOperation("GV_StringifyNodeEdgeAttrs", [GV_IsMap]);
-DeclareOperation("GV_StringifyGraph", [IsGraphvizObjectWithSubobjects, IsBool]);
+DeclareOperation("GV_StringifyGraph", [IsGraphvizGraphDigraphOrContext, IsBool]);
 
-DeclareOperation("GV_FindNode", [IsGraphvizObjectWithSubobjects, IsObject]);
+DeclareOperation("GV_FindNode", [IsGraphvizGraphDigraphOrContext, IsObject]);
 
 DeclareOperation("GV_Pluralize", [IsInt, IsString]);
 
-DeclareOperation("GV_Node", [IsGraphvizObjectWithSubobjects, IsString]);
+DeclareOperation("GV_Node", [IsGraphvizGraphDigraphOrContext, IsString]);
 DeclareOperation("GV_Edge",
-[IsGraphvizObjectWithSubobjects, IsGraphvizNode, IsGraphvizNode]);
-DeclareOperation("GV_Graph", [IsGraphvizObjectWithSubobjects, IsString]);
+[IsGraphvizGraphDigraphOrContext, IsGraphvizNode, IsGraphvizNode]);
+DeclareOperation("GV_Graph", [IsGraphvizGraphDigraphOrContext, IsString]);
 DeclareOperation("GV_Digraph", [IsGraphvizDigraph, IsString]);
-DeclareOperation("GV_Context", [IsGraphvizObjectWithSubobjects, IsString]);
+DeclareOperation("GV_Context", [IsGraphvizGraphDigraphOrContext, IsString]);
 DeclareOperation("GV_Map", []);
 DeclareOperation("GV_MapNames", [GV_IsMap]);
 
 # TODO required? Replace with String or just String?
 DeclareOperation("GV_EnsureString", [IsObject]);
 
-DeclareOperation("GV_HasNode", [IsGraphvizObjectWithSubobjects, IsObject]);
+DeclareOperation("GV_HasNode", [IsGraphvizGraphDigraphOrContext, IsObject]);
 
-DeclareOperation("GV_GetParent", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_GetParent", [IsGraphvizGraphDigraphOrContext]);
 DeclareOperation("GV_GraphTreeSearch",
-[IsGraphvizObjectWithSubobjects, IsFunction]);
+[IsGraphvizGraphDigraphOrContext, IsFunction]);
 DeclareOperation("GV_FindGraphWithNode",
-[IsGraphvizObjectWithSubobjects, IsString]);
-DeclareOperation("GV_GetRoot", [IsGraphvizObjectWithSubobjects]);
-DeclareOperation("GV_EnclosingNonContext", [IsGraphvizObjectWithSubobjects]);
-DeclareOperation("GV_AddNode", [IsGraphvizObjectWithSubobjects, IsGraphvizNode]);
-DeclareOperation("GV_AddEdge", [IsGraphvizObjectWithSubobjects, IsGraphvizEdge]);
+[IsGraphvizGraphDigraphOrContext, IsString]);
+DeclareOperation("GV_GetRoot", [IsGraphvizGraphDigraphOrContext]);
+DeclareOperation("GV_EnclosingNonContext", [IsGraphvizGraphDigraphOrContext]);
+DeclareOperation("GV_AddNode",
+[IsGraphvizGraphDigraphOrContext, IsGraphvizNode]);
+DeclareOperation("GV_AddEdge",
+[IsGraphvizGraphDigraphOrContext, IsGraphvizEdge]);
 DeclareOperation("GV_GetIdx", [IsGraphvizObject]);
-DeclareOperation("GV_ConstructHistory", [IsGraphvizObjectWithSubobjects]);
+DeclareOperation("GV_ConstructHistory", [IsGraphvizGraphDigraphOrContext]);
 
 DeclareGlobalFunction("GV_IsValidColor");
 DeclareGlobalFunction("GV_ErrorIfNotNodeColoring");
