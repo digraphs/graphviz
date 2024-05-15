@@ -79,7 +79,7 @@ gap> GraphvizSetAttr(t, "fontsize=12");
 <graphviz digraph TrafficLights with 0 nodes and 16 edges>
 
 #
-gap> String(t);
+gap> AsString(t);
 "//dot\ndigraph TrafficLights {\n\tengine=neato overlap=\"false\" label=\"Petr\
 iNet Model TrafficLights\nExtracted from ConceptBase and laid out by Graphviz\
 \"\n fontsize=12 \nsubgraph ctx1 {\n\tnode [shape=\"box\"] \n\tgy2\n\tyr2\n\tr\

@@ -540,7 +540,11 @@ end);
 # Stringify
 #############################################################################
 
-InstallMethod(String, "for a graphviz (di)graph or context",
+# It might be more natural for the next method to be one for String rather than
+# AsString, but unfortunately String is an attribute, which means it is
+# immutable, and hence cannot be changed after it is first set.
+
+InstallMethod(AsString, "for a graphviz (di)graph",
 [IsGraphvizGraphDigraphOrContext], graph -> GV_StringifyGraph(graph, false));
 
 # Can't do the following because it conflicts with the PrintString above, we

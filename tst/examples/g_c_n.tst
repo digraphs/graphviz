@@ -36,7 +36,7 @@ gap> GraphvizAddNode(cluster1, "anode");
 <graphviz node anode>
 
 #@if CompareVersionNumbers(GAPInfo.Version, "4.12.0")
-gap> Print(String(g));
+gap> Print(AsString(g));
 //dot
 graph G {
 	bgcolor="purple:pink" label="agraph" fontcolor="white" 
@@ -48,7 +48,7 @@ ntangle=270
 }
 }
 #@else
-gap> Print(String(g));
+gap> Print(AsString(g));
 //dot
 graph G {
 	bgcolor="purple:pink" label="agraph" fontcolor="white" 

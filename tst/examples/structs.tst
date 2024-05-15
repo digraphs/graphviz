@@ -63,7 +63,7 @@ gap> GraphvizAddEdge(s, "struct1:f2", "struct3:here");
 <graphviz edge (struct1:f2, struct3:here)>
 
 #
-gap> String(s);
+gap> AsString(s);
 "//dot\ndigraph structs {\n\tnode [shape=\"plaintext\"] \n\tstruct1 [label=<<T\
 ABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n<TR>\n<TD>left</TD>\n<T\
 D PORT=\"f1\">middle</TD><TD PORT=\"f2\">right</TD>\n</TR>\n</TABLE>>]\n\tstru\

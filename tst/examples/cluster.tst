@@ -74,7 +74,7 @@ gap> GraphvizSetAttr(graph["end"], "shape", "Msquare");
 <graphviz node end>
 
 #
-gap> String(graph);
+gap> AsString(graph);
 "//dot\ndigraph G {\nsubgraph cluster_0 {\n\tcolor=\"lightgrey\" style=\"fille\
 d\" node [color=\"white\", style=\"filled\"] label=\"process #1\" \n\ta0\n\ta1\
 \n\ta0 -> a1\n\ta2\n\ta1 -> a2\n\ta3\n\ta2 -> a3\n}\nsubgraph cluster_1 {\n\tc\

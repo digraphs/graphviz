@@ -54,7 +54,7 @@ gap> GraphvizSetAttr(node, "fillcolor", "deeppink");
 <graphviz node name: deeppink>
 
 #
-gap> String(g);
+gap> AsString(g);
 #I  invalid node name RGB: #40e0d0 using "RGB: #40e0d0" instead
 #I  invalid node name RGBA: #ff000042 using "RGBA: #ff000042" instead
 #I  invalid node name HSV: 0.051 0.718 0.627 using "HSV: 0.051 0.718 0.627" instead

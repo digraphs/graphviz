@@ -53,7 +53,7 @@ gap> GraphvizSetAttr(e, "ltail", "cluster0");
 <graphviz edge (c, e)>
 gap> GraphvizAddEdge(g, "d", "h");
 <graphviz edge (d, h)>
-gap> String(g);
+gap> AsString(g);
 "//dot\ndigraph G {\n\tcompound=true \nsubgraph cluster0 {\n\ta\n\tb\n\ta -> b\
 \n\tc\n\ta -> c\n\td\n\tb -> d\n\tc -> d\n}\nsubgraph cluster1 {\n\te\n\tg\n\t\
 e -> g\n\tf\n\te -> f\n}\n\tb -> f [lhead=cluster1]\n\td -> e\n\tc -> g [lhead\

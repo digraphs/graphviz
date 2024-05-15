@@ -58,7 +58,7 @@ gap> GraphvizAddEdge(g, "X", "Y");
 <graphviz edge (X, Y)>
 
 #
-gap> String(g);
+gap> AsString(g);
 "//dot\ndigraph  {\nsubgraph no_name_1 {\n\trank=same \n\tA\n\tX\n}\n\tC\nsubg\
 raph no_name_3 {\n\trank=same \n\tB\n\tD\n\tY\n}\n\tA -> B\n\tA -> C\n\tC -> D\
 \n\tX -> Y\n}\n"

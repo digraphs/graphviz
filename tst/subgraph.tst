@@ -138,7 +138,7 @@ gap> GraphvizAddEdge(g, "x", "y");;
 gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
-gap> String(g);
+gap> AsString(g);
 "//dot\ndigraph  {\nsubgraph a {\n\tcolor=red node [color=red] edge [color=red\
 ] \n}\n\tx\n\ty\n\tx -> y\n}\n"
 
@@ -149,7 +149,7 @@ gap> GraphvizAddEdge(g, "x", "y");;
 gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
-gap> String(g);
+gap> AsString(g);
 "//dot\ngraph  {\nsubgraph a {\n\tcolor=red node [color=red] edge [color=red] \
 \n}\n\tx\n\ty\n\tx -- y\n}\n"
 
@@ -160,7 +160,7 @@ gap> GraphvizAddEdge(g, "x", "y");;
 gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
-gap> String(g);
+gap> AsString(g);
 "//dot\ngraph  {\n// a context \n\tcolor=red node [color=red] edge [color=red]\
  \n\n\tx\n\ty\n\tx -- y\n}\n"
 
@@ -171,14 +171,14 @@ gap> GraphvizAddEdge(g, "x", "y");;
 gap> GraphvizSetAttr(s, "color", "red");;
 gap> GraphvizSetAttr(s, "node [color=red]");;
 gap> GraphvizSetAttr(s, "edge [color=red]");;
-gap> String(g);
+gap> AsString(g);
 "//dot\ndigraph  {\n// a context \n\tcolor=red node [color=red] edge [color=re\
 d] \n\n\tx\n\ty\n\tx -> y\n}\n"
 
 # Test stringifying subgraph w/o name
 gap> g := GraphvizDigraph();;
 gap> s := GraphvizAddSubgraph(g);;
-gap> String(g);
+gap> AsString(g);
 "//dot\ndigraph  {\nsubgraph no_name_1 {\n}\n}\n"
 
 # finding a node in a sibling graph
@@ -248,7 +248,7 @@ gap> GraphvizSetAttr(g, "node[color=blue]");;
 gap> GraphvizSetAttr(g, "edge[color=blue]");;
 gap> GraphvizSetAttr(ctx, "node[color=red]");;
 gap> GraphvizAddNode(ctx, "a");;
-gap> String(g);
+gap> AsString(g);
 "//dot\ndigraph  {\n\tcolor=green edge [label=testing123] node[color=blue] edg\
 e[color=blue] \n// no_name_1 context \n\tnode[color=red] \n\ta\n\tcolor=green \
 edge [label=testing123] node[color=blue] edge[color=blue] \n\n}\n"
@@ -295,7 +295,7 @@ gap> GraphvizSubgraphs(s1)["c"];
 gap> g := GraphvizGraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddSubgraph(s1, "c");;
-gap> String(g);
+gap> AsString(g);
 "//dot\ngraph  {\nsubgraph a {\nsubgraph c {\n}\n}\n}\n"
 
 # Test subgraphs with non-string names
@@ -364,7 +364,7 @@ gap> g      := GraphvizGraph("g");;
 gap> parent := GraphvizAddContext(g, "parent");;
 gap> ctx    := GraphvizAddContext(parent, "ctx");;
 gap> GraphvizAddEdge(ctx, "a", "b");;
-gap> String(g);
+gap> AsString(g);
 "//dot\ngraph g {\n// parent context \n// ctx context \n\ta\n\tb\n\ta -- b\n\n\
 \n}\n"
 
@@ -373,7 +373,7 @@ gap> g      := GraphvizDigraph("g");;
 gap> parent := GraphvizAddContext(g, "parent");;
 gap> ctx    := GraphvizAddContext(parent, "ctx");;
 gap> GraphvizAddEdge(ctx, "a", "b");;
-gap> String(g);
+gap> AsString(g);
 "//dot\ndigraph g {\n// parent context \n// ctx context \n\ta\n\tb\n\ta -> b\n\
 \n\n}\n"
 
