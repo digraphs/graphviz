@@ -210,8 +210,8 @@ end);
 # Graphviz Map Functions
 ############################################################
 
-InstallOtherMethod(\[\],
-"for a graphviz map and an object",
+InstallMethod(\[\],
+"for a graphviz map and a string",
 [GV_IsMap, IsString],
 function(m, o)
   if IsBound(m[o]) then
@@ -220,26 +220,26 @@ function(m, o)
   return fail;
 end);
 
-InstallOtherMethod(\[\],
+InstallMethod(\[\],
 "for a graphviz map and an object",
 [GV_IsMap, IsObject],
 {m, o} -> m[String(o)]);
 
-InstallOtherMethod(\[\]\:\=,
+InstallMethod(\[\]\:\=,
 "for a graphviz map and two objects",
 [GV_IsMap, IsObject, IsObject],
 function(m, key, val)
   m!.Data.(key) := val;
 end);
 
-InstallOtherMethod(Unbind\[\],
+InstallMethod(Unbind\[\],
 "for a graphviz map and an object",
 [GV_IsMap, IsObject],
 function(m, key)
   Unbind(m!.Data.(key));
 end);
 
-InstallOtherMethod(IsBound\[\],
+InstallMethod(IsBound\[\],
 "for a graphviz map and an object",
 [GV_IsMap, IsObject],
 {m, key} -> IsBound(m!.Data.(key)));
