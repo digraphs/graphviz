@@ -1227,7 +1227,7 @@ InstallMethod(GraphvizRemoveAttr, "for a graphviz graph and an object",
 function(obj, attr)
   local attrs;
   attrs      := GraphvizAttrs(obj);
-  obj!.Attrs := Filtered(attrs, item -> item[1] <> String(attr));
+  obj!.Attrs := Filtered(attrs, item -> item <> attr);
   return obj;
 end);
 
