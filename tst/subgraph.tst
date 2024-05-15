@@ -395,6 +395,17 @@ gap> GraphvizSetAttr(legend, "node [shape=plaintext]");
 <graphviz context legend with 0 nodes and 0 edges>
 gap> GraphvizAddSubgraph(legend, "legend");
 <graphviz graph legend with 0 nodes and 0 edges>
+gap> Print(AsString(gv));
+//dot
+graph context+subgraph {
+	node [shape="box"] 
+// legend context 
+	node [shape=plaintext] 
+subgraph legend {
+}
+	node [shape="box"] 
+
+}
 
 # Test a context containing a subdigraph
 gap> gv := GraphvizDigraph("context+subgraph");;
