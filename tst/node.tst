@@ -112,5 +112,64 @@ gap> s := GraphvizGraph();;
 gap> GraphvizAddNode(s, n);
 Error, Cannot add node objects directly to graphs. Please use the node's name.
 
+# Test updating an attribute
+gap> g := GraphvizGraph();;
+gap> n := GraphvizAddNode(g, "n");;
+gap> GraphvizSetAttr(n, "label", "a");;
+gap> AsString(g);
+"//dot\ngraph  {\n\tn [label=a]\n}\n"
+gap> GraphvizSetAttr(n, "label", "b");;
+gap> AsString(g);
+"//dot\ngraph  {\n\tn [label=b]\n}\n"
+gap> GraphvizSetAttr(n, "color", "red");;
+gap> AsString(g);
+"//dot\ngraph  {\n\tn [color=red, label=b]\n}\n"
+gap> GraphvizSetAttr(n, "color", "blue");;
+gap> AsString(g);
+"//dot\ngraph  {\n\tn [color=blue, label=b]\n}\n"
+
+# test changing labels functions properly
+gap> g := GraphvizGraph("xxx");;
+gap> GraphvizAddNode(g, 1);;
+gap> GraphvizAddNode(g, 2);;
+gap> GraphvizAddNode(g, 3);;
+gap> GraphvizSetNodeLabels(g, ["i", "ii", "iii"]);
+<graphviz graph xxx with 3 nodes and 0 edges>
+gap> AsString(g);
+"//dot\ngraph xxx {\n\t1 [label=i]\n\t2 [label=ii]\n\t3 [label=iii]\n}\n"
+gap> GraphvizSetNodeLabels(g, ["a", "b", "c"]);
+<graphviz graph xxx with 3 nodes and 0 edges>
+gap> AsString(g);
+"//dot\ngraph xxx {\n\t1 [label=a]\n\t2 [label=b]\n\t3 [label=c]\n}\n"
+
+# test changing labels and colors functions properly
+gap> g := GraphvizGraph("xxx");
+<graphviz graph xxx with 0 nodes and 0 edges>
+gap> GraphvizAddNode(g, 1);
+<graphviz node 1>
+gap> GraphvizAddNode(g, 2);
+<graphviz node 2>
+gap> GraphvizAddNode(g, 3);
+<graphviz node 3>
+gap> GraphvizSetNodeColors(g, ["i", "ii", "iii"]);
+Error, invalid color "i" (list (string)), valid colors are RGB values or names\
+ from the GraphViz 2.44.1 X11 Color Scheme http://graphviz.org/doc/info/colors\
+.html
+gap> GraphvizSetNodeColors(g, ["red", "green", "blue"]);
+<graphviz graph xxx with 3 nodes and 0 edges>
+gap> AsString(g);
+"//dot\ngraph xxx {\n\t1 [color=red, style=filled]\n\t2 [color=green, style=fi\
+lled]\n\t3 [color=blue, style=filled]\n}\n"
+gap> GraphvizSetNodeColors(g, ["red", "#00FF00", "blue"]);
+<graphviz graph xxx with 3 nodes and 0 edges>
+gap> AsString(g);
+"//dot\ngraph xxx {\n\t1 [color=red, style=filled]\n\t2 [color=\"#00FF00\", st\
+yle=filled]\n\t3 [color=blue, style=filled]\n}\n"
+gap> GraphvizSetNodeColors(g, ["#FF0000", "#00FF00", "#0000FF"]);
+<graphviz graph xxx with 3 nodes and 0 edges>
+gap> AsString(g);
+"//dot\ngraph xxx {\n\t1 [color=\"#FF0000\", style=filled]\n\t2 [color=\"#00FF\
+00\", style=filled]\n\t3 [color=\"#0000FF\", style=filled]\n}\n"
+
 #
 gap> STOP_TEST("graphviz package: node.tst", 0);
