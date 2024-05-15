@@ -61,14 +61,17 @@ DeclareOperation("GV_ConstructHistory", [IsGraphvizGraphDigraphOrContext]);
 DeclareGlobalFunction("GV_IsValidColor");
 DeclareGlobalFunction("GV_ErrorIfNotNodeColoring");
 
+# TODO move to dot? and make public?
 BindGlobal("GV_ObjectFamily",
            NewFamily("GV_ObjectFamily", IsGraphvizObject));
 
+# TODO move to dot? and make public?
 BindGlobal("GV_DigraphType", NewType(GV_ObjectFamily,
                                     IsGraphvizDigraph and
                                     IsComponentObjectRep and
                                     IsAttributeStoringRep));
 
+# TODO move to dot? and make public?
 BindGlobal("GV_GraphType", NewType(GV_ObjectFamily,
                                     IsGraphvizGraph and
                                     IsComponentObjectRep and
