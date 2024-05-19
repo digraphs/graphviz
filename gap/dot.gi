@@ -562,7 +562,7 @@ function(obj, attr)
       i := i + 1;
     od;
 
-    # attributes which are not key value
+    # attributes which are not key value or removal by value
     return true;
   end;
 
