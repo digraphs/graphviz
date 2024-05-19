@@ -250,11 +250,11 @@ gap> GraphvizAttrs(g);
 gap> GraphvizRemoveAttr(g, "1=2");
 <graphviz graph with 0 nodes and 0 edges>
 gap> GraphvizAttrs(g);
-[ "label=test", "1=2" ]
+[ "label=test" ]
 gap> GraphvizRemoveAttr(g, "1");
 <graphviz graph with 0 nodes and 0 edges>
 gap> GraphvizAttrs(g);
-[ "label=test", "1=2" ]
+[ "label=test" ]
 
 # Test set color (graph)
 gap> g := GraphvizGraph();;
