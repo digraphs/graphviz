@@ -540,9 +540,33 @@ InstallMethod(GraphvizRemoveAttr,
 "for a graphviz (di)graph or context and an object",
 [IsGraphvizGraphDigraphOrContext, IsObject],
 function(obj, attr)
-  local attrs;
-  attrs      := GraphvizAttrs(obj);
-  obj!.Attrs := Filtered(attrs, item -> item <> String(attr));
+  local attrs, i, match;
+  attrs := GraphvizAttrs(obj);
+  attr  := String(attr);
+
+  # checks if they attribute names match the one being removed
+  match := function(key, str)
+    for i in [1 .. Length(key)] do
+      if i > Length(str) or key[i] <> str[i] then
+        return false;
+      fi;
+    od;
+
+    i := i + 1;
+    while i <= Length(str) do
+      if str[i] = '=' then
+        return true;
+      elif str[i] <> '\s' and str[i] <> '\t' then
+        return false;
+      fi;
+      i := i + 1;
+    od;
+
+    # attributes which are not key value
+    return true;
+  end;
+
+  obj!.Attrs := Filtered(attrs, s -> not match(attr, s));
   return obj;
 end);
 
