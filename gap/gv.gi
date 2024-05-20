@@ -321,6 +321,37 @@ function(graph, pred)
   return fail;
 end);
 
+# tree search only on the children of the graph
+InstallMethod(GV_GraphSearchChildren,
+"for a graphviz graph and a predicate",
+[IsGraphvizGraphDigraphOrContext, IsFunction],
+function(graph, pred)
+  local _, curr, queue, count, subs, key;
+
+  queue := [graph];
+  while Length(queue) > 0 do
+    count := Length(queue);
+
+    for _ in [1 .. count] do
+      # TODO: make sure this is using a linked list rather than an array list
+      curr := Remove(queue, 1);
+
+      # Check this graph (visit)
+      if pred(curr) then
+        return curr;
+      fi;
+
+      # Add children
+      subs := GraphvizSubgraphs(curr);
+      for key in GV_MapNames(subs) do
+        Add(queue, subs[key]);
+      od;
+    od;
+  od;
+
+  return fail;
+end);
+
 InstallMethod(GV_FindGraphWithNode,
 "for a graphviz graph and a node",
 [IsGraphvizGraphDigraphOrContext, IsString],

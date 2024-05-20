@@ -99,9 +99,9 @@ gap> GraphvizSetAttrs(GraphvizAddEdge(e, "course", "S-C"),
 
 #
 gap> GraphvizSetAttr(e, "label=\"Entity Relation Diagram\ndrawn by NEATO\"");
-<graphviz graph "ER" with 0 nodes and 12 edges>
+<graphviz graph "ER" with 12 nodes and 12 edges>
 gap> GraphvizSetAttr(e, "fontsize=\"20\"");
-<graphviz graph "ER" with 0 nodes and 12 edges>
+<graphviz graph "ER" with 12 nodes and 12 edges>
 
 #
 gap> AsString(e);

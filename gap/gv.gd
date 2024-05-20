@@ -47,6 +47,8 @@ DeclareOperation("GV_HasNode", [IsGraphvizGraphDigraphOrContext, IsObject]);
 DeclareOperation("GV_GetParent", [IsGraphvizGraphDigraphOrContext]);
 DeclareOperation("GV_GraphTreeSearch",
 [IsGraphvizGraphDigraphOrContext, IsFunction]);
+DeclareOperation("GV_GraphSearchChildren",
+[IsGraphvizGraphDigraphOrContext, IsFunction]);
 DeclareOperation("GV_FindGraphWithNode",
 [IsGraphvizGraphDigraphOrContext, IsString]);
 DeclareOperation("GV_GetRoot", [IsGraphvizGraphDigraphOrContext]);

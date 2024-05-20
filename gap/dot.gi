@@ -68,9 +68,14 @@ function(g)
   local result, edges, nodes, kind;
 
   result := "";
-  edges  := Length(GraphvizEdges(g));
-  nodes  :=
-            Length(GV_MapNames(GraphvizNodes(g)));
+  edges  := 0;
+  nodes  := 0;
+
+  GV_GraphSearchChildren(g, function(s)
+    nodes := nodes + Length(GV_MapNames(GraphvizNodes(s)));
+    edges := edges + Length(GraphvizEdges(s));
+    return false;
+  end);
 
   if IsGraphvizDigraph(g) then
     kind := "digraph";

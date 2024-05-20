@@ -69,14 +69,14 @@ gap> for pair in [[2, 1], [1, 2]] do
 
 #
 gap> GraphvizSetAttr(t, "overlap=\"false\"");
-<graphviz digraph "TrafficLights" with 0 nodes and 16 edges>
+<graphviz digraph "TrafficLights" with 14 nodes and 16 edges>
 gap> GraphvizSetAttr(t,
 > """label="PetriNet Model TrafficLights
 > Extracted from ConceptBase and laid out by Graphviz"
 > """);
-<graphviz digraph "TrafficLights" with 0 nodes and 16 edges>
+<graphviz digraph "TrafficLights" with 14 nodes and 16 edges>
 gap> GraphvizSetAttr(t, "fontsize=12");
-<graphviz digraph "TrafficLights" with 0 nodes and 16 edges>
+<graphviz digraph "TrafficLights" with 14 nodes and 16 edges>
 
 #
 gap> AsString(t);
