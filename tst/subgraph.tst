@@ -9,6 +9,7 @@
 ##
 
 #@local a, a1, a2, a3, b, b1, b2, b3, c, child, ctx, g, gv, legend, main, n, o
+#@local sub1, sub2, ctx1, ctx2
 #@local parent, s, s1, s11, s2, sibling
 gap> START_TEST("graphviz package: subgraph.tst");
 gap> LoadPackage("graphviz", false);;
@@ -36,13 +37,12 @@ gap> GraphvizAddContext(g);
 <graphviz context "no_name_1" with 0 nodes and 0 edges>
 #@if CompareVersionNumbers(GAPInfo.Version, "4.12")
 gap> GraphvizAddContext(g, "no_name_1");
-Error, the 1st argument (a graphviz (di)graph/context) already has a context o\
-r subgraph with name "no_name_1"
+Error, the 1st argument (a graphviz (di)graph/context) already has a context w\
+ith name "no_name_1"
 #@else
 gap> GraphvizAddContext(g, "no_name_1");
-Error, the 1st argument (a graphviz (di)graph/context) already has a context o\
-r subgr\
-aph with name "no_name_1"
+Error, the 1st argument (a graphviz (di)graph/context) already has a context w\
+ith name "no_name_1"
 #@fi
 
 # Test no-name constructor graphs' names increment
@@ -65,13 +65,14 @@ gap> GraphvizAddContext(g);
 gap> GraphvizAddContext(g);
 <graphviz context "no_name_3" with 0 nodes and 0 edges>
 
-# Test getting subgraphs
+# Test getting subgraphs and contexts
 gap> g := GraphvizGraph();;
 gap> GraphvizAddSubgraph(g, "a");;
 gap> GraphvizAddContext(g, "b");;
 gap> GraphvizSubgraphs(g);
-rec( a := <graphviz graph "a" with 0 nodes and 0 edges>, 
-  b := <graphviz context "b" with 0 nodes and 0 edges> )
+rec( a := <graphviz graph "a" with 0 nodes and 0 edges> )
+gap> GraphvizContexts(g);
+rec( b := <graphviz context "b" with 0 nodes and 0 edges> )
 
 # Test adding a node to a subgraph (does or does not add to parent???)
 # TODO need to nail down expected behaviour!
@@ -294,13 +295,15 @@ gap> GraphvizSubgraphs(g)["b"];
 gap> GraphvizSubgraphs(g)["d"];
 fail
 
-# Test getting context (subgraph) by name
+# Test getting context by name
 gap> g := GraphvizDigraph();;
 gap> s1 := GraphvizAddSubgraph(g, "a");;
 gap> s2 := GraphvizAddContext(g, "c");;
 gap> GraphvizSubgraphs(g)["a"];
 <graphviz digraph "a" with 0 nodes and 0 edges>
 gap> GraphvizSubgraphs(g)["c"];
+fail
+gap> GraphvizContexts(g)["c"];
 <graphviz context "c" with 0 nodes and 0 edges>
 
 # Test adding a nested subgraph
@@ -331,10 +334,13 @@ gap> g := GraphvizGraph();;
 gap> GraphvizAddContext(g, 11);
 <graphviz context "11" with 0 nodes and 0 edges>
 
-# Test getting subgraphs with non-string names
+# Test getting subgraphs/contexts with non-string names
 gap> g := GraphvizGraph();;
 gap> GraphvizAddContext(g, ["a"]);;
-gap> GraphvizSubgraphs(g)[["a"]];
+gap> GraphvizAddSubgraph(g, ["b"]);;
+gap> GraphvizSubgraphs(g)[["b"]];
+<graphviz graph "[ "b" ]" with 0 nodes and 0 edges>
+gap> GraphvizContexts(g)[["a"]];
 <graphviz context "[ "a" ]" with 0 nodes and 0 edges>
 
 # Test finding subgraph (parent)
@@ -469,6 +475,48 @@ gap> b;
 <graphviz graph "2" with 3 nodes and 3 edges>
 gap> c;
 <graphviz graph "3" with 4 nodes and 4 edges>
+
+# Test the parent is the object it was added to
+gap> g    := GraphvizGraph("g");;
+gap> sub1 := GraphvizAddSubgraph(g, "sub1");;
+gap> sub2 := GraphvizAddSubgraph(sub1, "sub2");;
+gap> ctx2 := GraphvizAddContext(sub1, "ctx2");;
+gap> GV_GetParent(sub1);
+<graphviz graph "g" with 0 nodes and 0 edges>
+gap> GV_GetParent(sub2);
+<graphviz graph "sub1" with 0 nodes and 0 edges>
+gap> GV_GetParent(ctx2);
+<graphviz graph "sub1" with 0 nodes and 0 edges>
+gap> g    := GraphvizGraph("g");;
+gap> ctx1 := GraphvizAddSubgraph(g, "ctx1");;
+gap> sub2 := GraphvizAddSubgraph(ctx1, "sub2");;
+gap> ctx2 := GraphvizAddContext(ctx1, "ctx2");;
+gap> GV_GetParent(ctx1);
+<graphviz graph "g" with 0 nodes and 0 edges>
+gap> GV_GetParent(sub2);
+<graphviz graph "ctx1" with 0 nodes and 0 edges>
+gap> GV_GetParent(ctx2);
+<graphviz graph "ctx1" with 0 nodes and 0 edges>
+
+# Test adding contexts with the same name
+gap> g := GraphvizDigraph();;
+gap> s1 := GraphvizAddContext(g, "a");;
+#@if CompareVersionNumbers(GAPInfo.Version, "4.12")
+gap> s2 := GraphvizAddContext(g, "a");
+Error, the 1st argument (a graphviz (di)graph/context) already has a context w\
+ith name "a"
+#@else
+gap> s2 := GraphvizAddContext(g, "a");
+Error, the 1st argument (a graphviz (di)graph/context) already has a cotnext w\
+ith name "a"
+#@fi
+
+# Test adding contexts and subgraphs (different name spaces)
+gap> g := GraphvizDigraph();;
+gap> s1 := GraphvizAddContext(g, "a");
+<graphviz context "a" with 0 nodes and 0 edges>
+gap> s2 := GraphvizAddSubgraph(g, "a");
+<graphviz digraph "a" with 0 nodes and 0 edges>
 
 #
 gap> STOP_TEST("graphviz package: subgraph.tst", 0);

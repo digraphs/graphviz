@@ -18,6 +18,7 @@ function(name)
                       rec(
                         Name      := name,
                         Subgraphs := GV_Map(),
+                        Contexts  := GV_Map(),
                         Nodes     := GV_Map(),
                         Edges     := [],
                         Attrs     := [],
@@ -34,6 +35,7 @@ function(name)
                       rec(
                         Name      := name,
                         Subgraphs := GV_Map(),
+                        Contexts  := GV_Map(),
                         Nodes     := GV_Map(),
                         Edges     := [],
                         Attrs     := [],
@@ -138,6 +140,9 @@ end);
 
 InstallMethod(GraphvizSubgraphs, "for a graphviz (di)graph or context",
 [IsGraphvizGraphDigraphOrContext], x -> x!.Subgraphs);
+
+InstallMethod(GraphvizContexts, "for a graphviz (di)graph or context",
+[IsGraphvizGraphDigraphOrContext], x -> x!.Contexts);
 
 InstallMethod(GraphvizTail, "for a graphviz edge", [IsGraphvizEdge],
 x -> x!.Tail);
@@ -421,20 +426,17 @@ InstallMethod(GraphvizAddContext,
 "for a graphviz (di)graph or context and a string",
 [IsGraphvizGraphDigraphOrContext, IsString],
 function(graph, name)
-  local subgraphs, ctx;
+  local contexts, ctx;
 
-  subgraphs := GraphvizSubgraphs(graph);
-  # TODO is GraphvizSubgraphs appropriately named? It seems to contain both
-  # contexts and subgraphs, rather than just subgraphs as the name suggests
-  # See https://github.com/digraphs/graphviz/issues/19
-  if IsBound(subgraphs[name]) then
+  contexts := GraphvizContexts(graph);
+  if IsBound(contexts[name]) then
     ErrorFormatted("the 1st argument (a graphviz (di)graph/context) ",
-                   "already has a context or subgraph with name \"{}\"",
+                   "already has a context with name \"{}\"",
                    name);
   fi;
 
   ctx             := GV_Context(graph, name);
-  subgraphs[name] := ctx;
+  contexts[name] := ctx;
   return ctx;
 end);
 
