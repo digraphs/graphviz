@@ -518,5 +518,11 @@ gap> s1 := GraphvizAddContext(g, "a");
 gap> s2 := GraphvizAddSubgraph(g, "a");
 <graphviz digraph "a" with 0 nodes and 0 edges>
 
+# Test finding subgraphs will not return a context instead
+gap> g := GraphvizDigraph();;
+gap> s1 := GraphvizAddContext(g, "a");;
+gap> GraphvizFindSubgraphRecursive(g, "a");
+fail
+
 #
 gap> STOP_TEST("graphviz package: subgraph.tst", 0);
