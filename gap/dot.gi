@@ -217,7 +217,8 @@ InstallMethod(\[\], "for a graphviz (di)graph or context and object",
 InstallMethod(GraphvizFindSubgraphRecursive,
 "for a graphviz (di)graph or context and a string",
 [IsGraphvizGraphDigraphOrContext, IsString],
-{g, s} -> GV_GraphTreeSearch(g, v -> GraphvizName(v) = s));
+{g, s} -> GV_GraphTreeSearch(g, v -> GraphvizName(v) = s and
+                                     not IsGraphvizContext(v)));
 
 InstallMethod(GraphvizFindSubgraphRecursive,
 "for a graphviz (di)graph or context and a string",
