@@ -504,21 +504,20 @@ InstallMethod(GraphvizRemoveEdges,
 "for a graphviz (di)graph or context, string, and string",
 [IsGraphvizGraphDigraphOrContext, IsString, IsString],
 function(g, hn, tn)
-  local lh, lt;
+  local lh, lt, len;
 
   # if no such nodes exist -> error out
   lh := GV_FindNode(g, hn) = fail;
   lt := GV_FindNode(g, tn) = fail;
   if lh and lt then
-    ErrorFormatted("no nodes with names {} or {}", hn, tn);
+    ErrorFormatted("no nodes with names \"{}\" or \"{}\"", hn, tn);
   elif lh then
-    ErrorFormatted("no node with name {}", hn);
+    ErrorFormatted("no node with name \"{}\"", hn);
   elif lt then
-    ErrorFormatted("no node with name {}", tn);
+    ErrorFormatted("no node with name \"{}\"", tn);
   fi;
 
-  # remove any existing edges between them
-  # TODO decide if this should error if no edges exist
+  len := Length(GraphvizEdges(g));
   GraphvizFilterEdges(g,
     function(e)
       local head, tail, tmp;
@@ -531,6 +530,10 @@ function(g, hn, tn)
         return tmp and (hn <> GraphvizName(tail) or tn <> GraphvizName(head));
       fi;
     end);
+  if len - Length(GraphvizEdges(g)) = 0 then
+    ErrorFormatted("no edges exist from \"{}\" to \"{}\"",
+                   tn, hn);
+  fi;
 
   return g;
 end);

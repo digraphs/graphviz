@@ -37,9 +37,9 @@ gap> d := GraphvizAddNode(g, "d");;
 gap> ab := GraphvizAddEdge(g, a, b);;
 gap> cd := GraphvizAddEdge(g, c, d);;
 gap> GraphvizRemoveEdges(g, "a", "c");
-<graphviz digraph with 4 nodes and 2 edges>
+Error, no edges exist from "c" to "a"
 gap> GraphvizRemoveEdges(g, "b", "d");
-<graphviz digraph with 4 nodes and 2 edges>
+Error, no edges exist from "d" to "b"
 gap> GraphvizRemoveEdges(g, "a", "b");
 <graphviz digraph with 4 nodes and 1 edge>
 gap> GraphvizEdges(g);
@@ -49,7 +49,7 @@ gap> GraphvizRemoveEdges(g, "c", "d");
 gap> GraphvizEdges(g);
 [  ]
 gap> GraphvizRemoveEdges(g, "c", "d");
-<graphviz digraph with 4 nodes and 0 edges>
+Error, no edges exist from "d" to "c"
 
 # Test filtering edges by names (graph)
 gap> g := GraphvizGraph();;
@@ -60,9 +60,9 @@ gap> d := GraphvizAddNode(g, "d");;
 gap> ab := GraphvizAddEdge(g, a, b);;
 gap> cd := GraphvizAddEdge(g, c, d);;
 gap> GraphvizRemoveEdges(g, "a", "c");
-<graphviz graph with 4 nodes and 2 edges>
+Error, no edges exist from "c" to "a"
 gap> GraphvizRemoveEdges(g, "b", "d");
-<graphviz graph with 4 nodes and 2 edges>
+Error, no edges exist from "d" to "b"
 gap> GraphvizRemoveEdges(g, "b", "a");
 <graphviz graph with 4 nodes and 1 edge>
 gap> GraphvizEdges(g);
@@ -72,7 +72,7 @@ gap> GraphvizRemoveEdges(g, "d", "c");
 gap> GraphvizEdges(g);
 [  ]
 gap> GraphvizRemoveEdges(g, "c", "d");
-<graphviz graph with 4 nodes and 0 edges>
+Error, no edges exist from "d" to "c"
 
 # Test adding edge between nodes which are not in the graph, but there exists
 # nodes in the graph which share their names.
@@ -170,12 +170,12 @@ rec( color := "red" )
 # Test removing edges which do not exist
 gap> g := GraphvizGraph();;
 gap> GraphvizRemoveEdges(g, "a", "b");
-Error, no nodes with names a or b
+Error, no nodes with names "a" or "b"
 gap> GraphvizAddNode(g, "a");;
 gap> GraphvizRemoveEdges(g, "a", "b");
-Error, no node with name b
+Error, no node with name "b"
 gap> GraphvizRemoveEdges(g, "b", "a");
-Error, no node with name b
+Error, no node with name "b"
 
 #
 gap> STOP_TEST("graphviz package: edge.tst");
