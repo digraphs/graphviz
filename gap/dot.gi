@@ -424,9 +424,6 @@ function(graph, name)
   local subgraphs, ctx;
 
   subgraphs := GraphvizSubgraphs(graph);
-  # TODO is GraphvizSubgraphs appropriately named? It seems to contain both
-  # contexts and subgraphs, rather than just subgraphs as the name suggests
-  # See https://github.com/digraphs/graphviz/issues/19
   if IsBound(subgraphs[name]) then
     ErrorFormatted("the 1st argument (a graphviz (di)graph/context) ",
                    "already has a context or subgraph with name \"{}\"",
@@ -461,7 +458,6 @@ function(g, name)
   if nodes[name] <> fail then
     Unbind(nodes[name]);
   else
-    # Don't just silently do nothing
     ErrorFormatted("the 2nd argument (node name string) \"{}\"",
                    " is not a node of the 1st argument (a graphviz",
                    " (di)graph/context)",
@@ -508,6 +504,21 @@ InstallMethod(GraphvizRemoveEdges,
 "for a graphviz (di)graph or context, string, and string",
 [IsGraphvizGraphDigraphOrContext, IsString, IsString],
 function(g, hn, tn)
+  local lh, lt;
+
+  # if no such nodes exist -> error out
+  lh := GV_FindNode(g, hn) = fail;
+  lt := GV_FindNode(g, tn) = fail;
+  if lh and lt then
+    ErrorFormatted("no nodes with names {} or {}", hn, tn);
+  elif lh then
+    ErrorFormatted("no node with name {}", hn);
+  elif lt then
+    ErrorFormatted("no node with name {}", tn);
+  fi;
+
+  # remove any existing edges between them
+  # TODO decide if this should error if no edges exist
   GraphvizFilterEdges(g,
     function(e)
       local head, tail, tmp;
@@ -534,18 +545,23 @@ InstallMethod(GraphvizRemoveAttr, "for a graphviz object and an object",
 function(obj, attr)
   local attrs;
   attrs := GraphvizAttrs(obj);
-  # TODO error if no such attr?
-  Unbind(attrs[String(attr)]);
+  attr  := String(attr);
+
+  if not IsBound(attrs[attr]) then
+    ErrorFormatted("the 2nd argument (attribute name) \"{}\" ",
+                   "is not set on the provided object.",
+                   attr);
+  fi;
+
+  Unbind(attrs[attr]);
   return obj;
 end);
 
-# TODO this doesn't currently work as intended, see:
-# https://github.com/digraphs/graphviz/issues/23
 InstallMethod(GraphvizRemoveAttr,
 "for a graphviz (di)graph or context and an object",
 [IsGraphvizGraphDigraphOrContext, IsObject],
 function(obj, attr)
-  local attrs, i, match;
+  local attrs, i, match, len;
   attrs := GraphvizAttrs(obj);
   attr  := String(attr);
 
@@ -571,7 +587,15 @@ function(obj, attr)
     return true;
   end;
 
+  len := Length(attrs);
   obj!.Attrs := Filtered(attrs, s -> not match(attr, s));
+
+  # error if no attributes were removed i.e. did not exist
+  if Length(obj!.Attrs) - len = 0 then
+    ErrorFormatted("the 2nd argument (attribute name or attribute) \"{}\" ",
+                   "is not set on the provided object.",
+                   attr);
+  fi;
   return obj;
 end);
 

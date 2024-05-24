@@ -155,6 +155,8 @@ DeclareOperation("GraphvizAddNode", [IsGraphvizGraphDigraphOrContext, IsObject])
 #! If no nodes with the same name are in the graph then the edge's nodes will be
 #! added to the graph. If different nodes with the same name are in the graph
 #! then the operation fails.
+#! TODO I dont believe this is accurate - think it will connect existing ones
+#! underlying private function would fail though - TODO double check.
 DeclareOperation("GraphvizAddEdge",
 [IsGraphvizGraphDigraphOrContext, IsObject, IsObject]);
 

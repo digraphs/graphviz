@@ -167,5 +167,15 @@ gap> GraphvizSetAttr(n, "color", "red");;
 gap> GraphvizAttrs(n);
 rec( color := "red" )
 
+# Test removing edges which do not exist
+gap> g := GraphvizGraph();;
+gap> GraphvizRemoveEdges(g, "a", "b");
+Error, no nodes with names a or b
+gap> GraphvizAddNode(g, "a");;
+gap> GraphvizRemoveEdges(g, "a", "b");
+Error, no node with name b
+gap> GraphvizRemoveEdges(g, "b", "a");
+Error, no node with name b
+
 #
 gap> STOP_TEST("graphviz package: edge.tst");

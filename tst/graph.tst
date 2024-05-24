@@ -247,7 +247,9 @@ gap> GraphvizSetAttr(g, 1, 2);
 <graphviz graph with 0 nodes and 0 edges>
 gap> GraphvizAttrs(g);
 [ "label=test", "1=2" ]
-gap> GraphvizRemoveAttr(g, "label=tes");;
+gap> GraphvizRemoveAttr(g, "label=tes");
+Error, the 2nd argument (attribute name or attribute) "label=tes" is not set o\
+n the provided object.
 gap> GraphvizAttrs(g);
 [ "label=test", "1=2" ]
 gap> GraphvizRemoveAttr(g, "1=2");

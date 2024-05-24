@@ -258,7 +258,7 @@ end);
 InstallMethod(Size, "for a graphviz map",
 [GV_IsMap], m -> Length(GV_MapNames(m)));
 
-# ??
+# Graph child counter functions
 
 InstallMethod(GV_IncCounter,
 "for a graphviz graph",
@@ -386,7 +386,7 @@ function(g, n)
   local graph;
   graph := GV_FindGraphWithNode(g, n);
   if graph = fail then
-    return graph;
+    return fail;
   fi;
   return graph[n];
 end);
