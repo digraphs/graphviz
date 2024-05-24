@@ -104,6 +104,12 @@ DeclareOperation("GraphvizNodes", [IsGraphvizGraphDigraphOrContext]);
 #! @Description gets the subgraphs of a provided graphviz graph.
 DeclareOperation("GraphvizSubgraphs", [IsGraphvizGraphDigraphOrContext]);
 
+#! @Arguments graph
+#! @Returns the contexts of the provided graphviz graph, digraph or context.
+#! @Description gets the contexts of a provided graphviz graph, digraph
+#! or context.
+DeclareOperation("GraphvizContexts", [IsGraphvizGraphDigraphOrContext]);
+
 #! @Arguments graph, name
 #! @Returns a graph with the provided name.
 #! @Description
