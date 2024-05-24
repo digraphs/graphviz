@@ -42,7 +42,8 @@ ith name "no_name_1"
 #@else
 gap> GraphvizAddContext(g, "no_name_1");
 Error, the 1st argument (a graphviz (di)graph/context) already has a context w\
-ith name "no_name_1"
+ith nam\
+e "no_name_1"
 #@fi
 
 # Test no-name constructor graphs' names increment
@@ -508,7 +509,8 @@ ith name "a"
 #@else
 gap> s2 := GraphvizAddContext(g, "a");
 Error, the 1st argument (a graphviz (di)graph/context) already has a cotnext w\
-ith name "a"
+ith nam\
+e "a"
 #@fi
 
 # Test adding contexts and subgraphs (different name spaces)
