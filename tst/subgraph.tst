@@ -508,7 +508,7 @@ Error, the 1st argument (a graphviz (di)graph/context) already has a context w\
 ith name "a"
 #@else
 gap> s2 := GraphvizAddContext(g, "a");
-Error, the 1st argument (a graphviz (di)graph/context) already has a cotnext w\
+Error, the 1st argument (a graphviz (di)graph/context) already has a context w\
 ith nam\
 e "a"
 #@fi
