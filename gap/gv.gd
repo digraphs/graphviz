@@ -62,6 +62,7 @@ DeclareOperation("GV_ConstructHistory", [IsGraphvizGraphDigraphOrContext]);
 
 DeclareGlobalFunction("GV_IsValidColor");
 DeclareGlobalFunction("GV_ErrorIfNotNodeColoring");
+DeclareGlobalFunction("GV_ErrorIfNotValidLabel");
 
 # TODO move to dot? and make public?
 BindGlobal("GV_ObjectFamily",

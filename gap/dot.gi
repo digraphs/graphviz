@@ -632,9 +632,10 @@ function(gv, labels)
                    "has incorrect length, expected {}, but ",
                    "found {}", Size(GraphvizNodes(gv)), Size(labels));
   fi;
-  # TODO GV_ErrorIfNotValidLabel
+
   nodes := GraphvizNodes(gv);
   for i in [1 .. Size(nodes)] do
+    GV_ErrorIfNotValidLabel(labels[i]);
     GraphvizSetAttr(nodes[i], "label", labels[i]);
   od;
   return gv;
