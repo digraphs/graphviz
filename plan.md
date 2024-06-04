@@ -1,15 +1,23 @@
 ## Possible Failure Cases:
  - Add node
     - if node exists with the same name it should fail. `✓`
-    - if the node's name is [not a valid node identifier](https://graphviz.org/doc/info/lang.html) it should fail immediately `✓`
+    - if the node's name is [not a valid node identifier](https://graphviz.org/doc/info/lang.html) it should fail immediately `X` (at the moment there is only very basic checking done when stringifying).
  - Add edge
     - if either of the nodes do not exist it automatically creates the node. I think this is fine as it is much more convienent. `✓`
     - it should also allow for node failure cases above based on their names `✓`
  - Remove node
-    - if the node does not exist it should fail.
+    - if the node does not exist it should fail `✓`
  - Remove edge
-    - if no such edge exists it should fail
+    - if no such edge exists it should fail `✓`
  - Add subgraph
-    - if there is already a subgraph with the same name within the same parent it should fail
- - Remove subgraph
-    - if no such subgraph exists it should fail
+    - if there is already a subgraph with the same name within the same parent it should fail `✓`
+        - **QUESTION**: At the moment this check is only done within the parent i.e. if *g* has subgraphs *a* and *b* it is valid for both *a* and *b* to have children labelled *c*.
+        - I am parial to removing this as it will likely make the subgraph tree searching operations difficult to use properly or not make sense in their current version.
+        - If there is a good reason to keep this we can update such functions.
+ - Add attribute
+    - if no known attribute exists there is a warning (discussed this previously) `✓`
+ - Remove attribute
+    - removing an attribute which is not set causes in error `✓`
+ - Set attribute (which is already set)
+    - overwrites but does not change warn or error (I find this behaviour fine - let me know if you disagree) `✓`
+    - *CHANGE*: made it so adding an attribute to a graph now follows the above behaviour (before it was not removed)

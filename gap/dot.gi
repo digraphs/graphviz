@@ -275,8 +275,9 @@ function(x, name, value)
          " be removed using GraphvizRemoveAttr");
   fi;
 
-  attrs := GraphvizAttrs(x);
   name := String(name);
+  GV_RemoveGraphAttrIfExists(x, name);
+  attrs := GraphvizAttrs(x);
   value := String(value);
   if ' ' in value then
     # Replace with call to GV_QuoteName or whatever TODO
@@ -291,9 +292,31 @@ end);
 InstallMethod(GraphvizSetAttr, "for a graphviz (di)graph or context and object",
 [IsGraphvizGraphDigraphOrContext, IsObject],
 function(x, value)
-  local attrs;
-  attrs := GraphvizAttrs(x);
+  local attrs, match, pred;
 
+  match := function(lookup, target)
+      local idx, pred;
+      idx := 1;
+
+      pred := function(i)
+          return i <= Length(target) and i <= Length(lookup)
+                 and lookup[i] = target[i] and lookup[i] <> '=';
+      end;
+
+      while pred(idx) do
+        idx := idx + 1;
+      od;
+      if idx > Length(lookup) or idx > Length(lookup) then
+        return false;
+      elif lookup[idx] = '=' and target[idx] = '=' then
+        return true;
+      fi;
+      return false;
+  end;
+
+  attrs := GraphvizAttrs(x);
+  x!.Attrs := Filtered(attrs, attr -> not match(attr, value));
+  attrs := GraphvizAttrs(x);
   Add(attrs, String(value));
   return x;
 end);
@@ -564,35 +587,11 @@ InstallMethod(GraphvizRemoveAttr,
 "for a graphviz (di)graph or context and an object",
 [IsGraphvizGraphDigraphOrContext, IsObject],
 function(obj, attr)
-  local attrs, i, match, len;
+  local attrs, len;
   attrs := GraphvizAttrs(obj);
-  attr  := String(attr);
-
-  # checks if they attribute names match the one being removed
-  match := function(key, str)
-    for i in [1 .. Length(key)] do
-      if i > Length(str) or key[i] <> str[i] then
-        return false;
-      fi;
-    od;
-
-    i := i + 1;
-    while i <= Length(str) do
-      if str[i] = '=' then
-        return true;
-      elif str[i] <> '\s' and str[i] <> '\t' then
-        return false;
-      fi;
-      i := i + 1;
-    od;
-
-    # attributes which are not key value or removal by value
-    return true;
-  end;
-
   len := Length(attrs);
-  obj!.Attrs := Filtered(attrs, s -> not match(attr, s));
 
+  GV_RemoveGraphAttrIfExists(obj, attr);
   # error if no attributes were removed i.e. did not exist
   if Length(obj!.Attrs) - len = 0 then
     ErrorFormatted("the 2nd argument (attribute name or attribute) \"{}\" ",

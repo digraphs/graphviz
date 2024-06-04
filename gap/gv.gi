@@ -450,6 +450,39 @@ function(x, edge)
   return x;
 end);
 
+InstallMethod(GV_RemoveGraphAttrIfExists,
+"for a graphviz graph context or digraph and a string",
+[IsGraphvizGraphDigraphOrContext, IsString],
+function(obj, attr)
+  local attrs, i, match;
+  attrs := GraphvizAttrs(obj);
+  attr  := String(attr);
+
+  # checks if they attribute names match the one being removed
+  match := function(key, str)
+    for i in [1 .. Length(key)] do
+      if i > Length(str) or key[i] <> str[i] then
+        return false;
+      fi;
+    od;
+
+    i := i + 1;
+    while i <= Length(str) do
+      if str[i] = '=' then
+        return true;
+      elif str[i] <> '\s' and str[i] <> '\t' then
+        return false;
+      fi;
+      i := i + 1;
+    od;
+
+    # attributes which are not key value or removal by value
+    return true;
+  end;
+
+  obj!.Attrs := Filtered(attrs, s -> not match(attr, s));
+end);
+
 ###############################################################################
 # Stringifying
 ###############################################################################

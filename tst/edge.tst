@@ -51,6 +51,17 @@ gap> GraphvizEdges(g);
 gap> GraphvizRemoveEdges(g, "c", "d");
 Error, no edges exist from "d" to "c"
 
+# Test filtering edges by names - nodes do not exist (digraph)
+gap> g := GraphvizDigraph();;
+gap> GraphvizRemoveEdges(g, "a", "b");
+Error, no nodes with names "a" or "b"
+gap> GraphvizAddNode(g, "a");;
+gap> GraphvizRemoveEdges(g, "a", "b");
+Error, no node with name "b"
+gap> GraphvizAddNode(g, "b");;
+gap> GraphvizRemoveEdges(g, "c", "b");
+Error, no node with name "c"
+
 # Test filtering edges by names (graph)
 gap> g := GraphvizGraph();;
 gap> a := GraphvizAddNode(g, "a");;
