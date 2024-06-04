@@ -1,0 +1,15 @@
+## Possible Failure Cases:
+ - Add node
+    - if node exists with the same name it should fail. `✓`
+    - if the node's name is [not a valid node identifier](https://graphviz.org/doc/info/lang.html) it should fail immediately `✓`
+ - Add edge
+    - if either of the nodes do not exist it automatically creates the node. I think this is fine as it is much more convienent. `✓`
+    - it should also allow for node failure cases above based on their names `✓`
+ - Remove node
+    - if the node does not exist it should fail.
+ - Remove edge
+    - if no such edge exists it should fail
+ - Add subgraph
+    - if there is already a subgraph with the same name within the same parent it should fail
+ - Remove subgraph
+    - if no such subgraph exists it should fail
