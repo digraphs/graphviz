@@ -18,6 +18,7 @@ function(name)
                       rec(
                         Name      := name,
                         Subgraphs := GV_Map(),
+                        Contexts  := GV_Map(),
                         Nodes     := GV_Map(),
                         Edges     := [],
                         Attrs     := [],
@@ -34,6 +35,7 @@ function(name)
                       rec(
                         Name      := name,
                         Subgraphs := GV_Map(),
+                        Contexts  := GV_Map(),
                         Nodes     := GV_Map(),
                         Edges     := [],
                         Attrs     := [],
@@ -139,6 +141,9 @@ end);
 InstallMethod(GraphvizSubgraphs, "for a graphviz (di)graph or context",
 [IsGraphvizGraphDigraphOrContext], x -> x!.Subgraphs);
 
+InstallMethod(GraphvizContexts, "for a graphviz (di)graph or context",
+[IsGraphvizGraphDigraphOrContext], x -> x!.Contexts);
+
 InstallMethod(GraphvizTail, "for a graphviz edge", [IsGraphvizEdge],
 x -> x!.Tail);
 
@@ -212,7 +217,8 @@ InstallMethod(\[\], "for a graphviz (di)graph or context and object",
 InstallMethod(GraphvizFindSubgraphRecursive,
 "for a graphviz (di)graph or context and a string",
 [IsGraphvizGraphDigraphOrContext, IsString],
-{g, s} -> GV_GraphTreeSearch(g, v -> GraphvizName(v) = s));
+{g, s} -> GV_GraphTreeSearch(g, v -> GraphvizName(v) = s and
+                                     not IsGraphvizContext(v)));
 
 InstallMethod(GraphvizFindSubgraphRecursive,
 "for a graphviz (di)graph or context and a string",
@@ -444,17 +450,17 @@ InstallMethod(GraphvizAddContext,
 "for a graphviz (di)graph or context and a string",
 [IsGraphvizGraphDigraphOrContext, IsString],
 function(graph, name)
-  local subgraphs, ctx;
+  local contexts, ctx;
 
-  subgraphs := GraphvizSubgraphs(graph);
-  if IsBound(subgraphs[name]) then
+  contexts := GraphvizContexts(graph);
+  if IsBound(contexts[name]) then
     ErrorFormatted("the 1st argument (a graphviz (di)graph/context) ",
-                   "already has a context or subgraph with name \"{}\"",
+                   "already has a context with name \"{}\"",
                    name);
   fi;
 
   ctx             := GV_Context(graph, name);
-  subgraphs[name] := ctx;
+  contexts[name] := ctx;
   return ctx;
 end);
 

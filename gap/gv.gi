@@ -198,6 +198,7 @@ function(parent, name)
                       rec(
                         Name      := name,
                         Subgraphs := GV_Map(),
+                        Contexts  := GV_Map(),
                         Nodes     := GV_Map(),
                         Edges     := [],
                         Attrs     := [],
@@ -286,7 +287,7 @@ InstallMethod(GV_GraphTreeSearch,
 "for a graphviz graph and a predicate",
 [IsGraphvizGraphDigraphOrContext, IsFunction],
 function(graph, pred)
-  local seen, to_visit, g, key, subgraph, parent;
+  local seen, to_visit, g, key, subgraph, context, parent;
   seen     := [graph];
   to_visit := [graph];
 
@@ -304,6 +305,15 @@ function(graph, pred)
       if not ForAny(seen, s -> IsIdenticalObj(s, subgraph)) then
         Add(seen, subgraph);
         Add(to_visit, subgraph);
+      fi;
+    od;
+
+    # add contexts to list of to visit if not visited
+    for key in GV_MapNames(GraphvizContexts(g)) do
+      context := GraphvizContexts(g)[key];
+      if not ForAny(seen, s -> IsIdenticalObj(s, context)) then
+        Add(seen, context);
+        Add(to_visit, context);
       fi;
     od;
 
@@ -326,7 +336,7 @@ InstallMethod(GV_GraphSearchChildren,
 "for a graphviz graph and a predicate",
 [IsGraphvizGraphDigraphOrContext, IsFunction],
 function(graph, pred)
-  local _, curr, queue, count, subs, key;
+  local _, curr, queue, count, nexts, key;
 
   queue := [graph];
   while Length(queue) > 0 do
@@ -342,9 +352,13 @@ function(graph, pred)
       fi;
 
       # Add children
-      subs := GraphvizSubgraphs(curr);
-      for key in GV_MapNames(subs) do
-        Add(queue, subs[key]);
+      nexts := GraphvizSubgraphs(curr);
+      for key in GV_MapNames(nexts) do
+        Add(queue, nexts[key]);
+      od;
+      nexts := GraphvizContexts(curr);
+      for key in GV_MapNames(nexts) do
+        Add(queue, nexts[key]);
       od;
     od;
   od;
@@ -628,17 +642,20 @@ InstallMethod(GV_ConstructHistory,
 "for a graphviz graph",
 [IsGraphvizGraphDigraphOrContext],
 function(graph)
-  local nodes, edges, subs, node_hist, edge_hist, subs_hist, hist;
+  local ctxs, nodes, edges, subs,
+        ctxs_hist, node_hist, edge_hist, subs_hist, hist;
 
   nodes := GraphvizNodes(graph);
   edges := GraphvizEdges(graph);
   subs  := GraphvizSubgraphs(graph);
+  ctxs  := GraphvizContexts(graph);
 
   node_hist := List(GV_MapNames(nodes), n -> [GV_GetIdx(nodes[n]), nodes[n]]);
   subs_hist := List(GV_MapNames(subs), s -> [GV_GetIdx(subs[s]), subs[s]]);
+  ctxs_hist := List(GV_MapNames(ctxs), s -> [GV_GetIdx(ctxs[s]), ctxs[s]]);
   edge_hist := List(edges, e -> [GV_GetIdx(e), e]);
 
-  hist := Concatenation(node_hist, edge_hist, subs_hist);
+  hist := Concatenation(node_hist, edge_hist, subs_hist, ctxs_hist);
   SortBy(hist, v -> v[1]);
 
   Apply(hist, x -> x[2]);
