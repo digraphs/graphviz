@@ -477,6 +477,14 @@ gap> b;
 gap> c;
 <graphviz graph "3" with 4 nodes and 4 edges>
 
+# adding subgraphs with the same name (nested)
+gap> g := GraphvizGraph("g");;
+gap> a := GraphvizAddSubgraph(g, "a");;
+gap> b := GraphvizAddSubgraph(g, "b");;
+gap> GraphvizAddSubgraph(a, "c");;
+gap> GraphvizAddSubgraph(b, "c");
+<graphviz graph "c" with 0 nodes and 0 edges>
+
 # Test the parent is the object it was added to
 gap> g    := GraphvizGraph("g");;
 gap> sub1 := GraphvizAddSubgraph(g, "sub1");;

@@ -259,7 +259,7 @@ end);
 InstallMethod(Size, "for a graphviz map",
 [GV_IsMap], m -> Length(GV_MapNames(m)));
 
-# ??
+# Graph child counter functions
 
 InstallMethod(GV_IncCounter,
 "for a graphviz graph",
@@ -400,7 +400,7 @@ function(g, n)
   local graph;
   graph := GV_FindGraphWithNode(g, n);
   if graph = fail then
-    return graph;
+    return fail;
   fi;
   return graph[n];
 end);
@@ -462,6 +462,39 @@ function(x, edge)
 
   Add(x!.Edges, edge);
   return x;
+end);
+
+InstallMethod(GV_RemoveGraphAttrIfExists,
+"for a graphviz graph context or digraph and a string",
+[IsGraphvizGraphDigraphOrContext, IsString],
+function(obj, attr)
+  local attrs, i, match;
+  attrs := GraphvizAttrs(obj);
+  attr  := String(attr);
+
+  # checks if they attribute names match the one being removed
+  match := function(key, str)
+    for i in [1 .. Length(key)] do
+      if i > Length(str) or key[i] <> str[i] then
+        return false;
+      fi;
+    od;
+
+    i := i + 1;
+    while i <= Length(str) do
+      if str[i] = '=' then
+        return true;
+      elif str[i] <> '\s' and str[i] <> '\t' then
+        return false;
+      fi;
+      i := i + 1;
+    od;
+
+    # attributes which are not key value or removal by value
+    return true;
+  end;
+
+  obj!.Attrs := Filtered(attrs, s -> not match(attr, s));
 end);
 
 ###############################################################################
@@ -559,11 +592,29 @@ InstallMethod(GV_StringifyNodeEdgeAttrs,
 "for a GV_Map",
 [GV_IsMap],
 function(attrs)
-  local result, keys, key, val, n, i, tmp;
+  local result, keys, key, val, n, i, tmp, format;
 
   result := "";
   n      := Length(GV_MapNames(attrs));
   keys   := SSortedList(GV_MapNames(attrs));
+
+  # helper for formatting attribute kv pairs
+  format := function(format, key, val)
+    tmp := Chomp(val);
+    if "label" = key and StartsWith(tmp, "<<") and EndsWith(tmp, ">>") then
+      val := StringFormatted("{}", val);
+    else
+      if ' ' in key then
+        key := StringFormatted("\"{}\"", key);
+      fi;
+
+      if ' ' in val or '>' in val or '^' in val or '#' in val then
+        val := StringFormatted("\"{}\"", val);
+      fi;
+    fi;
+
+    return StringFormatted(format, key, val);
+  end;
 
   if n <> 0 then
     Append(result, " [");
@@ -571,50 +622,12 @@ function(attrs)
         key := keys[i];
         val := attrs[key];
 
-        tmp := Chomp(val);
-        if "label" = key and StartsWith(tmp, "<<") and EndsWith(tmp, ">>") then
-          val := StringFormatted("{}", val);
-        else
-          # TODO it doesn't seem to be possible to enter the if-statement
-          # below, even with examples where the key contains spaces (probably
-          # the quotes are added somewhere else). Either uncomment or delete
-          # this code.
-          # if ' ' in key then
-          #   key := StringFormatted("\"{}\"", key);
-          # fi;
-          if ' ' in val or '>' in val or '^' in val or '#' in val then
-              # TODO avoid code duplication here, and below
-            val := StringFormatted("\"{}\"", val);
-          fi;
-        fi;
-
-        Append(result,
-               StringFormatted("{}={}, ",
-                               key,
-                               val));
+        Append(result, format("{}={}, ", key, val));
     od;
-
     # handle last element
     key := keys[n];
     val := attrs[key];
-
-    tmp := Chomp(val);
-    if "label" = key and StartsWith(tmp, "<<") and EndsWith(tmp, ">>") then
-      val := StringFormatted("{}", val);
-    else
-        if ' ' in key then
-          key := StringFormatted("\"{}\"", key);
-        fi;
-        if ' ' in val or '>' in val or '^' in val or '#' in val then
-          # TODO what are the allowed things in the value?
-          val := StringFormatted("\"{}\"", val);
-        fi;
-    fi;
-
-    Append(result,
-           StringFormatted("{}={}]",
-                           key,
-                           val));
+    Append(result, format("{}={}]", key, val));
   fi;
 
   return result;
@@ -669,11 +682,9 @@ function(graph, is_subgraph)
   elif IsGraphvizGraph(graph) then
     Append(result, "//dot\n");
     Append(result, GV_StringifyGraphHead(graph));
-    # TODO doesn't seem to be possible to reach the case below either, uncomment
-    # or delete
-    # else
-    #  Append(result, "//dot\n");
-    #  Append(result, GV_StringifyContextHead(graph));
+  else
+    ErrorFormatted("Unknown graph category, ",
+                   "expected a context, digraph or graph.");
   fi;
 
   Append(result, GV_StringifyGraphAttrs(graph));
@@ -736,4 +747,39 @@ function(gv, colors)
         " of nodes, expected {} but found {}", N, Length(colors));
   fi;
   Perform(colors, ErrorIfNotValidColor);
+end);
+
+InstallGlobalFunction(GV_ErrorIfNotValidLabel,
+function(label)
+    local cond;
+
+    if Length(label) = 0 then
+        ErrorFormatted("invalid label \"{}\", valid DOT labels ",
+                       "cannot be empty strings", label);
+    fi;
+
+    # double quoted string
+    if StartsWith(label, "\"") and EndsWith(label, "\"")then
+        return;
+    fi;
+    # HTML string
+    if StartsWith(label, "<") and EndsWith(label, ">")then
+        return;
+    fi;
+
+    # numeral
+    if Int(label) <> fail then
+        return;
+    fi;
+
+    cond := not IsDigitChar(label[1]);
+    cond := cond and ForAll(label, c -> IsAlphaChar(c) or IsDigitChar(c)
+                            or c = '_' or ('\200' <= c and c <= '\377'));
+    if cond then
+        return;
+    fi;
+
+    ErrorFormatted("invalid label \"{}\", valid DOT labels ",
+                   "https://graphviz.org/doc/info/lang.html",
+                   label);
 end);

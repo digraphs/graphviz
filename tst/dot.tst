@@ -29,7 +29,7 @@ gap> GraphvizAttrs(g);
 [ "color=red", "shape=circle" ]
 gap> GraphvizSetAttrs(g, rec(color := "blue", label := "test"));;
 gap> GraphvizAttrs(g);
-[ "color=red", "shape=circle", "label=test", "color=blue" ]
+[ "shape=circle", "label=test", "color=blue" ]
 
 # Test stringify
 gap> g := GraphvizGraph();;
