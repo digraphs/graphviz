@@ -195,19 +195,12 @@ gap> GraphvizSetAttr(g, "color", "red");;
 gap> GraphvizAttrs(g);
 [ "color=red" ]
 
-# Test global attributes graph (duplicates)
-gap> g := GraphvizGraph();;
-gap> GraphvizSetAttr(g, "color", "red");;
-gap> GraphvizSetAttr(g, "color", "blue");;
-gap> GraphvizAttrs(g);
-[ "color=red", "color=blue" ]
-
 # Test stringify attributes graph
 gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "color", "red");;
 gap> GraphvizSetAttr(g, "color", "blue");;
 gap> AsString(g);
-"//dot\ngraph  {\n\tcolor=red color=blue \n}\n"
+"//dot\ngraph  {\n\tcolor=blue \n}\n"
 
 # # Test removing attributes from a graph TODO uncomment or delete
 # gap> g := GraphvizGraph();;
@@ -247,7 +240,9 @@ gap> GraphvizSetAttr(g, 1, 2);
 <graphviz graph with 0 nodes and 0 edges>
 gap> GraphvizAttrs(g);
 [ "label=test", "1=2" ]
-gap> GraphvizRemoveAttr(g, "label=tes");;
+gap> GraphvizRemoveAttr(g, "label=tes");
+Error, the 2nd argument (attribute name or attribute) "label=tes" is not set o\
+n the provided object.
 gap> GraphvizAttrs(g);
 [ "label=test", "1=2" ]
 gap> GraphvizRemoveAttr(g, "1=2");
@@ -277,6 +272,28 @@ gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "color", "red");;
 gap> GraphvizAttrs(g);
 [ "color=red" ]
+
+# Test removing attributes which do not exist
+gap> g := GraphvizGraph();;
+gap> GraphvizRemoveAttr(g, "test");
+Error, the 2nd argument (attribute name or attribute) "test" is not set on the\
+ provided object.
+gap> n := GraphvizAddNode(g, "a");;
+gap> GraphvizRemoveAttr(n, "test");
+Error, the 2nd argument (attribute name) "test" is not set on the provided obj\
+ect.
+
+# Test overwriting attributes removes them
+gap> g := GraphvizGraph();;
+gap> GraphvizSetAttr(g, "color", "red");;
+gap> GraphvizAttrs(g);
+[ "color=red" ]
+gap> GraphvizSetAttr(g, "color", "blue");;
+gap> GraphvizAttrs(g);
+[ "color=blue" ]
+gap> GraphvizSetAttr(g, "color=green");;
+gap> GraphvizAttrs(g);
+[ "color=green" ]
 
 #
 gap> STOP_TEST("graphviz package: graph.tst", 0);

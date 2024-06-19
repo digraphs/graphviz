@@ -281,8 +281,9 @@ function(x, name, value)
          " be removed using GraphvizRemoveAttr");
   fi;
 
-  attrs := GraphvizAttrs(x);
   name := String(name);
+  GV_RemoveGraphAttrIfExists(x, name);
+  attrs := GraphvizAttrs(x);
   value := String(value);
   if ' ' in value then
     # Replace with call to GV_QuoteName or whatever TODO
@@ -297,9 +298,31 @@ end);
 InstallMethod(GraphvizSetAttr, "for a graphviz (di)graph or context and object",
 [IsGraphvizGraphDigraphOrContext, IsObject],
 function(x, value)
-  local attrs;
-  attrs := GraphvizAttrs(x);
+  local attrs, match, pred;
 
+  match := function(lookup, target)
+      local idx, pred;
+      idx := 1;
+
+      pred := function(i)
+          return i <= Length(target) and i <= Length(lookup)
+                 and lookup[i] = target[i] and lookup[i] <> '=';
+      end;
+
+      while pred(idx) do
+        idx := idx + 1;
+      od;
+      if idx > Length(lookup) or idx > Length(lookup) then
+        return false;
+      elif lookup[idx] = '=' and target[idx] = '=' then
+        return true;
+      fi;
+      return false;
+  end;
+
+  attrs := GraphvizAttrs(x);
+  x!.Attrs := Filtered(attrs, attr -> not match(attr, value));
+  attrs := GraphvizAttrs(x);
   Add(attrs, String(value));
   return x;
 end);
@@ -464,7 +487,6 @@ function(g, name)
   if nodes[name] <> fail then
     Unbind(nodes[name]);
   else
-    # Don't just silently do nothing
     ErrorFormatted("the 2nd argument (node name string) \"{}\"",
                    " is not a node of the 1st argument (a graphviz",
                    " (di)graph/context)",
@@ -511,6 +533,20 @@ InstallMethod(GraphvizRemoveEdges,
 "for a graphviz (di)graph or context, string, and string",
 [IsGraphvizGraphDigraphOrContext, IsString, IsString],
 function(g, hn, tn)
+  local lh, lt, len;
+
+  # if no such nodes exist -> error out
+  lh := GV_FindNode(g, hn) = fail;
+  lt := GV_FindNode(g, tn) = fail;
+  if lh and lt then
+    ErrorFormatted("no nodes with names \"{}\" or \"{}\"", hn, tn);
+  elif lh then
+    ErrorFormatted("no node with name \"{}\"", hn);
+  elif lt then
+    ErrorFormatted("no node with name \"{}\"", tn);
+  fi;
+
+  len := Length(GraphvizEdges(g));
   GraphvizFilterEdges(g,
     function(e)
       local head, tail, tmp;
@@ -523,6 +559,10 @@ function(g, hn, tn)
         return tmp and (hn <> GraphvizName(tail) or tn <> GraphvizName(head));
       fi;
     end);
+  if len - Length(GraphvizEdges(g)) = 0 then
+    ErrorFormatted("no edges exist from \"{}\" to \"{}\"",
+                   tn, hn);
+  fi;
 
   return g;
 end);
@@ -537,44 +577,33 @@ InstallMethod(GraphvizRemoveAttr, "for a graphviz object and an object",
 function(obj, attr)
   local attrs;
   attrs := GraphvizAttrs(obj);
-  # TODO error if no such attr?
-  Unbind(attrs[String(attr)]);
+  attr  := String(attr);
+
+  if not IsBound(attrs[attr]) then
+    ErrorFormatted("the 2nd argument (attribute name) \"{}\" ",
+                   "is not set on the provided object.",
+                   attr);
+  fi;
+
+  Unbind(attrs[attr]);
   return obj;
 end);
 
-# TODO this doesn't currently work as intended, see:
-# https://github.com/digraphs/graphviz/issues/23
 InstallMethod(GraphvizRemoveAttr,
 "for a graphviz (di)graph or context and an object",
 [IsGraphvizGraphDigraphOrContext, IsObject],
 function(obj, attr)
-  local attrs, i, match;
+  local attrs, len;
   attrs := GraphvizAttrs(obj);
-  attr  := String(attr);
+  len := Length(attrs);
 
-  # checks if they attribute names match the one being removed
-  match := function(key, str)
-    for i in [1 .. Length(key)] do
-      if i > Length(str) or key[i] <> str[i] then
-        return false;
-      fi;
-    od;
-
-    i := i + 1;
-    while i <= Length(str) do
-      if str[i] = '=' then
-        return true;
-      elif str[i] <> '\s' and str[i] <> '\t' then
-        return false;
-      fi;
-      i := i + 1;
-    od;
-
-    # attributes which are not key value or removal by value
-    return true;
-  end;
-
-  obj!.Attrs := Filtered(attrs, s -> not match(attr, s));
+  GV_RemoveGraphAttrIfExists(obj, attr);
+  # error if no attributes were removed i.e. did not exist
+  if Length(obj!.Attrs) - len = 0 then
+    ErrorFormatted("the 2nd argument (attribute name or attribute) \"{}\" ",
+                   "is not set on the provided object.",
+                   attr);
+  fi;
   return obj;
 end);
 
@@ -608,9 +637,10 @@ function(gv, labels)
                    "has incorrect length, expected {}, but ",
                    "found {}", Size(GraphvizNodes(gv)), Size(labels));
   fi;
-  # TODO GV_ErrorIfNotValidLabel
+
   nodes := GraphvizNodes(gv);
   for i in [1 .. Size(nodes)] do
+    GV_ErrorIfNotValidLabel(labels[i]);
     GraphvizSetAttr(nodes[i], "label", labels[i]);
   od;
   return gv;
