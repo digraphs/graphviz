@@ -27,6 +27,9 @@ function(name)
                         Counter   := 1));
 end);
 
+InstallMethod(GraphvizGraph, "for an object", [IsObject],
+obj -> GraphvizGraph(String(obj)));
+
 InstallMethod(GraphvizGraph, "for no args", [], {} -> GraphvizGraph(""));
 
 InstallMethod(GraphvizDigraph, "for a string", [IsString],
@@ -46,6 +49,9 @@ end);
 
 InstallMethod(GraphvizDigraph, "for no args", [], {} -> GraphvizDigraph(""));
 
+InstallMethod(GraphvizDigraph, "for an object", [IsObject],
+obj -> GraphvizDigraph(String(obj)));
+
 #############################################################################
 # ViewString
 #############################################################################
@@ -54,15 +60,7 @@ InstallMethod(PrintString, "for a graphviz node", [IsGraphvizNode],
 n -> StringFormatted("<graphviz node \"{}\">", GraphvizName(n)));
 
 InstallMethod(PrintString, "for a graphviz edge", [IsGraphvizEdge],
-function(e)
-  local head, tail;
-  head := GraphvizHead(e);
-  tail := GraphvizTail(e);
-
-  return StringFormatted("<graphviz edge ({}, {})>",
-                         GraphvizName(head),
-                         GraphvizName(tail));
-end);
+e -> StringFormatted("<graphviz edge {}>", GraphvizName(e)));
 
 InstallMethod(PrintString, "for a graphviz (di)graph or context",
 [IsGraphvizGraphDigraphOrContext],
