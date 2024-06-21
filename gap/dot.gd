@@ -9,25 +9,174 @@
 ##
 
 #! @Chapter
-#! @ChapterTitle An introduction to the DOT language and Graphviz.
-#! This chapter explains what the DOT and graphviz are,
-#! key basic concepts relating to them, and how this package interacts with them.
+#! @ChapterTitle Getting started
+#! This chapter very briefly explains what &DOT; and &Graphviz; are, provides
+#! some key basic concepts relating to them, and how this package interacts
+#! with them.
 
-#! @Section A Brief Introduction
-#! DOT is a language for descrbing to a computer how to display a visualization
-#! for a graph or digraph. Graphviz is a graph visualization software which can
-#! consume DOT and produce visual outputs. This package is designed to allow
-#! users to programmatically construct objects in GAP which can then be
-#! converted into DOT. That DOT can then be inputted into the graphviz software
-#! to produce a visual output. As DOT is central to the design of this package
+#! @Section A brief introduction
+#! &DOT; is a language for descrbing to a computer how to display a visualization
+#! of a graph or digraph. &Graphviz; is a graph visualization software which can
+#! consume &DOT; and produce visual outputs. This package is designed to allow
+#! users to programmatically construct objects in &GAP; which can then be
+#! converted into &DOT;. That &DOT; can then be input to the &Graphviz; software
+#! to produce a visual output. As &DOT; is central to the design of this package
 #! it will likely be helpful to have a basic understanding of the language.
-#! For more information about DOT see
+#! For more information about &DOT; see
 #! <URL>https://graphviz.org/doc/info/lang.html</URL>.
+#! <P/>
+#!
+#! The &GAPGraphviz; package for &GAP; is intended to facilitate the creation
+#! and rendering of graph descriptions in the &DOT; language of the &Graphviz;
+#! graph drawing software.
+#! <P/>
+#!
+#! You can create a &GAPGraphviz; object, assemble the graph by adding nodes
+#! and edges, setting attributes, labels and so on, and retrieve its &DOT;
+#! source code string. You can save the source code
+#! to a file (using <Ref Func="FileString" BookName="ref"/>) and render it
+#! with the &Graphviz; installation of your system; or you can
+#! use the <Ref Func="Splash"/> function to directly inspect the resulting
+#! graph (depending on your system and the software installed).
 
-#! @Chapter
-#! @ChapterTitle The Graphviz Package
+#! @Section What this package is not
+#!
+#! This package does not implement a parser of the &DOT; language and does only
+#! minimal checks when assembling a graph. In particular, if you set attributes
+#! which don't exist in &DOT;, then the resulting string might not be valid,
+#! and might not render correctly using &Graphviz;.
+
+#! @Section A first example
+#! Here's an example of how to use the &GAPGraphviz; package, to construct a
+#! &DOT; representation of a finite state automata. This example is taken from
+#! <URL>https://graphviz.readthedocs.io/en/stable/examples.html</URL> or
+#! <URL>https://graphviz.org/Gallery/directed/fsm.html</URL>.
+#!
+#! @BeginExampleSession
+#! gap> LoadPackage("graphviz");;
+#! gap> f := GraphvizDigraph("finite_state_machine");
+#! <graphviz digraph "finite_state_machine" with 0 nodes and 0 edges>
+#! gap> GraphvizSetAttr(f, "rankdir=LR");
+#! <graphviz digraph "finite_state_machine" with 0 nodes and 0 edges>
+#! gap> GraphvizSetAttr(f, "size=\"8,5\"");
+#! <graphviz digraph "finite_state_machine" with 0 nodes and 0 edges>
+#! gap> terminals := GraphvizAddContext(f, "terminals");
+#! <graphviz context "terminals" with 0 nodes and 0 edges>
+#! gap> GraphvizSetAttr(terminals, "node [shape=doublecircle]");
+#! <graphviz context "terminals" with 0 nodes and 0 edges>
+#! gap> GraphvizAddNode(terminals, "LR_0");
+#! <graphviz node "LR_0">
+#! gap> GraphvizAddNode(terminals, "LR_3");
+#! <graphviz node "LR_3">
+#! gap> GraphvizAddNode(terminals, "LR_4");
+#! <graphviz node "LR_4">
+#! gap> GraphvizAddNode(terminals, "LR_8");
+#! <graphviz node "LR_8">
+#! gap> nodes := GraphvizAddContext(f, "nodes");
+#! <graphviz context "nodes" with 0 nodes and 0 edges>
+#! gap> GraphvizSetAttr(nodes, "node [shape=circle]");
+#! <graphviz context "nodes" with 0 nodes and 0 edges>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_0", "LR_2"),
+#! > "label", "\"SS(B)\"");
+#! <graphviz edge (LR_0, LR_2)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_0", "LR_1"),
+#! > "label", "\"SS(S)\"");
+#! <graphviz edge (LR_0, LR_1)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_1", "LR_3"),
+#! "label", "\"S($end)\"");
+#! <graphviz edge (LR_1, LR_3)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_2", "LR_6"),
+#! > "label", "\"SS(b)\"");
+#! <graphviz edge (LR_2, LR_6)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_2", "LR_5"),
+#! > "label", "\"SS(a)\"");
+#! <graphviz edge (LR_2, LR_5)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_2", "LR_4"),
+#! > "label", "\"S(A)\"");
+#! <graphviz edge (LR_2, LR_4)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_5", "LR_7"),
+#! > "label", "\"S(b)\"");
+#! <graphviz edge (LR_5, LR_7)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_5", "LR_5"),
+#! > "label", "\"S(a)\"");
+#! <graphviz edge (LR_5, LR_5)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_6", "LR_6"),
+#! > "label", "\"S(b)\"");
+#! <graphviz edge (LR_6, LR_6)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_6", "LR_5"),
+#! > "label", "\"S(a)\"");
+#! <graphviz edge (LR_6, LR_5)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_7", "LR_8"),
+#! > "label", "\"S(b)\"");
+#! <graphviz edge (LR_7, LR_8)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_7", "LR_5"),
+#! > "label", "\"S(a)\"");
+#! <graphviz edge (LR_7, LR_5)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_8", "LR_6"),
+#! > "label", "\"S(b)\"");
+#! <graphviz edge (LR_8, LR_6)>
+#! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_8", "LR_5"),
+#! > "label", "\"S(a)\"");
+#! <graphviz edge (LR_8, LR_5)>
+#! gap> Print(AsString(f), "\n");
+#! //dot
+#! digraph finite_state_machine {
+#!     rankdir=LR size="8,5"
+#! // terminals context
+#!     node [shape=doublecircle]
+#!     LR_0
+#!     LR_3
+#!     LR_4
+#!     LR_8
+#!     rankdir=LR size="8,5"
+#!
+#! // nodes context
+#!     node [shape=circle]
+#!     LR_2
+#!     LR_0 -> LR_2 [label="SS(B)"]
+#!     LR_1
+#!     LR_0 -> LR_1 [label="SS(S)"]
+#!     LR_1 -> LR_3 [label="S($end)"]
+#!     LR_6
+#!     LR_2 -> LR_6 [label="SS(b)"]
+#!     LR_5
+#!     LR_2 -> LR_5 [label="SS(a)"]
+#!     LR_2 -> LR_4 [label="S(A)"]
+#!     LR_7
+#!     LR_5 -> LR_7 [label="S(b)"]
+#!     LR_5 -> LR_5 [label="S(a)"]
+#!     LR_6 -> LR_6 [label="S(b)"]
+#!     LR_6 -> LR_5 [label="S(a)"]
+#!     LR_7 -> LR_8 [label="S(b)"]
+#!     LR_7 -> LR_5 [label="S(a)"]
+#!     LR_8 -> LR_6 [label="S(b)"]
+#!     LR_8 -> LR_5 [label="S(a)"]
+#!     rankdir=LR size="8,5"
+#!
+#! }
+#! gap> Splash(f);
+#! @EndExampleSession
+#!
+#! Provided that you have &Graphviz; installed on your computer, the last line
+#! of the example <C>Splash(f)</C> will produce the following picture:
+#!
+#! <Alt Only="HTML">
+#!     <![CDATA[
+#!     <figure>
+#!         <img height="400" src="png/finite_state_machine.png"/>
+#!     </figure>
+#!     ]]>
+#! </Alt>
+#!
+#! There are lots more examples in the <F>examples</F> directory within the
+#! &Graphviz; package for &GAP; directory.
+
+#! @Chapter Full Reference
+#! This chapter contains all of the gory details about the functionality of the
+#! &GAPGraphviz; package for &GAP;.
 
 #! @Section Graphviz Categories
+#! Blurg
 
 #! @BeginGroup Filters
 #! @Description Every object in graphviz belongs to the IsGraphvizObject
@@ -36,16 +185,25 @@
 #! All are direct subcategories of IsGraphvizObject excluding IsGraphvizDigraph
 #! which is a subcategory of is IsGraphvizGraph.
 
+#! TODO
 DeclareCategory("IsGraphvizObject", IsObject);
 
+#! TODO
 DeclareCategory("IsGraphvizGraphDigraphOrContext", IsGraphvizObject);
+#! TODO
 DeclareCategory("IsGraphvizGraph", IsGraphvizGraphDigraphOrContext);
+#! TODO
 DeclareCategory("IsGraphvizDigraph", IsGraphvizGraphDigraphOrContext);
+#! TODO
 DeclareCategory("IsGraphvizContext", IsGraphvizGraphDigraphOrContext);
 
+#! TODO
 DeclareCategory("IsGraphvizNodeOrEdge", IsGraphvizObject);
+#! TODO
 DeclareCategory("IsGraphvizNode", IsGraphvizNodeOrEdge);
+#! TODO
 DeclareCategory("IsGraphvizEdge", IsGraphvizNodeOrEdge);
+
 #! @EndGroup
 
 #! @Section Constructors
