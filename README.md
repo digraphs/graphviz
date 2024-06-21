@@ -19,15 +19,20 @@ You can use the [Splash] function to directly inspect the resulting
 graph.
 
 This package was inspired by the python package of the same name
-[Python Graphviz].
+[Python Graphviz][].
+
+## License
+
+This package is distributed under the GNU General Public License v2 or later.
+See the `LICENSE` file for more details.
 
 ## Links
 
-- GitHub: https://github.com/xflr6/graphviz
-- Documentation: https://graphviz.readthedocs.io
-- Changelog: https://graphviz.readthedocs.io/en/latest/changelog.html
-- Issue Tracker: https://github.com/xflr6/graphviz/issues
-- Download: https://pypi.org/project/graphviz/#files
+- GitHub: [https://github.com/digraphs/graphviz](https://github.com/digraphs/graphviz)
+- Documentation: TODO
+- Changelog: TODO
+- Issue Tracker: [https://github.com/digraphs/graphviz/issues](https://github.com/digraphs/graphviz/issues)
+- Download: TODO
 
 ## Installation
 
@@ -39,9 +44,9 @@ package has no further dependencies!
 ### From sources
 
 To get the latest version of the package, download the archive file
-`graphviz-x.x.x.tar.gz` from the [Graphviz webpage][]. Then, inside the
-`pkg` subdirectory of your GAP installation, unpack the archive
-`graphviz-x.x.x.tar.gz` in your `gap/pkg` directory, using
+`graphviz-x.x.x.tar.gz` from the [Graphviz package for GAP webpage][].
+Then, inside the `pkg` subdirectory of your GAP installation, unpack the
+archive `graphviz-x.x.x.tar.gz` in your `gap/pkg` directory, using
 
     gunzip graphviz-x.x.x.tar.gz; tar xvf graphviz-x.x.x.tar
 
@@ -51,8 +56,8 @@ for example.  This will create a subdirectory `graphviz-x.x.x`.
 
 Start GAP in the usual way, then type:
 
-   LoadPackage("PackageManager");
-   InstallPackage("graphviz");
+    LoadPackage("PackageManager");
+    InstallPackage("graphviz");
 
 ## Quickstart
 
@@ -99,93 +104,23 @@ Check the generated source code:
 
 Save the source code:
 
-    gap> FileString(TODO
+    gap> FileString("round-table.gv", AsString(dot));
+    134
 
-Save and render and view the result:
+Render and view the result:
 
-.. code:: python
+    gap> Splash(dot);
 
-    >>> doctest_mark_exe()  # skip this line
-
-    >>> dot.render('doctest-output/round-table.gv', view=True)  # doctest: +SKIP
-    'doctest-output/round-table.gv.pdf'
-
-.. image:: https://raw.github.com/xflr6/graphviz/master/docs/_static/round-table.svg
-    :align: center
-    :alt: round-table.svg
-
-**Caveat:**
-Backslash-escapes and strings of the form ``<...>``
-have a special meaning in the DOT language.
-If you need to render arbitrary strings (e.g. from user input),
-check the details in the `user guide`_.
+![The Round Table](https://raw.github.com/digraphs/graphviz/main/docs/png/The_Round_Table.png)
 
 ## Issues
 
 For questions, remarks, suggestions, and issues please use the
 [issue tracker](https://github.com/digraphs/graphviz/issues).
 
-## License
-
-This package is distributed under the GNU General Public License v2 or later.
-See the `LICENSE` file for more details.
-
-[PackageManager]: https://gap-packages.github.io/PackageManager
-[Graphviz webpage]: https://digraphs.github.io/Digraphs
+[DOT]: https://www.graphviz.org/doc/info/lang.html
 [GAP]: https://www.gap-system.org
-
-
-
-See also
---------
-
-- pygraphviz_ |--| full-blown interface wrapping the Graphviz C library with SWIG
-- graphviz-python_ |--| official Python bindings
-  (`documentation <graphviz-python-docs_>`_)
-- pydot_ |--| stable pure-Python approach, requires pyparsing
-
-
-License
--------
-
-This package is distributed under the `MIT license`_.
-
-
-.. _Graphviz:  https://www.graphviz.org
-.. _DOT: https://www.graphviz.org/doc/info/lang.html
-.. _upstream repo: https://gitlab.com/graphviz/graphviz/
-.. _upstream-download: https://www.graphviz.org/download/
-.. _upstream-archived: https://www2.graphviz.org/Archive/stable/
-.. _upstream-windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
-
-.. _set-path-windows: https://www.computerhope.com/issues/ch000549.htm
-.. _set-path-linux: https://stackoverflow.com/questions/14637979/how-to-permanently-set-path-on-linux-unix
-.. _set-path-darwin: https://stackoverflow.com/questions/22465332/setting-path-environment-variable-in-osx-permanently
-
-.. _pip: https://pip.pypa.io
-
-.. _Jupyter notebooks: https://jupyter.org
-.. _IPython notebooks: https://ipython.org/notebook.html
-.. _Jupyter QtConsole: https://qtconsole.readthedocs.io
-
-.. _notebook: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
-.. _notebook-nbviewer: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
-
-.. _Anaconda: https://docs.anaconda.com/anaconda/install/
-.. _conda-forge: https://conda-forge.org
-.. _conda-forge-python-graphviz: https://anaconda.org/conda-forge/python-graphviz
-.. _conda-forge-python-graphviz-feedstock: https://github.com/conda-forge/python-graphviz-feedstock
-.. _conda-forge-graphviz: https://anaconda.org/conda-forge/graphviz
-.. _conda-forge-graphviz-feedstock: https://github.com/conda-forge/graphviz-feedstock
-
-.. _user guide: https://graphviz.readthedocs.io/en/stable/manual.html
-
-.. _pygraphviz: https://pypi.org/project/pygraphviz/
-.. _graphviz-python: https://pypi.org/project/graphviz-python/
-.. _graphviz-python-docs: https://www.graphviz.org/pdf/gv.3python.pdf
-.. _pydot: https://pypi.org/project/pydot/
-
-.. _MIT license: https://opensource.org/licenses/MIT
-
-
-.. |--| unicode:: U+2013
+[Graphviz]: https://www.graphviz.org
+[Graphviz webpage]: https://digraphs.github.io/Digraphs
+[PackageManager]: https://gap-packages.github.io/PackageManager
+[Python Graphviz]: https://pypi.org/project/graphviz/
