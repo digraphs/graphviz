@@ -116,7 +116,7 @@ DeclareOperation("GraphvizContexts", [IsGraphvizGraphDigraphOrContext]);
 #! Searches through the tree of subgraphs connected to this subgraph for a graph
 #! with the provided name.
 #! It returns the graph if it exists.
-#! If no such graph exists then it will return <K>fail<K>.
+#! If no such graph exists then it will return <K>fail</K>.
 DeclareOperation("GraphvizFindSubgraphRecursive",
 [IsGraphvizGraphDigraphOrContext, IsObject]);
 
