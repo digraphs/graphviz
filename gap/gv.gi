@@ -147,9 +147,12 @@ InstallMethod(GV_Edge, "for two graphviz nodes",
 [IsGraphvizGraphDigraphOrContext, IsGraphvizNode, IsGraphvizNode],
 function(graph, head, tail)
   local out;
+
   out := Objectify(GV_EdgeType,
                 rec(
-                  Name  := "",
+                  Name  := StringFormatted("({}, {})",
+                                           GraphvizName(head),
+                                           GraphvizName(tail)),
                   Head  := head,
                   Tail  := tail,
                   Attrs := GV_Map(),
