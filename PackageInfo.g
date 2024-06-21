@@ -57,8 +57,6 @@ ArchiveURL     := Concatenation(~.PackageWWWHome,
                                 ~.Version),
 ArchiveFormats := ".tar.gz",
 
-AbstractHTML := "TODO",
-
 PackageDoc := rec(
   BookName  := "graphviz",
   ArchiveURLSubset := ["doc"],
@@ -77,4 +75,30 @@ Dependencies := rec(
 
 AvailabilityTest := ReturnTrue,
 
-TestFile := "tst/testall.g"));
+TestFile := "tst/testall.g",
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := """&copyright; by J. D. Mitchell and M. Pancer.<P/>
+        &GAPGraphviz; is free software; you can redistribute it and/or modify
+        it, under the terms of the GNU General Public License, version 3 of
+        the License, or (at your option) any later, version.""",
+        Abstract := """
+        This package facilitates the creation and rendering of graph
+        descriptions in the &DOT; language of the &Graphviz; graph drawing
+        software from &GAP;.
+        <P/>
+
+        Create a graphviz object, assemble the graph by adding nodes and edges,
+        and retrieve its &DOT; source code string. Save the source code to a file
+        and render it with the &Graphviz; installation of your system.
+        <P/>
+
+        Use the <Ref Func="Splash"/> function to directly inspect the resulting
+        graph.
+        <P/>
+
+        This package was inspired by the python package of the same name
+        &PyGraphviz;.""")),
+
+AbstractHTML := ~.AutoDoc.TitlePage.Abstract));
