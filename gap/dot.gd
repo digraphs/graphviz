@@ -568,43 +568,76 @@ DeclareOperation("AsString", [IsGraphvizGraphDigraphOrContext]);
 #! @EndExampleSession
 DeclareOperation("Graphviz", [IsObject]);
 
+#! @Section Shortcuts
+#! @Arguments graph, colours
+#! @Returns the modified object
+#! @Description
+#!   Sets the colors of the nodes in the (di)graph.
+#!   If there are a different number of colours than nodes the operation fails.
+#!   Also sets the node <K>style</K> to <K>filled</K>.
 #! @BeginExampleSession
 #! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizSetNodeColors",
 [IsGraphvizGraphDigraphOrContext, IsList]);
+
+#! @Arguments graph, labels
+#! @Returns the modified object
+#! @Description
+#!   Sets the labels of the nodes in the (di)graph.
+#!   If there are fewer labels than nodes the operation fails.
+#!   If there is an invalid label the operation halts there and fails.
+#!   What constitutes a valid label can be found here,
+#!   "https://graphviz.org/doc/info/lang.html".
 #! @BeginExampleSession
 #! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizSetNodeLabels",
 [IsGraphvizGraphDigraphOrContext, IsList]);
 
-# TODO doc
+#! @Arguments color
+#! @Returns true or false
+#! @Description
+#!   Determines if the color provided is a valid graphviz color.
+#!   Valid graphviz colors are described here,
+#!   "http://graphviz.org/doc/info/colors.html".
 #! @BeginExampleSession
 #! gap>
 #! @EndExampleSession
-DeclareOperation("\[\]", [IsGraphvizNode, IsObject]);
-# TODO doc
-#! @BeginExampleSession
-#! gap>
-#! @EndExampleSession
-DeclareOperation("\[\]\:\=", [IsGraphvizNode, IsObject, IsObject]);
+DeclareGlobalFunction("ErrorIfNotValidColor");
 
-# TODO doc
+#! @BeginGroup
+#! @GroupTitle Getting attributes
+#! @Arguments edge, attr
+#! @Returns the value associated with the provided attribute.
+#! @Description
+#!   Gets the value associated with the attribute <K>attr</K>.
 #! @BeginExampleSession
 #! gap>
 #! @EndExampleSession
 DeclareOperation("\[\]", [IsGraphvizEdge, IsObject]);
-# TODO doc
+#! @Arguments node, attr
+DeclareOperation("\[\]", [IsGraphvizNode, IsObject]);
+#! @EndGroup
+
+#! @BeginGroup
+#! @GroupTitle Setting attributes
+#! @Arguments node, attr
+#! @Description
+#!   Sets the value associated with the attribute <K>attr</K>.
 #! @BeginExampleSession
 #! gap>
 #! @EndExampleSession
+DeclareOperation("\[\]\:\=", [IsGraphvizNode, IsObject, IsObject]);
+#! @Arguments edge, attr
 DeclareOperation("\[\]\:\=", [IsGraphvizEdge, IsObject, IsObject]);
+#! @EndGroup
 
-# TODO doc
+#! @Arguments graph, node_name
+#! @Returns The associated node or <K>fail</K> if no such node exists.
+#! @Description
+#!   Gets a node from a (di)graph by id.
 #! @BeginExampleSession
 #! gap>
 #! @EndExampleSession
 DeclareOperation("\[\]", [IsGraphvizGraphDigraphOrContext, IsObject]);
-
-DeclareGlobalFunction("ErrorIfNotValidColor");
