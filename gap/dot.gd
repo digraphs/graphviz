@@ -75,8 +75,8 @@ DeclareOperation("GraphvizDigraph", []);
 #! objects.
 
 #! @Subsection For all graphviz objects.
-#! This section covers the operations for getting information about any graphviz
-#! object.
+#! Operations below are applicable to all graphviz
+#! objects.
 
 #! @Arguments obj
 #! @Returns the name of the provided graphviz object
@@ -89,8 +89,8 @@ DeclareOperation("GraphvizName", [IsGraphvizObject]);
 DeclareOperation("GraphvizAttrs", [IsGraphvizObject]);
 
 #! @Subsection For only graphs, digraphs and contexts.
-#! This section covers the operations for getting information about graphviz
-#! graphs, digraphs and contexts.
+#! This section covers the operations for getting information
+#! specific to graphviz graphs, digraphs and contexts.
 
 #! @Arguments graph
 #! @Returns the nodes of the provided graphviz graph
@@ -103,13 +103,16 @@ DeclareOperation("GraphvizNodes", [IsGraphvizGraphDigraphOrContext]);
 #! @Arguments graph
 #! @Returns the subgraphs of the provided graphviz graph.
 #! @Description gets the subgraphs of a provided graphviz graph.
-#! Subgraphs are returned as a mapping from subgraph name to object.
+#! Subgraphs are returned as a mapping from subgraph names to
+#! corresponding objects.
 DeclareOperation("GraphvizSubgraphs", [IsGraphvizGraphDigraphOrContext]);
 
 #! @Arguments graph
 #! @Returns the contexts of the provided graphviz graph, digraph or context.
 #! @Description gets the contexts of a provided graphviz graph, digraph
 #! or context.
+#! Subgraphs are returned as a mapping from context names to
+#! corresponding objects.
 DeclareOperation("GraphvizContexts", [IsGraphvizGraphDigraphOrContext]);
 
 #! @Arguments graph, name
@@ -154,6 +157,7 @@ DeclareOperation("GraphvizTail", [IsGraphvizEdge]);
 #! This section covers operations for modifying graphviz objects.
 
 #! @Subsection For modifying graphs.
+#! Operations below only pertain to graphs, digraphs and contexts.
 
 #! @Arguments graph, name
 #! @Returns the modified graph.
@@ -183,8 +187,6 @@ DeclareOperation("GraphvizAddNode", [IsGraphvizGraphDigraphOrContext, IsObject])
 #! If no nodes with the same id are in the (di)graph, nodes automatically will
 #! be added to the graph.
 #! If there are nodes with the same id, they will be used.
-#!  TODO: are we happy with this behaviour?
-#! I think if fail if they have the same id but different objects.
 DeclareOperation("GraphvizAddEdge",
 [IsGraphvizGraphDigraphOrContext, IsObject, IsObject]);
 
@@ -193,7 +195,9 @@ DeclareOperation("GraphvizAddEdge",
 #! @Arguments graph, name
 #! @Returns the new subgraph.
 #! @Description Adds a subgraph to a graph.
-#! The type of graph (graph or digraph) will be the same as the parent graph.
+#! The type of structure (graph or digraph) will be the same as the parent graph.
+#! At the moment it is not possible to add an existing graph as a
+#! subgraph of another graph.
 DeclareOperation("GraphvizAddSubgraph",
 [IsGraphvizGraphDigraphOrContext, IsObject]);
 #! @Arguments graph
@@ -214,6 +218,8 @@ DeclareOperation("GraphvizAddSubgraph", [IsGraphvizGraphDigraphOrContext]);
 #! without modifying the rendering behaviour.
 #! The type of graph edge (directed or undirected)
 #! will be the same as the parent graph.
+#! At the moment it is not possible to add an existing context to
+#! a new graph.
 DeclareOperation("GraphvizAddContext",
 [IsGraphvizGraphDigraphOrContext, IsObject]);
 #! @Arguments graph
