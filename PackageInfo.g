@@ -31,6 +31,8 @@ Persons := [
   rec(
     FirstNames    := "Matthew",
     LastName      := "Pancer",
+    WWWHome       := "https://github.com/mpan322",
+                     # TODO make personal website
     Email         := "mp322@st-andrews.ac.uk",
     IsAuthor      := true,
     IsMaintainer  := true,
