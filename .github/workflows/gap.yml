@@ -23,7 +23,7 @@ jobs:
           - stable-4.13
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
         with:
