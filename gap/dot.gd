@@ -11,7 +11,8 @@
 #! @Chapter
 #! @ChapterTitle An introduction to the DOT language and Graphviz.
 #! This chapter explains what the DOT and graphviz are,
-#! key basic concepts relating to them, and how this package interacts with them.
+#! key basic concepts relating to them, and how this package interacts with
+#! them.
 
 #! @Section A Brief Introduction
 #! DOT is a language for descrbing to a computer how to display a visualization
@@ -63,7 +64,8 @@ DeclareOperation("GraphvizGraph", []);
 #! @GroupTitle Constructors for Digraphs
 #! @Arguments name
 #! @Returns a new graphviz digraph
-#! @Description Creates a new graphviz digraph optionally with the provided name.
+#! @Description Creates a new graphviz digraph optionally with the provided
+#! name.
 DeclareOperation("GraphvizDigraph", [IsObject]);
 DeclareOperation("GraphvizDigraph", []);
 #! @EndGroup
@@ -147,13 +149,15 @@ DeclareOperation("GraphvizTail", [IsGraphvizEdge]);
 #! @Arguments graph, name
 #! @Returns the modified graph.
 #! @Description Sets the name of a graphviz graph or digraph.
-DeclareOperation("GraphvizSetName", [IsGraphvizGraphDigraphOrContext, IsObject]);
+DeclareOperation("GraphvizSetName",
+                 [IsGraphvizGraphDigraphOrContext, IsObject]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
 #! @Description Adds a node to the graph.
 #! If a node with the same name is already present the operation fails.
-DeclareOperation("GraphvizAddNode", [IsGraphvizGraphDigraphOrContext, IsObject]);
+DeclareOperation("GraphvizAddNode",
+                 [IsGraphvizGraphDigraphOrContext, IsObject]);
 
 #! @Arguments graph, edge
 #! @Returns the modified graph.
@@ -179,6 +183,9 @@ DeclareOperation("GraphvizAddSubgraph", [IsGraphvizGraphDigraphOrContext]);
 DeclareOperation("GraphvizAddContext",
 [IsGraphvizGraphDigraphOrContext, IsObject]);
 DeclareOperation("GraphvizAddContext", [IsGraphvizGraphDigraphOrContext]);
+
+DeclareOperation("GraphvizAddComment",
+[IsGraphvizGraphDigraphOrContext, IsString]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.

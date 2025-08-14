@@ -75,7 +75,8 @@ else
       out := Concatenation(str{[1 .. len - 3]}, "ses");
     elif EndsWith(str, "fe") and not EndsWith(str, "ffe") then
       out := Concatenation(str{[1 .. len - 2]}, "ves");
-    elif EndsWith(str, "lf") or EndsWith(str, "rf") or EndsWith(str, "loaf") then
+    elif EndsWith(str, "lf") or EndsWith(str, "rf")
+        or EndsWith(str, "loaf") then
       out := Concatenation(str{[1 .. len - 1]}, "ves");
     elif EndsWith(str, "y") and not str[len - 1] in "aeiouy" then
       out := Concatenation(str{[1 .. len - 1]}, "ies");
