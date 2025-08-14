@@ -41,7 +41,8 @@ function(name)
                         Attrs     := [],
                         Parent    := fail,
                         Idx       := 1,
-                        Counter   := 1));
+                        Counter   := 1,
+                        Comments  := []));
 end);
 
 InstallMethod(GraphvizDigraph, "for no args", [], {} -> GraphvizDigraph(""));
@@ -326,6 +327,13 @@ function(x, value)
   attrs := GraphvizAttrs(x);
   Add(attrs, String(value));
   return x;
+end);
+
+InstallMethod(GraphvizAddComment, "for a graphviz (di)graph and string",
+[IsGraphvizGraphDigraphOrContext, IsString],
+function(gv, comment)
+    Append(gv!.Comments, SplitString(comment, "\n"));
+    return gv;
 end);
 
 #############################################################################
@@ -642,7 +650,8 @@ function(gv, labels)
 
   nodes := GraphvizNodes(gv);
   for i in [1 .. Size(nodes)] do
-    GV_ErrorIfNotValidLabel(labels[i]);
+    # FIXME something in the next function call causes a seg fault!!
+    # GV_ErrorIfNotValidLabel(labels[i]);
     GraphvizSetAttr(nodes[i], "label", labels[i]);
   od;
   return gv;

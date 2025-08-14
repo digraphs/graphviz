@@ -136,10 +136,9 @@ function(graph, name)
     ErrorNoReturn("the 2nd argument (string/node name) cannot be empty");
   fi;
   out := Objectify(GV_NodeType,
-                  rec(
-                    Name  := name,
-                    Attrs := GV_Map(),
-                    Idx   := GV_GetCounter(graph)));
+                   rec(Name  := name,
+                       Attrs := GV_Map(),
+                       Idx   := GV_GetCounter(graph)));
   GV_IncCounter(graph);
   return out;
 end);
@@ -667,7 +666,8 @@ InstallMethod(GV_StringifyGraph,
 "for a graphviz graph and a string",
 [IsGraphvizGraphDigraphOrContext, IsBool],
 function(graph, is_subgraph)
-  local result, obj;
+  local result, comment, obj;
+
   result := "";
 
   # get the correct head to use
@@ -679,6 +679,9 @@ function(graph, is_subgraph)
     fi;
   elif IsGraphvizDigraph(graph) then
     Append(result, "//dot\n");
+    for comment in graph!.Comments do
+      Append(result, StringFormatted("// {}\n", comment));
+    od;
     Append(result, GV_StringifyDigraphHead(graph));
   elif IsGraphvizGraph(graph) then
     Append(result, "//dot\n");
