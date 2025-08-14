@@ -254,7 +254,8 @@ function(x, attrs)
   return x;
 end);
 
-InstallMethod(GraphvizSetAttr, "for a graphviz node or edge, object, and object",
+InstallMethod(GraphvizSetAttr,
+"for a graphviz node or edge, object, and object",
 [IsGraphvizNodeOrEdge, IsObject, IsObject],
 function(x, name, value)
 
@@ -342,7 +343,7 @@ end);
 
 InstallMethod(GraphvizAddNode, "for a graphviz (di)graph or context and string",
 [IsGraphvizGraphDigraphOrContext, IsGraphvizNode],
-function(gv, name)  # gaplint: disable=analyse-lvars
+function(gv, name)  # gaplint: disable=unused-func-args
   ErrorNoReturn("it is not currently possible to add Graphviz node ",
                 "objects directly to Graphviz graphs or digraphs, use ",
                 "the node's name instead");
@@ -474,7 +475,8 @@ InstallMethod(GraphvizAddContext,
 [IsGraphvizGraphDigraphOrContext, IsObject],
 {g, o} -> GraphvizAddContext(g, String(o)));
 
-InstallMethod(GraphvizRemoveNode, "for a graphviz (di)graph or context and node",
+InstallMethod(GraphvizRemoveNode,
+"for a graphviz (di)graph or context and node",
 [IsGraphvizGraphDigraphOrContext, IsGraphvizNode],
 {g, node} -> GraphvizRemoveNode(g, GraphvizName(node)));
 

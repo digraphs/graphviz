@@ -1,3 +1,2 @@
 disable:
   - align-assignments
-duplicate-function-min-length: 4
