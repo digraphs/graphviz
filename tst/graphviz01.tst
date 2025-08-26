@@ -38,12 +38,87 @@ gap> GraphvizName(gv);
 gap> dot := GraphvizDigraph("The Round Table");;
 gap> GraphvizName(dot);
 "The Round Table"
-gap> n := GraphvizSetAttr(GraphvizAddNode(dot, "A"), "label", "King Arthur");;
+gap> n := GraphvizSetAttr(GraphvizAddNode(dot, "A"), "label", "King Arthur");
 gap> GraphvizName(n);
 "A"
 gap> e := GraphvizAddEdge(dot, "A", "B");;
 gap> GraphvizName(e);
 "(A, B)"
+
+# doc/_Chapter_Full_Reference.xml:196-198
+gap>
+
+# doc/_Chapter_Full_Reference.xml:211-213
+gap>
+
+# doc/_Chapter_Full_Reference.xml:227-229
+gap>
+
+# doc/_Chapter_Full_Reference.xml:245-247
+gap>
+
+# doc/_Chapter_Full_Reference.xml:264-266
+gap>
+
+# doc/_Chapter_Full_Reference.xml:287-289
+gap>
+
+# doc/_Chapter_Full_Reference.xml:302-304
+gap>
+
+# doc/_Chapter_Full_Reference.xml:331-333
+gap>
+
+# doc/_Chapter_Full_Reference.xml:355-357
+gap>
+
+# doc/_Chapter_Full_Reference.xml:381-383
+gap>
+
+# doc/_Chapter_Full_Reference.xml:401-403
+gap>
+
+# doc/_Chapter_Full_Reference.xml:430-432
+gap>
+
+# doc/_Chapter_Full_Reference.xml:451-453
+gap>
+
+# doc/_Chapter_Full_Reference.xml:466-468
+gap>
+
+# doc/_Chapter_Full_Reference.xml:483-485
+gap>
+
+# doc/_Chapter_Full_Reference.xml:511-513
+gap>
+
+# doc/_Chapter_Full_Reference.xml:530-532
+gap>
+
+# doc/_Chapter_Full_Reference.xml:551-553
+gap>
+
+# doc/_Chapter_Full_Reference.xml:567-569
+gap>
+
+# doc/_Chapter_Full_Reference.xml:675-677
+gap>
+
+# doc/_Chapter_Full_Reference.xml:694-696
+gap>
+
+# doc/_Chapter_Full_Reference.xml:711-713
+gap>
+
+# doc/_Chapter_Full_Reference.xml:728-730
+gap>
+
+# doc/_Chapter_Full_Reference.xml:744-746
+gap>
+
+# doc/_Chapter_Full_Reference.xml:760-762
+gap>
 
 #
 gap> STOP_TEST("graphviz01.tst", 1);
