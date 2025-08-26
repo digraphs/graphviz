@@ -28,7 +28,7 @@ jobs:
         uses: gap-actions/setup-gap@v2
         with:
           GAPBRANCH: ${{ matrix.gap-branch }}
-      - name: "Run DigraphsTestInstall"
+      - name: "Run tests via tst/testall.g"
         uses: gap-actions/run-pkg-tests@v3
         with:
           GAP_TESTFILE: "tst/testall.g"
