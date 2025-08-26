@@ -15,14 +15,14 @@
 #! with them.
 
 #! @Section A brief introduction
-#! &DOT; is a language for descrbing to a computer how to display a visualization
-#! of a graph or digraph. &Graphviz; is a graph visualization software which can
-#! consume &DOT; and produce visual outputs. This package is designed to allow
-#! users to programmatically construct objects in &GAP; which can then be
-#! converted into &DOT;. That &DOT; can then be input to the &Graphviz; software
-#! to produce a visual output. As &DOT; is central to the design of this package
-#! it will likely be helpful to have a basic understanding of the language.
-#! For more information about &DOT; see
+#! &DOT; is a language for descrbing to a computer how to display a
+#! visualization of a graph or digraph. &Graphviz; is a graph visualization
+#! software which can consume &DOT; and produce visual outputs. This package is
+#! designed to allow users to programmatically construct objects in &GAP; which
+#! can then be converted into &DOT;. That &DOT; can then be input to the
+#! &Graphviz; software to produce a visual output. As &DOT; is central to the
+#! design of this package it will likely be helpful to have a basic
+#! understanding of the language. For more information about &DOT; see
 #! <URL>https://graphviz.org/doc/info/lang.html</URL>.
 #! <P/>
 #!
@@ -406,7 +406,6 @@ DeclareOperation("GraphvizTail", [IsGraphvizEdge]);
 #! @EndExampleSession
 DeclareOperation("GraphvizSetName",
                  [IsGraphvizGraphDigraphOrContext, IsObject]);
-DeclareOperation("GraphvizSetName", [IsGraphvizGraphDigraphOrContext, IsObject]);
 
 #! @Arguments graph, node
 #! @Returns the modified graph.
@@ -415,7 +414,8 @@ DeclareOperation("GraphvizSetName", [IsGraphvizGraphDigraphOrContext, IsObject])
 #! @BeginExampleSession
 #! gap>
 #! @EndExampleSession
-DeclareOperation("GraphvizAddNode", [IsGraphvizGraphDigraphOrContext, IsObject]);
+DeclareOperation("GraphvizAddNode",
+                 [IsGraphvizGraphDigraphOrContext, IsObject]);
 
 #! @Arguments graph, head, tail
 #! @Returns the new edge.
@@ -442,8 +442,8 @@ DeclareOperation("GraphvizAddEdge",
 #! @Arguments graph, name
 #! @Returns the new subgraph.
 #! @Description Adds a subgraph to a graph.
-#! The type of structure (graph or digraph) will be the same as the parent graph.
-#! At the moment it is not possible to add an existing graph as a
+#! The type of structure (graph or digraph) will be the same as the parent
+#! graph. At the moment it is not possible to add an existing graph as a
 #! subgraph of another graph.
 #! @BeginExampleSession
 #! gap>
