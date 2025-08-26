@@ -34,91 +34,67 @@ gap> gv := GraphvizDigraph();
 gap> GraphvizName(gv);
 ""
 
-# doc/_Chapter_Full_Reference.xml:167-177
+# doc/_Chapter_Full_Reference.xml:167-178
 gap> dot := GraphvizDigraph("The Round Table");;
 gap> GraphvizName(dot);
 "The Round Table"
 gap> n := GraphvizSetAttr(GraphvizAddNode(dot, "A"), "label", "King Arthur");
+<graphviz node "A">
 gap> GraphvizName(n);
 "A"
 gap> e := GraphvizAddEdge(dot, "A", "B");;
 gap> GraphvizName(e);
 "(A, B)"
 
-# doc/_Chapter_Full_Reference.xml:196-198
-gap>
+# doc/_Chapter_Full_Reference.xml:197-198
 
-# doc/_Chapter_Full_Reference.xml:211-213
-gap>
+# doc/_Chapter_Full_Reference.xml:211-212
 
-# doc/_Chapter_Full_Reference.xml:227-229
-gap>
+# doc/_Chapter_Full_Reference.xml:226-227
 
-# doc/_Chapter_Full_Reference.xml:245-247
-gap>
+# doc/_Chapter_Full_Reference.xml:243-244
 
-# doc/_Chapter_Full_Reference.xml:264-266
-gap>
+# doc/_Chapter_Full_Reference.xml:261-262
 
-# doc/_Chapter_Full_Reference.xml:287-289
-gap>
+# doc/_Chapter_Full_Reference.xml:283-284
 
-# doc/_Chapter_Full_Reference.xml:302-304
-gap>
+# doc/_Chapter_Full_Reference.xml:297-298
 
-# doc/_Chapter_Full_Reference.xml:331-333
-gap>
+# doc/_Chapter_Full_Reference.xml:325-326
 
-# doc/_Chapter_Full_Reference.xml:355-357
-gap>
+# doc/_Chapter_Full_Reference.xml:340-341
 
-# doc/_Chapter_Full_Reference.xml:381-383
-gap>
+# doc/_Chapter_Full_Reference.xml:365-366
 
-# doc/_Chapter_Full_Reference.xml:401-403
-gap>
+# doc/_Chapter_Full_Reference.xml:384-385
 
-# doc/_Chapter_Full_Reference.xml:430-432
-gap>
+# doc/_Chapter_Full_Reference.xml:412-413
 
-# doc/_Chapter_Full_Reference.xml:451-453
-gap>
+# doc/_Chapter_Full_Reference.xml:432-433
 
-# doc/_Chapter_Full_Reference.xml:466-468
-gap>
+# doc/_Chapter_Full_Reference.xml:446-447
 
-# doc/_Chapter_Full_Reference.xml:483-485
-gap>
+# doc/_Chapter_Full_Reference.xml:462-463
 
-# doc/_Chapter_Full_Reference.xml:511-513
-gap>
+# doc/_Chapter_Full_Reference.xml:489-490
 
-# doc/_Chapter_Full_Reference.xml:530-532
-gap>
+# doc/_Chapter_Full_Reference.xml:507-508
 
-# doc/_Chapter_Full_Reference.xml:551-553
-gap>
+# doc/_Chapter_Full_Reference.xml:527-528
 
-# doc/_Chapter_Full_Reference.xml:567-569
-gap>
+# doc/_Chapter_Full_Reference.xml:542-543
 
-# doc/_Chapter_Full_Reference.xml:675-677
-gap>
+# doc/_Chapter_Full_Reference.xml:649-650
 
-# doc/_Chapter_Full_Reference.xml:694-696
-gap>
+# doc/_Chapter_Full_Reference.xml:667-668
 
-# doc/_Chapter_Full_Reference.xml:711-713
-gap>
+# doc/_Chapter_Full_Reference.xml:683-684
 
-# doc/_Chapter_Full_Reference.xml:728-730
-gap>
+# doc/_Chapter_Full_Reference.xml:699-700
 
-# doc/_Chapter_Full_Reference.xml:744-746
-gap>
+# doc/_Chapter_Full_Reference.xml:714-715
 
-# doc/_Chapter_Full_Reference.xml:760-762
-gap>
+# doc/_Chapter_Full_Reference.xml:729-730
 
 #
 gap> STOP_TEST("graphviz01.tst", 1);

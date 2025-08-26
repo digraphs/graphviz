@@ -291,6 +291,7 @@ DeclareOperation("GraphvizDigraph", []);
 #! gap> GraphvizName(dot);
 #! "The Round Table"
 #! gap> n := GraphvizSetAttr(GraphvizAddNode(dot, "A"), "label", "King Arthur");
+#! <graphviz node "A">
 #! gap> GraphvizName(n);
 #! "A"
 #! gap> e := GraphvizAddEdge(dot, "A", "B");;
@@ -303,7 +304,6 @@ DeclareOperation("GraphvizName", [IsGraphvizObject]);
 #! @Returns the attributes of the provided graphviz object
 #! @Description Gets the attributes of the provided graphviz object.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 # HERE
 DeclareOperation("GraphvizAttrs", [IsGraphvizObject]);
@@ -323,7 +323,6 @@ DeclareOperation("GraphvizAttrs", [IsGraphvizObject]);
 # an HTML string (<...>).
 # TODO specify
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizNodes", [IsGraphvizGraphDigraphOrContext]);
 
@@ -331,7 +330,6 @@ DeclareOperation("GraphvizNodes", [IsGraphvizGraphDigraphOrContext]);
 #! @Returns the subgraphs of the provided graphviz graph.
 #! @Description gets the subgraphs of a provided graphviz graph.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizSubgraphs", [IsGraphvizGraphDigraphOrContext]);
 
@@ -340,7 +338,6 @@ DeclareOperation("GraphvizSubgraphs", [IsGraphvizGraphDigraphOrContext]);
 #! @Description gets the contexts of a provided graphviz graph, digraph
 #! or context.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizContexts", [IsGraphvizGraphDigraphOrContext]);
 
@@ -352,7 +349,6 @@ DeclareOperation("GraphvizContexts", [IsGraphvizGraphDigraphOrContext]);
 #! It returns the graph if it exists.
 #! If no such graph exists then it will return <K>fail</K>.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizFindSubgraphRecursive",
 [IsGraphvizGraphDigraphOrContext, IsObject]);
@@ -365,7 +361,6 @@ DeclareOperation("GraphvizFindSubgraphRecursive",
 #! If a head and tail are provided will only return edges
 #! between those two nodes.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizEdges", [IsGraphvizGraphDigraphOrContext]);
 #! @Arguments graph, head, tail
@@ -380,7 +375,6 @@ DeclareOperation("GraphvizEdges",
 #! @Returns the head of the provided graphviz edge.
 #! @Description Gets the head of the provided graphviz graph.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizHead", [IsGraphvizEdge]);
 
@@ -388,7 +382,6 @@ DeclareOperation("GraphvizHead", [IsGraphvizEdge]);
 #! @Returns the head of the provided graphviz tail.
 #! @Description Gets the tail of the provided graphviz graph.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizTail", [IsGraphvizEdge]);
 
@@ -402,7 +395,6 @@ DeclareOperation("GraphvizTail", [IsGraphvizEdge]);
 #! @Returns the modified graph.
 #! @Description Sets the name of a graphviz graph or digraph.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizSetName",
                  [IsGraphvizGraphDigraphOrContext, IsObject]);
@@ -412,7 +404,6 @@ DeclareOperation("GraphvizSetName",
 #! @Description Adds a node to the graph.
 #! If a node with the same name is already present the operation fails.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizAddNode",
                  [IsGraphvizGraphDigraphOrContext, IsObject]);
@@ -432,7 +423,6 @@ DeclareOperation("GraphvizAddNode",
 #! TODO I dont believe this is accurate - think it will connect existing ones
 #! underlying private function would fail though - TODO double check.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizAddEdge",
 [IsGraphvizGraphDigraphOrContext, IsObject, IsObject]);
@@ -446,7 +436,6 @@ DeclareOperation("GraphvizAddEdge",
 #! graph. At the moment it is not possible to add an existing graph as a
 #! subgraph of another graph.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizAddSubgraph",
 [IsGraphvizGraphDigraphOrContext, IsObject]);
@@ -471,7 +460,6 @@ DeclareOperation("GraphvizAddSubgraph", [IsGraphvizGraphDigraphOrContext]);
 #! At the moment it is not possible to add an existing context to
 #! a new graph.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizAddContext",
 [IsGraphvizGraphDigraphOrContext, IsObject]);
@@ -491,7 +479,6 @@ DeclareOperation("GraphvizAddComment",
 #! All edges containing the node are also removed.
 #! If no such node exists the operation fails.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizRemoveNode",
 [IsGraphvizGraphDigraphOrContext, IsObject]);
@@ -500,7 +487,6 @@ DeclareOperation("GraphvizRemoveNode",
 #! @Returns the modified graph.
 #! @Description Filters the graph's edges using the provided predicate.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizFilterEdges",
 [IsGraphvizGraphDigraphOrContext, IsFunction]);
@@ -511,7 +497,6 @@ DeclareOperation("GraphvizFilterEdges",
 #! the specified names.
 #! If no edges exist between the two nodes, the operation fails.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizRemoveEdges",
 [IsGraphvizGraphDigraphOrContext, IsObject, IsObject]);
@@ -529,7 +514,6 @@ DeclareOperation("GraphvizRemoveEdges",
 #!    If an attribute already exists and a new value is provided, the old value
 #!    will be overwritten.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizSetAttrs", [IsGraphvizObject, IsRecord]);
 #! @Arguments obj, name, value
@@ -545,7 +529,6 @@ DeclareOperation("GraphvizSetAttr", [IsGraphvizObject, IsObject]);
 #!   Attributes may be removed by key or by
 #!   key-value pair eg. "label" or "label=\"test\"".
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizRemoveAttr", [IsGraphvizObject, IsObject]);
 
@@ -554,7 +537,6 @@ DeclareOperation("GraphvizRemoveAttr", [IsGraphvizObject, IsObject]);
 #! @Returns the dot representation of the graphviz object.
 #! @Description TODO
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("AsString", [IsGraphvizGraphDigraphOrContext]);
 
@@ -564,7 +546,6 @@ DeclareOperation("AsString", [IsGraphvizGraphDigraphOrContext]);
 #!  Unimplemented operation which depending packages can implement.
 #!  Should output the graphviz package representation of the object.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("Graphviz", [IsObject]);
 
@@ -576,7 +557,6 @@ DeclareOperation("Graphviz", [IsObject]);
 #!   If there are a different number of colours than nodes the operation fails.
 #!   Also sets the node <K>style</K> to <K>filled</K>.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizSetNodeColors",
 [IsGraphvizGraphDigraphOrContext, IsList]);
@@ -590,7 +570,6 @@ DeclareOperation("GraphvizSetNodeColors",
 #!   What constitutes a valid label can be found here,
 #!   "https://graphviz.org/doc/info/lang.html".
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("GraphvizSetNodeLabels",
 [IsGraphvizGraphDigraphOrContext, IsList]);
@@ -602,7 +581,6 @@ DeclareOperation("GraphvizSetNodeLabels",
 #!   Valid graphviz colors are described here,
 #!   "http://graphviz.org/doc/info/colors.html".
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareGlobalFunction("ErrorIfNotValidColor");
 
@@ -613,7 +591,6 @@ DeclareGlobalFunction("ErrorIfNotValidColor");
 #! @Description
 #!   Gets the value associated with the attribute <K>attr</K>.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("\[\]", [IsGraphvizEdge, IsObject]);
 #! @Arguments node, attr
@@ -626,7 +603,6 @@ DeclareOperation("\[\]", [IsGraphvizNode, IsObject]);
 #! @Description
 #!   Sets the value associated with the attribute <K>attr</K>.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("\[\]\:\=", [IsGraphvizNode, IsObject, IsObject]);
 #! @Arguments edge, attr
@@ -638,6 +614,5 @@ DeclareOperation("\[\]\:\=", [IsGraphvizEdge, IsObject, IsObject]);
 #! @Description
 #!   Gets a node from a (di)graph by id.
 #! @BeginExampleSession
-#! gap>
 #! @EndExampleSession
 DeclareOperation("\[\]", [IsGraphvizGraphDigraphOrContext, IsObject]);
