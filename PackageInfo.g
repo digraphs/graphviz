@@ -89,9 +89,10 @@ AutoDoc := rec(
         software from &GAP;.
         <P/>
 
-        Create a graphviz object, assemble the graph by adding nodes and edges,
-        and retrieve its &DOT; source code string. Save the source code to a file
-        and render it with the &Graphviz; installation of your system.
+        Create a graphviz object, assemble the graph by adding nodes and
+        edges, and retrieve its &DOT; source code string. Save the source
+        code to a file and render it with the &Graphviz; installation of your
+        system.
         <P/>
 
         Use the <Ref Func="Splash"/> function to directly inspect the resulting
