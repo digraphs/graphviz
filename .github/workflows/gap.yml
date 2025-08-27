@@ -21,6 +21,7 @@ jobs:
           - stable-4.11
           - stable-4.12
           - stable-4.13
+          - stable-4.14
 
     steps:
       - uses: actions/checkout@v5
@@ -28,7 +29,7 @@ jobs:
         uses: gap-actions/setup-gap@v2
         with:
           GAPBRANCH: ${{ matrix.gap-branch }}
-      - name: "Run DigraphsTestInstall"
+      - name: "Run tests via tst/testall.g"
         uses: gap-actions/run-pkg-tests@v3
         with:
           GAP_TESTFILE: "tst/testall.g"
