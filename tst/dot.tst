@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-#@local a, b, color, e, g, gv, label, n, shape
+#@local a, b, color, e, g, gv, label, n, shape, G, D
 gap> START_TEST("graphviz package: dot.tst");
 gap> LoadPackage("graphviz", false);;
 
@@ -121,18 +121,18 @@ gap> GraphvizSetNodeLabels(gv, ["i", "ii", "iii"]);
 gap> Print(AsString(gv));
 //dot
 graph xxx {
-	1 [label=i]
-	2 [label=ii]
-	3 [label=iii]
+	1 [label="i"]
+	2 [label="ii"]
+	3 [label="iii"]
 }
 gap> GraphvizSetNodeLabels(gv, ["a", "b", "c"]);
 <graphviz graph "xxx" with 3 nodes and 0 edges>
 gap> Print(AsString(gv));
 //dot
 graph xxx {
-	1 [label=a]
-	2 [label=b]
-	3 [label=c]
+	1 [label="a"]
+	2 [label="b"]
+	3 [label="c"]
 }
 gap> GraphvizSetNodeLabels(gv, ["i", "ii"]);
 Error, the 2nd argument (list of node labels) has incorrect length, expected 3\
@@ -229,6 +229,15 @@ gap> Print(AsString(gv));
 graph xxx {
 	1 [label=<<>>, "probably not ok"=1]
 }
+
+# Fix adding of quotes to labels
+gap> G := AsList(SymmetricGroup(3));
+[ (), (2,3), (1,3), (1,3,2), (1,2,3), (1,2) ]
+gap> D := Digraph(G, {x, y} -> x * y = y * x);
+<immutable digraph with 6 vertices, 18 edges>
+gap> SetDigraphVertexLabels(D, G);
+gap> gv := GraphvizVertexLabelledGraph(D);
+<graphviz graph "hgn" with 6 nodes and 6 edges>
 
 #
 gap> STOP_TEST("graphviz package: dot.tst", 0);
