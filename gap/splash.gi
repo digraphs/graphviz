@@ -32,7 +32,7 @@ function(arg...)
         file[i] := '_';
       fi;
     od;
-    arg[1] := String(arg[1]);
+    arg[1] := AsString(arg[1]);
   else
     file := "vizpicture";
   fi;
@@ -42,7 +42,7 @@ function(arg...)
   if IsBound(arg[2]) and IsRecord(arg[2]) then
     opt := arg[2];
   elif IsBound(arg[2]) then
-    ErrorNoReturn("the 2nd argument must be a record,");
+    ErrorNoReturn("the 2nd argument must be a record");
   fi;
 
   path := UserHomeExpand("~/");
