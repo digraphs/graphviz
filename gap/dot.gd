@@ -15,7 +15,7 @@
 #! with them.
 
 #! @Section A brief introduction
-#! &DOT; is a language for descrbing to a computer how to display a
+#! &DOT; is a language for describing to a computer how to display a
 #! visualization of a graph or digraph. &Graphviz; is a graph visualization
 #! software which can consume &DOT; and produce visual outputs. This package is
 #! designed to allow users to programmatically construct objects in &GAP; which
