@@ -640,7 +640,11 @@ function(gv, labels)
 
   nodes := GraphvizNodes(gv);
   for i in [1 .. Size(nodes)] do
-    GV_ErrorIfNotValidLabel(labels[i]);
+    labels[i] := String(labels[i]);
+    if not StartsWith(labels[i], "\"") or not EndsWith(labels[i], "\"") then
+      labels[i] := Concatenation("\"", labels[i], "\"");
+    fi;
+    # GV_ErrorIfNotValidLabel(labels[i]);
     GraphvizSetAttr(nodes[i], "label", labels[i]);
   od;
   return gv;
