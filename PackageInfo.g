@@ -107,12 +107,10 @@ AbstractHTML := ~.AutoDoc.TitlePage.Abstract,
 Extensions := [
  rec(
    needed := [["Digraphs", "1.10.0"]],
-   filename := "./gap/digraphs.gd",
-   ),
+   filename := "./gap/digraphs.gd",),
  rec(
    needed := [["Digraphs", "1.10.0"]],
-   filename := "./gap/digraphs.gi",
- ),
+   filename := "./gap/digraphs.gi",),
 ],
 
 ));
