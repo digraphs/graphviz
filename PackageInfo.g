@@ -102,4 +102,17 @@ AutoDoc := rec(
         This package was inspired by the python package of the same name
         &PyGraphviz;.""")),
 
-AbstractHTML := ~.AutoDoc.TitlePage.Abstract));
+AbstractHTML := ~.AutoDoc.TitlePage.Abstract,
+
+Extensions := [
+ rec(
+   needed := [ ["Digraphs", "1.10.0"] ],
+   filename := "./gap/digraphs.gd",
+ ),
+ rec(
+   needed := [ ["Digraphs", "1.10.0"] ],
+   filename := "./gap/digraphs.gi",
+ ),
+],
+
+));
