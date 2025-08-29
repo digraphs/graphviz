@@ -759,8 +759,8 @@ function(label)
     # Print("we got here \n")
 
     if Length(label) = 0 then
-        # ErrorFormatted("invalid label \"{}\", valid DOT labels ",
-        #                "cannot be empty strings", label);
+        ErrorFormatted("invalid label \"{}\", valid DOT labels ",
+                       "cannot be empty strings", label);
     fi;
 
     # double quoted string
@@ -780,11 +780,12 @@ function(label)
     cond := not IsDigitChar(label[1]);
     # cond := cond and ForAll(label, c -> IsAlphaChar(c) or IsDigitChar(c)
     #                         or c = '_' or ('\200' <= c and c <= '\377'));
+    cond := cond and ForAll(label, c -> IsAlphaChar(c) or IsDigitChar(c) or c = '_');
     if cond then
         return;
     fi;
 
-    # ErrorFormatted("invalid label \"{}\", valid DOT labels ",
-    #                "https://graphviz.org/doc/info/lang.html",
-    #                label);
+    ErrorFormatted("invalid label \"{}\", valid DOT labels ",
+                   "https://graphviz.org/doc/info/lang.html",
+                   label);
 end);
