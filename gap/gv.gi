@@ -756,7 +756,7 @@ end);
 InstallGlobalFunction(GV_ErrorIfNotValidLabel,
 function(label)
     local cond;
-    
+
     if Length(label) = 0 then
         ErrorFormatted("invalid label \"{}\", valid DOT labels ",
                        "cannot be empty strings", label);
@@ -779,7 +779,8 @@ function(label)
     cond := not IsDigitChar(label[1]);
     # cond := cond and ForAll(label, c -> IsAlphaChar(c) or IsDigitChar(c)
     #                         or c = '_' or ('\200' <= c and c <= '\377'));
-    cond := cond and ForAll(label, c -> IsAlphaChar(c) or IsDigitChar(c) or c = '_' );
+    cond := cond and ForAll(label, c -> IsAlphaChar(c) or IsDigitChar(c) 
+            or c = '_');
     if cond then
         return;
     fi;
