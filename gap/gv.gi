@@ -777,13 +777,8 @@ function(label)
     fi;
 
     cond := not IsDigitChar(label[1]);
-    # The following is due to https://github.com/gap-system/gap/issues/6073
-    # It can be removed once the new GAP version is released and there we make
-    # GAP 4.15 or similar the minimum version required.
-    # cond := cond and ForAll(label, c -> IsAlphaChar(c) or IsDigitChar(c)
-    #                         or c = '_' or ('\200' <= c and c <= '\377'));
     cond := cond and ForAll(label, c -> IsAlphaChar(c) or IsDigitChar(c)
-            or c = '_');
+                            or c = '_' or ('\200' <= c and c <= '\377'));
     if cond then
         return;
     fi;
