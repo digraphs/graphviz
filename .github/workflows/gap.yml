@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: "Install GAP and clone/compile necessary packages"
-        uses: gap-actions/setup-gap@v2
+        uses: gap-actions/setup-gap@v3
         with:
           GAPBRANCH: ${{ matrix.gap-branch }}
       - name: "Run tests via tst/testall.g"
