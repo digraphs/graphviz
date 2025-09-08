@@ -42,6 +42,8 @@ Persons := [
     Place       := "St Andrews",
     Institution := "University of St Andrews")],
 
+Status := "dev",
+
 SourceRepository := rec(Type := "git",
                         URL  := "https://github.com/digraphs/graphviz"),
 IssueTrackerURL := "https://github.com/digraphs/graphviz/issues",
