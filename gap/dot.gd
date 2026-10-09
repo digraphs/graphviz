@@ -201,8 +201,6 @@ DeclareCategory("IsGraphvizEdge", IsGraphvizNodeOrEdge);
 #! attributes.
 #! @EndGroup
 
-DeclareCategory("IsGraphvizDigraph", IsGraphvizGraph);
-DeclareCategory("IsGraphvizContext", IsGraphvizGraph);
 #! @Section Constructors
 
 #! @BeginGroup
@@ -225,7 +223,7 @@ DeclareCategory("IsGraphvizContext", IsGraphvizGraph);
 #! See also:
 #! * <Ref Oper="GraphvizDigraph" Label="for IsObject"/>
 #! * <Ref Oper="GraphvizSetName"
-#!    Label="for IsGraphvizGraph, IsObject"/>
+#!    Label="for IsGraphvizGraphDigraphOrContext, IsObject"/>
 #! * <Ref Oper="GraphvizName" Label="for IsGraphvizObject"/>
 #!
 #! @BeginExampleSession
@@ -267,7 +265,7 @@ DeclareOperation("GraphvizGraph", []);
 #! See also:
 #! * <Ref Oper="GraphvizGraph" Label="for IsObject"/>
 #! * <Ref Oper="GraphvizSetName"
-#!    Label="for IsGraphvizGraph, IsObject"/>
+#!    Label="for IsGraphvizGraphDigraphOrContext, IsObject"/>
 #! * <Ref Oper="GraphvizName" Label="for IsGraphvizObject"/>
 #!
 #! @BeginExampleSession
@@ -346,7 +344,7 @@ DeclareOperation("GraphvizAttrs", [IsGraphvizObject]);
 #! gap> GraphvizNodes(context);
 #! rec( a := <graphviz node "a"> )
 #! @EndExampleSession
-DeclareOperation("GraphvizNodes", [IsGraphvizGraph]);
+DeclareOperation("GraphvizNodes", [IsGraphvizGraphDigraphOrContext]);
 
 #! @Arguments gv, val
 #! @Returns a &GraphvizForGAP; node object or <K>fail</K>.
@@ -379,14 +377,14 @@ DeclareOperation("GraphvizNode", [IsGraphvizGraphDigraphOrContext, IsObject]);
 #! &GAPGraphviz; graph, digraph, or context <A>graph</A>.
 #! @BeginExampleSession
 #! @EndExampleSession
-DeclareOperation("GraphvizNumberOfNodes", [IsGraphvizGraph]);
+DeclareOperation("GraphvizNumberOfNodes", [IsGraphvizGraphDigraphOrContext]);
 
 #! @Arguments graph
 #! @Returns a print record of &GAPGraphviz; graphs
 #! @Description gets the subgraphs of a provided graphviz graph.
 #! @BeginExampleSession
 #! @EndExampleSession
-DeclareOperation("GraphvizSubgraphs", [IsGraphvizGraph]);
+DeclareOperation("GraphvizSubgraphs", [IsGraphvizGraphDigraphOrContext]);
 
 #! @Arguments graph
 #! @Returns a print record of &GAPGraphviz; contexts
@@ -394,7 +392,7 @@ DeclareOperation("GraphvizSubgraphs", [IsGraphvizGraph]);
 #! or context.
 #! @BeginExampleSession
 #! @EndExampleSession
-DeclareOperation("GraphvizContexts", [IsGraphvizGraph]);
+DeclareOperation("GraphvizContexts", [IsGraphvizGraphDigraphOrContext]);
 
 #! @Arguments graph, name
 #! @Returns a &GAPGraphviz; graph
@@ -406,7 +404,7 @@ DeclareOperation("GraphvizContexts", [IsGraphvizGraph]);
 #! @BeginExampleSession
 #! @EndExampleSession
 DeclareOperation("GraphvizFindSubgraphRecursive",
-[IsGraphvizGraph, IsObject]);
+[IsGraphvizGraphDigraphOrContext, IsObject]);
 
 #! @BeginGroup
 #! @GroupTitle Getting Graphviz Edges
@@ -423,10 +421,10 @@ DeclareOperation("GraphvizFindSubgraphRecursive",
 #! gap> GraphvizEdges(gv, "a", "b");
 #! [ <graphviz edge (a, b)> ]
 #! @EndExampleSession
-DeclareOperation("GraphvizEdges", [IsGraphvizGraph]);
+DeclareOperation("GraphvizEdges", [IsGraphvizGraphDigraphOrContext]);
 #! @Arguments graph, head, tail
 DeclareOperation("GraphvizEdges",
-[IsGraphvizGraph, IsObject, IsObject]);
+[IsGraphvizGraphDigraphOrContext, IsObject, IsObject]);
 #! @EndGroup
 
 #! @Arguments edge
@@ -468,7 +466,7 @@ DeclareOperation("GraphvizTail", [IsGraphvizEdge]);
 #! <graphviz graph "newname" with 0 nodes and 0 edges>
 #! @EndExampleSession
 DeclareOperation("GraphvizSetName",
-                 [IsGraphvizGraph, IsObject]);
+                 [IsGraphvizGraphDigraphOrContext, IsObject]);
 
 #! @Arguments graph, node
 #! @Returns a &GAPGraphviz; node object
@@ -485,7 +483,7 @@ DeclareOperation("GraphvizSetName",
 #! <graphviz graph with 1 node and 0 edges>
 #! @EndExampleSession
 DeclareOperation("GraphvizAddNode",
-                 [IsGraphvizGraph, IsObject]);
+                 [IsGraphvizGraphDigraphOrContext, IsObject]);
 
 #! @Arguments graph, head, tail
 #! @Returns a &GAPGraphviz; edge object
@@ -508,7 +506,7 @@ DeclareOperation("GraphvizAddNode",
 #! <graphviz graph with 2 nodes and 1 edge>
 #! @EndExampleSession
 DeclareOperation("GraphvizAddEdge",
-[IsGraphvizGraph, IsObject, IsObject]);
+[IsGraphvizGraphDigraphOrContext, IsObject, IsObject]);
 
 #! @BeginGroup
 #! @GroupTitle Adding Subgraphs
@@ -521,9 +519,9 @@ DeclareOperation("GraphvizAddEdge",
 #! @BeginExampleSession
 #! @EndExampleSession
 DeclareOperation("GraphvizAddSubgraph",
-[IsGraphvizGraph, IsObject]);
+[IsGraphvizGraphDigraphOrContext, IsObject]);
 #! @Arguments graph
-DeclareOperation("GraphvizAddSubgraph", [IsGraphvizGraph]);
+DeclareOperation("GraphvizAddSubgraph", [IsGraphvizGraphDigraphOrContext]);
 #! @EndGroup
 
 #! @BeginGroup
@@ -545,13 +543,13 @@ DeclareOperation("GraphvizAddSubgraph", [IsGraphvizGraph]);
 #! @BeginExampleSession
 #! @EndExampleSession
 DeclareOperation("GraphvizAddContext",
-[IsGraphvizGraph, IsObject]);
+[IsGraphvizGraphDigraphOrContext, IsObject]);
 #! @Arguments graph
-DeclareOperation("GraphvizAddContext", [IsGraphvizGraph]);
+DeclareOperation("GraphvizAddContext", [IsGraphvizGraphDigraphOrContext]);
 #! @EndGroup
 
 DeclareOperation("GraphvizAddComment",
-[IsGraphvizGraph, IsString]);
+[IsGraphvizGraphDigraphOrContext, IsString]);
 
 #! @Arguments graph, node
 #! @Returns a &GAPGraphviz; graph
@@ -570,7 +568,7 @@ DeclareOperation("GraphvizAddComment",
 #! <graphviz graph with 0 nodes and 0 edges>
 #! @EndExampleSession
 DeclareOperation("GraphvizRemoveNode",
-[IsGraphvizGraph, IsObject]);
+[IsGraphvizGraphDigraphOrContext, IsObject]);
 
 #! @Arguments graph, predicate
 #! @Returns a &GAPGraphviz; graph
@@ -578,7 +576,7 @@ DeclareOperation("GraphvizRemoveNode",
 #! @BeginExampleSession
 #! @EndExampleSession
 DeclareOperation("GraphvizFilterEdges",
-[IsGraphvizGraph, IsFunction]);
+[IsGraphvizGraphDigraphOrContext, IsFunction]);
 
 #! @Arguments graph, head_id, tail_id
 #! @Returns a &GAPGraphviz; graph
@@ -594,7 +592,7 @@ DeclareOperation("GraphvizFilterEdges",
 #! <graphviz graph with 2 nodes and 0 edges>
 #! @EndExampleSession
 DeclareOperation("GraphvizRemoveEdges",
-[IsGraphvizGraph, IsObject, IsObject]);
+[IsGraphvizGraphDigraphOrContext, IsObject, IsObject]);
 
 #! @Subsection Modifying object attributes
 #! Operations for modifying attributes.
@@ -652,7 +650,7 @@ DeclareOperation("GraphvizRemoveAttr", [IsGraphvizObject, IsObject]);
 #! @Description The &DOT; source for the <A>graph</A> argument.
 #! @BeginExampleSession
 #! @EndExampleSession
-DeclareOperation("AsString", [IsGraphvizGraph]);
+DeclareOperation("AsString", [IsGraphvizGraphDigraphOrContext]);
 
 #! @Arguments obj
 #! @Returns a &GAPGraphviz; object
@@ -673,7 +671,7 @@ DeclareOperation("Graphviz", [IsObject]);
 #! @BeginExampleSession
 #! @EndExampleSession
 DeclareOperation("GraphvizSetNodeColors",
-[IsGraphvizGraph, IsList]);
+[IsGraphvizGraphDigraphOrContext, IsList]);
 
 #! @Arguments graph, labels
 #! @Returns a &GAPGraphviz; object
@@ -686,7 +684,7 @@ DeclareOperation("GraphvizSetNodeColors",
 #! @BeginExampleSession
 #! @EndExampleSession
 DeclareOperation("GraphvizSetNodeLabels",
-[IsGraphvizGraph, IsList]);
+[IsGraphvizGraphDigraphOrContext, IsList]);
 
 #! @Arguments color
 #! @Returns true or false
@@ -738,6 +736,6 @@ DeclareGlobalFunction("ErrorIfNotValidColor");
 #!   viewer it uses. At level 2, it reports each program it runs with its
 #!   arguments. At level 3, it reports where it found each program, and
 #!   <Ref Oper="GraphvizAddEdge"
-#!        Label="for IsGraphvizGraph, IsObject, IsObject"/>
+#!        Label="for IsGraphvizGraphDigraphOrContext, IsObject, IsObject"/>
 #!   reports the nodes it adds.
 DeclareInfoClass("InfoGraphviz");
