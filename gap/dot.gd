@@ -109,14 +109,16 @@
 #! digraph finite_state_machine {
 #!     rankdir=LR size="8,5"
 #! // terminals context
+#!  {
 #!     node [shape=doublecircle]
 #!     LR_0
 #!     LR_3
 #!     LR_4
 #!     LR_8
 #!     rankdir=LR size="8,5"
-#!
+#!  }
 #! // nodes context
+#!  {
 #!     node [shape=circle]
 #!     LR_2
 #!     LR_0 -> LR_2 [label="SS(B)"]
@@ -138,6 +140,7 @@
 #!     LR_8 -> LR_6 [label="S(b)"]
 #!     LR_8 -> LR_5 [label="S(a)"]
 #!     rankdir=LR size="8,5"
+#!  }
 #!
 #! }
 #! gap> Splash(f);
@@ -239,6 +242,8 @@ DeclareOperation("GraphvizGraph", [IsObject]);
 #!
 DeclareOperation("GraphvizGraph", []);
 #! @EndGroup
+
+# TODO: deprecate
 
 #! @BeginGroup
 #! @GroupTitle Creating a new &GAPGraphviz; digraphs

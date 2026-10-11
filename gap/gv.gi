@@ -14,20 +14,24 @@
 # Family + type
 ###############################################################################
 
+BindGlobal("GV_ObjectFamily",
+           NewFamily("GV_ObjectFamily", IsGraphvizObject));
+
 BindGlobal("GV_NodeType", NewType(GV_ObjectFamily,
-                                    IsGraphvizNode and
-                                    IsComponentObjectRep and
-                                    IsAttributeStoringRep));
+                                  IsGraphvizNode and
+                                  IsComponentObjectRep and
+                                  IsAttributeStoringRep));
 
 BindGlobal("GV_EdgeType", NewType(GV_ObjectFamily,
-                                    IsGraphvizEdge and
-                                    IsComponentObjectRep and
-                                    IsAttributeStoringRep));
+                                  IsGraphvizEdge and
+                                  IsComponentObjectRep and
+                                  IsAttributeStoringRep));
 
-BindGlobal("GV_ContextType", NewType(GV_ObjectFamily,
-                                    IsGraphvizContext and
-                                    IsComponentObjectRep and
-                                    IsAttributeStoringRep));
+BindGlobal("GV_GraphDigraphOrContextType",
+           NewType(GV_ObjectFamily,
+                   IsGraphvizGraphDigraphOrContext and
+                   IsComponentObjectRep and
+                   IsAttributeStoringRep));
 
 ###############################################################################
 # Constructors etc
@@ -69,27 +73,40 @@ end);
 
 # Graph constructors
 
-InstallMethod(GV_Digraph,
-"for a graphviz digraph and a string",
-[IsGraphvizDigraph, IsString],
-function(parent, name)
-  local out;
+InstallMethod(GV_GraphOrDigraph,
+"for a string and a filter", [IsString, IsFunction],
+function(name, filt)
+  local result;
+  Assert(0, filt = IsGraphvizGraph or filt = IsGraphvizDigraph);
 
-  out         := GraphvizDigraph(name);
-  out!.Parent := parent;
-  out!.Idx    := GV_GetCounter(parent);
-
-  GV_IncCounter(parent);
-  return out;
+  result := Objectify(
+    GV_GraphDigraphOrContextType,
+    rec(
+      # Note that the following aren't attributes because we require them to be
+      # mutable.
+      Name      := name,
+      Subgraphs := rec(),
+      Contexts  := rec(),
+      Nodes     := rec(),
+      Edges     := [],
+      Attrs     := rec(graph := rec(),
+                       edge := rec(),
+                       node := rec()),
+      Parent    := fail,
+      Idx       := 1,
+      Counter   := 1));
+  SetFilterObj(result, filt);
+  SetGV_Filter(result, filt);
+  return result;
 end);
 
-InstallMethod(GV_Graph,
+InstallMethod(GV_Subgraph,
 "for a graphviz graph and a string",
 [IsGraphvizGraphDigraphOrContext, IsString],
 function(parent, name)
   local out;
 
-  out         := GraphvizGraph(name);
+  out         := GV_GraphOrDigraph(name, GV_Filter(parent));
   out!.Parent := parent;
   out!.Idx    := GV_GetCounter(parent);
 
@@ -98,26 +115,12 @@ function(parent, name)
 end);
 
 InstallMethod(GV_Context,
-"for a string and a positive integer",
+"for a string and a string",
 [IsGraphvizGraphDigraphOrContext, IsString],
 function(parent, name)
   local out;
-
-  out := Objectify(GV_ContextType,
-                      rec(
-                        Name      := name,
-                        Subgraphs := rec(),
-                        Contexts  := rec(),
-                        Nodes     := rec(),
-                        Edges     := [],
-                        Attrs     := rec(graph := rec(),
-                                         edge := rec(),
-                                         node := rec()),
-                        Parent    := parent,
-                        Idx       := GV_GetCounter(parent),
-                        Counter   := 1));
-
-  GV_IncCounter(parent);
+  out := GV_Subgraph(parent, name);
+  SetFilterObj(out, IsGraphvizContext);
   return out;
 end);
 
@@ -279,8 +282,7 @@ end);
 ###############################################################################
 
 # @ Return DOT graph head line.
-InstallMethod(GV_StringifyGraphHead, "for a string",
-[IsGraphvizGraphDigraphOrContext],
+InstallMethod(GV_StringifyGraphHead, "for a string", [IsGraphvizGraph],
 graph -> StringFormatted("graph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT digraph head line.
@@ -448,7 +450,7 @@ function(graph, is_subgraph)
     elif IsGraphvizNode(obj) then
       Append(result, GV_StringifyNode(obj));
     elif IsGraphvizEdge(obj) then
-      if IsGraphvizDigraph(GV_GetRoot(graph)) then
+      if (IsGraphvizDigraph(GV_GetRoot(graph))) then
         Append(result, GV_StringifyEdge(obj, "->"));
       else
         Append(result, GV_StringifyEdge(obj, "--"));

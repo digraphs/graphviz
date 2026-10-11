@@ -27,8 +27,10 @@ DeclareOperation("GV_StringifyGraph",
 DeclareOperation("GV_Node", [IsGraphvizGraphDigraphOrContext, IsString]);
 DeclareOperation("GV_Edge",
 [IsGraphvizGraphDigraphOrContext, IsGraphvizNode, IsGraphvizNode]);
-DeclareOperation("GV_Graph", [IsGraphvizGraphDigraphOrContext, IsString]);
-DeclareOperation("GV_Digraph", [IsGraphvizDigraph, IsString]);
+DeclareOperation("GV_GraphOrDigraph", [IsString, IsFunction]);
+DeclareAttribute("GV_Filter", IsGraphvizGraph);
+DeclareAttribute("GV_Filter", IsGraphvizDigraph);
+DeclareOperation("GV_Subgraph", [IsGraphvizGraphDigraphOrContext, IsString]);
 DeclareOperation("GV_Context", [IsGraphvizGraphDigraphOrContext, IsString]);
 
 DeclareOperation("GV_HasNode", [IsGraphvizGraphDigraphOrContext, IsObject]);
@@ -52,22 +54,6 @@ DeclareOperation("GV_ConstructHistory", [IsGraphvizGraphDigraphOrContext]);
 DeclareGlobalFunction("GV_IsValidColor");
 DeclareGlobalFunction("GV_ErrorIfNotNodeColoring");
 DeclareGlobalFunction("GV_ErrorIfNotValidLabel");
-
-# TODO move to dot? and make public?
-BindGlobal("GV_ObjectFamily",
-           NewFamily("GV_ObjectFamily", IsGraphvizObject));
-
-# TODO move to dot? and make public?
-BindGlobal("GV_DigraphType", NewType(GV_ObjectFamily,
-                                    IsGraphvizDigraph and
-                                    IsComponentObjectRep and
-                                    IsAttributeStoringRep));
-
-# TODO move to dot? and make public?
-BindGlobal("GV_GraphType", NewType(GV_ObjectFamily,
-                                    IsGraphvizGraph and
-                                    IsComponentObjectRep and
-                                    IsAttributeStoringRep));
 
 BindGlobal("GV_ValidColorNames",
   ["aliceblue", "antiquewhite", "antiquewhite1", "antiquewhite2",
