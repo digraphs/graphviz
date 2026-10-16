@@ -33,17 +33,17 @@ gap> GraphvizSetAttrs(cluster1,
 <graphviz graph "cluster1" with 0 nodes and 0 edges>
 gap> GraphvizAddNode(cluster1, "anode");
 <graphviz node "anode">
-gap> Print(AsString(g));
+gap> Print(AsString(g), "\n");
 //dot
 graph G {
-graph  [bgcolor="purple:pink", fontcolor="white", label="agraph"]
-subgraph cluster1 {
-graph  [fillcolor="blue:cyan", fontcolor="white", gradientangle="270", label="\
-acluster", style="filled"]
-node  [fillcolor="red:yellow", gradientangle="90", shape="box", style="filled"\
-]
-	anode
-}
+  graph [bgcolor="purple:pink", fontcolor="white", label="agraph"]
+  subgraph cluster1 {
+    graph [fillcolor="blue:cyan", fontcolor="white", gradientangle="270", labe\
+l="acluster", style="filled"]
+    node [fillcolor="red:yellow", gradientangle="90", shape="box", style="fill\
+ed"]
+    anode
+  }
 }
 
 #

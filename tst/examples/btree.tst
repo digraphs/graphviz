@@ -55,19 +55,44 @@ gap> GraphvizAddEdge(s, "node4:f2", "node6:f1");
 <graphviz edge (node4:f2, node6:f1)>
 gap> GraphvizAddEdge(s, "node4:f0", "node5:f1");
 <graphviz edge (node4:f0, node5:f1)>
-gap> AsString(s) =
-> "//dot\ndigraph g {\nnode  [height=\".1\", shape=\"record\"]\n\tnode0 [label=\
-> \"<f0> |<f1> G|<f2>\"]\n\tnode1 [label=\"<f0> |<f1> E|<f2>\"]\n\tnode2 [label=\
-> \"<f0> |<f1> B|<f2>\"]\n\tnode3 [label=\"<f0> |<f1> F|<f2>\"]\n\tnode4 [label=\
-> \"<f0> |<f1> R|<f2>\"]\n\tnode5 [label=\"<f0> |<f1> H|<f2>\"]\n\tnode6 [label=\
-> \"<f0> |<f1> Y|<f2>\"]\n\tnode7 [label=\"<f0> |<f1> A|<f2>\"]\n\tnode8 [label=\
-> \"<f0> |<f1> C|<f2>\"]\n\tnode0:f2\n\tnode4:f1\n\tnode0:f2 -> node4:f1\n\tnode\
-> 0:f0\n\tnode1:f1\n\tnode0:f0 -> node1:f1\n\tnode1:f0\n\tnode2:f1\n\tnode1:f0 -\
-> > node2:f1\n\tnode1:f2\n\tnode3:f1\n\tnode1:f2 -> node3:f1\n\tnode2:f2\n\tnode\
-> 8:f1\n\tnode2:f2 -> node8:f1\n\tnode2:f0\n\tnode7:f1\n\tnode2:f0 -> node7:f1\n\
-> \tnode4:f2\n\tnode6:f1\n\tnode4:f2 -> node6:f1\n\tnode4:f0\n\tnode5:f1\n\tnode\
-> 4:f0 -> node5:f1\n}\n";
-true
+gap> Print(AsString(s), "\n");
+//dot
+digraph g {
+  node [height=".1", shape="record"]
+  node0 [label="<f0> |<f1> G|<f2>"]
+  node1 [label="<f0> |<f1> E|<f2>"]
+  node2 [label="<f0> |<f1> B|<f2>"]
+  node3 [label="<f0> |<f1> F|<f2>"]
+  node4 [label="<f0> |<f1> R|<f2>"]
+  node5 [label="<f0> |<f1> H|<f2>"]
+  node6 [label="<f0> |<f1> Y|<f2>"]
+  node7 [label="<f0> |<f1> A|<f2>"]
+  node8 [label="<f0> |<f1> C|<f2>"]
+  node0:f2
+  node4:f1
+  node0:f2 -> node4:f1
+  node0:f0
+  node1:f1
+  node0:f0 -> node1:f1
+  node1:f0
+  node2:f1
+  node1:f0 -> node2:f1
+  node1:f2
+  node3:f1
+  node1:f2 -> node3:f1
+  node2:f2
+  node8:f1
+  node2:f2 -> node8:f1
+  node2:f0
+  node7:f1
+  node2:f0 -> node7:f1
+  node4:f2
+  node6:f1
+  node4:f2 -> node6:f1
+  node4:f0
+  node5:f1
+  node4:f0 -> node5:f1
+}
 
 #
 gap> STOP_TEST("graphviz package: btree.tst");

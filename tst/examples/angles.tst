@@ -67,41 +67,41 @@ gap> GraphvizSetAttr(cluster2, "label",
 <graphviz digraph "cluster_2" with 9 nodes and 0 edges>
 gap> GraphvizAddEdge(g, "n5", "n14");
 <graphviz edge (n5, n14)>
-gap> Print(AsString(g));
+gap> Print(AsString(g), "\n");
 //dot
 digraph G {
-graph  [bgcolor="blue"]
-subgraph cluster_1 {
-graph  [fontcolor="white", label="Linear Angle Variations (white to black grad\
-ient)"]
-node  [fillcolor="white:black", fontcolor="black", gradientangle="360", label=\
-"n9:n360", shape="circle", style="filled"]
-	n9
-	n8 [gradientangle="315", label="n8:315"]
-	n7 [gradientangle="270", label="n7:270"]
-	n6 [gradientangle="225", label="n6:225"]
-	n5 [gradientangle="180", label="n5:180"]
-	n4 [gradientangle="135", label="n4:135"]
-	n3 [gradientangle="90", label="n3:90"]
-	n2 [gradientangle="45", label="n2:45"]
-	n1 [gradientangle="0", label="n1:0"]
-}
-subgraph cluster_2 {
-graph  [fontcolor="white", label="Radial Angle Variations (white to black grad\
-ient)"]
-node  [fillcolor="white:black", fontcolor="black", gradientangle="360", label=\
-"n9:n360", shape="circle", style="radial"]
-	n18
-	n17 [gradientangle="315", label="n17:315"]
-	n16 [gradientangle="270", label="n16:270"]
-	n15 [gradientangle="225", label="n15:225"]
-	n14 [gradientangle="180", label="n14:180"]
-	n13 [gradientangle="135", label="n13:135"]
-	n12 [gradientangle="90", label="n12:90"]
-	n11 [gradientangle="45", label="n11:45"]
-	n10 [gradientangle="0", label="n10:0"]
-}
-	n5 -> n14
+  graph [bgcolor="blue"]
+  subgraph cluster_1 {
+    graph [fontcolor="white", label="Linear Angle Variations (white to black g\
+radient)"]
+    node [fillcolor="white:black", fontcolor="black", gradientangle="360", lab\
+el="n9:n360", shape="circle", style="filled"]
+    n9
+    n8 [gradientangle="315", label="n8:315"]
+    n7 [gradientangle="270", label="n7:270"]
+    n6 [gradientangle="225", label="n6:225"]
+    n5 [gradientangle="180", label="n5:180"]
+    n4 [gradientangle="135", label="n4:135"]
+    n3 [gradientangle="90", label="n3:90"]
+    n2 [gradientangle="45", label="n2:45"]
+    n1 [gradientangle="0", label="n1:0"]
+  }
+  subgraph cluster_2 {
+    graph [fontcolor="white", label="Radial Angle Variations (white to black g\
+radient)"]
+    node [fillcolor="white:black", fontcolor="black", gradientangle="360", lab\
+el="n9:n360", shape="circle", style="radial"]
+    n18
+    n17 [gradientangle="315", label="n17:315"]
+    n16 [gradientangle="270", label="n16:270"]
+    n15 [gradientangle="225", label="n15:225"]
+    n14 [gradientangle="180", label="n14:180"]
+    n13 [gradientangle="135", label="n13:135"]
+    n12 [gradientangle="90", label="n12:90"]
+    n11 [gradientangle="45", label="n11:45"]
+    n10 [gradientangle="0", label="n10:0"]
+  }
+  n5 -> n14
 }
 
 #

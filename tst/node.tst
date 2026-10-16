@@ -54,15 +54,21 @@ rec( shape := "circle" )
 # Test name containing ':'
 gap> g := GraphvizGraph();;
 gap> GraphvizAddNode(g, "test:colon");;
-gap> AsString(g);
-"//dot\ngraph  {\n\ttest:colon\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+graph  {
+  test:colon
+}
 
 # Test non-string name containing ':'
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, 111);
 <graphviz node "111">
-gap> AsString(g);
-"//dot\ngraph  {\n\t111\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+graph  {
+  111
+}
 gap> GraphvizGetAttr(n, 1);
 fail
 gap> GraphvizSetAttr(n, 1, 2);

@@ -38,8 +38,11 @@ rec( edge := rec(  ),
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "test");;
 gap> GraphvizSetAttrs(n, rec(color := "red", label := "lab"));;
-gap> AsString(g);
-"//dot\ngraph  {\n\ttest [color=\"red\", label=\"lab\"]\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+graph  {
+  test [color="red", label="lab"]
+}
 gap> GraphvizRemoveNode(g, "banana");
 Error, the 2nd argument (node name string) "banana" is not a node of the 1st a\
 rgument (a graphviz (di)graph/context)
@@ -52,9 +55,13 @@ gap> GraphvizSetAttrs(a, rec(color := "blue"));;
 gap> GraphvizSetAttrs(b, rec(color := "red"));;
 gap> e := GraphvizAddEdge(g, a, b);;
 gap> GraphvizSetAttrs(e, rec(color := "green"));;
-gap> AsString(g);
-"//dot\ndigraph  {\n\ta [color=\"blue\"]\n\tb [color=\"red\"]\n\ta -> b [color\
-=\"green\"]\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+digraph  {
+  a [color="blue"]
+  b [color="red"]
+  a -> b [color="green"]
+}
 
 # Test stringify with edge (graph)
 gap> g := GraphvizGraph();;
@@ -64,14 +71,20 @@ gap> GraphvizSetAttrs(a, rec(color := "blue"));;
 gap> GraphvizSetAttrs(b, rec(color := "red"));;
 gap> e := GraphvizAddEdge(g, a, b);;
 gap> GraphvizSetAttrs(e, rec(color := "green"));;
-gap> AsString(g);
-"//dot\ngraph  {\n\ta [color=\"blue\"]\n\tb [color=\"red\"]\n\ta -- b [color=\
-\"green\"]\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+graph  {
+  a [color="blue"]
+  b [color="red"]
+  a -- b [color="green"]
+}
 
 # Test stringify empty
 gap> g := GraphvizGraph();;
-gap> AsString(g);
-"//dot\ngraph  {\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+graph  {
+}
 
 # Test unknown attributes (node)
 gap> g := GraphvizGraph();;
@@ -88,25 +101,41 @@ gap> GraphvizSetAttr(g, "test", "false");
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "node");;
 gap> GraphvizSetAttr(n, "label", ">>hello");;
-gap> AsString(g);
-"//dot\ngraph  {\n\tnode [label=\">>hello\"]\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+graph  {
+  node [label=">>hello"]
+}
 gap> g := GraphvizGraph();;
 gap> n := GraphvizAddNode(g, "node");;
 gap> GraphvizSetAttr(n, "label", "before>>hello");;
-gap> AsString(g);
-"//dot\ngraph  {\n\tnode [label=\"before>>hello\"]\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+graph  {
+  node [label="before>>hello"]
+}
 
 # Test strngifying labels with ">>" inside (edge attrs)
 gap> g := GraphvizGraph();;
 gap> e := GraphvizAddEdge(g, "a", "b");;
 gap> GraphvizSetAttr(e, "label", ">>hello");;
-gap> AsString(g);
-"//dot\ngraph  {\n\ta\n\tb\n\ta -- b [label=\">>hello\"]\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+graph  {
+  a
+  b
+  a -- b [label=">>hello"]
+}
 gap> g := GraphvizGraph();;
 gap> e := GraphvizAddEdge(g, "a", "b");;
 gap> GraphvizSetAttr(e, "label", "before>>hello");;
-gap> AsString(g);
-"//dot\ngraph  {\n\ta\n\tb\n\ta -- b [label=\"before>>hello\"]\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+graph  {
+  a
+  b
+  a -- b [label="before>>hello"]
+}
 
 # Test GraphvizSetNodeLabels
 gap> gv := GraphvizGraph("xxx");
@@ -122,18 +151,18 @@ gap> GraphvizSetNodeLabels(gv, ["i", "ii", "iii"]);
 gap> Print(AsString(gv), "\n");
 //dot
 graph xxx {
-	1 [label="i"]
-	2 [label="ii"]
-	3 [label="iii"]
+  1 [label="i"]
+  2 [label="ii"]
+  3 [label="iii"]
 }
 gap> GraphvizSetNodeLabels(gv, ["a", "b", "c"]);
 <graphviz graph "xxx" with 3 nodes and 0 edges>
 gap> Print(AsString(gv), "\n");
 //dot
 graph xxx {
-	1 [label="a"]
-	2 [label="b"]
-	3 [label="c"]
+  1 [label="a"]
+  2 [label="b"]
+  3 [label="c"]
 }
 gap> GraphvizSetNodeLabels(gv, ["i", "ii"]);
 Error, the 2nd argument (list of node labels) has incorrect length, expected 3\
@@ -160,27 +189,27 @@ gap> GraphvizSetNodeColors(gv, ["red", "green", "blue"]);
 gap> Print(AsString(gv), "\n");
 //dot
 graph xxx {
-	1 [color="red", style="filled"]
-	2 [color="green", style="filled"]
-	3 [color="blue", style="filled"]
+  1 [color="red", style="filled"]
+  2 [color="green", style="filled"]
+  3 [color="blue", style="filled"]
 }
 gap> GraphvizSetNodeColors(gv, ["red", "#00FF00", "blue"]);
 <graphviz graph "xxx" with 3 nodes and 0 edges>
 gap> Print(AsString(gv), "\n");
 //dot
 graph xxx {
-	1 [color="red", style="filled"]
-	2 [color="#00FF00", style="filled"]
-	3 [color="blue", style="filled"]
+  1 [color="red", style="filled"]
+  2 [color="#00FF00", style="filled"]
+  3 [color="blue", style="filled"]
 }
 gap> GraphvizSetNodeColors(gv, ["#FF0000", "#00FF00", "#0000FF"]);
 <graphviz graph "xxx" with 3 nodes and 0 edges>
 gap> Print(AsString(gv), "\n");
 //dot
 graph xxx {
-	1 [color="#FF0000", style="filled"]
-	2 [color="#00FF00", style="filled"]
-	3 [color="#0000FF", style="filled"]
+  1 [color="#FF0000", style="filled"]
+  2 [color="#00FF00", style="filled"]
+  3 [color="#0000FF", style="filled"]
 }
 gap> GraphvizSetNodeColors(gv, ["#FF0000", "#00FF00", "#0000FG"]);
 Error, invalid color "#0000FG" (list (string)), valid colors are RGB values or\
@@ -206,14 +235,14 @@ gap> n := GraphvizSetAttr(n, "probably not ok", 1);
 gap> Print(AsString(gv : invalidDOT := "unquoted attribute name with spaces"), "\n");
 //dot
 graph xxx {
-	1 [probably not ok="1"]
+  1 [probably not ok="1"]
 }
 gap> GraphvizSetAttr(n, "label", "<<>>");
 <graphviz node "1">
 gap> Print(AsString(gv : invalidDOT := "unquoted attribute name with spaces"), "\n");
 //dot
 graph xxx {
-	1 [label="<<>>", probably not ok="1"]
+  1 [label="<<>>", probably not ok="1"]
 }
 
 # Issue 68
@@ -223,14 +252,25 @@ gap> a := GraphvizAddNode(g, "a");
 <graphviz node "a">
 gap> e := GraphvizAddEdge(g, a, "b");
 <graphviz edge (a, b)>
-gap> GraphvizNodes(g); AsString(g);
+gap> GraphvizNodes(g); Print(AsString(g), "\n");
 rec( a := <graphviz node "a">, b := <graphviz node "b"> )
-"//dot\ndigraph unexpected {\n\ta\n\tb\n\ta -> b\n}\n"
+//dot
+digraph unexpected {
+  a
+  b
+  a -> b
+}
 gap> e := GraphvizAddEdge(g, "b", a);
 <graphviz edge (b, a)>
-gap> GraphvizNodes(g); AsString(g);
+gap> GraphvizNodes(g); Print(AsString(g), "\n");
 rec( a := <graphviz node "a">, b := <graphviz node "b"> )
-"//dot\ndigraph unexpected {\n\ta\n\tb\n\ta -> b\n\tb -> a\n}\n"
+//dot
+digraph unexpected {
+  a
+  b
+  a -> b
+  b -> a
+}
 
 #
 gap> STOP_TEST("graphviz package: dot.tst", 0);

@@ -63,18 +63,46 @@ gap> GraphvizAddEdge(s, "struct1:f2", "struct3:here");
 <graphviz edge (struct1:f2, struct3:here)>
 
 #
-gap> AsString(s : invalidDOT := "inappropriate addition of quotes to HTML labels FIXME");
-"//dot\ndigraph structs {\nnode  [shape=\"plaintext\"]\n\tstruct1 [label=\"<<T\
-ABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n<TR>\n<TD>left</TD>\n<T\
-D PORT=\"f1\">middle</TD><TD PORT=\"f2\">right</TD>\n</TR>\n</TABLE>>\"]\n\tst\
-ruct2 [label=\"<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n<TR>\
-\n<TD PORT=\"f0\">one</TD>\n<TD>two</TD>\n</TR>\n</TABLE>>\"]\n\tstruct3 [labe\
-l=\"<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">\
-\n<TR>\n<TD ROWSPAN=\"3\">hello<BR/>world</TD>\n<TD COLSPAN=\"3\">b</TD>\n<TD \
-ROWSPAN=\"3\">g</TD>\n<TD ROWSPAN=\"3\">h</TD>\n</TR>\n<TR>\n<TD>c</TD>\n<TD P\
-ORT=\"here\">d</TD>\n<TD>e</TD>\n</TR>\n<TR>\n<TD COLSPAN=\"3\">f</TD>\n</TR>\
-\n</TABLE>>\"]\n\tstruct1:f1\n\tstruct2:f0\n\tstruct1:f1 -> struct2:f0\n\tstru\
-ct1:f2\n\tstruct3:here\n\tstruct1:f2 -> struct3:here\n}\n"
+gap> Print(AsString(s : invalidDOT := "inappropriate addition of quotes to HTML labels FIXME"), "\n");
+//dot
+digraph structs {
+  node [shape="plaintext"]
+  struct1 [label="<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+<TR>
+<TD>left</TD>
+<TD PORT="f1">middle</TD><TD PORT="f2">right</TD>
+</TR>
+</TABLE>>"]
+  struct2 [label="<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+<TR>
+<TD PORT="f0">one</TD>
+<TD>two</TD>
+</TR>
+</TABLE>>"]
+  struct3 [label="<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDIN\
+G="4">
+<TR>
+<TD ROWSPAN="3">hello<BR/>world</TD>
+<TD COLSPAN="3">b</TD>
+<TD ROWSPAN="3">g</TD>
+<TD ROWSPAN="3">h</TD>
+</TR>
+<TR>
+<TD>c</TD>
+<TD PORT="here">d</TD>
+<TD>e</TD>
+</TR>
+<TR>
+<TD COLSPAN="3">f</TD>
+</TR>
+</TABLE>>"]
+  struct1:f1
+  struct2:f0
+  struct1:f1 -> struct2:f0
+  struct1:f2
+  struct3:here
+  struct1:f2 -> struct3:here
+}
 
 #
 gap> STOP_TEST("graphviz package: examples/structs.tst");

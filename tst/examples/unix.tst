@@ -124,37 +124,7 @@ gap> GraphvizAddEdge(u, "System V.2", "System V.3");
 <graphviz edge (System V.2, System V.3)>
 
 #
-gap> AsString(u) =
-> "//dot\ndigraph unix {\nnode  [color=\"lightblue2\", size=\"6,6\", style=\"fil\
-> led\"]\n\t\"5th Edition\"\n\t\"6th Edition\"\n\t\"5th Edition\" -> \"6th Editi\
-> on\"\n\t\"PWB 1.0\"\n\t\"5th Edition\" -> \"PWB 1.0\"\n\tLSX\n\t\"6th Edition\
-> \" -> LSX\n\t\"1 BSD\"\n\t\"6th Edition\" -> \"1 BSD\"\n\t\"Mini Unix\"\n\t\"6\
-> th Edition\" -> \"Mini Unix\"\n\tWollongong\n\t\"6th Edition\" -> Wollongong\n\
-> \tInterdata\n\t\"6th Edition\" -> Interdata\n\t\"Unix/TS 3.0\"\n\t\"Unix/TS 3.\
-> 0\" -> Interdata\n\t\"PWB 2.0\"\n\tInterdata -> \"PWB 2.0\"\n\t\"7th Edition\"\
-> \n\tInterdata -> \"7th Edition\"\n\t\"8th Edition\"\n\t\"7th Edition\" -> \"8t\
-> h Edition\"\n\t\"32V\"\n\t\"7th Edition\" -> \"32V\"\n\tV7M\n\t\"7th Edition\"\
->  -> V7M\n\t\"Ultrix-11\"\n\t\"7th Edition\" -> \"Ultrix-11\"\n\tXenix\n\t\"7th\
->  Edition\" -> Xenix\n\t\"UniPlus+\"\n\t\"7th Edition\" -> \"UniPlus+\"\n\tV7M \
-> -> \"Ultrix-11\"\n\t\"9th Edition\"\n\t\"8th Edition\" -> \"9th Edition\"\n\t\
-> \"2 BSD\"\n\t\"1 BSD\" -> \"2 BSD\"\n\t\"2.8 BSD\"\n\t\"2 BSD\" -> \"2.8 BSD\"\
-> \n\t\"2.8 BSD\" -> \"Ultrix-11\"\n\t\"2.9 BSD\"\n\t\"2.8 BSD\" -> \"2.9 BSD\"\
-> \n\t\"3 BSD\"\n\t\"32V\" -> \"3 BSD\"\n\t\"4 BSD\"\n\t\"3 BSD\" -> \"4 BSD\"\n\
-> \t\"4.1 BSD\"\n\t\"4 BSD\" -> \"4.1 BSD\"\n\t\"4.2 BSD\"\n\t\"4.1 BSD\" -> \"4\
-> .2 BSD\"\n\t\"4.1 BSD\" -> \"2.8 BSD\"\n\t\"4.1 BSD\" -> \"8th Edition\"\n\t\"\
-> 4.3 BSD\"\n\t\"4.2 BSD\" -> \"4.3 BSD\"\n\t\"Ultrix-32\"\n\t\"4.2 BSD\" -> \"U\
-> ltrix-32\"\n\t\"PWB 1.2\"\n\t\"PWB 1.0\" -> \"PWB 1.2\"\n\t\"USG 1.0\"\n\t\"PW\
-> B 1.0\" -> \"USG 1.0\"\n\t\"PWB 1.2\" -> \"PWB 2.0\"\n\t\"CB Unix 1\"\n\t\"USG\
->  1.0\" -> \"CB Unix 1\"\n\t\"USG 2.0\"\n\t\"USG 1.0\" -> \"USG 2.0\"\n\t\"CB U\
-> nix 2\"\n\t\"CB Unix 1\" -> \"CB Unix 2\"\n\t\"CB Unix 3\"\n\t\"CB Unix 2\" ->\
->  \"CB Unix 3\"\n\t\"Unix/TS++\"\n\t\"CB Unix 3\" -> \"Unix/TS++\"\n\t\"PDP-11 \
-> Sys V\"\n\t\"CB Unix 3\" -> \"PDP-11 Sys V\"\n\t\"USG 3.0\"\n\t\"USG 2.0\" -> \
-> \"USG 3.0\"\n\t\"USG 3.0\" -> \"Unix/TS 3.0\"\n\t\"PWB 2.0\" -> \"Unix/TS 3.0\
-> \"\n\t\"Unix/TS 1.0\"\n\t\"Unix/TS 1.0\" -> \"Unix/TS 3.0\"\n\t\"TS 4.0\"\n\t\
-> \"Unix/TS 3.0\" -> \"TS 4.0\"\n\t\"Unix/TS++\" -> \"TS 4.0\"\n\t\"CB Unix 3\" \
-> -> \"TS 4.0\"\n\t\"System V.0\"\n\t\"TS 4.0\" -> \"System V.0\"\n\t\"System V.\
-> 2\"\n\t\"System V.0\" -> \"System V.2\"\n\t\"System V.3\"\n\t\"System V.2\" ->\
->  \"System V.3\"\n}\n";
+gap> Print(AsString(u), "\n");
 #I  invalid node name 5th Edition using "5th Edition" instead
 #I  invalid node name 6th Edition using "6th Edition" instead
 #I  invalid node name 5th Edition using "5th Edition" instead
@@ -280,7 +250,100 @@ gap> AsString(u) =
 #I  invalid node name System V.3 using "System V.3" instead
 #I  invalid node name System V.2 using "System V.2" instead
 #I  invalid node name System V.3 using "System V.3" instead
-true
+//dot
+digraph unix {
+  node [color="lightblue2", size="6,6", style="filled"]
+  "5th Edition"
+  "6th Edition"
+  "5th Edition" -> "6th Edition"
+  "PWB 1.0"
+  "5th Edition" -> "PWB 1.0"
+  LSX
+  "6th Edition" -> LSX
+  "1 BSD"
+  "6th Edition" -> "1 BSD"
+  "Mini Unix"
+  "6th Edition" -> "Mini Unix"
+  Wollongong
+  "6th Edition" -> Wollongong
+  Interdata
+  "6th Edition" -> Interdata
+  "Unix/TS 3.0"
+  "Unix/TS 3.0" -> Interdata
+  "PWB 2.0"
+  Interdata -> "PWB 2.0"
+  "7th Edition"
+  Interdata -> "7th Edition"
+  "8th Edition"
+  "7th Edition" -> "8th Edition"
+  "32V"
+  "7th Edition" -> "32V"
+  V7M
+  "7th Edition" -> V7M
+  "Ultrix-11"
+  "7th Edition" -> "Ultrix-11"
+  Xenix
+  "7th Edition" -> Xenix
+  "UniPlus+"
+  "7th Edition" -> "UniPlus+"
+  V7M -> "Ultrix-11"
+  "9th Edition"
+  "8th Edition" -> "9th Edition"
+  "2 BSD"
+  "1 BSD" -> "2 BSD"
+  "2.8 BSD"
+  "2 BSD" -> "2.8 BSD"
+  "2.8 BSD" -> "Ultrix-11"
+  "2.9 BSD"
+  "2.8 BSD" -> "2.9 BSD"
+  "3 BSD"
+  "32V" -> "3 BSD"
+  "4 BSD"
+  "3 BSD" -> "4 BSD"
+  "4.1 BSD"
+  "4 BSD" -> "4.1 BSD"
+  "4.2 BSD"
+  "4.1 BSD" -> "4.2 BSD"
+  "4.1 BSD" -> "2.8 BSD"
+  "4.1 BSD" -> "8th Edition"
+  "4.3 BSD"
+  "4.2 BSD" -> "4.3 BSD"
+  "Ultrix-32"
+  "4.2 BSD" -> "Ultrix-32"
+  "PWB 1.2"
+  "PWB 1.0" -> "PWB 1.2"
+  "USG 1.0"
+  "PWB 1.0" -> "USG 1.0"
+  "PWB 1.2" -> "PWB 2.0"
+  "CB Unix 1"
+  "USG 1.0" -> "CB Unix 1"
+  "USG 2.0"
+  "USG 1.0" -> "USG 2.0"
+  "CB Unix 2"
+  "CB Unix 1" -> "CB Unix 2"
+  "CB Unix 3"
+  "CB Unix 2" -> "CB Unix 3"
+  "Unix/TS++"
+  "CB Unix 3" -> "Unix/TS++"
+  "PDP-11 Sys V"
+  "CB Unix 3" -> "PDP-11 Sys V"
+  "USG 3.0"
+  "USG 2.0" -> "USG 3.0"
+  "USG 3.0" -> "Unix/TS 3.0"
+  "PWB 2.0" -> "Unix/TS 3.0"
+  "Unix/TS 1.0"
+  "Unix/TS 1.0" -> "Unix/TS 3.0"
+  "TS 4.0"
+  "Unix/TS 3.0" -> "TS 4.0"
+  "Unix/TS++" -> "TS 4.0"
+  "CB Unix 3" -> "TS 4.0"
+  "System V.0"
+  "TS 4.0" -> "System V.0"
+  "System V.2"
+  "System V.0" -> "System V.2"
+  "System V.3"
+  "System V.2" -> "System V.3"
+}
 
 #
 gap> STOP_TEST("graphviz package: examples/unix.tst");

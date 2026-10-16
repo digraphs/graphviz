@@ -58,10 +58,26 @@ gap> GraphvizAddEdge(g, "X", "Y");
 <graphviz edge (X, Y)>
 
 #
-gap> AsString(g);
-"//dot\ndigraph  {\nsubgraph no_name_1 {\ngraph  [rank=\"same\"]\n\tA\n\tX\n}\
-\n\tC\nsubgraph no_name_3 {\ngraph  [rank=\"same\"]\n\tB\n\tD\n\tY\n}\n\tA -> \
-B\n\tA -> C\n\tC -> D\n\tX -> Y\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+digraph  {
+  subgraph no_name_1 {
+    graph [rank="same"]
+    A
+    X
+  }
+  C
+  subgraph no_name_3 {
+    graph [rank="same"]
+    B
+    D
+    Y
+  }
+  A -> B
+  A -> C
+  C -> D
+  X -> Y
+}
 
 #
 gap> STOP_TEST("graphviz package: examples/rank_same.tst");
