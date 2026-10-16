@@ -63,7 +63,7 @@ gap> GraphvizAddEdge(s, "struct1:f2", "struct3:here");
 <graphviz edge (struct1:f2, struct3:here)>
 
 #
-gap> AsString(s);
+gap> AsString(s : invalidDOT := "inappropriate addition of quotes to HTML labels FIXME");
 "//dot\ndigraph structs {\nnode  [shape=\"plaintext\"]\n\tstruct1 [label=\"<<T\
 ABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n<TR>\n<TD>left</TD>\n<T\
 D PORT=\"f1\">middle</TD><TD PORT=\"f2\">right</TD>\n</TR>\n</TABLE>>\"]\n\tst\

@@ -401,9 +401,9 @@ gap> IsIdenticalObj(o, s);
 true
 
 # Test a context containing a subgraph
-gap> gv := GraphvizGraph("context+subgraph");;
+gap> gv := GraphvizGraph("context_and_subgraph");;
 gap> GraphvizSetAttrs(gv, rec(node := rec(shape := "box")));
-<graphviz graph "context+subgraph" with 0 nodes and 0 edges>
+<graphviz graph "context_and_subgraph" with 0 nodes and 0 edges>
 gap> legend := GraphvizAddContext(gv, "legend");
 <graphviz context "legend" with 0 nodes and 0 edges>
 gap> GraphvizSetAttrs(legend, rec(node := rec(shape := "plaintext")));
@@ -411,8 +411,8 @@ gap> GraphvizSetAttrs(legend, rec(node := rec(shape := "plaintext")));
 gap> GraphvizAddSubgraph(legend, "legend");
 <graphviz graph "legend" with 0 nodes and 0 edges>
 gap> AsString(gv);
-"//dot\ngraph context+subgraph {\nnode  [shape=\"box\"]\n// legend context \n{\
-\nnode  [shape=\"plaintext\"]\nsubgraph legend {\n}\n}\n}\n"
+"//dot\ngraph context_and_subgraph {\nnode  [shape=\"box\"]\n// legend context\
+ \n{\nnode  [shape=\"plaintext\"]\nsubgraph legend {\n}\n}\n}\n"
 
 # Test a context containing a subdigraph
 gap> gv := GraphvizDigraph("context+subgraph");;
