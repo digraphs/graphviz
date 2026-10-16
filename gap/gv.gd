@@ -41,7 +41,6 @@ DeclareOperation("GV_GraphSearchChildren",
 DeclareOperation("GV_FindGraphWithNode",
 [IsGraphvizGraphDigraphOrContext, IsString]);
 DeclareOperation("GV_GetRoot", [IsGraphvizObject]);
-DeclareOperation("GV_EnclosingNonContext", [IsGraphvizObject]);
 DeclareOperation("GV_AddNode",
 [IsGraphvizGraphDigraphOrContext, IsGraphvizNode]);
 DeclareOperation("GV_AddEdge",
