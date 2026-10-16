@@ -8,23 +8,23 @@
 #############################################################################
 ##
 
+# TODO
+# 2. ensure arg names are consistent (using gv, name, e, n, key, val, head,
+#    tail)
+# 3. Use GraphvizStringify which for a string does nothing (no copy); for an
+#    object calls String; for a IsGraphvizObject returns its name;
+
 #############################################################################
 # Constructors
 #############################################################################
 
-InstallMethod(GraphvizGraph, "for a string", [IsString],
-name -> GV_GraphOrDigraph(name, IsGraphvizGraph));
-
 InstallMethod(GraphvizGraph, "for an object", [IsObject],
-obj -> GraphvizGraph(String(obj)));
+obj -> GV_GraphOrDigraph(String(obj), IsGraphvizGraph));
 
 InstallMethod(GraphvizGraph, "for no args", [], {} -> GraphvizGraph(""));
 
-InstallMethod(GraphvizDigraph, "for a string", [IsString],
-name -> GV_GraphOrDigraph(name, IsGraphvizDigraph));
-
 InstallMethod(GraphvizDigraph, "for an object", [IsObject],
-obj -> GraphvizDigraph(String(obj)));
+obj -> GV_GraphOrDigraph(String(obj), IsGraphvizDigraph));
 
 InstallMethod(GraphvizDigraph, "for no args", [], {} -> GraphvizDigraph(""));
 
@@ -154,30 +154,22 @@ InstallMethod(\=, "for graphviz edges",
 # Accessor for graphs and digraphs
 
 InstallMethod(GraphvizFindSubgraphRecursive,
-"for a graphviz (di)graph or context and a string",
-[IsGraphvizGraphDigraphOrContext, IsString],
-{g, s} -> GV_GraphTreeSearch(g, v -> GraphvizName(v) = s and
-                                     not IsGraphvizContext(v)));
-
-InstallMethod(GraphvizFindSubgraphRecursive,
-"for a graphviz (di)graph or context and a string",
+"for a graphviz (di)graph or context and an object",
 [IsGraphvizGraphDigraphOrContext, IsObject],
-{g, o} -> GraphvizFindSubgraphRecursive(g, String(o)));
+{g, s} -> GV_GraphTreeSearch(g, v -> GraphvizName(v) = String(s)
+                                     and not IsGraphvizContext(v)));
 
 #############################################################################
 # GraphvizSetName
 #############################################################################
 
-InstallMethod(GraphvizSetName, "for a graphviz (di)graph or context and string",
-[IsGraphvizGraphDigraphOrContext, IsString],
+InstallMethod(GraphvizSetName,
+"for a graphviz (di)graph or context and object",
+[IsGraphvizGraphDigraphOrContext, IsObject],
 function(x, name)
-  x!.Name := name;
+  x!.Name := String(name);
   return x;
 end);
-
-InstallMethod(GraphvizSetName, "for a graphviz (di)graph or context and string",
-[IsGraphvizGraphDigraphOrContext, IsObject],
-{g, o} -> GraphvizSetName(g, String(o)));
 
 #############################################################################
 # GraphvizSetAttr(s)
@@ -362,35 +354,11 @@ function(x, head, tail)
 end);
 
 InstallMethod(GraphvizAddEdge,
-"for a graphviz (di)graph or context and two strings",
-[IsGraphvizGraphDigraphOrContext, IsString, IsString],
-function(x, head, tail)
-  local head_node, tail_node;
-
-  head_node := GraphvizNode(x, head);
-  if head_node = fail then
-    Info(InfoGraphviz, 3, "the head of the edge \"", head,
-         "\" is not an existing node, adding node \"", head, "\"");
-    head_node := GV_Node(x, head);
-    GV_AddNode(x, head_node);
-  fi;
-
-  tail_node := GraphvizNode(x, tail);
-  if tail_node = fail then
-    Info(InfoGraphviz, 3, "the tail of the edge \"", tail,
-         "\" is not an existing node, adding node \"", tail, "\"");
-    tail_node := GV_Node(x, tail);
-    GV_AddNode(x, tail_node);
-  fi;
-
-  return GraphvizAddEdge(x, head_node, tail_node);
-end);
-
-InstallMethod(GraphvizAddEdge,
 "for a graphviz (di)graph or context and two objects",
 [IsGraphvizGraphDigraphOrContext, IsObject, IsObject],
-function(gv, head, tail)
-  local head_name, tail_name;
+function(x, head, tail)
+  local head_name, tail_name, head_node, tail_node;
+
   if IsGraphvizNode(head) then
     head_name := GraphvizName(head);
   else
@@ -401,7 +369,24 @@ function(gv, head, tail)
   else
     tail_name := String(tail);
   fi;
-  return GraphvizAddEdge(gv, head_name, tail_name);
+
+  head_node := GraphvizNode(x, head_name);
+  if head_node = fail then
+    Info(InfoGraphviz, 3, "the head of the edge \"", head_name,
+         "\" is not an existing node, adding node \"", head_name, "\"");
+    head_node := GV_Node(x, head_name);
+    GV_AddNode(x, head_node);
+  fi;
+
+  tail_node := GraphvizNode(x, tail_name);
+  if tail_node = fail then
+    Info(InfoGraphviz, 3, "the tail of the edge \"", tail_name,
+         "\" is not an existing node, adding node \"", tail_name, "\"");
+    tail_node := GV_Node(x, tail_name);
+    GV_AddNode(x, tail_node);
+  fi;
+
+  return GraphvizAddEdge(x, head_node, tail_node);
 end);
 
 #############################################################################
@@ -409,10 +394,12 @@ end);
 #############################################################################
 
 InstallMethod(GraphvizAddSubgraph,
-"for a graphviz (di)graph or context and string",
-[IsGraphvizGraphDigraphOrContext, IsString],
-function(gv, name)
-  local subgraphs, subgraph;
+"for a graphviz (di)graph or context and object",
+[IsGraphvizGraphDigraphOrContext, IsObject],
+function(gv, obj)
+  local subgraphs, subgraph, name;
+
+  name := String(obj);
 
   subgraphs := GraphvizSubgraphs(gv);
   if IsBound(subgraphs.(name)) then
@@ -426,11 +413,6 @@ function(gv, name)
   return subgraph;
 end);
 
-InstallMethod(GraphvizAddSubgraph,
-"for a graphviz (di)graph or context and an object",
-[IsGraphvizGraphDigraphOrContext, IsObject],
-{g, o} -> GraphvizAddSubgraph(g, String(o)));
-
 InstallMethod(GraphvizAddSubgraph, "for a graphviz (di)graph or context",
 [IsGraphvizGraphDigraphOrContext],
 graph -> GraphvizAddSubgraph(graph,
@@ -438,10 +420,12 @@ graph -> GraphvizAddSubgraph(graph,
                                              GV_GetCounter(graph))));
 
 InstallMethod(GraphvizAddContext,
-"for a graphviz (di)graph or context and a string",
-[IsGraphvizGraphDigraphOrContext, IsString],
-function(graph, name)
-  local contexts, ctx;
+"for a graphviz (di)graph or context and object",
+[IsGraphvizGraphDigraphOrContext, IsObject],
+function(graph, obj)
+  local contexts, ctx, name;
+
+  name := String(obj);
 
   contexts := GraphvizContexts(graph);
   if IsBound(contexts.(name)) then
@@ -460,11 +444,6 @@ InstallMethod(GraphvizAddContext,
 [IsGraphvizGraphDigraphOrContext],
 g -> GraphvizAddContext(g, StringFormatted("no_name_{}", GV_GetCounter(g))));
 
-InstallMethod(GraphvizAddContext,
-"for a graphviz (di)graph or context and an object",
-[IsGraphvizGraphDigraphOrContext, IsObject],
-{g, o} -> GraphvizAddContext(g, String(o)));
-
 # Removal
 
 InstallMethod(GraphvizRemoveNode,
@@ -474,9 +453,10 @@ InstallMethod(GraphvizRemoveNode,
 
 InstallMethod(GraphvizRemoveNode,
 "for a graphviz (di)graph or context and a string",
-[IsGraphvizGraphDigraphOrContext, IsString],
-function(g, name)
-  local nodes;
+[IsGraphvizGraphDigraphOrContext, IsObject],
+function(g, obj)
+  local nodes, name;
+  name := String(obj);
   nodes := GraphvizNodes(g);
   if IsBound(nodes.(name)) then
     Unbind(nodes.(name));
@@ -499,16 +479,12 @@ function(g, name)
   return g;
 end);
 
-InstallMethod(GraphvizRemoveNode,
-"for a graphviz (di)graph or context and a string",
-[IsGraphvizGraphDigraphOrContext, IsObject],
-{g, o} -> GraphvizRemoveNode(g, String(o)));
-
 InstallMethod(GraphvizFilterEdges,
 "for a graphviz (di)graph or context and edge filter",
 [IsGraphvizGraphDigraphOrContext, IsFunction],
 function(g, filter)
   local edge, idx, edges;
+  # TODO check filter is good
 
   edges := GraphvizEdges(g);
   idx   := Length(edges);
@@ -524,12 +500,16 @@ function(g, filter)
 end);
 
 InstallMethod(GraphvizRemoveEdges,
-"for a graphviz (di)graph or context, string, and string",
-[IsGraphvizGraphDigraphOrContext, IsString, IsString],
-function(g, hn, tn)
-  local lh, lt, len;
+"for a graphviz (di)graph or context, object, and object",
+[IsGraphvizGraphDigraphOrContext, IsObject, IsObject],
+function(g, head_obj, tail_obj)
+  local lh, lt, len, hn, tn;
+
+  hn := String(head_obj);
+  tn := String(tail_obj);
 
   # if no such nodes exist -> error out
+  # TODO clean this up
   lh := GraphvizNode(g, hn) = fail;
   lt := GraphvizNode(g, tn) = fail;
   if lh and lt then
@@ -560,11 +540,6 @@ function(g, hn, tn)
 
   return g;
 end);
-
-InstallMethod(GraphvizRemoveEdges,
-"for a graphviz (di)graph or context, object, and object",
-[IsGraphvizGraphDigraphOrContext, IsObject, IsObject],
-{gv, o1, o2} -> GraphvizRemoveEdges(gv, String(o1), String(o2)));
 
 #############################################################################
 # Stringify
