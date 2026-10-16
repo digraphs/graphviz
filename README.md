@@ -110,6 +110,20 @@ Render and view the result:
 
 ![The Round Table](./doc/img/The_Round_Table.png)
 
+## Testing
+
+Run `make check` (or `make check GAP=/path/to/gap`). When Graphviz's `dot`
+is on `PATH`, the suite also parses every generated `AsString` result using
+`dot -Tcanon`. Validation failures report the DOT and Graphviz diagnostics
+and fail the suite even if the saved output matches. CI installs Graphviz;
+local runs without it explicitly report that validation is skipped.
+
+Tests which intentionally produce invalid DOT must give a reason, for example
+`AsString(gv : invalidDOT := "unquoted attribute name with spaces")`.
+These cases must be rejected by Graphviz. This checks syntax, not layout or
+whether the parsed graph has the intended meaning; the output comparisons
+remain in place.
+
 ## Issues
 
 For questions, remarks, suggestions, and issues please use the

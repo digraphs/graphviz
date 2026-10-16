@@ -203,14 +203,14 @@ gap> n := GraphvizAddNode(gv, 1);
 <graphviz node "1">
 gap> n := GraphvizSetAttr(n, "probably not ok", 1);
 <graphviz node "1">
-gap> Print(AsString(gv));
+gap> Print(AsString(gv : invalidDOT := "unquoted attribute name with spaces"), "\n");
 //dot
 graph xxx {
 	1 [probably not ok="1"]
 }
 gap> GraphvizSetAttr(n, "label", "<<>>");
 <graphviz node "1">
-gap> Print(AsString(gv));
+gap> Print(AsString(gv : invalidDOT := "unquoted attribute name with spaces"), "\n");
 //dot
 graph xxx {
 	1 [label="<<>>", probably not ok="1"]
