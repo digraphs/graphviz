@@ -47,12 +47,33 @@ gap> GraphvizAddEdge(graph, "runswap", "runmem");
 <graphviz edge (runswap, runmem)>
 gap> GraphvizAddEdge(graph, "new", "runmem");
 <graphviz edge (new, runmem)>
-gap> AsString(graph);
-"//dot\ngraph G {\ngraph  [engine=\"sfdp\"]\n\trun\n\tintr\n\trun -- intr\n\tr\
-unbl\n\tintr -- runbl\n\trunbl -- run\n\tkernel\n\trun -- kernel\n\tzombie\n\t\
-kernel -- zombie\n\tsleep\n\tkernel -- sleep\n\trunmem\n\tkernel -- runmem\n\t\
-swap\n\tsleep -- swap\n\trunswap\n\tswap -- runswap\n\tnew\n\trunswap -- new\n\
-\trunswap -- runmem\n\tnew -- runmem\n}\n"
+gap> Print(AsString(graph), "\n");
+//dot
+graph G {
+  graph [engine="sfdp"]
+  run
+  intr
+  run -- intr
+  runbl
+  intr -- runbl
+  runbl -- run
+  kernel
+  run -- kernel
+  zombie
+  kernel -- zombie
+  sleep
+  kernel -- sleep
+  runmem
+  kernel -- runmem
+  swap
+  sleep -- swap
+  runswap
+  swap -- runswap
+  new
+  runswap -- new
+  runswap -- runmem
+  new -- runmem
+}
 
 #
 gap> STOP_TEST("graphviz package: examples/process.tst");

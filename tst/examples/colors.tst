@@ -54,15 +54,18 @@ gap> GraphvizSetAttr(node, "fillcolor", "deeppink");
 <graphviz node "name: deeppink">
 
 #
-gap> AsString(g);
+gap> Print(AsString(g), "\n");
 #I  invalid node name RGB: #40e0d0 using "RGB: #40e0d0" instead
 #I  invalid node name RGBA: #ff000042 using "RGBA: #ff000042" instead
 #I  invalid node name HSV: 0.051 0.718 0.627 using "HSV: 0.051 0.718 0.627" instead
 #I  invalid node name name: deeppink using "name: deeppink" instead
-"//dot\ngraph  {\n\t\"RGB: #40e0d0\" [fillcolor=\"#40e0d0\", style=\"filled\"]\
-\n\t\"RGBA: #ff000042\" [fillcolor=\"#ff000042\", style=\"filled\"]\n\t\"HSV: \
-0.051 0.718 0.627\" [fillcolor=\"0.051 0.718 0.627\", style=\"filled\"]\n\t\"n\
-ame: deeppink\" [fillcolor=\"deeppink\", style=\"filled\"]\n}\n"
+//dot
+graph  {
+  "RGB: #40e0d0" [fillcolor="#40e0d0", style="filled"]
+  "RGBA: #ff000042" [fillcolor="#ff000042", style="filled"]
+  "HSV: 0.051 0.718 0.627" [fillcolor="0.051 0.718 0.627", style="filled"]
+  "name: deeppink" [fillcolor="deeppink", style="filled"]
+}
 
 #
 gap> STOP_TEST("graphviz package: examples/colors.tst");

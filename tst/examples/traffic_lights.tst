@@ -78,16 +78,48 @@ gap> GraphvizSetAttrs(t, rec(fontsize := "12"));
 <graphviz digraph "TrafficLights" with 14 nodes and 16 edges>
 
 #
-gap> AsString(t);
-"//dot\ndigraph TrafficLights {\ngraph  [engine=\"neato\", fontsize=\"12\", la\
-bel=\"PetriNet Model TrafficLights\nExtracted from ConceptBase and laid out by\
- Graphviz\", overlap=\"false\"]\nsubgraph ctx1 {\nnode  [shape=\"box\"]\n\tgy2\
-\n\tyr2\n\trg2\n\tgy1\n\tyr1\n\trg1\n}\nsubgraph ctx2 {\nnode  [fixedsize=\"tr\
-ue\", shape=\"circle\", width=\"0.9\"]\n\tgreen2\n\tyellow2\n\tred2\n\tsafe2\n\
-\tgreen1\n\tyellow1\n\tred1\n\tsafe1\n}\n\tgy2 -> yellow2\n\trg2 -> green2\n\t\
-yr2 -> safe1\n\tyr2 -> red2\n\tsafe2 -> rg2\n\tgreen2 -> gy2\n\tyellow2 -> yr2\
-\n\tred2 -> rg2\n\tgy1 -> yellow1\n\trg1 -> green1\n\tyr1 -> safe2\n\tyr1 -> r\
-ed1\n\tsafe1 -> rg1\n\tgreen1 -> gy1\n\tyellow1 -> yr1\n\tred1 -> rg1\n}\n"
+gap> Print(AsString(t), "\n");
+//dot
+digraph TrafficLights {
+  graph [engine="neato", fontsize="12", label="PetriNet Model TrafficLights
+Extracted from ConceptBase and laid out by Graphviz", overlap="false"]
+  subgraph ctx1 {
+    node [shape="box"]
+    gy2
+    yr2
+    rg2
+    gy1
+    yr1
+    rg1
+  }
+  subgraph ctx2 {
+    node [fixedsize="true", shape="circle", width="0.9"]
+    green2
+    yellow2
+    red2
+    safe2
+    green1
+    yellow1
+    red1
+    safe1
+  }
+  gy2 -> yellow2
+  rg2 -> green2
+  yr2 -> safe1
+  yr2 -> red2
+  safe2 -> rg2
+  green2 -> gy2
+  yellow2 -> yr2
+  red2 -> rg2
+  gy1 -> yellow1
+  rg1 -> green1
+  yr1 -> safe2
+  yr1 -> red1
+  safe1 -> rg1
+  green1 -> gy1
+  yellow1 -> yr1
+  red1 -> rg1
+}
 
 #
 gap> STOP_TEST("graphviz package: examples/traffic_lights.tst");

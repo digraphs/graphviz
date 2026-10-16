@@ -74,14 +74,41 @@ gap> GraphvizSetAttr(GraphvizNode(graph, "end"), "shape", "Msquare");
 <graphviz node "end">
 
 #
-gap> AsString(graph);
-"//dot\ndigraph G {\nsubgraph cluster_0 {\ngraph  [color=\"lightgrey\", label=\
-\"process #1\", style=\"filled\"]\nnode  [color=\"white\", style=\"filled\"]\n\
-\ta0\n\ta1\n\ta0 -> a1\n\ta2\n\ta1 -> a2\n\ta3\n\ta2 -> a3\n}\nsubgraph cluste\
-r_1 {\ngraph  [color=\"blue\", label=\"process #2\"]\nnode  [style=\"filled\"]\
-\n\tb0\n\tb1\n\tb0 -> b1\n\tb2\n\tb1 -> b2\n\tb3\n\tb2 -> b3\n}\n\tstart [shap\
-e=\"Mdiamond\"]\n\tstart -> a0\n\tstart -> b0\n\ta1 -> b3\n\tb2 -> a3\n\ta3 ->\
- a0\n\tend [shape=\"Msquare\"]\n\ta3 -> end\n\tb3 -> end\n}\n"
+gap> Print(AsString(graph), "\n");
+//dot
+digraph G {
+  subgraph cluster_0 {
+    graph [color="lightgrey", label="process #1", style="filled"]
+    node [color="white", style="filled"]
+    a0
+    a1
+    a0 -> a1
+    a2
+    a1 -> a2
+    a3
+    a2 -> a3
+  }
+  subgraph cluster_1 {
+    graph [color="blue", label="process #2"]
+    node [style="filled"]
+    b0
+    b1
+    b0 -> b1
+    b2
+    b1 -> b2
+    b3
+    b2 -> b3
+  }
+  start [shape="Mdiamond"]
+  start -> a0
+  start -> b0
+  a1 -> b3
+  b2 -> a3
+  a3 -> a0
+  end [shape="Msquare"]
+  a3 -> end
+  b3 -> end
+}
 
 #
 gap> STOP_TEST("graphviz package: examples/cluster.tst");

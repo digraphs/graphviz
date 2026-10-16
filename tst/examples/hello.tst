@@ -20,8 +20,13 @@ gap> graph := GraphvizDigraph("G");
 <graphviz digraph "G" with 0 nodes and 0 edges>
 gap> GraphvizAddEdge(graph, "hello", "world");
 <graphviz edge (hello, world)>
-gap> AsString(graph);
-"//dot\ndigraph G {\n\thello\n\tworld\n\thello -> world\n}\n"
+gap> Print(AsString(graph), "\n");
+//dot
+digraph G {
+  hello
+  world
+  hello -> world
+}
 
 #
 gap> STOP_TEST("graphviz package: examples/hello.tst");

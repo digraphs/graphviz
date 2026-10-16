@@ -179,8 +179,11 @@ rec( edge := rec(  ), graph := rec( color := "red" ), node := rec(  ) )
 gap> g := GraphvizGraph();;
 gap> GraphvizSetAttr(g, "color", "red");;
 gap> GraphvizSetAttr(g, "color", "blue");;
-gap> AsString(g);
-"//dot\ngraph  {\ngraph  [color=\"blue\"]\n}\n"
+gap> Print(AsString(g), "\n");
+//dot
+graph  {
+  graph [color="blue"]
+}
 
 # # Test removing attributes from a graph TODO uncomment or delete
 # gap> g := GraphvizGraph();;
