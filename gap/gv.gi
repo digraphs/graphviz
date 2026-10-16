@@ -241,18 +241,6 @@ function(graph)
   return graph;
 end);
 
-InstallMethod(GV_EnclosingNonContext,
-"for a graphviz object with subobjects",
-[IsGraphvizObject],
-function(graph)
-  local parent;
-
-  repeat
-    parent := GV_GetParent(graph);
-  until parent = fail or not IsGraphvizContext(parent);
-  return parent;
-end);
-
 InstallMethod(GV_AddNode,
 "for a graphviz graph and node",
 [IsGraphvizGraphDigraphOrContext, IsGraphvizNode],
