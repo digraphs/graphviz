@@ -52,17 +52,18 @@
 #! <URL>https://graphviz.readthedocs.io/en/stable/examples.html</URL> or
 #! <URL>https://graphviz.org/Gallery/directed/fsm.html</URL>.
 #!
-#! @BeginLogSession
+#! @BeginExampleSession
 #! gap> LoadPackage("GraphvizForGAP");;
 #! gap> f := GraphvizDigraph("finite_state_machine");
 #! <graphviz digraph "finite_state_machine" with 0 nodes and 0 edges>
-#! gap> GraphvizSetAttr(f, "rankdir=LR");
+#! gap> GraphvizSetAttr(f, "rankdir", "LR");
 #! <graphviz digraph "finite_state_machine" with 0 nodes and 0 edges>
-#! gap> GraphvizSetAttr(f, "size=\"8,5\"");
+#! gap> GraphvizSetAttr(f, "size", "8,5");
 #! <graphviz digraph "finite_state_machine" with 0 nodes and 0 edges>
 #! gap> terminals := GraphvizAddContext(f, "terminals");
 #! <graphviz context "terminals" with 0 nodes and 0 edges>
-#! gap> GraphvizSetAttr(terminals, "node [shape=doublecircle]");
+#! gap> GraphvizSetAttrs(terminals, rec(node := rec(shape :=
+#! > "doublecircle")));
 #! <graphviz context "terminals" with 0 nodes and 0 edges>
 #! gap> GraphvizAddNode(terminals, "LR_0");
 #! <graphviz node "LR_0">
@@ -74,7 +75,7 @@
 #! <graphviz node "LR_8">
 #! gap> nodes := GraphvizAddContext(f, "nodes");
 #! <graphviz context "nodes" with 0 nodes and 0 edges>
-#! gap> GraphvizSetAttr(nodes, "node [shape=circle]");
+#! gap> GraphvizSetAttrs(nodes, rec(node := rec(shape := "circle")));
 #! <graphviz context "nodes" with 0 nodes and 0 edges>
 #! gap> GraphvizSetAttr(GraphvizAddEdge(nodes, "LR_0", "LR_2"), "label", "\"SS(B)\"");
 #! <graphviz edge (LR_0, LR_2)>
@@ -107,19 +108,18 @@
 #! gap> Print(AsString(f), "\n");
 #! //dot
 #! digraph finite_state_machine {
-#!     rankdir=LR size="8,5"
-#! // terminals context
-#!  {
-#!     node [shape=doublecircle]
+#!   graph [rankdir="LR", size="8,5"]
+#!   {
+#!     // context "terminals"
+#!     node [shape="doublecircle"]
 #!     LR_0
 #!     LR_3
 #!     LR_4
 #!     LR_8
-#!     rankdir=LR size="8,5"
-#!  }
-#! // nodes context
-#!  {
-#!     node [shape=circle]
+#!   }
+#!   {
+#!     // context "nodes"
+#!     node [shape="circle"]
 #!     LR_2
 #!     LR_0 -> LR_2 [label="SS(B)"]
 #!     LR_1
@@ -139,12 +139,10 @@
 #!     LR_7 -> LR_5 [label="S(a)"]
 #!     LR_8 -> LR_6 [label="S(b)"]
 #!     LR_8 -> LR_5 [label="S(a)"]
-#!     rankdir=LR size="8,5"
-#!  }
-#!
+#!   }
 #! }
-#! gap> Splash(f);
-#! @EndLogSession
+#! gap> # Splash(f);
+#! @EndExampleSession
 #!
 #! Provided that you have &Graphviz; installed on your computer, the last line
 #! of the example <C>Splash(f)</C> would produce the following picture:
