@@ -33,8 +33,6 @@ DeclareAttribute("GV_Filter", IsGraphvizDigraph);
 DeclareOperation("GV_Subgraph", [IsGraphvizGraphDigraphOrContext, IsString]);
 DeclareOperation("GV_Context", [IsGraphvizGraphDigraphOrContext, IsString]);
 
-DeclareOperation("GV_HasNode", [IsGraphvizGraphDigraphOrContext, IsObject]);
-
 DeclareOperation("GV_GetParent", [IsGraphvizObject]);
 DeclareOperation("GV_GraphTreeSearch",
 [IsGraphvizGraphDigraphOrContext, IsFunction]);
