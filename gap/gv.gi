@@ -489,38 +489,3 @@ function(gv, colors)
   fi;
   Perform(colors, ErrorIfNotValidColor);
 end);
-
-InstallGlobalFunction(GV_ErrorIfNotValidLabel,
-function(label)
-    local cond;
-
-    if Length(label) = 0 then
-        ErrorFormatted("invalid label \"{}\", valid DOT labels ",
-                       "cannot be empty strings", label);
-    fi;
-
-    # double quoted string
-    if StartsWith(label, "\"") and EndsWith(label, "\"")then
-        return;
-    fi;
-    # HTML string
-    if StartsWith(label, "<") and EndsWith(label, ">")then
-        return;
-    fi;
-
-    # numeral
-    if Int(label) <> fail then
-        return;
-    fi;
-
-    cond := not IsDigitChar(label[1]);
-    cond := cond and ForAll(label, c -> IsAlphaChar(c) or IsDigitChar(c)
-                            or c = '_' or ('\200' <= c and c <= '\377'));
-    if cond then
-        return;
-    fi;
-
-    ErrorFormatted("invalid label \"{}\", valid DOT labels ",
-                   "https://graphviz.org/doc/info/lang.html",
-                   label);
-end);

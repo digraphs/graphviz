@@ -51,7 +51,6 @@ DeclareOperation("GV_ConstructHistory", [IsGraphvizGraphDigraphOrContext]);
 
 DeclareGlobalFunction("GV_IsValidColor");
 DeclareGlobalFunction("GV_ErrorIfNotNodeColoring");
-DeclareGlobalFunction("GV_ErrorIfNotValidLabel");
 
 BindGlobal("GV_ValidColorNames",
   ["aliceblue", "antiquewhite", "antiquewhite1", "antiquewhite2",
