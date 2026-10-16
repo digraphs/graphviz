@@ -10,8 +10,6 @@
 
 # https://graphviz.readthedocs.io/en/stable/examples.html
 # https://graphviz.org/Gallery/undirected/ER.html
-
-#@local context1, context2, e, label, len, start
 gap> START_TEST("graphviz package: examples/er.tst");
 gap> LoadPackage("GraphvizForGAP");
 true
@@ -104,7 +102,7 @@ gap> GraphvizSetAttrs(e, rec(fontsize := "20"));
 <graphviz graph "ER" with 12 nodes and 12 edges>
 
 #
-gap> AsString(e);
+gap> Print(AsString(e), "\n");
 #I  invalid node name C-I using "C-I" instead
 #I  invalid node name S-C using "S-C" instead
 #I  invalid node name S-I using "S-I" instead
@@ -114,18 +112,47 @@ gap> AsString(e);
 #I  invalid node name S-I using "S-I" instead
 #I  invalid node name S-C using "S-C" instead
 #I  invalid node name S-C using "S-C" instead
-"//dot\ngraph ER {\ngraph  [engine=\"neato\", fontsize=\"20\", label=\"Entity \
-Relation Diagram\ndrawn by NEATO\"]\n// context_start context \n{\nnode  [shap\
-e=\"box\"]\n\tcourse\n\tinstitute\n\tstudent\n}\n// context1 context \n{\nnode\
-  [shape=\"ellipse\"]\n\tname0 [label=\"name\"]\n\tname1 [label=\"name\"]\n\tn\
-ame2 [label=\"name\"]\n\tcode\n\tgrade\n\tnumber\n}\n// context2 context \n{\n\
-node  [color=\"lightgrey\", shape=\"diamond\", style=\"filled\"]\n\t\"C-I\"\n\
-\t\"S-C\"\n\t\"S-I\"\n}\n\tname0 -- course\n\tcode -- course\n\t\"C-I\" -- cou\
-rse [label=\"n\", len=\"1.00\"]\n\tinstitute -- \"C-I\" [label=\"1\", len=\"1.\
-00\"]\n\tname1 -- institute\n\t\"S-I\" -- institute [label=\"1\", len=\"1.00\"\
-]\n\tstudent -- \"S-I\" [label=\"n\", len=\"1.00\"]\n\tgrade -- student\n\tnam\
-e2 -- student\n\tnumber -- student\n\t\"S-C\" -- student [label=\"m\", len=\"1\
-.00\"]\n\tcourse -- \"S-C\" [label=\"n\", len=\"1.00\"]\n}\n"
+//dot
+graph ER {
+  graph [engine="neato", fontsize="20", label="Entity Relation Diagram
+drawn by NEATO"]
+  {
+    // context "context_start" 
+    node [shape="box"]
+    course
+    institute
+    student
+  }
+  {
+    // context "context1" 
+    node [shape="ellipse"]
+    name0 [label="name"]
+    name1 [label="name"]
+    name2 [label="name"]
+    code
+    grade
+    number
+  }
+  {
+    // context "context2" 
+    node [color="lightgrey", shape="diamond", style="filled"]
+    "C-I"
+    "S-C"
+    "S-I"
+  }
+  name0 -- course
+  code -- course
+  "C-I" -- course [label="n", len="1.00"]
+  institute -- "C-I" [label="1", len="1.00"]
+  name1 -- institute
+  "S-I" -- institute [label="1", len="1.00"]
+  student -- "S-I" [label="n", len="1.00"]
+  grade -- student
+  name2 -- student
+  number -- student
+  "S-C" -- student [label="m", len="1.00"]
+  course -- "S-C" [label="n", len="1.00"]
+}
 
 #
 gap> STOP_TEST("graphviz package: examples/er.tst");

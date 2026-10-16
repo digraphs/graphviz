@@ -239,6 +239,18 @@ function(graph)
   return graph;
 end);
 
+BindGlobal("GV_Indent", lvl -> ListWithIdenticalEntries(2 * lvl, ' '));
+
+BindGlobal("GV_Depth", function(gv)
+  local depth;
+  depth := 0;
+  while GV_GetParent(gv) <> fail do
+    gv := GV_GetParent(gv);
+    depth := depth + 1;
+  od;
+  return depth;
+end);
+
 InstallMethod(GV_AddNode,
 "for a graphviz graph and node",
 [IsGraphvizGraphDigraphOrContext, IsGraphvizNode],
@@ -272,11 +284,17 @@ graph -> StringFormatted("digraph {} {{\n", GraphvizName(graph)));
 
 # @ Return DOT subgraph head line.
 BindGlobal("GV_StringifySubgraphHead",
-graph -> StringFormatted("subgraph {} {{\n", GraphvizName(graph)));
+gv -> StringFormatted("{}subgraph {} {{\n", GV_Indent(GV_Depth(gv)), GraphvizName(gv)));
 
 # @ Return DOT subgraph head line.
 BindGlobal("GV_StringifyContextHead",
-graph -> StringFormatted("// {} context \n{{\n", GraphvizName(graph)));
+function(gv)
+  local indent;
+  indent := GV_Indent(GV_Depth(gv));
+  return StringFormatted("{1}{{\n{1}  // context \"{2}\" \n",
+                         indent,
+                         GraphvizName(gv));
+end);
 
 BindGlobal("GV_StringifyNodeName",
 function(node)
@@ -289,13 +307,7 @@ function(node)
       and not StartsWith(name, "\"") then
     old  := name;
     name := StringFormatted("\"{}\"", name);
-    Info(InfoWarning,
-         1,
-         "invalid node name ",
-         old,
-         " using ",
-         name,
-         " instead");
+    Info(InfoWarning, 1, "invalid node name ", old, " using ", name, " instead");
   fi;
   return name;
 end);
@@ -339,7 +351,10 @@ function(node)
   local name, attrs;
   name  := GV_StringifyNodeName(node);
   attrs := GraphvizAttrs(node);
-  return StringFormatted("\t{}{}\n", name, GV_StringifyAttrList(attrs));
+  return StringFormatted("{}{}{}\n",
+                         GV_Indent(GV_Depth(node)),
+                         name,
+                         GV_StringifyAttrList(attrs));
 end);
 
 # @ Return DOT graph edge statement line.
@@ -353,7 +368,8 @@ function(edge, edge_str)
   attrs := GraphvizAttrs(edge);
 
   # handle : syntax
-  return StringFormatted("\t{} {} {}{}\n",
+  return StringFormatted("{}{} {} {}{}\n",
+                         GV_Indent(GV_Depth(edge)),
                          head,
                          edge_str,
                          tail,
@@ -413,7 +429,11 @@ function(graph, is_subgraph)
   for type in ["graph", "node", "edge"] do
     record := GraphvizAttrs(graph).(type);
     if Length(RecNames(record)) > 0 then
-      Append(result, StringFormatted("{} {}\n", type, GV_StringifyAttrList(record)));
+      Append(result,
+        StringFormatted("{}{}{}\n",
+                        GV_Indent(GV_Depth(graph) + 1),
+                        type,
+                        GV_StringifyAttrList(record)));
     fi;
   od;
 
@@ -432,7 +452,10 @@ function(graph, is_subgraph)
     fi;
   od;
 
-  Append(result, "}\n");
+  Append(result, StringFormatted("{}}}", GV_Indent(GV_Depth(graph))));
+  if GV_Depth(graph) > 0 then
+    Append(result, "\n");
+  fi;
   return result;
 end);
 
