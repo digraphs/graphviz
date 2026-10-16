@@ -119,7 +119,7 @@ gap> GraphvizAddNode(gv, 3);
 <graphviz node "3">
 gap> GraphvizSetNodeLabels(gv, ["i", "ii", "iii"]);
 <graphviz graph "xxx" with 3 nodes and 0 edges>
-gap> Print(AsString(gv));
+gap> Print(AsString(gv), "\n");
 //dot
 graph xxx {
 	1 [label="i"]
@@ -128,7 +128,7 @@ graph xxx {
 }
 gap> GraphvizSetNodeLabels(gv, ["a", "b", "c"]);
 <graphviz graph "xxx" with 3 nodes and 0 edges>
-gap> Print(AsString(gv));
+gap> Print(AsString(gv), "\n");
 //dot
 graph xxx {
 	1 [label="a"]
@@ -157,7 +157,7 @@ Error, invalid color "i" (list (string)), valid colors are RGB values or names\
 .html
 gap> GraphvizSetNodeColors(gv, ["red", "green", "blue"]);
 <graphviz graph "xxx" with 3 nodes and 0 edges>
-gap> Print(AsString(gv));
+gap> Print(AsString(gv), "\n");
 //dot
 graph xxx {
 	1 [color="red", style="filled"]
@@ -166,7 +166,7 @@ graph xxx {
 }
 gap> GraphvizSetNodeColors(gv, ["red", "#00FF00", "blue"]);
 <graphviz graph "xxx" with 3 nodes and 0 edges>
-gap> Print(AsString(gv));
+gap> Print(AsString(gv), "\n");
 //dot
 graph xxx {
 	1 [color="red", style="filled"]
@@ -175,7 +175,7 @@ graph xxx {
 }
 gap> GraphvizSetNodeColors(gv, ["#FF0000", "#00FF00", "#0000FF"]);
 <graphviz graph "xxx" with 3 nodes and 0 edges>
-gap> Print(AsString(gv));
+gap> Print(AsString(gv), "\n");
 //dot
 graph xxx {
 	1 [color="#FF0000", style="filled"]
