@@ -139,11 +139,6 @@ x -> x!.Counter);
 
 # Nodes
 
-InstallMethod(GV_HasNode,
-"for a graphviz graph",
-[IsGraphvizGraphDigraphOrContext, IsString],
-{g, name} -> name in RecNames(GraphvizNodes(g)));
-
 InstallMethod(GV_GetParent,
 "for a graphviz object",
 [IsGraphvizObject], graph -> graph!.Parent);
