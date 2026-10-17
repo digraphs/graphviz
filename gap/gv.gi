@@ -591,11 +591,12 @@ function(str)
   return true;
 end);
 
-# TODO make this an operation
 InstallGlobalFunction(GV_IsValidColor,
 c -> IsString(c) and (GV_IsValidRGBColor(c) or c in GV_ValidColorNames));
 
-InstallGlobalFunction(GV_ErrorIfNotNodeColoring,
+InstallMethod(GV_ErrorIfNotNodeColoring,
+"for a graphviz (di)graph or context and list",
+[IsGraphvizGraphDigraphOrContext, IsList],
 function(gv, colors)
   local N;
   N := GraphvizNumberOfNodes(gv);

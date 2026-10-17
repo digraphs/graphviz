@@ -39,4 +39,4 @@ DeclareOperation("GV_AddEdge",
 [IsGraphvizGraphDigraphOrContext, IsGraphvizEdge]);
 
 DeclareGlobalFunction("GV_IsValidColor");
-DeclareGlobalFunction("GV_ErrorIfNotNodeColoring");
+DeclareOperation("GV_ErrorIfNotNodeColoring", [IsGraphvizObject, IsList]);
