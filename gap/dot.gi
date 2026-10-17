@@ -100,9 +100,18 @@ function(gv, obj)
   return GraphvizNodes(subgraph).(name);
 end);
 
-# FIXME the below only counts nodes in the root graph, not in its children
 InstallMethod(GraphvizNumberOfNodes, "for a graphviz (di)graph or context",
-[IsGraphvizGraphDigraphOrContext], gv -> Length(RecNames(GraphvizNodes(gv))));
+[IsGraphvizGraphDigraphOrContext],
+function(gv)
+  local nodes;
+
+  nodes := 0;
+  GV_GraphSearchChildren(gv, function(subgraph)
+    nodes := nodes + Length(RecNames(GraphvizNodes(subgraph)));
+    return false;
+  end);
+  return nodes;
+end);
 
 InstallMethod(GraphvizEdges, "for a graphviz (di)graph or context",
 [IsGraphvizGraphDigraphOrContext], gv -> gv!.Edges);
