@@ -8,8 +8,6 @@
 #############################################################################
 ##
 
-# TODO: add assertions to BindGlobals
-
 ###############################################################################
 # Family + type
 ###############################################################################
@@ -241,7 +239,11 @@ function(gv)
   return gv;
 end);
 
-BindGlobal("GV_Indent", lvl -> ListWithIdenticalEntries(2 * lvl, ' '));
+BindGlobal("GV_Indent",
+function(lvl)
+  Assert(0, IsInt(lvl));
+  return ListWithIdenticalEntries(2 * lvl, ' ');
+end);
 
 BindGlobal("GV_Depth", function(gv)
   local depth;
@@ -278,28 +280,38 @@ end);
 ###############################################################################
 
 BindGlobal("GV_StringifyGraphHead",
-gv -> StringFormatted("graph {} {{\n", GraphvizName(gv)));
+function(gv)
+  Assert(0, IsGraphvizGraph(gv));
+  return StringFormatted("graph {} {{\n", GraphvizName(gv));
+end);
 
 BindGlobal("GV_StringifyDigraphHead",
-gv -> StringFormatted("digraph {} {{\n", GraphvizName(gv)));
+function(gv)
+  Assert(0, IsGraphvizDigraph(gv));
+  return StringFormatted("digraph {} {{\n", GraphvizName(gv));
+end);
 
 BindGlobal("GV_StringifySubgraphHead",
-gv -> StringFormatted("{}subgraph {} {{\n", GV_Indent(GV_Depth(gv)), GraphvizName(gv)));
+function(gv)
+  Assert(0, IsGraphvizDigraph(gv) or IsGraphvizGraph(gv));
+  return StringFormatted("{}subgraph {} {{\n",
+                         GV_Indent(GV_Depth(gv)),
+                         GraphvizName(gv));
+end);
 
 BindGlobal("GV_StringifyContextHead",
 function(gv)
-  local indent;
-  indent := GV_Indent(GV_Depth(gv));
+  Assert(0, IsGraphvizContext(gv));
   return StringFormatted("{1}{{\n{1}  // context \"{2}\" \n",
-                         indent,
+                         GV_Indent(GV_Depth(gv)),
                          GraphvizName(gv));
 end);
 
 BindGlobal("GV_StringifyNodeName",
 function(node)
   local name, old;
-
   Assert(0, IsGraphvizNode(node));
+
   name  := GraphvizName(node);
   if (ForAny("- .+", x -> x in name)
       or (IsDigitChar(First(name)) and IsAlphaChar(Last(name))))
@@ -374,12 +386,17 @@ function(edge, edge_str)
                          GV_StringifyAttrList(attrs));
 end);
 
-BindGlobal("GV_GetIdx", gv -> gv!.Idx);
+BindGlobal("GV_GetIdx",
+function(gv)
+  Assert(0, IsGraphvizObject(gv));
+  return gv!.Idx;
+end);
 
 BindGlobal("GV_ConstructHistory",
 function(gv)
   local ctxs, nodes, edges, subs,
         ctxs_hist, node_hist, edge_hist, subs_hist, hist;
+  Assert(0, IsGraphvizGraphDigraphOrContext(gv));
 
   nodes := GraphvizNodes(gv);
   edges := GraphvizEdges(gv);
@@ -576,6 +593,8 @@ BindGlobal("GV_ValidColorNames",
 BindGlobal("GV_IsValidRGBColor",
 function(str)
   local valid, i;
+
+  Assert(0, IsString(str));
 
   valid := "0123456789ABCDEFabcdef";
 
