@@ -72,13 +72,15 @@ gap> GraphvizNode(gv, "a");
 
 # doc/_Chapter_Full_Reference.xml:278-279
 
-# doc/_Chapter_Full_Reference.xml:292-293
+# doc/_Chapter_Full_Reference.xml:293-294
 
 # doc/_Chapter_Full_Reference.xml:307-308
 
-# doc/_Chapter_Full_Reference.xml:324-325
+# doc/_Chapter_Full_Reference.xml:322-323
 
-# doc/_Chapter_Full_Reference.xml:342-349
+# doc/_Chapter_Full_Reference.xml:339-340
+
+# doc/_Chapter_Full_Reference.xml:357-364
 gap> gv := GraphvizGraph();;
 gap> GraphvizAddEdge(gv, "a", "b");;
 gap> GraphvizEdges(gv);
@@ -86,27 +88,27 @@ gap> GraphvizEdges(gv);
 gap> GraphvizEdges(gv, "a", "b");
 [ <graphviz edge (a, b)> ]
 
-# doc/_Chapter_Full_Reference.xml:363-369
+# doc/_Chapter_Full_Reference.xml:378-384
 gap> gv := GraphvizGraph();;
 gap> e := GraphvizAddEdge(gv, "a", "b");
 <graphviz edge (a, b)>
 gap> GraphvizHead(e);
 <graphviz node "a">
 
-# doc/_Chapter_Full_Reference.xml:382-388
+# doc/_Chapter_Full_Reference.xml:397-403
 gap> gv := GraphvizGraph();;
 gap> e := GraphvizAddEdge(gv, "a", "b");
 <graphviz edge (a, b)>
 gap> GraphvizTail(e);
 <graphviz node "b">
 
-# doc/_Chapter_Full_Reference.xml:410-415
+# doc/_Chapter_Full_Reference.xml:425-430
 gap> gv := GraphvizGraph();
 <graphviz graph with 0 nodes and 0 edges>
 gap> GraphvizSetName(gv, "newname");
 <graphviz graph "newname" with 0 nodes and 0 edges>
 
-# doc/_Chapter_Full_Reference.xml:431-438
+# doc/_Chapter_Full_Reference.xml:446-453
 gap> gv := GraphvizGraph();
 <graphviz graph with 0 nodes and 0 edges>
 gap> GraphvizAddNode(gv, "a");
@@ -114,7 +116,7 @@ gap> GraphvizAddNode(gv, "a");
 gap> gv;
 <graphviz graph with 1 node and 0 edges>
 
-# doc/_Chapter_Full_Reference.xml:460-467
+# doc/_Chapter_Full_Reference.xml:475-482
 gap> gv := GraphvizGraph();
 <graphviz graph with 0 nodes and 0 edges>
 gap> GraphvizAddEdge(gv, "a", "b");
@@ -122,11 +124,11 @@ gap> GraphvizAddEdge(gv, "a", "b");
 gap> gv;
 <graphviz graph with 2 nodes and 1 edge>
 
-# doc/_Chapter_Full_Reference.xml:485-486
+# doc/_Chapter_Full_Reference.xml:500-501
 
-# doc/_Chapter_Full_Reference.xml:513-514
+# doc/_Chapter_Full_Reference.xml:528-529
 
-# doc/_Chapter_Full_Reference.xml:533-540
+# doc/_Chapter_Full_Reference.xml:548-555
 gap> gv := GraphvizGraph();;
 gap> GraphvizAddNode(gv, "a");;
 gap> gv;
@@ -134,9 +136,9 @@ gap> gv;
 gap> GraphvizRemoveNode(gv, "a");
 <graphviz graph with 0 nodes and 0 edges>
 
-# doc/_Chapter_Full_Reference.xml:553-554
+# doc/_Chapter_Full_Reference.xml:568-569
 
-# doc/_Chapter_Full_Reference.xml:569-576
+# doc/_Chapter_Full_Reference.xml:584-591
 gap> gv := GraphvizGraph();;
 gap> GraphvizAddEdge(gv, "a", "b");;
 gap> gv;
@@ -144,23 +146,23 @@ gap> gv;
 gap> GraphvizRemoveEdges(gv, "a", "b");
 <graphviz graph with 2 nodes and 0 edges>
 
-# doc/_Chapter_Full_Reference.xml:599-600
+# doc/_Chapter_Full_Reference.xml:614-615
 
-# doc/_Chapter_Full_Reference.xml:618-619
+# doc/_Chapter_Full_Reference.xml:633-634
 
-# doc/_Chapter_Full_Reference.xml:634-635
+# doc/_Chapter_Full_Reference.xml:649-650
 
-# doc/_Chapter_Full_Reference.xml:651-652
-
-# doc/_Chapter_Full_Reference.xml:671-672
+# doc/_Chapter_Full_Reference.xml:666-667
 
 # doc/_Chapter_Full_Reference.xml:686-687
 
-# doc/_Chapter_Full_Reference.xml:802-803
+# doc/_Chapter_Full_Reference.xml:701-702
 
-# doc/_Chapter_Full_Reference.xml:820-821
+# doc/_Chapter_Full_Reference.xml:817-818
 
-# doc/_Chapter_Full_Reference.xml:836-837
+# doc/_Chapter_Full_Reference.xml:835-836
+
+# doc/_Chapter_Full_Reference.xml:851-852
 
 #
 gap> STOP_TEST("graphvizforgap02.tst", 1);

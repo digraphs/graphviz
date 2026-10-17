@@ -368,14 +368,23 @@ DeclareOperation("GraphvizNodes", [IsGraphvizGraphDigraphOrContext]);
 #! @EndExampleSession
 DeclareOperation("GraphvizNode", [IsGraphvizGraphDigraphOrContext, IsObject]);
 
-#! @Arguments graph
+#! @Arguments gv
 #! @Returns the number of nodes in a &GAPGraphviz; object.
 #!
 #! @Description This operations returns the number of nodes in the
-#! &GAPGraphviz; graph, digraph, or context <A>graph</A>.
+#! &GAPGraphviz; graph, digraph, or context <A>gv</A>.
 #! @BeginExampleSession
 #! @EndExampleSession
 DeclareOperation("GraphvizNumberOfNodes", [IsGraphvizGraphDigraphOrContext]);
+
+#! @Arguments gv
+#! @Returns the number of nodes in a &GAPGraphviz; object.
+#!
+#! @Description This operations returns the number of nodes in the
+#! &GAPGraphviz; graph, digraph, or context <A>gv</A>.
+#! @BeginExampleSession
+#! @EndExampleSession
+DeclareOperation("GraphvizNumberOfEdges", [IsGraphvizGraphDigraphOrContext]);
 
 #! @Arguments graph
 #! @Returns a print record of &GAPGraphviz; graphs
