@@ -503,7 +503,6 @@ function(gv, head_obj, tail_obj)
   tn := String(tail_obj);
 
   # if no such nodes exist -> error out
-  # TODO clean this up
   lh := GraphvizNode(gv, hn) = fail;
   lt := GraphvizNode(gv, tn) = fail;
   if lh and lt then
