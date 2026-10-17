@@ -124,6 +124,18 @@ These cases must be rejected by Graphviz. This checks syntax, not layout or
 whether the parsed graph has the intended meaning; the output comparisons
 remain in place.
 
+## Structure of the package
+
+The goal for the structure of this packages is as follows:
+
+- `GraphvizForGAP` provides a wrapper for the [`graphviz`](https://graphviz.org/) graph visualization tool:
+  - It allows users to construct and manipulate `graphviz` graphs as GAP objects in a structured manner,
+  - It has functionality for converting `graphviz` graphs to [DOT language](https://graphviz.org/doc/info/lang.html) strings which can be rendered using `graphviz` via the `dot` tool,
+  - It provides a method for calling the `dot` tool from within GAP and saving or displaying the resulting output,
+- e.g. `Digraphs` has code, which uses these functions so that a user can generate these visualisations
+- e.g. `Digraphs` has `GraphvizForGAP` as an extension, so in particular only loads the code using the `GraphvizForGAP` functions if the `GraphvizForGAP` is loaded. As a result e.g. `Digraphs` can be used without installing `GraphvizForGAP`
+- The main reason for this is that the packages dealing with the mathematical objects maintain their own visualisation themselves, to reduce maintenance burden in `GraphvizForGAP`. The package is meant to be small in scope.
+
 ## Issues
 
 For questions, remarks, suggestions, and issues please use the
