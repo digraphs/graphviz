@@ -44,14 +44,8 @@ function(gv)
   local result, edges, nodes, kind;
 
   result := "";
-  edges  := 0;
-  nodes  := 0;
-
-  GV_GraphSearchChildren(gv, function(s)
-    nodes := nodes + Length(RecNames(GraphvizNodes(s)));
-    edges := edges + Length(GraphvizEdges(s));
-    return false;
-  end);
+  edges  := GraphvizNumberOfEdges(gv);
+  nodes  := GraphvizNumberOfNodes(gv);
 
   if IsGraphvizContext(gv) then
     kind := "context";
@@ -111,6 +105,19 @@ function(gv)
     return false;
   end);
   return nodes;
+end);
+
+InstallMethod(GraphvizNumberOfEdges, "for a graphviz (di)graph or context",
+[IsGraphvizGraphDigraphOrContext],
+function(gv)
+  local edges;
+
+  edges := 0;
+  GV_GraphSearchChildren(gv, function(subgraph)
+    edges := edges + Length(GraphvizEdges(subgraph));
+    return false;
+  end);
+  return edges;
 end);
 
 InstallMethod(GraphvizEdges, "for a graphviz (di)graph or context",
